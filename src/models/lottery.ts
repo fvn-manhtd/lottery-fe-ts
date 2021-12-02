@@ -1,6 +1,7 @@
 export interface Lottery {
     id: number
     title?: string
+    status?: number
     description?: string
     image?: string
     thumbnailImage?: string

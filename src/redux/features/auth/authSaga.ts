@@ -13,6 +13,7 @@ function* handleLogin(payload: LoginPayLoad) {
         }))
 
         console.log(payload)
+    
 
 
         // If Call API OK - Save token to localStorage        
@@ -41,6 +42,7 @@ function* watchLoginFlow() {
             // Listening dispatch action login from user
             const action: PayloadAction<LoginPayLoad> = yield take(authActions.login.type)
             yield fork(handleLogin, action.payload)
+
         
         
         // Listening dispatch action logout from user

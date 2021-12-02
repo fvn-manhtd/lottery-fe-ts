@@ -16,6 +16,7 @@ import {
   TextArea,
   TextField,
   Typography,
+  SelectBox,
 } from "components/atoms";
 import { ModalComponent } from "components/molecules";
 import {
@@ -45,6 +46,11 @@ const checkoutSchema = yup.object().shape({
     .email("invalid email")
     .required("このフィールドを入力してください"),
 });
+
+const countryList = [
+  { label: "Japan", value: "JP" },
+  { label: "Vietnam", value: "VN" },
+];
 
 const breadcrumbList = [
   { url: "https://example.com/", description: "Home" },
@@ -182,6 +188,16 @@ export const ExamplePage = () => {
                         errorText={
                           touched.shipping_email && errors.shipping_email
                         }
+                      />
+
+                      <SelectBox
+                        mb="1rem"
+                        label="Country"
+                        placeholder="Select Country"
+                        options={countryList}
+                        onChange={(e) => {
+                          console.log(e);
+                        }}
                       />
                     </Grid>
                     <Grid item sm={6} xs={12}>
