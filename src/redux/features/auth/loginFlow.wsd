@@ -1,0 +1,68 @@
+@startuml
+
+actor User
+participant API
+
+
+== APP CHECK REQUEST ==
+
+User -> API : Send Request
+
+API -> API : Check Header 'Authorization'
+
+API -> API : If authorized
+
+API -> User : Response a message authorized
+
+API -> API : If unauthorized
+
+API -> User : Response a message unauthorized
+
+
+== LOGIN FLOW ==
+
+User -> API : Client Sign In
+activate User
+note left : POST /api/users?mailaddress={メールアドレス}&password={パスワード}
+deactivate User
+
+activate API
+API -> API : Check email, password
+
+API -> API : If Success
+
+API -> User : Response success message
+
+API -> API : If Fail
+
+API -> User : Response failed message
+
+deactivate API
+
+== LOGIN Success ==
+
+
+User -> API : Request Current User Info 
+activate User
+note left : GET /api/users/self
+activate API
+API -> API : Check User Info
+API -> User: Response Current User Info
+
+
+User -> API : Request Current User Cart
+note left : Async GET /api/users/self/cart
+
+API -> API : Check User Cart
+API -> User: Response Current User Cart
+
+User -> API : Request Current User Profile
+note left : Async GET /api/users/self/profile
+
+API -> API : Check User Profile
+API -> User: Response Current User Profile
+
+deactivate API
+
+
+@enduml
