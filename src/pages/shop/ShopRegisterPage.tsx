@@ -15,6 +15,7 @@ import {
 } from "components/atoms";
 import { Card1, Logo } from "components/organisms";
 import * as yup from "yup";
+import { useHistory } from "react-router-dom";
 
 const initialValues = {
   shopID: "",
@@ -34,8 +35,9 @@ const formSchema = yup.object().shape({
 });
 
 const ShopRegisterPage = () => {
+  const history = useHistory();
   const handleFormSubmit = () => {
-    //
+    history.push("/shop/register/create-account");
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =

@@ -38,6 +38,9 @@ export const ShopPasswordForgotPage = lazy(
 export const ShopRegisterPage = lazy(
   () => import("pages/shop/ShopRegisterPage")
 );
+export const ShopCreateAccountPage = lazy(
+  () => import("pages/shop/ShopCreateAccountPage")
+);
 
 /* error pages */
 export const Error404Page = lazy(() => import("pages/generals/Error404Page"));

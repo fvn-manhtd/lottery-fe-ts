@@ -24,7 +24,7 @@ export const SyledTextArea = styled.textarea<
       minHeight: "40px",
       fontSize: "inherit",
       color: "body.text",
-      borderRadius: 0,
+      borderRadius: "5px",
       border: "1px solid",
       borderColor: "gray.500",
       width: props.fullwidth ? "100%" : "inherit",
