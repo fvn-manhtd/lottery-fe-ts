@@ -85,7 +85,7 @@ export const Header: React.FC = () => {
                         borderRadius="100%"
                         bg="error.main"
                         px="5px"
-                        py="5px"
+                        py="3px"
                         alignItems="center"
                         justifyContent="center"
                         position="absolute"

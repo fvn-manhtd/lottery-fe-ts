@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "models/user";
 
 export interface LoginPayLoad {    
     email: '',
@@ -23,10 +22,9 @@ const authSlice = createSlice({
             state.logging = true
             console.log(action)
         },
-        loginSucess(state, action: PayloadAction<User>) {            
+        loginSucess(state) {            
             state.isLoggedIn = true
             state.logging = false
-            console.log(action)
         },
         loginFailed(state, action: PayloadAction<string>) {
             state.logging = false
