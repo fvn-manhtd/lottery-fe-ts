@@ -1,4 +1,4 @@
-import DashBoardLayout from "components/templates/DashBoardLayout";
+import { DashBoardLayout } from "components/templates";
 
 export const MyPage = () => {
   return (

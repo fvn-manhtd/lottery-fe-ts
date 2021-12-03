@@ -1,9 +1,8 @@
 import React from "react";
 import { Sticky, Box } from "components/atoms";
 import { HeaderDashboard, MyPageMenu } from "components/organisms";
-import ProtectedRoute from "router/ProtectedRoute";
 
-const DashBoardLayout: React.FC = ({ children }) => (
+export const DashBoardLayout: React.FC = ({ children }) => (
   <>
     <Sticky fixedOn={0}>
       <HeaderDashboard />
@@ -17,5 +16,3 @@ const DashBoardLayout: React.FC = ({ children }) => (
     </Box>
   </>
 );
-
-export default ProtectedRoute(DashBoardLayout);

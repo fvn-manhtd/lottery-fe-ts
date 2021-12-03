@@ -7,12 +7,9 @@ function* handleLogin(payload: LoginPayLoad) {
     
     try {
         // Call API - Set payload currentUser if login Sucess
-        yield put(authActions.loginSucess({
-            id: 1,
-            email: "manh@test.com"
-        }))
+        yield put(authActions.loginSucess());
 
-        console.log(payload)
+        console.log(payload)              
     
 
 
@@ -39,12 +36,12 @@ function* handleLogout() {
 function* watchLoginFlow() {
     while (true) {
         
+        const isLoggedIn = JSON.parse(localStorage.getItem("redux")).auth.isLoggedIn;
+        if(isLoggedIn === false){
             // Listening dispatch action login from user
             const action: PayloadAction<LoginPayLoad> = yield take(authActions.login.type)
             yield fork(handleLogin, action.payload)
-
-        
-        
+        }
         // Listening dispatch action logout from user
         yield take(authActions.logout.type)
         yield fork(handleLogout)

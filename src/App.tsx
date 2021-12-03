@@ -4,6 +4,7 @@ import { HomePage, ExamplePage, MyPage, UserLoginPage } from "./pages";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
 import { useEffect, useMemo } from "react";
+import ProtectedRoute from "router/ProtectedRoute";
 
 const FancyRoute = (props) => {
   useMemo(() => {
@@ -26,7 +27,11 @@ export default function App() {
         <FancyRoute path="/example" exact component={() => <ExamplePage />} />
 
         {/* mypage pages */}
-        <FancyRoute path="/user/mypage" exact component={() => <MyPage />} />
+        <FancyRoute
+          path="/user/mypage"
+          exact
+          component={ProtectedRoute(MyPage)}
+        />
         <FancyRoute
           path="/user/login"
           exact
