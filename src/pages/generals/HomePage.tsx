@@ -90,7 +90,7 @@ interface data {
   lotteries: LotteryModel[];
 }
 
-export const HomePage = () => {
+const HomePage = () => {
   const data: data = {
     lotteries: [
       {
@@ -262,3 +262,5 @@ export const HomePage = () => {
     </>
   );
 };
+
+export default HomePage;

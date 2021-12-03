@@ -45,19 +45,23 @@ export const Header: React.FC = () => {
         alignItems="center"
         shadow={6}
         justifyContent="space-between"
-        height="80px"
+        height={{ _: "60px", md: "80px" }}
         px={10}
+        position="relative"
+        zIndex={991}
       >
         <Box width={{ _: "20%", lg: "30%" }}>
-          <MobileMenu
-            handle={menuHandle}
-            position="left"
-            open={open}
-            width={320}
-            toggleMobileMenu={toggleMobileMenu}
-          >
-            <MobileMenuContent />
-          </MobileMenu>
+          {isTablet && (
+            <MobileMenu
+              handle={menuHandle}
+              position="top"
+              open={open}
+              width={320}
+              toggleMobileMenu={toggleMobileMenu}
+            >
+              <MobileMenuContent />
+            </MobileMenu>
+          )}
         </Box>
         <Box width={{ _: "60%", lg: "40%" }} maxWidth="260px">
           <Logo />
@@ -97,7 +101,9 @@ export const Header: React.FC = () => {
                         </Tiny>
                       </FlexBox>
 
-                      <Typography ml={10}>カート</Typography>
+                      <Typography fontWeight={400} ml={10}>
+                        カート
+                      </Typography>
                     </FlexBox>
                   </NavLink>
                 </>
@@ -105,12 +111,19 @@ export const Header: React.FC = () => {
 
               {!isLoggedIn && (
                 <>
-                  <NavLink color="gray.700" href="/user/login">
+                  <NavLink href="/user/login">
                     <FlexBox alignItems="center">
                       <Box width="16px">
                         <IconPng>login</IconPng>
                       </Box>
-                      <Typography ml={10}>ログイン</Typography>
+                      <Typography
+                        color="gray.700"
+                        fontWeight={600}
+                        fontSize="1rem"
+                        ml={10}
+                      >
+                        ログイン
+                      </Typography>
                     </FlexBox>
                   </NavLink>
                 </>
@@ -124,7 +137,14 @@ export const Header: React.FC = () => {
                     <Box width="16px">
                       <IconPng>user</IconPng>
                     </Box>
-                    <Typography ml={10}>マイページ</Typography>
+                    <Typography
+                      color="gray.700"
+                      fontSize="1rem"
+                      fontWeight={600}
+                      ml={10}
+                    >
+                      マイページ
+                    </Typography>
                     <Icon size="1rem">chevron-down</Icon>
                   </Button>
                 }
@@ -140,7 +160,9 @@ export const Header: React.FC = () => {
                       <Box width="16px">
                         <IconPng>user</IconPng>
                       </Box>
-                      <Typography ml={10}>マイページ</Typography>
+                      <Typography fontWeight={600} ml={10}>
+                        マイページ
+                      </Typography>
                     </FlexBox>
                   </NavLink>
 
