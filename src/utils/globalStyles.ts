@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { lotteryStatusObj } from "utils/constants";
 export const GlobalStyles = createGlobalStyle`
   html,
   body {
@@ -130,10 +131,40 @@ export const GlobalStyles = createGlobalStyle`
   left: 10px;
   top: 30px;
   overflow:hidden;
+  &::before{
+    content:"";
+    position:absolute;
+    width: 25%;
+    padding-top: 25%;
+    transform: rotate(45deg);
+    top: -21%;
+    left: -13%;
+  }
   @media(max-width:768px){
     width:unset;
     height:unset;
     left:unset;
+  }
+}
+
+.carousel__slide-1 .carousel__inner-slide {
+  &::before{
+    background:${lotteryStatusObj[0].color};
+  }
+}
+.carousel__slide-2 .carousel__inner-slide {
+  &::before{
+    background:${lotteryStatusObj[1].color};
+  }
+}
+.carousel__slide-3 .carousel__inner-slide {
+  &::before{
+    background:${lotteryStatusObj[2].color};
+  }
+}
+.carousel__slide-4 .carousel__inner-slide {
+  &::before{
+    background:${lotteryStatusObj[3].color};
   }
 }
 .carousel__slide--hidden{
@@ -185,5 +216,4 @@ export const GlobalStyles = createGlobalStyle`
   background:white;
 }
 `;
-
 

@@ -15,82 +15,27 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import { Lottery as LotteryModel } from "models/lottery";
 import { lotteryStatusObj } from "utils/constants";
 
-const StyledBox = styled(Box)`
-  color: white;
-  position: absolute;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  top: -15%;
-  left: -13%;
-  width: 200px;
-  height: 150px;
-  background: ${(props) => props.color};
-  transform: rotate(-45deg);
-  padding-bottom: 0.625rem;
-  @media only screen and (max-width: 1280px) {
-    left: -17%;
-    top: -18%;
-  }
-  @media only screen and (max-width: 1087px) {
-    left: -20%;
-    top: -25%;
-    font-size: 1.3rem;
-  }
-  @media only screen and (max-width: 922px) {
-    left: -25%;
-    top: -29%;
-    font-size: 1.2rem;
-  }
-  @media only screen and (max-width: 800px) {
-    left: -28%;
-    top: -33%;
-  }
-  @media only screen and (max-width: 768px) {
-    left: -18%;
-    top: -26%;
-    width: 250px;
-    height: 200px;
-    font-size: 1.5rem;
-  }
-  @media only screen and (max-width: 655px) {
-    left: -22%;
-    top: -28%;
-  }
-  @media only screen and (max-width: 550px) {
-    left: -27%;
-    top: -37%;
-    font-size: 1.3rem;
-  }
-  @media only screen and (max-width: 476px) {
-    left: -31%;
-    top: -44%;
-    font-size: 1.3rem;
-  }
-  @media only screen and (max-width: 400px) {
-    left: -40%;
-    top: -56%;
-    font-size: 1rem;
-  }
-  @media only screen and (max-width: 363px) {
-    left: -44%;
-    top: -62%;
-    font-size: 1rem;
-  }
-  @media only screen and (max-width: 320px) {
-    left: -49%;
-    top: -69%;
-    font-size: 1rem;
-  }
-`;
+const StyledText = styled(Typography) `
+position:absolute;
+top:0;
+left:0;
+transform: rotate(-45deg);
+`
+const StyledBox = styled.div `
+display: grid;
+grid-template-columns: repeat(auto-fill, 33%);
+justify-content: center;
+@media screen and (max-width: 768px){
+  grid-template-columns: repeat(auto-fill,50%);
+}
+`
 
 interface data {
   lotteries: LotteryModel[];
 }
 
 export const HomePage = () => {
+  
   const data: data = {
     lotteries: [
       {
@@ -125,6 +70,14 @@ export const HomePage = () => {
         startedAt: "2021/00/00",
         status: 4,
       },
+      {
+        id: 5,
+        title:
+          "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
+        image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",
+        startedAt: "2021/00/00",
+        status: 1,
+      },
     ],
   };
 
@@ -145,10 +98,26 @@ export const HomePage = () => {
             <Slider>
               {data.lotteries.map((value, index) => {
                 return (
-                  <Slide index={index}>
-                    <StyledBox color={lotteryStatusObj[value.status - 1].color}>
-                      {lotteryStatusObj[value.status - 1].text}
-                    </StyledBox>
+                  <Slide index={index} className={"carousel__slide-"+value.status}>
+                    {
+                    value.status<=2?
+                    <StyledText 
+                      color="white" 
+                      fontWeight={600} 
+                      pt={["4%","4%","4%","4%"]} 
+                      ml={["-1%","-1%","unset","unset"]} 
+                      fontSize={["0.8rem","1.4rem","1rem","1.4rem"]}>
+                      {lotteryStatusObj[value.status-1].text}
+                    </StyledText>:
+                    <StyledText 
+                      color="white" 
+                      fontWeight={600} 
+                      pt={["4%","4%","4%","4%"]} 
+                      ml={["-1%","-2%","-1%","-1%"]} 
+                      fontSize={["0.6rem","1.1rem","0.8rem","1.2rem"]}>
+                      {lotteryStatusObj[value.status-1].text}
+                    </StyledText>
+                    }
                     <Box
                       position="absolute"
                       bottom={0}
@@ -226,24 +195,13 @@ export const HomePage = () => {
                   </Typography>
                 </Box>
               </Box>
-              <Box
-                display="flex"
-                flexWrap="wrap"
-                justifyContent={[
-                  "space-between",
-                  "space-between",
-                  "center",
-                  "center",
-                ]}
-              >
+              <StyledBox>
                 {data.lotteries.map((value) => {
                   return (
                     <Box
                       key={value.id}
-                      width={["48%", "48%", "30%", "30%"]}
-                      mb={4}
-                      minWidth={["unset", "unset", 250, 250]}
-                      mr={[0, 0, 3, 3]}
+                      width={["95%","95%","92%","90%"]}
+                      mb={[3,3,3,4]}
                     >
                       <Lottery
                         src={value.image}
@@ -254,7 +212,7 @@ export const HomePage = () => {
                     </Box>
                   );
                 })}
-              </Box>
+              </StyledBox>
             </Box>
           </Container>
         </main>
