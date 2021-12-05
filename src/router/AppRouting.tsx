@@ -41,6 +41,9 @@ export const ShopRegisterPage = lazy(
 export const ShopCreateAccountPage = lazy(
   () => import("pages/shop/ShopCreateAccountPage")
 );
+export const ShopOperationSettingPage = lazy(
+  () => import("pages/shop/ShopOperationSettingPage")
+);
 
 /* error pages */
 export const Error404Page = lazy(() => import("pages/generals/Error404Page"));

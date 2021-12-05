@@ -9,53 +9,32 @@ import {
   TextField,
   TextArea,
   Typography,
-  SelectBox,
 } from "components/atoms";
 import { Card1, Logo } from "components/organisms";
 import * as yup from "yup";
-import { dayListArr, monthListArr, phoneRegExp, yearListArr } from "utils";
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  firstNameKana: "",
-  lastNameKana: "",
+  bussinessType: "",
+  companyName: "",
+  userName: "",
   phone: "",
   note: "",
+  postcode: "",
+  address: "",
 };
 
 const formSchema = yup.object().shape({
-  firstName: yup.string().required("姓を入力してください"),
-  lastName: yup.string().required("名を入力してください"),
-  firstNameKana: yup.string().required("姓（カナ）を入力してください"),
-  lastNameKana: yup.string().required("名（カナ）を入力してください"),
-  phone: yup.string().matches(phoneRegExp, "電話番号を入力してください"),
+  bussinessType: yup.string().required("姓を入力してください"),
 });
 
-const ShopCreateAccountPage: React.FC = () => {
-  const [year, setYear] = useState(1989);
-  const [month, setMonth] = useState(1);
-  const [day, setDay] = useState(1);
-
+const ShopOperationSettingPage: React.FC = () => {
   const history = useHistory();
 
   const handleFormSubmit = (values) => {
-    const birthday = `${year}/${month}/${day}`;
-    const obj = { ...values, birthday };
-    console.log("Values: ", obj);
     history.push("/shop/register/operation-setting");
-  };
-
-  const handleYearChange = (e) => {
-    setYear(e.value);
-  };
-  const handleMonthChange = (e) => {
-    setMonth(e.value);
-  };
-  const handleDayChange = (e) => {
-    setDay(e.value);
+    console.log(values);
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -77,7 +56,7 @@ const ShopCreateAccountPage: React.FC = () => {
                 </Box>
 
                 <H3 textAlign="center" mb="2rem">
-                  アカウント設定
+                  運営に関する設定
                 </H3>
 
                 <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
@@ -144,46 +123,6 @@ const ShopCreateAccountPage: React.FC = () => {
                   生年月日
                 </Typography>
 
-                <FlexBox
-                  mb="1rem"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <Box width="30%">
-                    <SelectBox
-                      placeholder="選択"
-                      defaultValue={yearListArr(80)[32]}
-                      options={yearListArr(80)}
-                      onChange={handleYearChange}
-                    />
-                  </Box>
-                  <Box textAlign="center" width="8%">
-                    年
-                  </Box>
-                  <Box width="23%">
-                    <SelectBox
-                      placeholder="選択"
-                      defaultValue={monthListArr().reverse()[0]}
-                      options={monthListArr().reverse()}
-                      onChange={handleMonthChange}
-                    />
-                  </Box>
-                  <Box textAlign="center" width="8%">
-                    月
-                  </Box>
-                  <Box width="23%">
-                    <SelectBox
-                      placeholder="選択"
-                      defaultValue={dayListArr().reverse()[0]}
-                      options={dayListArr().reverse()}
-                      onChange={handleDayChange}
-                    />
-                  </Box>
-                  <Box textAlign="center" width="8%">
-                    日
-                  </Box>
-                </FlexBox>
-
                 <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
                   電話番号
                 </Typography>
@@ -235,4 +174,4 @@ const ShopCreateAccountPage: React.FC = () => {
   );
 };
 
-export default ShopCreateAccountPage;
+export default ShopOperationSettingPage;

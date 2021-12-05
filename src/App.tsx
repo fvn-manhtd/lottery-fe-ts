@@ -20,6 +20,7 @@ import {
   ShopPasswordForgotConfirmMailPage,
   ShopPasswordForgotPage,
   ShopCreateAccountPage,
+  ShopOperationSettingPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -93,6 +94,11 @@ export default function App() {
             path="/shop/register/create-account"
             exact
             component={() => <ShopCreateAccountPage />}
+          />
+          <FancyRoute
+            path="/shop/register/operation-setting"
+            exact
+            component={() => <ShopOperationSettingPage />}
           />
 
           <FancyRoute
