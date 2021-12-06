@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Box, Image, Typography } from "components/atoms";
-import { theme } from "../../../../utils/theme";
+import { theme } from "utils/theme";
 
 type LotteryProps = {
   src: string;

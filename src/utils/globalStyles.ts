@@ -4,7 +4,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-size: 15px;
+    font-size: 14px;
     background: ${({ theme }: any) => theme.colors.body.default};
     color: ${({ theme }: any) => theme.colors.body.text};
     transition: all 0.50s linear;
@@ -14,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   * {

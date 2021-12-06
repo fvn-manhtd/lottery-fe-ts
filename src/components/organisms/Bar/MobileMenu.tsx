@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { MobileMenuStyle } from "./MobileMenuStyle";
 
 export interface MobileMenuProps {
-  position?: "left" | "right";
+  position?: "left" | "right" | "top";
   open?: boolean;
   width?: number;
   scroll?: boolean;

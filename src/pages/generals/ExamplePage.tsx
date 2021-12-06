@@ -62,7 +62,7 @@ const breadcrumbList = [
   },
 ];
 
-export const ExamplePage = () => {
+const ExamplePage = () => {
   const handleFormSubmit = async (values) => {
     console.log(values);
   };
@@ -402,3 +402,5 @@ export const ExamplePage = () => {
     </BaseLayout>
   );
 };
+
+export default ExamplePage;

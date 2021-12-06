@@ -32,7 +32,7 @@ const formSchema = yup.object().shape({
   password: yup.string().required("パスワードを入力してください"),
 });
 
-export const UserLoginPage = () => {
+const UserLoginPage = () => {
   const dispatch = useAppDispatch();
   const handleFormSubmit = (values) => {
     dispatch(
@@ -141,7 +141,7 @@ export const UserLoginPage = () => {
               </Button>
 
               <FlexBox justifyContent="flex-start" py="1rem">
-                <Link to="/user/password-forget">
+                <Link to="/user/password-forgot">
                   <H6
                     ml="0.5rem"
                     borderBottom="1px solid"
@@ -203,3 +203,5 @@ export const UserLoginPage = () => {
     </>
   );
 };
+
+export default UserLoginPage;

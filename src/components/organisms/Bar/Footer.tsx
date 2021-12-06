@@ -45,10 +45,11 @@ export const Footer: React.FC = () => {
 
             <Box width={{ _: 1, md: 3 / 4 }}>
               <FlexBox
-                justifyContent={{ _: "flex-start", lg: "flex-end" }}
+                justifyContent={{ _: "center", lg: "flex-end" }}
                 flexDirection={{ _: "column", lg: "row" }}
                 fontSize="1rem"
                 fontWeight="bold"
+                textAlign="center"
               >
                 {listStaticPage.map((value) => {
                   return (
