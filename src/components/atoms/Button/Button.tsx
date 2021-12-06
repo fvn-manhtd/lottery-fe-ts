@@ -103,8 +103,8 @@ export const Button = styled.button<
             boxShadow: `0px 1px 4px 0px ${theme.colors[color]?.[500]}`,
           },
           "&:hover:enabled": {
-            bg: color && `${color}.main`,
-            borderColor: color && `${color}.main`,
+            bg: color && `${color}.second`,
+            borderColor: color && `${color}.second`,
             color: color && `${color}.text`,
             "svg path": {
               fill: color

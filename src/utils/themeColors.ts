@@ -53,6 +53,7 @@ const gradientColor = {
 const secondaryColor = {
   light: "rgba(15, 52, 96, 0.2)",
   main: "#0F3460",
+  second: "#FF6C00",
   dark: "#303A47",
   text: "#ffffff",
   900: "#041533",

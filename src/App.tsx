@@ -7,6 +7,7 @@ import {
   Loading,
   HomePage,
   ExamplePage,
+  LotteriesPage,
   MyPage,
   UserLoginPage,
   ShopLoginPage,
@@ -46,6 +47,9 @@ export default function App() {
           {/* home page */}
           <FancyRoute path="/" exact component={() => <HomePage />} />
           <FancyRoute path="/example" exact component={() => <ExamplePage />} />
+
+          {/* lottery page */}
+          <FancyRoute path="/lotteries" exact component={() => <LotteriesPage/>} />
 
           {/* user pages */}
           <FancyRoute

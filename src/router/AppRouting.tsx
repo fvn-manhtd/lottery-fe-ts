@@ -5,6 +5,9 @@ import { lazy } from "react";
 export const HomePage = lazy(() => import("pages/generals/HomePage"));
 export const ExamplePage = lazy(() => import("pages/generals/ExamplePage"));
 
+/*lottery pages */
+export const LotteriesPage = lazy(()=> import("pages/generals/Lotteries"));
+
 /* user pages */
 export const MyPage = lazy(() => import("pages/user/MyPage"));
 export const UserLoginPage = lazy(() => import("pages/user/UserLoginPage"));
