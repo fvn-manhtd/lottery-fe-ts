@@ -1,12 +1,33 @@
-import { Error404Page } from "pages/generals/Error404Page";
 import { Route, Switch } from "react-router-dom";
-import { HomePage, ExamplePage, MyPage, UserLoginPage } from "./pages";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
 import { useEffect, useMemo } from "react";
+import {
+  ProtectedRoute,
+  Loading,
+  HomePage,
+  ExamplePage,
+  MyPage,
+  UserLoginPage,
+  ShopLoginPage,
+  Error404Page,
+  UserNewPasswordPage,
+  UserPasswordForgotPage,
+  UserPasswordForgotConfirmMailPage,
+  UserRegisterPage,
+  ShopRegisterPage,
+  ShopNewPasswordPage,
+  ShopPasswordForgotConfirmMailPage,
+  ShopPasswordForgotPage,
+  ShopCreateAccountPage,
+  ShopOperationSettingPage,
+} from "router";
+
+import { Suspense } from "react";
 
 const FancyRoute = (props) => {
   useMemo(() => {
+    nprogress.configure({ showSpinner: false });
     nprogress.start();
   }, []);
 
@@ -20,22 +41,86 @@ const FancyRoute = (props) => {
 export default function App() {
   return (
     <>
-      <Switch>
-        {/* home page */}
-        <FancyRoute path="/" exact component={() => <HomePage />} />
-        <FancyRoute path="/example" exact component={() => <ExamplePage />} />
+      <Suspense fallback={<Loading />}>
+        <Switch>
+          {/* home page */}
+          <FancyRoute path="/" exact component={() => <HomePage />} />
+          <FancyRoute path="/example" exact component={() => <ExamplePage />} />
 
-        {/* mypage pages */}
-        <FancyRoute path="/user/mypage" exact component={() => <MyPage />} />
-        <FancyRoute
-          path="/user/login"
-          exact
-          component={() => <UserLoginPage />}
-        />
+          {/* user pages */}
+          <FancyRoute
+            path="/user/mypage"
+            exact
+            component={ProtectedRoute(MyPage)}
+          />
+          <FancyRoute
+            path="/user/login"
+            exact
+            component={() => <UserLoginPage />}
+          />
+          <FancyRoute
+            path="/user/new-password"
+            exact
+            component={() => <UserNewPasswordPage />}
+          />
+          <FancyRoute
+            path="/user/password-forgot"
+            exact
+            component={() => <UserPasswordForgotPage />}
+          />
+          <FancyRoute
+            path="/user/password-forgot-confirm-mail"
+            exact
+            component={() => <UserPasswordForgotConfirmMailPage />}
+          />
+          <FancyRoute
+            path="/user/register"
+            exact
+            component={() => <UserRegisterPage />}
+          />
 
-        {/* error page */}
-        <FancyRoute path="**" component={() => <Error404Page />} />
-      </Switch>
+          {/* shop pages */}
+          <FancyRoute
+            path="/shop/login"
+            exact
+            component={() => <ShopLoginPage />}
+          />
+          <FancyRoute
+            path="/shop/register"
+            exact
+            component={() => <ShopRegisterPage />}
+          />
+          <FancyRoute
+            path="/shop/register/create-account"
+            exact
+            component={() => <ShopCreateAccountPage />}
+          />
+          <FancyRoute
+            path="/shop/register/operation-setting"
+            exact
+            component={() => <ShopOperationSettingPage />}
+          />
+
+          <FancyRoute
+            path="/shop/password-forgot"
+            exact
+            component={() => <ShopPasswordForgotPage />}
+          />
+          <FancyRoute
+            path="/shop/new-password"
+            exact
+            component={() => <ShopNewPasswordPage />}
+          />
+          <FancyRoute
+            path="/shop/password-forgot-confirm-mail"
+            exact
+            component={() => <ShopPasswordForgotConfirmMailPage />}
+          />
+
+          {/* error page */}
+          <FancyRoute path="**" component={() => <Error404Page />} />
+        </Switch>
+      </Suspense>
     </>
   );
 }

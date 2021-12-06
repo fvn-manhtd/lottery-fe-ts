@@ -3,7 +3,7 @@ import { FlexBox, Box, Button, Image } from "components/atoms";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
-export const Error404Page = () => {
+const Error404Page = () => {
   const history = useHistory();
 
   const handleGoBack = async () => {
@@ -44,3 +44,5 @@ export const Error404Page = () => {
     </CartLayout>
   );
 };
+
+export default Error404Page;

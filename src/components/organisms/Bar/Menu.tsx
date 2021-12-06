@@ -5,16 +5,17 @@ export const Menu: React.FC = () => {
   return (
     <FlexBox
       bg="gray.800"
-      px={4}
-      fontSize="1rem"
-      display={{ _: "none", md: "flex" }}
+      px={{ _: 0, md: 4 }}
+      fontSize={{ _: "0.8rem", md: "1rem" }}
+      display={{ _: "flex" }}
+      justifyContent={{ _: "space-around", md: "flex-start" }}
     >
       <NavLink
         as="div"
         href="/"
         color="gray.white"
-        px="2rem"
-        py="1rem"
+        px={{ _: "0rem", md: "2rem" }}
+        py={{ _: "1rem", md: "1rem" }}
         variant="hover"
       >
         スクラッチ
@@ -23,8 +24,8 @@ export const Menu: React.FC = () => {
         as="div"
         href="/"
         color="gray.white"
-        px="2rem"
-        py="1rem"
+        px={{ _: "0rem", md: "2rem" }}
+        py={{ _: "1rem", md: "1rem" }}
         variant="hover"
       >
         マイコレクション
@@ -33,8 +34,8 @@ export const Menu: React.FC = () => {
         as="div"
         href="/"
         color="gray.white"
-        px="2rem"
-        py="1rem"
+        px={{ _: "0rem", md: "2rem" }}
+        py={{ _: "1rem", md: "1rem" }}
         variant="hover"
       >
         ショップ

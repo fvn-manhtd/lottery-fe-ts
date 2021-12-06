@@ -1,14 +1,14 @@
-import { useAppSelector } from "redux/app/hooks";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { selectIsLoggedIn } from "redux/features";
-import { useHistory } from "react-router";
+import { push } from "connected-react-router";
 
-const ProtectedRoute = (ProtectedComponent) => {
+export const ProtectedRoute = (ProtectedComponent) => {
   return (props) => {
     if (typeof window !== "undefined") {
-      const history = useHistory();
       const isLoggedIn = useAppSelector(selectIsLoggedIn);
+      const dispatch = useAppDispatch();
       if (!isLoggedIn) {
-        history.push("/user/login");
+        dispatch(push("/user/login"));
       } else {
         return <ProtectedComponent {...props} />;
       }
@@ -17,5 +17,3 @@ const ProtectedRoute = (ProtectedComponent) => {
     return null;
   };
 };
-
-export default ProtectedRoute;

@@ -79,12 +79,12 @@ const customStyles = {
     ...provided,
     boxShadow: "none",
     border: `1px solid ${colors.gray[500]}`,
-    borderRadius: "0",
+    borderRadius: "5px",
   }),
   menu: (provided) => ({
     ...provided,
     border: `1px solid ${colors.gray[500]}`,
-    borderRadius: "0",
+    borderRadius: "5px",
     boxShadow: "none",
   }),
   option: (provided, state) => ({
