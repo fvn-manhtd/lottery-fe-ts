@@ -12,7 +12,7 @@ export const SyledTextField = styled.input<
   (props) =>
     systemCss({
       padding: "8px 12px",
-      height: "40px",
+      height: "50px",
       fontSize: "inherit",
       color: "body.text",
       borderRadius: "5px",
@@ -33,7 +33,7 @@ export const SyledTextField = styled.input<
         // )}, 0.1)`,
       },
       "&::placeholder": {
-        color: colors.gray[300],
+        color: colors.gray[600],
       },
     }),
   compose(color)

@@ -11552,6 +11552,11 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+use-postal-jp@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/use-postal-jp/-/use-postal-jp-2.0.1.tgz#9cf170a37e87776d4b4f75b14ce36d109fd755cd"
+  integrity sha512-jXWF8y/Utd9XHc97dxS35osm+dng/k+0N22l/Wqs4j2JWFRSvedNoUzKF8stf6udCqUFCO3eqzE2h74p1tbgiQ==
+
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"

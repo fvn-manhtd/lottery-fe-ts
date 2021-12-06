@@ -5,13 +5,13 @@ import {
   H3,
   Box,
   FlexBox,
-  Paragraph,
-  TextField,
   TextArea,
+  TextField,
+  Paragraph,
   Typography,
   SelectBox,
 } from "components/atoms";
-import { Card1, Logo } from "components/organisms";
+import { Card, Logo } from "components/organisms";
 import * as yup from "yup";
 import { dayListArr, monthListArr, phoneRegExp, yearListArr } from "utils";
 import React, { useState } from "react";
@@ -68,168 +68,176 @@ const ShopCreateAccountPage: React.FC = () => {
   return (
     <>
       <OneColumnLayout>
-        <main>
-          <Box bg="body.paper" mt="3rem" maxWidth="480px" mx="auto">
-            <form onSubmit={handleSubmit}>
-              <Card1 mb="2rem" borderRadius={5} shadow={6}>
-                <Box mx="auto" mt="1rem" mb="2rem" maxWidth="200px">
-                  <Logo />
+        <Box
+          bg="body.paper"
+          maxWidth="800px"
+          mt="3rem"
+          shadow={6}
+          borderRadius={5}
+          mx="auto"
+        >
+          <form onSubmit={handleSubmit}>
+            <Card
+              pt="5rem"
+              px={{ _: "1rem", md: "0" }}
+              maxWidth="490px"
+              mx="auto"
+              boxShadow="none"
+            >
+              <Box mx="auto" mt="1rem" mb="2rem" maxWidth="200px">
+                <Logo />
+              </Box>
+
+              <H3 textAlign="center" mb="2rem">
+                アカウント設定
+              </H3>
+
+              <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
+                お名前
+              </Typography>
+              <FlexBox mb="1rem" flexWrap="wrap" justifyContent="space-between">
+                <Box mb="1rem" width="48%">
+                  <TextField
+                    name="firstName"
+                    placeholder="姓"
+                    fullwidth
+                    type="text"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.firstName || ""}
+                    errorText={touched.firstName && errors.firstName}
+                  />
                 </Box>
 
-                <H3 textAlign="center" mb="2rem">
-                  アカウント設定
-                </H3>
+                <Box mb="1rem" width="48%">
+                  <TextField
+                    name="lastName"
+                    placeholder="名"
+                    fullwidth
+                    type="text"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.lastName || ""}
+                    errorText={touched.lastName && errors.lastName}
+                  />
+                </Box>
+                <Box width="48%">
+                  <TextField
+                    name="firstNameKana"
+                    placeholder="姓 (カナ）"
+                    fullwidth
+                    type="text"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.firstNameKana || ""}
+                    errorText={touched.firstNameKana && errors.firstNameKana}
+                  />
+                </Box>
 
-                <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
-                  お名前
-                </Typography>
-                <FlexBox
-                  mb="1rem"
-                  flexWrap="wrap"
-                  justifyContent="space-between"
-                >
-                  <Box mb="1rem" width="48%">
-                    <TextField
-                      name="firstName"
-                      placeholder="姓"
-                      fullwidth
-                      type="text"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.firstName || ""}
-                      errorText={touched.firstName && errors.firstName}
-                    />
-                  </Box>
+                <Box width="48%">
+                  <TextField
+                    name="lastNameKana"
+                    placeholder="名 (カナ）"
+                    fullwidth
+                    type="text"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.lastNameKana || ""}
+                    errorText={touched.lastNameKana && errors.lastNameKana}
+                  />
+                </Box>
+              </FlexBox>
 
-                  <Box mb="1rem" width="48%">
-                    <TextField
-                      name="lastName"
-                      placeholder="名"
-                      fullwidth
-                      type="text"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.lastName || ""}
-                      errorText={touched.lastName && errors.lastName}
-                    />
-                  </Box>
-                  <Box width="48%">
-                    <TextField
-                      name="firstNameKana"
-                      placeholder="姓 (カナ）"
-                      fullwidth
-                      type="text"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.firstNameKana || ""}
-                      errorText={touched.firstNameKana && errors.firstNameKana}
-                    />
-                  </Box>
+              <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
+                生年月日
+              </Typography>
 
-                  <Box width="48%">
-                    <TextField
-                      name="lastNameKana"
-                      placeholder="名 (カナ）"
-                      fullwidth
-                      type="text"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.lastNameKana || ""}
-                      errorText={touched.lastNameKana && errors.lastNameKana}
-                    />
-                  </Box>
-                </FlexBox>
+              <FlexBox
+                mb="1rem"
+                justifyContent="flex-start"
+                alignItems="center"
+              >
+                <Box width="25%">
+                  <SelectBox
+                    placeholder="選択"
+                    defaultValue={yearListArr(80)[32]}
+                    options={yearListArr(80)}
+                    onChange={handleYearChange}
+                  />
+                </Box>
+                <Box textAlign="center" width="8%">
+                  年
+                </Box>
+                <Box width="20%">
+                  <SelectBox
+                    placeholder="選択"
+                    defaultValue={monthListArr().reverse()[0]}
+                    options={monthListArr().reverse()}
+                    onChange={handleMonthChange}
+                  />
+                </Box>
+                <Box textAlign="center" width="8%">
+                  月
+                </Box>
+                <Box width="20%">
+                  <SelectBox
+                    placeholder="選択"
+                    defaultValue={dayListArr().reverse()[0]}
+                    options={dayListArr().reverse()}
+                    onChange={handleDayChange}
+                  />
+                </Box>
+                <Box textAlign="center" width="8%">
+                  日
+                </Box>
+              </FlexBox>
 
-                <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
-                  生年月日
-                </Typography>
+              <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
+                電話番号
+              </Typography>
+              <TextField
+                name="phone"
+                placeholder="電話番号"
+                fullwidth
+                type="text"
+                mb="1rem"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.phone || ""}
+                errorText={touched.phone && errors.phone}
+              />
 
-                <FlexBox
-                  mb="1rem"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <Box width="30%">
-                    <SelectBox
-                      placeholder="選択"
-                      defaultValue={yearListArr(80)[32]}
-                      options={yearListArr(80)}
-                      onChange={handleYearChange}
-                    />
-                  </Box>
-                  <Box textAlign="center" width="8%">
-                    年
-                  </Box>
-                  <Box width="23%">
-                    <SelectBox
-                      placeholder="選択"
-                      defaultValue={monthListArr().reverse()[0]}
-                      options={monthListArr().reverse()}
-                      onChange={handleMonthChange}
-                    />
-                  </Box>
-                  <Box textAlign="center" width="8%">
-                    月
-                  </Box>
-                  <Box width="23%">
-                    <SelectBox
-                      placeholder="選択"
-                      defaultValue={dayListArr().reverse()[0]}
-                      options={dayListArr().reverse()}
-                      onChange={handleDayChange}
-                    />
-                  </Box>
-                  <Box textAlign="center" width="8%">
-                    日
-                  </Box>
-                </FlexBox>
+              <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
+                その他
+              </Typography>
+              <TextArea
+                name="note"
+                placeholder="その他"
+                fullwidth
+                rows={8}
+                mb={10}
+                border="gray.500"
+                borderRadius="5px"
+              />
 
-                <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
-                  電話番号
-                </Typography>
-                <TextField
-                  name="phone"
-                  placeholder="電話番号"
-                  fullwidth
-                  type="text"
-                  mb="1rem"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.phone || ""}
-                  errorText={touched.phone && errors.phone}
-                />
-
-                <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
-                  その他
-                </Typography>
-                <TextArea
-                  name="note"
-                  placeholder="その他"
-                  fullwidth
-                  rows={8}
-                  mb={10}
-                  border="gray.500"
-                  borderRadius="5px"
-                />
-
-                <Button
-                  mt="1.65rem"
-                  mb="1.65rem"
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  fullwidth
-                  borderRadius={5}
-                >
-                  次
-                </Button>
-              </Card1>
-            </form>
-          </Box>
-          <Paragraph mb="1rem" textAlign="center" fontSize="0.8rem">
-            &copy;Online Gacha
-          </Paragraph>
-        </main>
+              <Button
+                mt="1.65rem"
+                mb="1.65rem"
+                variant="contained"
+                color="primary"
+                type="submit"
+                size="large"
+                fullwidth
+                borderRadius={5}
+              >
+                次
+              </Button>
+            </Card>
+            <Paragraph py="1rem" textAlign="center" fontSize="0.8rem">
+              &copy;Online Gacha
+            </Paragraph>
+          </form>
+        </Box>
       </OneColumnLayout>
     </>
   );

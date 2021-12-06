@@ -8,6 +8,7 @@ import { colorOptions } from "../../../interfaces";
 type CheckBoxProps = {
   color?: colorOptions;
   labelColor?: colorOptions;
+  justfiyContent?: "center" | "start";
   labelPlacement?: "start" | "end";
   label?: any;
   id?: any;
@@ -17,6 +18,7 @@ type CheckBoxProps = {
 
 type WrapperProps = {
   labelPlacement?: "start" | "end";
+  justfiyContent?: "center" | "start";
 };
 
 const SyledCheckBox = styled.input<
@@ -81,6 +83,8 @@ const SyledCheckBox = styled.input<
 const Wrapper = styled.div<WrapperProps & SpaceProps>`
   display: flex;
   align-items: center;
+  justify-content: ${(props) =>
+    props.justfiyContent == "center" ? "center" : "flex-start"};
   flex-direction: ${(props) =>
     props.labelPlacement !== "end" ? "row" : "row-reverse"};
   input {
@@ -97,14 +101,21 @@ const Wrapper = styled.div<WrapperProps & SpaceProps>`
     cursor: unset;
   }
 
-  
   ${color}
   ${space}
 `;
 
 export const CheckBox: React.FC<
   InputHTMLAttributes<HTMLInputElement> & CheckBoxProps & SpaceProps
-> = ({ id, label, labelPlacement, labelColor, errorText,  ...props }: CheckBoxProps) => {
+> = ({
+  id,
+  label,
+  labelPlacement,
+  justfiyContent,
+  labelColor,
+  errorText,
+  ...props
+}: CheckBoxProps) => {
   const [checkboxId, setCheckboxId] = useState(id);
 
   // extract spacing props
@@ -120,20 +131,18 @@ export const CheckBox: React.FC<
 
   return (
     <>
-    <Wrapper
-      labelPlacement={labelPlacement}
-      color={`${labelColor}.main`}
-      {...spacingProps}
-    >
-      <SyledCheckBox id={checkboxId} type="checkbox" {...props} />
-      <label htmlFor={checkboxId}>{label}</label>
-
-      
+      <Wrapper
+        labelPlacement={labelPlacement}
+        justfiyContent={justfiyContent}
+        color={`${labelColor}.main`}
+        {...spacingProps}
+      >
+        <SyledCheckBox id={checkboxId} type="checkbox" {...props} />
+        <label htmlFor={checkboxId}>{label}</label>
       </Wrapper>
-      
+
       {errorText && <Small color="error.main">{errorText}</Small>}
-      
-      </>
+    </>
   );
 };
 

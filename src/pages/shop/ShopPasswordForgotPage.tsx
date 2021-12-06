@@ -8,10 +8,10 @@ import {
   Box,
   Paragraph,
   TextField,
-  NavLink,
 } from "components/atoms";
 import { Card1, Logo } from "components/organisms";
 import * as yup from "yup";
+import { Link } from "react-router-dom";
 
 const initialValues = {
   email: "",
@@ -75,19 +75,12 @@ const ShopPasswordForgotPage = () => {
                   配信する
                 </Button>
 
-                <FlexBox justifyContent="flex-start" py="1rem">
-                  <NavLink href="/shop/login">
-                    <a>
-                      <H6
-                        ml="0.5rem"
-                        borderBottom="1px solid"
-                        borderColor="gray.900"
-                        fontWeight={400}
-                      >
-                        アカウントをお持ちの方はこちら
-                      </H6>
-                    </a>
-                  </NavLink>
+                <FlexBox justifyContent="center" py="1rem">
+                  <Link to="/shop/login">
+                    <H6 color="primary.blue" fontWeight={400}>
+                      アカウントをお持ちの方はこちら
+                    </H6>
+                  </Link>
                 </FlexBox>
               </Card1>
             </form>

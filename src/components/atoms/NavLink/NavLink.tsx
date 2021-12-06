@@ -1,14 +1,14 @@
 import React, { AnchorHTMLAttributes } from "react";
 import { CSSProperties } from "styled-components";
-import { ColorProps, SpaceProps } from "styled-system";
+import { ColorProps, SpaceProps, TypographyProps } from "styled-system";
 import StyledNavLink from "./NavLinkStyle";
 
-export interface NavLinkProps extends SpaceProps, ColorProps {
+export interface NavLinkProps extends SpaceProps, ColorProps, TypographyProps {
   href: string;
   as?: string;
   style?: CSSProperties;
   className?: string;
-  variant?: "hover";
+  variant?: "hover" | "button";
 }
 
 export const NavLink: React.FC<
