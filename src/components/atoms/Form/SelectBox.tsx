@@ -74,7 +74,7 @@ export const SelectBox: React.FC<SelectProps> = ({
 };
 
 const customStyles = {
-  input: (styles) => ({ ...styles, height: 30 }),
+  input: (styles) => ({ ...styles, height: 50 }),
   control: (provided) => ({
     ...provided,
     boxShadow: "none",

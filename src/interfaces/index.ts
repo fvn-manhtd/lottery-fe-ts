@@ -8,7 +8,7 @@ export type colorOptions =
 
 export type deviceOptions = "xs" | "sm" | "md" | "lg";
 
-export type shadowOptions =
+export type shadowOptions =  
   | "small"
   | "regular"
   | "large"

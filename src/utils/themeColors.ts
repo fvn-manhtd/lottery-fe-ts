@@ -30,7 +30,7 @@ const primaryColor = {
   
   pink: "#EF3B62",
   green: "#19A057",  
-  blue: "#0168B7",
+  blue: "#0095ee",
 
   main: "#E95106",
 

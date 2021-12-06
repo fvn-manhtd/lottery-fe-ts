@@ -13,7 +13,7 @@ const StyledIcon = styled(ReactSVG)<IconProps>(
         transform,
 
         path: {
-          fill: color ? `${color}.main` : defaultcolor,
+          fill: color ? `${color}.text` : defaultcolor,
         },
         polyline: {
           color: color ? `${color}.main` : defaultcolor,
