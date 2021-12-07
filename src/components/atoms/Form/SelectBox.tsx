@@ -74,7 +74,7 @@ export const SelectBox: React.FC<SelectProps> = ({
 };
 
 const customStyles = {
-  input: (styles) => ({ ...styles, height: 50 }),
+  input: (styles) => ({ ...styles, height: 40 }),
   control: (provided) => ({
     ...provided,
     boxShadow: "none",
@@ -89,7 +89,7 @@ const customStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    color: "inherit",
+    color: `${colors.primary["second"]}`,
     backgroundColor: state.isFocused ? `${colors.primary["main"]}` : "inherit",
     cursor: "pointer",
   }),

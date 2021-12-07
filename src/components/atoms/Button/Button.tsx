@@ -20,7 +20,13 @@ import {
 interface ButtonProps {
   size?: "small" | "medium" | "large" | "none";
   color?: colorOptions;
-  variant?: "text" | "outlined" | "contained" | "none" | "containedSecond";
+  variant?:
+    | "text"
+    | "outlined"
+    | "contained"
+    | "none"
+    | "containedSecond"
+    | "danger";
   fullwidth?: boolean;
 }
 export const Button = styled.button<
@@ -141,10 +147,32 @@ export const Button = styled.button<
           },
         },
         containedSecond: {
-          color: `${color}.dark`,
-          bg: `${color}.light`,
+          color: `${color}.text`,
+          bg: `${color}.900`,
           border: "1px solid",
-          borderColor: color ? `${color}.light` : "text.disabled",
+          borderColor: color ? `${color}.900` : "text.disabled",
+          "&:focus": {
+            boxShadow: `0px 1px 4px 0px ${theme.colors[color]?.[500]}`,
+          },
+          "&:enabled svg path": {
+            fill: color
+              ? `${theme.colors[color]?.text} !important`
+              : "text.primary",
+          },
+          "&:enabled svg polyline, svg polygon": {
+            color: color
+              ? `${theme.colors[color]?.text} !important`
+              : "text.primary",
+          },
+          "&:hover": {
+            opacity: "0.7",
+          },
+        },
+        danger: {
+          color: `${color}.text`,
+          bg: `${color}.dark`,
+          border: "1px solid",
+          borderColor: color ? `${color}.dark` : "text.disabled",
           "&:focus": {
             boxShadow: `0px 1px 4px 0px ${theme.colors[color]?.[500]}`,
           },

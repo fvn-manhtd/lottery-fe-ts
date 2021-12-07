@@ -36,12 +36,11 @@ function* handleLogout() {
 function* watchLoginFlow() {
     while (true) {
         
-        const isLoggedIn = JSON.parse(localStorage.getItem("redux")).auth.isLoggedIn;
-        if(isLoggedIn === false){
-            // Listening dispatch action login from user
-            const action: PayloadAction<LoginPayLoad> = yield take(authActions.login.type)
-            yield fork(handleLogin, action.payload)
-        }
+        // Listening dispatch action login from user
+        const action: PayloadAction<LoginPayLoad> = yield take(authActions.login.type)
+        yield fork(handleLogin, action.payload)
+        
+
         // Listening dispatch action logout from user
         yield take(authActions.logout.type)
         yield fork(handleLogout)

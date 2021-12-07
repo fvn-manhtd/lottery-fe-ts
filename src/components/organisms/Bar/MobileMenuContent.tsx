@@ -69,11 +69,11 @@ export const MobileMenuContent: React.FC = () => {
           </>
         )}
 
-        <Divider width="100%" mx="auto" />
+        <Divider height="1px" width="100%" mx="auto" />
 
         {isLoggedIn && (
           <>
-            <Divider width="100%" mx="auto" />
+            <Divider height="1px" width="100%" mx="auto" />
 
             <Box px="2rem" py="1rem" color="gray.700" onClick={handleLogout}>
               <FlexBox alignItems="center">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import { Box } from "components/atoms";
 
@@ -7,7 +7,7 @@ export type ModalProps = {
   content: JSX.Element;
 };
 
-const StyledModal = {
+export const StyledModal = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 50%)",
     zIndex: 999,
@@ -32,7 +32,7 @@ export const ModalComponent: React.FC<ModalProps> = ({
   buttonElement,
   content,
 }) => {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div>

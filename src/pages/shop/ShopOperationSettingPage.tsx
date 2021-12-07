@@ -108,7 +108,13 @@ const ShopOperationSettingPage: React.FC = () => {
                 ネットショップを運営する事業者さまの公開情報です。
               </Typography>
 
-              <Divider color="gray.700" width="100%" mx="auto" mb="1.5rem" />
+              <Divider
+                height="1px"
+                color="gray.700"
+                width="100%"
+                mx="auto"
+                mb="1.5rem"
+              />
 
               <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
                 事業形態
@@ -143,7 +149,13 @@ const ShopOperationSettingPage: React.FC = () => {
                 />
               </FlexBox>
 
-              <Divider color="gray.700" width="100%" mx="auto" mb="1.5rem" />
+              <Divider
+                height="1px"
+                color="gray.700"
+                width="100%"
+                mx="auto"
+                mb="1.5rem"
+              />
 
               <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
                 連絡先
@@ -261,7 +273,13 @@ const ShopOperationSettingPage: React.FC = () => {
                 </>
               )}
 
-              <Divider color="gray.700" width="100%" mx="auto" mb="1.5rem" />
+              <Divider
+                height="1px"
+                color="gray.700"
+                width="100%"
+                mx="auto"
+                mb="1.5rem"
+              />
 
               <Typography fontWeight={600} mb="0.5rem" fontSize="0.875rem">
                 特定商取引法に関する表記

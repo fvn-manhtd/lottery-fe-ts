@@ -119,7 +119,12 @@ const UserRegisterPage = () => {
               </FlexBox>
 
               <Box mt="2rem" mb="1.5rem">
-                <Divider color="gray.500" width="320px" mx="auto" />
+                <Divider
+                  height="1px"
+                  color="gray.500"
+                  width="320px"
+                  mx="auto"
+                />
                 <FlexBox justifyContent="center" mt="-10px">
                   <Span
                     fontSize="0.8rem"

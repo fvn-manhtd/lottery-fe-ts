@@ -101,7 +101,12 @@ export const Header: React.FC = () => {
                         </Tiny>
                       </FlexBox>
 
-                      <Typography fontWeight={400} ml={10}>
+                      <Typography
+                        color="gray.700"
+                        fontSize="1rem"
+                        fontWeight={600}
+                        ml={10}
+                      >
                         カート
                       </Typography>
                     </FlexBox>
@@ -198,7 +203,7 @@ export const Header: React.FC = () => {
 
                   {isLoggedIn && (
                     <>
-                      <Divider width="100%" mx="auto" />
+                      <Divider height="1px" width="100%" mx="auto" />
 
                       <Button
                         px="1rem"

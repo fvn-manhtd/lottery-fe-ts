@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, FlexBox, Icon } from "components/atoms";
+import { Box, FlexBox, Icon, Typography } from "components/atoms";
 import { Logo } from "./Logo";
 import { useHistory } from "react-router-dom";
 
@@ -19,6 +19,8 @@ export const HeaderDashboard: React.FC = () => {
         justifyContent="space-between"
         height="80px"
         px={10}
+        zIndex="1000"
+        position="relative"
       >
         <Box width={{ _: "20%", lg: "30%" }}>
           <Box
@@ -41,7 +43,9 @@ export const HeaderDashboard: React.FC = () => {
           fontWeight="bold"
           alignItems="center"
           justifyContent="flex-end"
-        ></FlexBox>
+        >
+          <Typography mr="10%">マン さん</Typography>
+        </FlexBox>
       </FlexBox>
     </header>
   );
