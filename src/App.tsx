@@ -5,9 +5,9 @@ import { useEffect, useMemo } from "react";
 import {
   ProtectedRoute,
   Loading,
-  HomePage,
+  SiteTopPage,
   ExamplePage,
-  LotteriesPage,
+  SiteLotteryListPage,
   MyPage,
   UserLoginPage,
   ShopLoginPage,
@@ -22,6 +22,9 @@ import {
   ShopPasswordForgotPage,
   ShopCreateAccountPage,
   ShopOperationSettingPage,
+  ShopTopPage,
+  ShopLotteryListPage,
+  ShopLotteryDetailPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -45,11 +48,11 @@ export default function App() {
       <Suspense fallback={<Loading />}>
         <Switch>
           {/* home page */}
-          <FancyRoute path="/" exact component={() => <HomePage />} />
+          <FancyRoute path="/" exact component={() => <SiteTopPage />} />
           <FancyRoute path="/example" exact component={() => <ExamplePage />} />
 
           {/* lottery page */}
-          <FancyRoute path="/lotteries" exact component={() => <LotteriesPage/>} />
+          <FancyRoute path="/lotteries" exact component={() => <SiteLotteryListPage/>} />
 
           {/* user pages */}
           <FancyRoute
@@ -119,6 +122,23 @@ export default function App() {
             path="/shop/password-forgot-confirm-mail"
             exact
             component={() => <ShopPasswordForgotConfirmMailPage />}
+          />
+
+          {/* shop front pages */}
+          <FancyRoute
+            path="/:shop"
+            exact
+            component={() => <ShopTopPage />}
+          />
+          <FancyRoute
+            path="/:shop/lotteries"
+            exact
+            component={() => <ShopLotteryListPage />}
+          />
+          <FancyRoute
+            path="/:shop/lottery/:id"
+            exact
+            component={() => <ShopLotteryDetailPage />}
           />
 
           {/* error page */}

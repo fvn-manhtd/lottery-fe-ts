@@ -12,10 +12,9 @@ import {
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { lotteryStatusObj } from "utils/constants";
-import { CarouselStyle, StyledLabelText } from "./HomePageStyle";
-import { fakeLotteryList } from "utils/fakeData";
+import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
 
-const HomePage = () => {
+export const TopPage = ({lotteries}) => {
 
   return (
     <>
@@ -26,7 +25,7 @@ const HomePage = () => {
             <CarouselProvider
               naturalSlideWidth={100}
               naturalSlideHeight={62}
-              totalSlides={fakeLotteryList.length}
+              totalSlides={lotteries.length}
               visibleSlides={1}
               currentSlide={0}
               infinite={true}
@@ -34,7 +33,7 @@ const HomePage = () => {
               interval={5000}
             >
               <Slider>
-                {fakeLotteryList.map((value, index) => {
+                {lotteries.map((value, index) => {
                   return (
                     <Slide index={index} className={"carousel__slide-"+value.status}>
                       {
@@ -97,7 +96,7 @@ const HomePage = () => {
             </CarouselProvider>
           </CarouselStyle>
           <Container>
-            <Box p={[0, 0, 40, 40]}>
+            <Box p={{ _: 0, md: 40 }}>
 
               {/* title */}
               <Box marginY="2rem">
@@ -138,7 +137,7 @@ const HomePage = () => {
               </Box>
 
               {/** lottery list */}
-              <LotteryList lotteries={fakeLotteryList}/>
+              <LotteryList lotteries={lotteries}/>
             
             </Box>
           </Container>
@@ -148,4 +147,3 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;

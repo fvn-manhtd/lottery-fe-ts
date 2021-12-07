@@ -348,7 +348,8 @@ const ExamplePage = () => {
           <LotteryRankDescription
             title="商品タイトル"
             description="説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります。"
-            rank="A賞"
+            rankTitle="A賞"
+            rank={1}
             probability={2}
             products={[
               {

@@ -2,11 +2,11 @@ import { FlexBox, Spinner } from "components/atoms";
 import { lazy } from "react";
 
 /* homepage */
-export const HomePage = lazy(() => import("pages/generals/HomePage"));
+export const SiteTopPage = lazy(() => import("pages/generals/SiteTopPage"));
 export const ExamplePage = lazy(() => import("pages/generals/ExamplePage"));
 
 /*lottery pages */
-export const LotteriesPage = lazy(()=> import("pages/generals/Lotteries"));
+export const SiteLotteryListPage = lazy(()=> import("pages/generals/SiteLotteryListPage"));
 
 /* user pages */
 export const MyPage = lazy(() => import("pages/user/MyPage"));
@@ -47,6 +47,11 @@ export const ShopCreateAccountPage = lazy(
 export const ShopOperationSettingPage = lazy(
   () => import("pages/shop/ShopOperationSettingPage")
 );
+
+/** shop front pages */
+export const ShopTopPage = lazy(() => import("pages/shop/ShopTopPage"));
+export const ShopLotteryListPage = lazy(() => import("pages/shop/ShopLotteryListPage"));
+export const ShopLotteryDetailPage = lazy(() => import("pages/shop/ShopLotteryDetailPage"));
 
 /* error pages */
 export const Error404Page = lazy(() => import("pages/generals/Error404Page"));
