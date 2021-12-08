@@ -1,4 +1,7 @@
-export interface Lottery {
+import { LotteryProductModel } from "models";
+import { RankModel } from "./rank";
+
+export interface LotteryModel {
     id: number
     title?: string
     status?: number
@@ -19,3 +22,13 @@ export interface Lottery {
     publishedAt?: string
     publicStatus?: string
 }
+
+export interface LotteryListModel {
+    lotteries:LotteryModel[];
+}
+
+export interface LotteryDetailModel extends LotteryModel {
+    rankedProducts: LotteryProductModel[];
+    ranks: RankModel[];
+}
+

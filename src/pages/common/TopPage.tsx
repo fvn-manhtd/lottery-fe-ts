@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from "components/atoms";
 import {  LotteryList } from "components/organisms";
 import { BaseLayout } from "components/templates";
+import { LotteryListModel } from "models";
 import {
   CarouselProvider,
   Slider,
@@ -14,11 +15,15 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import { lotteryStatusObj } from "utils/constants";
 import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
 
-export const TopPage = ({lotteries}) => {
+interface TopPageProps extends LotteryListModel {
+  isShopPage?: boolean;
+};
+
+export const TopPage:React.FC<TopPageProps> = ({ lotteries, isShopPage }) => {
 
   return (
     <>
-      <BaseLayout>
+      <BaseLayout isShopPage={isShopPage}>
         <main>
           {/* carousel lottery list */}
           <CarouselStyle>

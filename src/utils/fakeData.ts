@@ -1,4 +1,7 @@
-export const fakeLotteryList = [
+import { LotteryDetailModel, LotteryListModel } from "models";
+
+export const fakeLotteryList :LotteryListModel = {
+  lotteries: [
       {
         id: 1,
         title:
@@ -39,10 +42,12 @@ export const fakeLotteryList = [
         startedAt: "2021/00/00",
         status: 1,
       },
-    ];
+  ]
+}
 
-export const fakeLotteryDetail = {
-  topImage:"https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
+export const fakeLotteryDetail: LotteryDetailModel = {
+  id:1,
+  image:"https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
   startedAt:"2021年00月00日(金) 15:00",
   endedAt:"2021年00月00日(木) 23:59",
   title:"スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。スクラッチのタイト",
@@ -77,7 +82,7 @@ export const fakeLotteryDetail = {
       rankTitle:"A賞",
       rank:1,
       probability:2,
-      products: [
+      lotteryProducts: [
         {
             src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
             title: "商品タイトル商品タイトル",
@@ -97,13 +102,13 @@ export const fakeLotteryDetail = {
       ]
     },
     {
-      id:1,
+      id:2,
       title:"商品タイトル",
       description:"説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります。",
       rankTitle:"C賞",
       rank:3,
       probability:2,
-      products: [
+      lotteryProducts: [
         {
             src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
             title: "商品タイトル商品タイトル",
@@ -123,13 +128,13 @@ export const fakeLotteryDetail = {
       ]
     },
     {
-      id:1,
+      id:3,
       title:"商品タイトル",
       description:"説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります。",
       rankTitle:"B賞",
       rank:2,
       probability:2,
-      products: [
+      lotteryProducts: [
         {
             src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
             title: "商品タイトル商品タイトル",

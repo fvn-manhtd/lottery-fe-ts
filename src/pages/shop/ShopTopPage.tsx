@@ -1,11 +1,11 @@
-import { fakeLotteryList } from "utils/fakeData";
+import { fakeLotteryList as lotteryList } from "utils/fakeData";
 import { TopPage } from "pages/common/TopPage";
 
 const ShopTopPage = () => {
 
   return (
       <>
-        <TopPage lotteries={fakeLotteryList} />
+        <TopPage lotteries={lotteryList.lotteries} />
       </>
   );
 };

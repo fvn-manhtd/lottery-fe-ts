@@ -19,7 +19,7 @@ const ShopLotteryDetailPage = () => {
                             borderBottomLeftRadius="20px"
                             borderBottomRightRadius="20px">
                             <StyledImage 
-                                src={lotteryDetail.topImage}
+                                src={lotteryDetail.image}
                                 width="100%"
                                 objectFit="cover"/>
                             <Grid container>
@@ -245,7 +245,7 @@ const ShopLotteryDetailPage = () => {
                                         rankTitle={value.rankTitle}
                                         rank={value.rank}
                                         probability={value.probability}
-                                        products={value.products}
+                                        products={value.lotteryProducts}
                                     />
                                     </Box>
                                 )

@@ -1,4 +1,4 @@
-import { Lottery } from "./lottery";
+import { LotteryModel } from "./lottery";
 
 export interface User {
     id: number
@@ -16,5 +16,5 @@ export interface User {
 
 export interface UserCart extends User {
     lotteryInCart: number
-    lotteries: Lottery[]
+    lotteries: LotteryModel[]
 }
