@@ -40,7 +40,7 @@ const UserShippingAddressPage: React.FC = () => {
 
   return (
     <DashBoardLayout>
-      <Typography fontSize="2rem" mb="1rem">
+      <Typography fontWeight={600} fontSize="1.6rem" mb="1rem">
         アカウント設定
       </Typography>
       <Box shadow={3} p="2rem" bg="gray.white" borderRadius="10px">

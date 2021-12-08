@@ -42,12 +42,7 @@ export const MobileMenuContent: React.FC = () => {
 
         {isLoggedIn && (
           <>
-            <NavLink
-              px="2rem"
-              py="1rem"
-              color="gray.700"
-              href="/user/dashboard/"
-            >
+            <NavLink px="2rem" py="1rem" color="gray.700" href="/user/mypage">
               <FlexBox alignItems="center">
                 <Box width="16px">
                   <IconPng>user</IconPng>

@@ -22,7 +22,7 @@ const StyledSticky = styled.div<StyledStickyProps>`
 
   & + .section-after-sticky {
     padding-top: ${(props) =>
-      props.fixed ? `${props.componentHeight}px` : "inherit"};
+      props.fixed ? `${props.componentHeight + 20}px` : "inherit"};
   }
 `;
 

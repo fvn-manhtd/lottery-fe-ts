@@ -25,6 +25,8 @@ import {
   UserFavoritePage,
   UserShippingAddressPage,
   UserCardPage,
+  UserPurchaseHistoryPage,
+  UserReceiptPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -78,6 +80,16 @@ export default function App() {
             path="/user/card"
             exact
             component={ProtectedRoute(UserCardPage)}
+          />
+          <FancyRoute
+            path="/user/purchase-history"
+            exact
+            component={ProtectedRoute(UserPurchaseHistoryPage)}
+          />
+          <FancyRoute
+            path="/user/receipt"
+            exact
+            component={ProtectedRoute(UserReceiptPage)}
           />
 
           {/* user auth pages */}

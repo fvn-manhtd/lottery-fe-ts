@@ -10,6 +10,25 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "redux/app/hooks";
 import { authActions } from "redux/features";
+import styled from "styled-components";
+import { getTheme, theme } from "utils";
+
+const MyPageStyledBox = styled(FlexBox)`
+  background-color: ${getTheme("colors.gray.800")};
+  justify-content: center;
+
+  @media only screen and (min-width: ${theme.breakpoints.md}) {
+    position: fixed;
+    top: 80px;
+    width: 100px;
+    height: 100vh;
+    bg: gray.800;
+    fontsize: 1rem;
+    zindex: 0;
+    flex-direction: column;
+    justify-content: unset;
+  }
+`;
 
 export const MyPageMenu: React.FC = () => {
   const location = useLocation();
@@ -20,23 +39,15 @@ export const MyPageMenu: React.FC = () => {
   };
 
   return (
-    <FlexBox
-      position="fixed"
-      top="80px"
-      width="100px"
-      height="100vh"
-      bg="gray.800"
-      fontSize="1rem"
-      zIndex="0"
-      display={{ _: "none", md: "flex" }}
-      flexDirection="column"
-    >
+    <MyPageStyledBox>
       <NavLink
         color="gray.white"
         bg={location.pathname === "/user/favorite" ? "gray.900" : ""}
+        py="1rem"
+        px="0.8rem"
         href="/user/favorite"
       >
-        <FlexBox flexDirection="column" alignItems="center" py={3}>
+        <FlexBox flexDirection="column" alignItems="center">
           <Box mb="5px" width="24px">
             <IconPng>favorite</IconPng>
           </Box>
@@ -45,11 +56,13 @@ export const MyPageMenu: React.FC = () => {
       </NavLink>
 
       <NavLink
-        bg={location.pathname === "/user/history" ? "gray.900" : ""}
+        py="1rem"
+        px="0.8rem"
+        bg={location.pathname === "/user/purchase-history" ? "gray.900" : ""}
         color="gray.white"
-        href="/user/history"
+        href="/user/purchase-history"
       >
-        <FlexBox flexDirection="column" alignItems="center" py={3}>
+        <FlexBox flexDirection="column" alignItems="center">
           <Box mb="5px" width="20px">
             <IconPng>history</IconPng>
           </Box>
@@ -61,6 +74,8 @@ export const MyPageMenu: React.FC = () => {
         direction="top_right"
         handler={
           <NavLink
+            py="1rem"
+            px="0.8rem"
             bg={
               location.pathname === "/user/mypage" ||
               location.pathname === "/user/shipping-address" ||
@@ -71,7 +86,7 @@ export const MyPageMenu: React.FC = () => {
             color="gray.white"
             href="#!"
           >
-            <FlexBox flexDirection="column" alignItems="center" py={3}>
+            <FlexBox flexDirection="column" alignItems="center">
               <Box mb="5px" width="24px">
                 <IconPng>user-white</IconPng>
               </Box>
@@ -113,14 +128,20 @@ export const MyPageMenu: React.FC = () => {
         </FlexBox>
       </Menu>
 
-      <NavLink color="gray.white" href="#!" onClick={handleLogout}>
-        <FlexBox flexDirection="column" alignItems="center" py={3}>
-          <Box mb="5px" width="20px">
+      <NavLink
+        py="1rem"
+        px="0.8rem"
+        color="gray.white"
+        href="#!"
+        onClick={handleLogout}
+      >
+        <FlexBox flexDirection="column" alignItems="center">
+          <Box mb="5px" width="26px">
             <IconPng>logout-white</IconPng>
           </Box>
           <Typography fontSize="0.8rem">ログアウト</Typography>
         </FlexBox>
       </NavLink>
-    </FlexBox>
+    </MyPageStyledBox>
   );
 };

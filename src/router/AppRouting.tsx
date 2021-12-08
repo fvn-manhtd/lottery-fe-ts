@@ -18,6 +18,11 @@ export const UserShippingAddressPage = lazy(
 );
 
 export const UserCardPage = lazy(() => import("pages/user/UserCardPage"));
+export const UserPurchaseHistoryPage = lazy(
+  () => import("pages/user/UserPurchaseHistoryPage")
+);
+
+export const UserReceiptPage = lazy(() => import("pages/user/UserReceiptPage"));
 
 /* user auth pages */
 export const UserLoginPage = lazy(() => import("pages/user/UserLoginPage"));

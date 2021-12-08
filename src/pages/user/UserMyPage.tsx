@@ -43,7 +43,7 @@ const UserMyPage: React.FC = () => {
 
   return (
     <DashBoardLayout>
-      <Typography fontSize="2rem" mb="1rem">
+      <Typography fontWeight={600} fontSize="1.6rem" mb="1rem">
         アカウント設定
       </Typography>
       <Box shadow={3} p="2rem" bg="gray.white" borderRadius="10px">
@@ -142,7 +142,8 @@ const UserMyPage: React.FC = () => {
 
             <Modal
               isOpen={isModalOpen}
-              style={StyledModal}
+              style={StyledModal("180px", "600px")}
+              ariaHideApp={false}
               onRequestClose={() => {
                 setIsModalOpen(false);
               }}
@@ -156,7 +157,7 @@ const UserMyPage: React.FC = () => {
                 <Typography
                   color="primary.second"
                   fontWeight={600}
-                  fontSize="1.6rem"
+                  fontSize="1.4rem"
                   mb="2rem"
                 >
                   アカウントを削除しますか？
@@ -164,6 +165,7 @@ const UserMyPage: React.FC = () => {
 
                 <Paragraph fontSize="1rem" mb="2rem">
                   アカウントを削除するとお気に入り情報や
+                  <br />
                   ご登録情報がすべて削除されます。
                 </Paragraph>
 

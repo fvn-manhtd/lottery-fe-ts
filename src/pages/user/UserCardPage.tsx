@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
   SelectBox,
+  Image,
 } from "components/atoms";
 import { DashBoardLayout } from "components/templates";
 import { useFormik } from "formik";
@@ -38,7 +39,7 @@ const UserCardPage: React.FC = () => {
 
   return (
     <DashBoardLayout>
-      <Typography fontSize="2rem" mb="1rem">
+      <Typography fontWeight={600} fontSize="1.6rem" mb="1rem">
         アカウント設定
       </Typography>
       <Box shadow={3} p="2rem" bg="gray.white" borderRadius="10px">
@@ -55,6 +56,21 @@ const UserCardPage: React.FC = () => {
           backgroundColor="gray.500"
         ></Divider>
         <form onSubmit={handleSubmit}>
+          <FlexBox maxWidth="420px">
+            <Image
+              src="/assets/images/illustrator/card-list.png"
+              width="100%"
+              alt="cards"
+            />
+          </FlexBox>
+
+          <Divider
+            height="1px"
+            my="2rem"
+            width="100%"
+            backgroundColor="gray.500"
+          ></Divider>
+
           <FlexBox
             alignItems="center"
             flexDirection={{ _: "column", md: "row" }}
@@ -172,7 +188,11 @@ const UserCardPage: React.FC = () => {
             >
               セキュリティコード
             </Box>
-            <Box mb={{ _: "1rem", md: "0" }} width={{ _: "100%", md: "60%" }}>
+            <Box
+              mb={{ _: "1rem", md: "0" }}
+              width={{ _: "100%", md: "60%" }}
+              maxWidth="120px"
+            >
               <TextField
                 name="cartCustomerCVC"
                 fullwidth
