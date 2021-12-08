@@ -5,7 +5,7 @@ import styled, { CSSProperties } from "styled-components";
 import { SpaceProps, space, compose, variant } from "styled-system";
 
 interface MenuProps extends SpaceProps {
-  direction?: "left" | "right";
+  direction?: "left" | "right" | "top_right";
   handler: any;
   children: any;
   className?: string;
@@ -40,6 +40,15 @@ const StyledMenu = styled.div<SpaceProps & { direction: string }>(
         ".menu-item-holder": {
           left: "auto",
           right: 0,
+        },
+      },
+
+      top_right: {
+        ".menu-item-holder": {
+          left: ["0", "100%"],
+          top: ["100%", "0"],
+          minWidth: "160px",
+          padding: "0",
         },
       },
     },

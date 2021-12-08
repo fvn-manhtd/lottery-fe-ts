@@ -118,7 +118,12 @@ const UserLoginPage = () => {
               </FlexBox>
 
               <Box mb="2rem">
-                <Divider color="gray.500" width="320px" mx="auto" />
+                <Divider
+                  height="1px"
+                  color="gray.500"
+                  width="320px"
+                  mx="auto"
+                />
                 <FlexBox justifyContent="center" mt="-10px">
                   <Span
                     fontSize="0.8rem"
@@ -186,7 +191,7 @@ const UserLoginPage = () => {
                 </NavLink>
               </FlexBox>
 
-              <Divider width="100%" mx="auto" mb="1.25rem" />
+              <Divider height="1px" width="100%" mx="auto" mb="1.25rem" />
 
               <FlexBox justifyContent="center" py="1rem">
                 <NavLink href="/shop/login">

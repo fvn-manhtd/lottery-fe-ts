@@ -1,13 +1,14 @@
 import React from "react";
-import { Box, FlexBox, Icon } from "components/atoms";
+import { Box, FlexBox, Icon, Typography } from "components/atoms";
 import { Logo } from "./Logo";
 import { useHistory } from "react-router-dom";
+import { MyPageMenu } from "./MyPageMenu";
 
 export const HeaderDashboard: React.FC = () => {
   let history = useHistory();
 
   const handleBackClick = async () => {
-    history.push("/");
+    history.goBack();
   };
 
   return (
@@ -17,8 +18,10 @@ export const HeaderDashboard: React.FC = () => {
         alignItems="center"
         shadow={6}
         justifyContent="space-between"
-        height="80px"
+        height={{ _: "60px", md: "80px" }}
         px={10}
+        zIndex="1000"
+        position="relative"
       >
         <Box width={{ _: "20%", lg: "30%" }}>
           <Box
@@ -41,8 +44,14 @@ export const HeaderDashboard: React.FC = () => {
           fontWeight="bold"
           alignItems="center"
           justifyContent="flex-end"
-        ></FlexBox>
+        >
+          <Typography mr="10%" display={{ _: "none", md: "block" }}>
+            マン さん
+          </Typography>
+        </FlexBox>
       </FlexBox>
+
+      <MyPageMenu></MyPageMenu>
     </header>
   );
 };

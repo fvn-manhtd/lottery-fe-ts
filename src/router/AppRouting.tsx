@@ -6,10 +6,25 @@ export const HomePage = lazy(() => import("pages/generals/HomePage"));
 export const ExamplePage = lazy(() => import("pages/generals/ExamplePage"));
 
 /*lottery pages */
-export const LotteriesPage = lazy(()=> import("pages/generals/Lotteries"));
+export const LotteriesPage = lazy(() => import("pages/generals/Lotteries"));
 
 /* user pages */
-export const MyPage = lazy(() => import("pages/user/MyPage"));
+export const UserMyPage = lazy(() => import("pages/user/UserMyPage"));
+export const UserFavoritePage = lazy(
+  () => import("pages/user/UserFavoritePage")
+);
+export const UserShippingAddressPage = lazy(
+  () => import("pages/user/UserShippingAddressPage")
+);
+
+export const UserCardPage = lazy(() => import("pages/user/UserCardPage"));
+export const UserPurchaseHistoryPage = lazy(
+  () => import("pages/user/UserPurchaseHistoryPage")
+);
+
+export const UserReceiptPage = lazy(() => import("pages/user/UserReceiptPage"));
+
+/* user auth pages */
 export const UserLoginPage = lazy(() => import("pages/user/UserLoginPage"));
 export const UserNewPasswordPage = lazy(
   () => import("pages/user/UserNewPasswordPage")

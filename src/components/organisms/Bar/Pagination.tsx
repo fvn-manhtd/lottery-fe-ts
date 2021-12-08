@@ -28,11 +28,9 @@ export const Pagination: React.FC<PaginationProps> = ({
         previousLabel={
           <Button
             className="control-button"
-            color="primary"
             overflow="hidden"
             height="auto"
             padding="6px"
-            borderRadius="50%"
           >
             <Icon defaultcolor="currentColor" variant="small">
               chevron-left
@@ -42,11 +40,9 @@ export const Pagination: React.FC<PaginationProps> = ({
         nextLabel={
           <Button
             className="control-button"
-            color="primary"
             overflow="hidden"
             height="auto"
             padding="6px"
-            borderRadius="50%"
           >
             <Icon defaultcolor="currentColor" variant="small">
               chevron-right

@@ -51,6 +51,12 @@ const StyledIcon = styled(ReactSVG)<IconProps>(
             height: size || "2rem",
           },
         },
+        auto: {
+          div: {
+            width: "100%",
+            height: "100%",
+          },
+        },
       },
     }),
   compose(color, space)

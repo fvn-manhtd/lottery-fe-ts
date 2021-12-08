@@ -8,7 +8,7 @@ import {
   HomePage,
   ExamplePage,
   LotteriesPage,
-  MyPage,
+  UserMyPage,
   UserLoginPage,
   ShopLoginPage,
   Error404Page,
@@ -22,6 +22,11 @@ import {
   ShopPasswordForgotPage,
   ShopCreateAccountPage,
   ShopOperationSettingPage,
+  UserFavoritePage,
+  UserShippingAddressPage,
+  UserCardPage,
+  UserPurchaseHistoryPage,
+  UserReceiptPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -49,14 +54,45 @@ export default function App() {
           <FancyRoute path="/example" exact component={() => <ExamplePage />} />
 
           {/* lottery page */}
-          <FancyRoute path="/lotteries" exact component={() => <LotteriesPage/>} />
+          <FancyRoute
+            path="/lotteries"
+            exact
+            component={() => <LotteriesPage />}
+          />
 
           {/* user pages */}
           <FancyRoute
             path="/user/mypage"
             exact
-            component={ProtectedRoute(MyPage)}
+            component={ProtectedRoute(UserMyPage)}
           />
+          <FancyRoute
+            path="/user/favorite"
+            exact
+            component={ProtectedRoute(UserFavoritePage)}
+          />
+          <FancyRoute
+            path="/user/shipping-address"
+            exact
+            component={ProtectedRoute(UserShippingAddressPage)}
+          />
+          <FancyRoute
+            path="/user/card"
+            exact
+            component={ProtectedRoute(UserCardPage)}
+          />
+          <FancyRoute
+            path="/user/purchase-history"
+            exact
+            component={ProtectedRoute(UserPurchaseHistoryPage)}
+          />
+          <FancyRoute
+            path="/user/receipt"
+            exact
+            component={ProtectedRoute(UserReceiptPage)}
+          />
+
+          {/* user auth pages */}
           <FancyRoute
             path="/user/login"
             exact
@@ -83,7 +119,7 @@ export default function App() {
             component={() => <UserRegisterPage />}
           />
 
-          {/* shop pages */}
+          {/* shop auth pages */}
           <FancyRoute
             path="/shop/login"
             exact

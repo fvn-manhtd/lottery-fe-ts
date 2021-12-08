@@ -106,4 +106,3 @@ export const Small: React.FC<CustomProps> = (props) => (
 export const Tiny: React.FC<CustomProps> = (props) => (
   <Typography as="span" fontSize="10px" {...props} />
 );
-
