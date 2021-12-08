@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Box, Image, Typography } from "components/atoms";
+import { Card } from "components/organisms";
 import { lotteryStatusObj } from 'utils/constants';
 
 type LotteryProps = {
@@ -33,7 +34,10 @@ transform: rotate(-45deg);
 export const Lottery: React.FC<LotteryProps> = ({ src, title, status, period }) => {
     
     return (
-        <Box bg="white" shadow={9}>
+        <Card 
+        bg="white" 
+        shadow={9}
+        hoverEffect={true}>
             <StyledBox color={lotteryStatusObj[status-1].color}>
                 {
                     status<=2?
@@ -112,6 +116,6 @@ export const Lottery: React.FC<LotteryProps> = ({ src, title, status, period }) 
                     }
                 </Box>
             </Box>
-        </Box>
+        </Card>
     )
 }

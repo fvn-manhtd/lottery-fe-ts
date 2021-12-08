@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Image, Typography } from "components/atoms";
+import { Card } from "components/organisms";
 import { theme } from "../../../../utils/theme";
 
 type LotteryRankedProductProps = {
@@ -8,7 +9,7 @@ type LotteryRankedProductProps = {
   rank:number;
 };
 
-const StyledBox=styled.div `
+const StyledBox=styled(Card) `
 position:relative;
 overflow:hidden;
 border-radius:20px;
@@ -37,7 +38,7 @@ export const LotteryRankedProduct: React.FC<LotteryRankedProductProps> = ({
 }) => {
 
   return (
-    <StyledBox color={theme.colors.gradient[`${rank*100}`]}>
+    <StyledBox color={theme.colors.gradient[`${rank*100}`]} hoverEffect={true}>
       <StyledText 
         color="white" 
         fontWeight={600} 

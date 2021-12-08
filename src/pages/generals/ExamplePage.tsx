@@ -28,6 +28,9 @@ import {
   Lottery,
   LotteryRankDescription,
   Breadcrumb,
+  LotteryList,
+  PurchaseModal,
+  PurchaseCard,
 } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import { colors } from "utils";
@@ -289,19 +292,13 @@ const ExamplePage = () => {
             alt="image"
           />
 
-          {[{ src: "http://placehold.jp/320x320.png", rankTitle: "A賞", rank:1, }].map(
-            (value, index) => {
-              return (
-                <Box width="20%" mb={4} minWidth={180} key={index}>
-                  <LotteryRankedProduct
-                    src={value.src}
-                    rankTitle={value.rankTitle}
-                    rank={value.rank}
-                  />
-                </Box>
-              );
-            }
-          )}
+          <Box width="20%" mb={4} minWidth={180}>
+            <LotteryRankedProduct
+              src="http://placehold.jp/320x320.png"
+              rankTitle="A賞"
+              rank={1}
+            />
+          </Box>
 
           <Box width="20%" mb={4} minWidth={180}>
             <LotteryProduct
@@ -310,39 +307,13 @@ const ExamplePage = () => {
             />
           </Box>
 
-          <Box display="flex" flexWrap="wrap">
-            <Box width="30%" mb={4} minWidth={250} mr={3}>
-              <Lottery
-                src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
-                title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
-                status={1}
-                period="販売終了日　2021年00月00日(金)"
-              />
-            </Box>
-            <Box width="30%" mb={4} minWidth={250} mr={3}>
-              <Lottery
-                src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
-                title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
-                status={2}
-                period="販売終了日　2021年00月00日(金)"
-              />
-            </Box>
-            <Box width="30%" mb={4} minWidth={250} mr={3}>
-              <Lottery
-                src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
-                title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
-                status={3}
-                period="販売終了日　2021年00月00日(金)"
-              />
-            </Box>
-            <Box width="30%" mb={4} minWidth={250}>
-              <Lottery
-                src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
-                title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
-                status={4}
-                period="COMING SOON!"
-              />
-            </Box>
+          <Box width="30%" mb={4} minWidth={250} mr={3}>
+            <Lottery
+              src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
+              title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
+              status={1}
+              period="販売終了日　2021年00月00日(金)"
+            />
           </Box>
 
           <LotteryRankDescription
@@ -371,10 +342,32 @@ const ExamplePage = () => {
             ]}
           />
 
+          <LotteryList lotteries={[
+            {
+              id: 1,
+              title:
+                "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
+              image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",
+              startedAt: "2021/00/00",
+              status: 1,
+            },
+            {
+              id: 2,
+              title:
+                "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
+              image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",
+              startedAt: "2021/00/00",
+              status: 2,
+            }
+          ]}/>
+
           <ModalComponent
-            buttonElement={<div>click me</div>}
-            content={<Box width="20%" mr={4} minWidth={180}></Box>}
+            buttonElement={<div>purchase modal</div>}
+            content={<PurchaseModal/>}
           ></ModalComponent>
+
+          <PurchaseCard times={1} color="blue"/>
+          <PurchaseCard times={10} color="red"/>
 
           <Spinner
             size={60}

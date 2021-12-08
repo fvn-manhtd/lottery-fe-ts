@@ -1,7 +1,7 @@
 import { BaseLayout } from "components/templates";
 import { Container, Box, Typography, Icon, Small, FlexBox, Paragraph } from "components/atoms";
 import { ModalComponent } from "components/molecules";
-import { Grid, LotteryRankDescription, LotteryRankedProduct, PurchaseModal, PurchaseButton } from "components/organisms";
+import { Grid, LotteryRankDescription, LotteryRankedProduct, PurchaseModal, PurchaseCard } from "components/organisms";
 import { StyledImage, StyledGrid, StyledWiderGrid } from "./ShopLotteryDetailPageStyle";
 import { fakeLotteryDetail as lotteryDetail } from "utils/fakeData";
 
@@ -187,7 +187,7 @@ const ShopLotteryDetailPage = () => {
                         </StyledGrid>
                     </Container>
                 </section>
-                {/* purchase buttons */}
+                {/* purchase cards */}
                 <section>
                     <Box 
                         bg="gray.550"
@@ -215,12 +215,12 @@ const ShopLotteryDetailPage = () => {
                             </Typography>
                             <StyledWiderGrid>
                                 <ModalComponent
-                                    buttonElement={<Box mb={{_:20,md:0}}><PurchaseButton times={1} color="blue"/></Box>}
+                                    buttonElement={<Box mb={{_:20,md:0}}><PurchaseCard times={1} color="blue"/></Box>}
                                     content={<PurchaseModal/>}
                                 ></ModalComponent>
                                 {/* 10回くじ */}
                                 <ModalComponent
-                                    buttonElement={<PurchaseButton times={10} color="red"/>}
+                                    buttonElement={<PurchaseCard times={10} color="red"/>}
                                     content={<PurchaseModal/>}
                                 ></ModalComponent>
                             </StyledWiderGrid>
@@ -237,9 +237,9 @@ const ShopLotteryDetailPage = () => {
                                 return 0;
                             }).map((value)=>{
                                 return (
-                                    <Box mb={{_:4,md:5}}>
+                                    <Box mb={{_:4,md:5}}　key={value.id}>
                                     <LotteryRankDescription
-                                        key={value.id}
+                                        
                                         title={value.title}
                                         description={value.description}
                                         rankTitle={value.rankTitle}

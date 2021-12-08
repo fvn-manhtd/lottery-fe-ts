@@ -1,8 +1,9 @@
 import { Box, Typography } from "components/atoms";
+import { Card } from ".";
 import styled from "styled-components";
 import { variant } from "styled-system";
 
-type PurchaseButtonProps = {
+type PurchaseCardProps = {
     times:number;
     color:"blue"|"red" ;
 }
@@ -12,7 +13,7 @@ export const Colors = {
     red:{light:"#ea5206", thick:"#bb4002"},
 }
 
-const StyledBoxLight = styled(Box) (
+const StyledBoxLight = styled(Card) (
     variant({
         prop:"color",
         variants: {
@@ -41,9 +42,10 @@ const StyledBoxThick = styled(Box) (
     })
 )
 
-export const PurchaseButton: React.FC<PurchaseButtonProps> = ({ times, color }) => {
+export const PurchaseCard: React.FC<PurchaseCardProps> = ({ times, color }) => {
     return (
         <StyledBoxLight
+        hoverEffect={true}
         color={color}
         cursor="pointer"
         borderRadius="20px"
