@@ -1,62 +1,49 @@
 import styled from "styled-components";
-import { Box, Image } from "components/atoms";
-import { colors } from "utils/themeColors";
+import { Image, Typography } from "components/atoms";
 import { theme } from "../../../../utils/theme";
 
 type LotteryRankedProductProps = {
-  src?: string;
-  index?: number;
-  rank?: string;
+  src: string;
+  rankTitle: string;
+  rank:number;
 };
 
-const StyledBox = styled.div`
-  position: relative;
-  &::before {
+const StyledBox=styled.div `
+position:relative;
+overflow:hidden;
+border-radius:20px;
+&::before{
     content: "";
-    top: 0;
-    left: 0;
     position: absolute;
-    border-top: solid ${(props) => props.color};
-    border-left: solid ${(props) => props.color};
-    border-right: solid transparent;
-    border-bottom: solid transparent;
-    border-radius: 20px 0 0 0;
-    border-width: 3rem;
-    @media only screen and (max-width: ${theme.breakpoints.md}) {
-      border-width: 2.9rem;
-    }
-    @media only screen and (max-width: ${theme.breakpoints.sm}) {
-      border-width: 2.5rem;
-    }
-  }
-`;
+    background:${props=>props.color};
+    width: 55%;
+    padding-top: 55%;
+    top: -28%;
+    left: -28%;
+    transform: rotate(45deg);
+}
+`
+const StyledText = styled(Typography) `
+position:absolute;
+top:6%;
+left:5%;
+transform: rotate(-45deg);
+`
 
 export const LotteryRankedProduct: React.FC<LotteryRankedProductProps> = ({
   src,
-  index,
+  rankTitle,
   rank,
 }) => {
-  const colorArr: string[] = [
-    colors.primary.pink,
-    colors.primary.green,
-    colors.primary.light,
-    colors.primary.blue,
-  ];
 
   return (
-    <StyledBox color={colorArr[index]}>
-      <Box
-        display="block"
-        transform="rotate(-49deg)"
-        color="white"
-        position="absolute"
-        top="9%"
-        left="7%"
-        fontWeight={600}
-        fontSize={["1rem", "1.2rem", "1.3rem"]}
-      >
-        {rank}
-      </Box>
+    <StyledBox color={theme.colors.gradient[`${rank*100}`]}>
+      <StyledText 
+        color="white" 
+        fontWeight={600} 
+        fontSize={{_:"1rem",md:"1.3rem"}}>
+        {rankTitle}
+      </StyledText>
       <Image
         width="100%"
         height="auto"

@@ -101,6 +101,7 @@ export const LotteryRankDescription: React.FC<LotteryRankDescriptionProps> = ({
       >
         {description}
       </Paragraph>
+      {/* product list */}
       <Box
         display="flex"
         flexWrap="wrap"
@@ -110,10 +111,11 @@ export const LotteryRankDescription: React.FC<LotteryRankDescriptionProps> = ({
           return (
             <Box
               key={index}
-              width="20%"
+              width={{_:"45%",md:"20%"}}
               marginX={"0.5rem"}
               marginBottom={"1rem"}
-              minWidth={{_:"10rem",md:"12rem"}}
+              minWidth={{_:"unset",md:192}}
+              maxWidth={{_:192,md:"unset"}}
             >
               <LotteryProduct src={value.src} title={value.title} />
             </Box>

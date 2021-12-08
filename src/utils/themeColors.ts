@@ -7,6 +7,7 @@ const gray = {
   550: "#e5e5e5",
   500: "#C9C9C9", //Border Color
   400: "#F6F7FB", 
+  350: "#a0a0a0",
   300: "#E3E9EF",
   200: "#F3F5F9", 
   100: "#F6F9FC",
@@ -19,6 +20,7 @@ const textColor = {
   hint: gray[600],
   muted: gray[600],
   disabled: gray[400],
+  link: "#0095ed",
 };
 
 const bodyColor = {

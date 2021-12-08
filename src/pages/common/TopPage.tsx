@@ -35,7 +35,7 @@ export const TopPage = ({lotteries}) => {
               <Slider>
                 {lotteries.map((value, index) => {
                   return (
-                    <Slide index={index} className={"carousel__slide-"+value.status}>
+                    <Slide index={index} className={"carousel__slide-"+value.status} key={value.id}>
                       {
                       value.status<=2?
                       <StyledLabelText 

@@ -289,13 +289,13 @@ const ExamplePage = () => {
             alt="image"
           />
 
-          {[{ src: "http://placehold.jp/320x320.png", rank: "A賞" }].map(
+          {[{ src: "http://placehold.jp/320x320.png", rankTitle: "A賞", rank:1, }].map(
             (value, index) => {
               return (
                 <Box width="20%" mb={4} minWidth={180} key={index}>
                   <LotteryRankedProduct
                     src={value.src}
-                    index={index}
+                    rankTitle={value.rankTitle}
                     rank={value.rank}
                   />
                 </Box>
