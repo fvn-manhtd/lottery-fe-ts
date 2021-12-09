@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "redux/app/hooks";
 import { authActions } from "redux/features";
 import styled from "styled-components";
-import { getTheme, theme } from "utils";
+import { getTheme, theme, Route as ROUTES } from "utils";
 
 const MyPageStyledBox = styled(FlexBox)`
   background-color: ${getTheme("colors.gray.800")};
@@ -42,10 +42,10 @@ export const MyPageMenu: React.FC = () => {
     <MyPageStyledBox>
       <NavLink
         color="gray.white"
-        bg={location.pathname === "/user/favorite" ? "gray.900" : ""}
+        bg={location.pathname === ROUTES.USER_FAVORITE ? "gray.900" : ""}
         py="1rem"
         px="0.8rem"
-        href="/user/favorite"
+        href={ROUTES.USER_FAVORITE}
       >
         <FlexBox flexDirection="column" alignItems="center">
           <Box mb="5px" width="24px">
@@ -58,9 +58,11 @@ export const MyPageMenu: React.FC = () => {
       <NavLink
         py="1rem"
         px="0.8rem"
-        bg={location.pathname === "/user/purchase-history" ? "gray.900" : ""}
+        bg={
+          location.pathname === ROUTES.USER_PURCHASED_HISTORY ? "gray.900" : ""
+        }
         color="gray.white"
-        href="/user/purchase-history"
+        href={ROUTES.USER_PURCHASED_HISTORY}
       >
         <FlexBox flexDirection="column" alignItems="center">
           <Box mb="5px" width="20px">
@@ -77,9 +79,9 @@ export const MyPageMenu: React.FC = () => {
             py="1rem"
             px="0.8rem"
             bg={
-              location.pathname === "/user/mypage" ||
-              location.pathname === "/user/shipping-address" ||
-              location.pathname === "/user/card"
+              location.pathname === ROUTES.USER_MYAPGE ||
+              location.pathname === ROUTES.USER_SHIPPING_ADDRESS ||
+              location.pathname === ROUTES.USER_CARD
                 ? "gray.900"
                 : ""
             }
@@ -97,31 +99,33 @@ export const MyPageMenu: React.FC = () => {
       >
         <FlexBox flexDirection="column" bg="gray.800">
           <NavLink
-            bg={location.pathname === "/user/mypage" ? "gray.900" : ""}
+            bg={location.pathname === ROUTES.USER_MYAPGE ? "gray.900" : ""}
             py="0.8rem"
             px="1rem"
             color="gray.white"
-            href="/user/mypage"
+            href={ROUTES.USER_MYAPGE}
           >
             <Typography>登録情報</Typography>
           </NavLink>
           <NavLink
             bg={
-              location.pathname === "/user/shipping-address" ? "gray.900" : ""
+              location.pathname === ROUTES.USER_SHIPPING_ADDRESS
+                ? "gray.900"
+                : ""
             }
             py="0.8rem"
             px="1rem"
             color="gray.white"
-            href="/user/shipping-address"
+            href={ROUTES.USER_SHIPPING_ADDRESS}
           >
             <Typography>お届け先</Typography>
           </NavLink>
           <NavLink
-            bg={location.pathname === "/user/card" ? "gray.900" : ""}
+            bg={location.pathname === ROUTES.USER_CARD ? "gray.900" : ""}
             py="0.8rem"
             px="1rem"
             color="gray.white"
-            href="/user/card"
+            href={ROUTES.USER_CARD}
           >
             <Typography>クレジットカード</Typography>
           </NavLink>

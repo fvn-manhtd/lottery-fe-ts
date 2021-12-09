@@ -63,7 +63,7 @@ export const LotteryPurchasedHistory: React.FC<LotteryPurchasedHistoryProps> =
         </FlexBox>
         <FlexBox flexDirection="column" width={{ _: "100%", md: "30%" }}>
           <Button
-            onClick={() => history.push("/user/receipt")}
+            onClick={() => history.push("/user/purchased-history/12321")}
             color="primary"
             mb="0.5rem"
             size="small"
@@ -71,7 +71,7 @@ export const LotteryPurchasedHistory: React.FC<LotteryPurchasedHistoryProps> =
           >
             領収書
           </Button>
-          <Button
+          {/* <Button
             onClick={() => history.push("/user/invoice")}
             color="primary"
             mb="0.5rem"
@@ -79,7 +79,7 @@ export const LotteryPurchasedHistory: React.FC<LotteryPurchasedHistoryProps> =
             variant="outlined"
           >
             請求書
-          </Button>
+          </Button> */}
 
           <ModalComponent
             minHeight="400px"

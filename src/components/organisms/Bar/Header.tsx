@@ -15,6 +15,7 @@ import { MobileMenu, MobileMenuContent } from "components/organisms";
 import { Logo } from "./Logo";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { authActions, selectIsLoggedIn } from "redux/features";
+import { Route as ROUTES } from "utils";
 
 export const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -73,7 +74,7 @@ export const Header: React.FC = () => {
           >
             {isLoggedIn && (
               <>
-                <NavLink ml={40} color="gray.700" href="/cart/shopping-cart">
+                <NavLink ml={40} color="gray.700" href={ROUTES.SHOPPING_CART}>
                   <FlexBox position="relative" alignItems="center">
                     <Box width="16px" color="primary.main">
                       <Icon defaultcolor="currentColor" variant="medium">
@@ -112,7 +113,7 @@ export const Header: React.FC = () => {
 
             {!isLoggedIn && (
               <>
-                <NavLink href="/user/login">
+                <NavLink href={ROUTES.USER_LOGIN}>
                   <FlexBox alignItems="center">
                     <Box width="16px">
                       <IconPng>login</IconPng>
@@ -155,7 +156,7 @@ export const Header: React.FC = () => {
                   px="1rem"
                   py="0.5rem"
                   color="gray.700"
-                  href="/user/mypage"
+                  href={ROUTES.USER_MYAPGE}
                 >
                   <FlexBox alignItems="center">
                     <Box width="16px">
@@ -171,7 +172,7 @@ export const Header: React.FC = () => {
                   px="1rem"
                   py="0.5rem"
                   color="gray.700"
-                  href="/user/favorite"
+                  href={ROUTES.USER_FAVORITE}
                 >
                   <FlexBox alignItems="center">
                     <Box width="18px" color="primary.main">
@@ -187,7 +188,7 @@ export const Header: React.FC = () => {
                   px="1rem"
                   py="0.5rem"
                   color="gray.700"
-                  href="/static-pages/guideline"
+                  href={ROUTES.STATIC_GUIDELINE}
                 >
                   <FlexBox alignItems="center">
                     <Box width="16px">
@@ -226,7 +227,7 @@ export const Header: React.FC = () => {
             justifyContent="flex-end"
             display={{ _: "flex", lg: "none" }}
           >
-            <NavLink color="gray.700" href="/cart/shopping-cart">
+            <NavLink color="gray.700" href={ROUTES.SHOPPING_CART}>
               <FlexBox
                 position="relative"
                 alignItems="center"
