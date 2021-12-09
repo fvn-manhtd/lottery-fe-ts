@@ -1,4 +1,5 @@
 import { LotteryDetailModel, LotteryListModel } from "models";
+import { NewsListModel } from "models/news";
 
 export const fakeLotteryList :LotteryListModel = {
   lotteries: [
@@ -155,3 +156,53 @@ export const fakeLotteryDetail: LotteryDetailModel = {
     }
   ]
 };
+
+export const fakeNewsList: NewsListModel = {
+  news: [
+    {
+      id:1,
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      date:"2021年00月00日 (金)",
+    },
+    {
+      id:1,
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      date:"2021年00月00日 (金)",
+    },
+    {
+      id:1,
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      date:"2021年00月00日 (金)",
+    },
+    {
+      id:1,
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      date:"2021年00月00日 (金)",
+    },
+  ]
+}
+
+export const fakeStaticPageData = {
+  contents: [
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+  ]
+}

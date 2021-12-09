@@ -1,9 +1,28 @@
+import styled from "styled-components";
 import { BaseLayout } from "components/templates";
-import { Container, Box, Typography, Icon, Small, FlexBox, Paragraph } from "components/atoms";
+import { Container, Box, Typography, Icon, Small, FlexBox, Paragraph, Image } from "components/atoms";
 import { ModalComponent } from "components/molecules";
-import { Grid, LotteryRankDescription, LotteryRankedProduct, PurchaseModal, PurchaseCard } from "components/organisms";
-import { StyledImage, StyledGrid, StyledWiderGrid } from "./ShopLotteryDetailPageStyle";
+import { Grid, LotteryRankDescription, LotteryRankedProduct, PurchaseModal, PurchaseCard, GridSection } from "components/organisms";
 import { fakeLotteryDetail as lotteryDetail } from "utils/fakeData";
+
+const StyledImage = styled(Image) `
+height:65vh;
+@media only screen and (max-width:767px) {
+    height:50vh;
+}
+`
+const StyledGrid = styled.div `
+display: grid;
+grid-template-columns: repeat(auto-fill, 25%);
+justify-content: center;
+margin:2rem 0;
+@media screen and (max-width: 768px){
+    grid-template-columns: repeat(auto-fill,33%);
+}
+@media screen and (max-width: 425px){
+    grid-template-columns: repeat(auto-fill,50%);
+}
+`
 
 const ShopLotteryDetailPage = () => {
 
@@ -12,7 +31,7 @@ const ShopLotteryDetailPage = () => {
             <main>
                 {/* eye catch */}
                 <section>
-                    <Container isMaxWidth={true}>
+                    <Container isSPFullWidth={true}>
                         <Box
                             pt={{ _: 0, md: 40 }}
                             pb={{ _: 0, md: 20 }}
@@ -187,46 +206,25 @@ const ShopLotteryDetailPage = () => {
                         </StyledGrid>
                     </Container>
                 </section>
-                {/* purchase cards */}
-                <section>
-                    <Box 
-                        bg="gray.550"
-                        pt={{_:3,md:4}}
-                        pb={{_:4,md:5}}
-                        mb={{_:4,md:5}}>
-                        <Container>
-                            <Typography
-                                as="h3"
-                                fontSize={{_:"1.4rem",md:"1.9rem"}}
-                                fontWeight="bold"
-                                textAlign="center"
-                                margin={0}>
-                                くじを購入!
-                            </Typography>
-                            <Typography
-                                as="h3"
-                                fontSize={{_:"1rem",md:"1.2rem"}}
-                                fontWeight="bold"
-                                textAlign="center"
-                                color="primary.light"
-                                margin={1}
-                                mb={{_:2,md:4}}>
-                                WIN A PRICE
-                            </Typography>
-                            <StyledWiderGrid>
-                                <ModalComponent
-                                    buttonElement={<Box mb={{_:20,md:0}}><PurchaseCard times={1} color="blue"/></Box>}
-                                    content={<PurchaseModal/>}
-                                ></ModalComponent>
-                                {/* 10回くじ */}
-                                <ModalComponent
-                                    buttonElement={<PurchaseCard times={10} color="red"/>}
-                                    content={<PurchaseModal/>}
-                                ></ModalComponent>
-                            </StyledWiderGrid>
-                        </Container>
-                    </Box>
-                </section>
+                {/* purchase section */}
+                <Box mb={{_:4,md:5}}>
+                <GridSection
+                    title="くじを購入!"
+                    subTitle="WIN A PRICE"
+                    content={
+                        <>
+                        {/* 1回くじ */}
+                        <ModalComponent
+                            buttonElement={<Box mb={{_:20,md:0}}><PurchaseCard times={1} color="blue"/></Box>}
+                            content={<PurchaseModal/>}
+                        ></ModalComponent>
+                        {/* 10回くじ */}
+                        <ModalComponent
+                            buttonElement={<PurchaseCard times={10} color="red"/>}
+                            content={<PurchaseModal/>}
+                        ></ModalComponent>
+                        </>
+                    }/></Box>
                 {/* rank list */}
                 <section>
                     <Container>

@@ -25,6 +25,7 @@ import {
   ShopTopPage,
   ShopLotteryListPage,
   ShopLotteryDetailPage,
+  SiteUsagePolicyPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -50,6 +51,7 @@ export default function App() {
           {/* home page */}
           <FancyRoute path="/" exact component={() => <SiteTopPage />} />
           <FancyRoute path="/example" exact component={() => <ExamplePage />} />
+          <FancyRoute path="/static-pages/usage-policy" exact component={() => <SiteUsagePolicyPage />} />
 
           {/* lottery page */}
           <FancyRoute path="/lotteries" exact component={() => <SiteLotteryListPage/>} />

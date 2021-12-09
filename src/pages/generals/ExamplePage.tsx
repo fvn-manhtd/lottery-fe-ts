@@ -31,6 +31,7 @@ import {
   LotteryList,
   PurchaseModal,
   PurchaseCard,
+  GridSection,
 } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import { colors } from "utils";
@@ -368,6 +369,22 @@ const ExamplePage = () => {
 
           <PurchaseCard times={1} color="blue"/>
           <PurchaseCard times={10} color="red"/>
+
+          <GridSection  
+            title="セクション"
+            subTitle="SECTION"
+                content={
+                <>
+                    <Button mb={10} size="small" variant="text" color="primary">
+                      {" "}
+                      This is Button
+                    </Button>
+                    <Button mb={10} size="small" variant="text" color="primary">
+                      {" "}
+                      This is Button
+                    </Button>
+                </>}
+            />
 
           <Spinner
             size={60}

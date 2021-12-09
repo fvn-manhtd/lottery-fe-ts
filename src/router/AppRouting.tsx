@@ -2,15 +2,28 @@ import { FlexBox, Spinner } from "components/atoms";
 import { lazy } from "react";
 
 /* homepage */
-export const SiteTopPage = lazy(() => import("pages/generals/SiteTopPage"));
-export const ExamplePage = lazy(() => import("pages/generals/ExamplePage"));
+export const SiteTopPage = lazy(
+  () => import("pages/generals/SiteTopPage")
+);
+export const ExamplePage = lazy(
+  () => import("pages/generals/ExamplePage")
+);
+export const SiteUsagePolicyPage = lazy(
+  ()=> import("pages/generals/SiteUsagePolicyPage")
+);
 
 /*lottery pages */
-export const SiteLotteryListPage = lazy(()=> import("pages/generals/SiteLotteryListPage"));
+export const SiteLotteryListPage = lazy(
+  ()=> import("pages/generals/SiteLotteryListPage")
+);
 
 /* user pages */
-export const MyPage = lazy(() => import("pages/user/MyPage"));
-export const UserLoginPage = lazy(() => import("pages/user/UserLoginPage"));
+export const MyPage = lazy(
+  () => import("pages/user/MyPage")
+);
+export const UserLoginPage = lazy(
+  () => import("pages/user/UserLoginPage")
+);
 export const UserNewPasswordPage = lazy(
   () => import("pages/user/UserNewPasswordPage")
 );
@@ -28,7 +41,9 @@ export const UserRegisterConfirmMailPage = lazy(
 );
 
 /* shop pages */
-export const ShopLoginPage = lazy(() => import("pages/shop/ShopLoginPage"));
+export const ShopLoginPage = lazy(
+  () => import("pages/shop/ShopLoginPage")
+);
 export const ShopNewPasswordPage = lazy(
   () => import("pages/shop/ShopNewPasswordPage")
 );
@@ -49,9 +64,15 @@ export const ShopOperationSettingPage = lazy(
 );
 
 /** shop front pages */
-export const ShopTopPage = lazy(() => import("pages/shop/ShopTopPage"));
-export const ShopLotteryListPage = lazy(() => import("pages/shop/ShopLotteryListPage"));
-export const ShopLotteryDetailPage = lazy(() => import("pages/shop/ShopLotteryDetailPage"));
+export const ShopTopPage = lazy(
+  () => import("pages/shop/ShopTopPage")
+);
+export const ShopLotteryListPage = lazy(
+  () => import("pages/shop/ShopLotteryListPage")
+);
+export const ShopLotteryDetailPage = lazy(
+  () => import("pages/shop/ShopLotteryDetailPage")
+);
 
 /* error pages */
 export const Error404Page = lazy(() => import("pages/generals/Error404Page"));
