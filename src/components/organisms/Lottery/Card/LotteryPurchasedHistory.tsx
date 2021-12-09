@@ -71,7 +71,7 @@ export const LotteryPurchasedHistory: React.FC<LotteryPurchasedHistoryProps> =
           >
             領収書
           </Button>
-          <Button
+          {/* <Button
             onClick={() => history.push("/user/invoice")}
             color="primary"
             mb="0.5rem"
@@ -79,7 +79,7 @@ export const LotteryPurchasedHistory: React.FC<LotteryPurchasedHistoryProps> =
             variant="outlined"
           >
             請求書
-          </Button>
+          </Button> */}
 
           <ModalComponent
             minHeight="400px"
