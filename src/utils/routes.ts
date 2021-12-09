@@ -15,7 +15,7 @@ export enum Route {
     USER_FAVORITE = '/user/favorite',
     USER_PURCHASED_HISTORY = '/user/purchased-history',
     USER_PURCHASED_HISTORY_DETAIL = '/user/purchased-history/:id',    
-    USER_SHIPPING_ADDRESS = '/user/favorite',
+    USER_SHIPPING_ADDRESS = '/user/shipping-address',
     USER_CARD = '/user/card',
     
 
@@ -39,6 +39,13 @@ export enum Route {
     EFFECT_FINISH = '/cart/effect-finish',
 
     //Static Pages
-    EXAMPLE = '/example'
+    EXAMPLE = '/example',
+    STATIC_GUIDELINE = "/static-pages/guideline",
+    STATIC_USAGE_POLICY = "/static-pages/usage-policy",
+    STATIC_LEGAL = "/static-pages/legal-information",
+    STATIC_POLICY = "/static-pages/privacy-policy",
+
+
+    CONTACT = "/contact",
 
 }

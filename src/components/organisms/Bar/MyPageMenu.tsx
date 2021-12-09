@@ -59,10 +59,7 @@ export const MyPageMenu: React.FC = () => {
         py="1rem"
         px="0.8rem"
         bg={
-          location.pathname === ROUTES.USER_PURCHASED_HISTORY ||
-          location.pathname === ROUTES.USER_PURCHASED_HISTORY_DETAIL
-            ? "gray.900"
-            : ""
+          location.pathname === ROUTES.USER_PURCHASED_HISTORY ? "gray.900" : ""
         }
         color="gray.white"
         href={ROUTES.USER_PURCHASED_HISTORY}
