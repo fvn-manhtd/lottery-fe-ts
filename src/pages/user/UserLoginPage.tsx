@@ -1,5 +1,6 @@
 import { OneColumnLayout } from "components/templates";
 import { useFormik } from "formik";
+import { Route as ROUTES } from "utils";
 import {
   H6,
   Button,
@@ -172,7 +173,7 @@ const UserLoginPage = () => {
               </Button>
 
               <FlexBox justifyContent="center" py="1rem">
-                <NavLink href="/user/password-forgot">
+                <NavLink href={ROUTES.USER_PASSWORD_FORGOT}>
                   <H6 color="primary.blue" fontWeight={400}>
                     パスワードを忘れた方はこちら
                   </H6>
@@ -185,7 +186,7 @@ const UserLoginPage = () => {
                   bg="gray.500"
                   py="1.4rem"
                   variant="button"
-                  href="/user/register"
+                  href={ROUTES.USER_REGISTER}
                 >
                   <H6 fontWeight={400}>新規登録</H6>
                 </NavLink>
@@ -194,7 +195,7 @@ const UserLoginPage = () => {
               <Divider height="1px" width="100%" mx="auto" mb="1.25rem" />
 
               <FlexBox justifyContent="center" py="1rem">
-                <NavLink href="/shop/login">
+                <NavLink href={ROUTES.SHOP_LOGIN}>
                   <H6 color="primary.blue" fontWeight={400}>
                     ショップログイン
                   </H6>
@@ -202,7 +203,7 @@ const UserLoginPage = () => {
               </FlexBox>
 
               <FlexBox justifyContent="center" py="1rem">
-                <NavLink href="/shop/register">
+                <NavLink href={ROUTES.SHOP_REGISTER}>
                   <H6 color="primary.blue" fontWeight={400}>
                     ショップを作成
                   </H6>

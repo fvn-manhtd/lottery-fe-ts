@@ -22,7 +22,9 @@ export const UserPurchaseHistoryPage = lazy(
   () => import("pages/user/UserPurchaseHistoryPage")
 );
 
-export const UserReceiptPage = lazy(() => import("pages/user/UserReceiptPage"));
+export const UserPurchaseHistoryDetailPage = lazy(
+  () => import("pages/user/UserPurchaseHistoryDetailPage")
+);
 
 /* user auth pages */
 export const UserLoginPage = lazy(() => import("pages/user/UserLoginPage"));

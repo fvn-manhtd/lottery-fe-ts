@@ -1,3 +1,4 @@
+import { Route as ROUTES } from "utils";
 import { Route, Switch } from "react-router-dom";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
@@ -26,7 +27,7 @@ import {
   UserShippingAddressPage,
   UserCardPage,
   UserPurchaseHistoryPage,
-  UserReceiptPage,
+  UserPurchaseHistoryDetailPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -50,109 +51,113 @@ export default function App() {
       <Suspense fallback={<Loading />}>
         <Switch>
           {/* home page */}
-          <FancyRoute path="/" exact component={() => <HomePage />} />
-          <FancyRoute path="/example" exact component={() => <ExamplePage />} />
+          <FancyRoute path={ROUTES.HOME} exact component={() => <HomePage />} />
+          <FancyRoute
+            path={ROUTES.EXAMPLE}
+            exact
+            component={() => <ExamplePage />}
+          />
 
           {/* lottery page */}
           <FancyRoute
-            path="/lotteries"
+            path={ROUTES.LOTTERIES}
             exact
             component={() => <LotteriesPage />}
           />
 
           {/* user pages */}
           <FancyRoute
-            path="/user/mypage"
+            path={ROUTES.USER_MYAPGE}
             exact
             component={ProtectedRoute(UserMyPage)}
           />
           <FancyRoute
-            path="/user/favorite"
+            path={ROUTES.USER_FAVORITE}
             exact
             component={ProtectedRoute(UserFavoritePage)}
           />
           <FancyRoute
-            path="/user/shipping-address"
+            path={ROUTES.USER_SHIPPING_ADDRESS}
             exact
             component={ProtectedRoute(UserShippingAddressPage)}
           />
           <FancyRoute
-            path="/user/card"
+            path={ROUTES.USER_CARD}
             exact
             component={ProtectedRoute(UserCardPage)}
           />
           <FancyRoute
-            path="/user/purchase-history"
+            path={ROUTES.USER_PURCHASED_HISTORY}
             exact
             component={ProtectedRoute(UserPurchaseHistoryPage)}
           />
           <FancyRoute
-            path="/user/receipt"
+            path={ROUTES.USER_PURCHASED_HISTORY_DETAIL}
             exact
-            component={ProtectedRoute(UserReceiptPage)}
+            component={ProtectedRoute(UserPurchaseHistoryDetailPage)}
           />
 
           {/* user auth pages */}
           <FancyRoute
-            path="/user/login"
+            path={ROUTES.USER_LOGIN}
             exact
             component={() => <UserLoginPage />}
           />
           <FancyRoute
-            path="/user/new-password"
+            path={ROUTES.USER_NEW_PASSWORD}
             exact
             component={() => <UserNewPasswordPage />}
           />
           <FancyRoute
-            path="/user/password-forgot"
+            path={ROUTES.USER_PASSWORD_FORGOT}
             exact
             component={() => <UserPasswordForgotPage />}
           />
           <FancyRoute
-            path="/user/password-forgot-confirm-mail"
+            path={ROUTES.USER_PASSWORD_FORGOT_CONFIRM_MAIL}
             exact
             component={() => <UserPasswordForgotConfirmMailPage />}
           />
           <FancyRoute
-            path="/user/register"
+            path={ROUTES.USER_REGISTER}
             exact
             component={() => <UserRegisterPage />}
           />
 
           {/* shop auth pages */}
           <FancyRoute
-            path="/shop/login"
+            path={ROUTES.SHOP_LOGIN}
             exact
             component={() => <ShopLoginPage />}
           />
           <FancyRoute
-            path="/shop/register"
+            path={ROUTES.SHOP_REGISTER}
             exact
             component={() => <ShopRegisterPage />}
           />
           <FancyRoute
-            path="/shop/register/create-account"
+            path={ROUTES.SHOP_REGISTER_CREATE_ACCOUNT}
             exact
             component={() => <ShopCreateAccountPage />}
           />
           <FancyRoute
-            path="/shop/register/operation-setting"
+            path={ROUTES.SHOP_REGISTER_OPERATION_SETTING}
             exact
             component={() => <ShopOperationSettingPage />}
           />
 
           <FancyRoute
-            path="/shop/password-forgot"
+            path={ROUTES.SHOP_PASSWORD_FORGOT}
             exact
             component={() => <ShopPasswordForgotPage />}
           />
           <FancyRoute
-            path="/shop/new-password"
+            path={ROUTES.SHOP_NEW_PASSWORD}
             exact
             component={() => <ShopNewPasswordPage />}
           />
           <FancyRoute
-            path="/shop/password-forgot-confirm-mail"
+            path={ROUTES.SHOP_PASSWORD_FORGOT_CONFIRM_MAIL}
             exact
             component={() => <ShopPasswordForgotConfirmMailPage />}
           />

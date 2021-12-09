@@ -11,5 +11,6 @@ export * from './Menu';
 export * from './NavLink';
 export * from './Spinner';
 export * from './Sticky';
+export * from './Table';
 export * from './Typography';
 

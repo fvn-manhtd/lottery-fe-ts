@@ -1,0 +1,44 @@
+export enum Route {
+    HOME = '/',
+
+    //Lottery
+    LOTTERIES = '/lotteries',
+    LOTTERY_DETAIL = '/lottery/:id',
+    
+    //User
+    USER_LOGIN = '/user/login',
+    USER_REGISTER = '/user/register',
+    USER_PASSWORD_FORGOT = '/user/password-forgot',    
+    USER_NEW_PASSWORD = '/user/new-password', 
+    USER_PASSWORD_FORGOT_CONFIRM_MAIL  = 'password-forgot-confirm-mail',
+    USER_MYAPGE = '/user/mypage',
+    USER_FAVORITE = '/user/favorite',
+    USER_PURCHASED_HISTORY = '/user/purchased-history',
+    USER_PURCHASED_HISTORY_DETAIL = '/user/purchased-history/:id',    
+    USER_SHIPPING_ADDRESS = '/user/favorite',
+    USER_CARD = '/user/card',
+    
+
+    //Shop
+    SHOP_LOGIN = '/shop/login',
+    SHOP_REGISTER = '/shop/register',
+    SHOP_PASSWORD_FORGET = '/shop/password-forgot', 
+    SHOP_REGISTER_CREATE_ACCOUNT = "/shop/register/create-account",
+    SHOP_REGISTER_OPERATION_SETTING = "/shop/register/operation-setting",
+    SHOP_PASSWORD_FORGOT = "/shop/password-forgot",
+    SHOP_NEW_PASSWORD = "/shop/new-password",
+    SHOP_PASSWORD_FORGOT_CONFIRM_MAIL = "/shop/password-forgot-confirm-mail",
+
+
+    //Card
+    SHOPPING_CART = '/cart/shopping-cart',
+    PAYMENT_METHOD = '/cart/payment-method',
+    ORDER_CONFIRMATION = '/cart/order-confirmation',
+    ORDER_COMPLETE = '/cart/order-complete',
+    EFFECT_START = '/cart/effect-start',
+    EFFECT_FINISH = '/cart/effect-finish',
+
+    //Static Pages
+    EXAMPLE = '/example'
+
+}
