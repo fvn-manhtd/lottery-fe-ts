@@ -23,8 +23,8 @@ export const SiteLegalInformationPage = lazy(
 export const SiteNewsListPage = lazy(
   ()=> import("pages/generals/SiteNewsListPage")
 );
-export const SiteNewsPage = lazy(
-  ()=> import("pages/generals/SiteNewsPage")
+export const SiteNewsDetailPage = lazy(
+  ()=> import("pages/generals/SiteNewsDetailPage")
 );
 
 /*lottery pages */

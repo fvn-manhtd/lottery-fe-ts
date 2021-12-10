@@ -31,7 +31,7 @@ import {
   SitePrivacyPolicyPage,
   SiteLegalInformationPage,
   SiteNewsListPage,
-  SiteNewsPage,
+  SiteNewsDetailPage,
   UserFavoritePage,
   UserShippingAddressPage,
   UserCardPage,
@@ -98,7 +98,7 @@ export default function App() {
           <FancyRoute 
             path={ROUTES.NEWS_DETAIL} 
             exact 
-            component={() => <SiteNewsPage />} 
+            component={() => <SiteNewsDetailPage />} 
           />
 
           {/* lottery pages */}
