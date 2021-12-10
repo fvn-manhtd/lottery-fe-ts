@@ -1,32 +1,27 @@
 import React from "react";
-import {
-  Image,
-  FlexBox,
-  Container,
-  NavLink,
-  Box,
-  Paragraph,
-} from "components/atoms";
+import { FlexBox, Container, NavLink, Box, Paragraph } from "components/atoms";
+import { Route as ROUTES } from "utils";
+import { Logo } from "./Logo";
 
 export const Footer: React.FC = () => {
   const listStaticPage = [
-    { id: 1, title: "ご利用規約", href: "/static-pages/usage-policy" },
+    { id: 1, title: "ご利用規約", href: ROUTES.STATIC_USAGE_POLICY },
     {
       id: 2,
       title: "特定商取引法に基づく表示",
-      href: "/static-pages/legal-information",
+      href: ROUTES.STATIC_LEGAL,
     },
     {
       id: 3,
       title: "プライバシーポリシー",
-      href: "/static-pages/privacy-policy",
+      href: ROUTES.STATIC_LEGAL,
     },
     {
       id: 4,
       title: "会社情報",
-      href: "/static-pages/company",
+      href: ROUTES.STATIC_COMPANY,
     },
-    { id: 5, title: "お問い合わせ", href: "/contact" },
+    { id: 5, title: "お問い合わせ", href: ROUTES.CONTACT },
   ];
   return (
     <footer>
@@ -39,13 +34,7 @@ export const Footer: React.FC = () => {
             justifyContent="space-between"
           >
             <Box width="260px" mb={{ _: "2rem", lg: 0 }}>
-              <NavLink href="/">
-                <Image
-                  width="100%"
-                  src="/assets/images/logo.png"
-                  alt="Online Gacha"
-                />
-              </NavLink>
+              <Logo />
             </Box>
 
             <Box width={{ _: 1, md: 3 / 4 }}>

@@ -3,33 +3,33 @@ import { Box, Image, Typography } from "components/atoms";
 import { Card } from "components/organisms";
 import { lotteryStatusObj } from 'utils/constants';
 
-type LotteryProps = {
-    src: string;
-    title: string;
-    status?: number;
-    period: string;
+export type LotteryProps = {
+  src: string;
+  title: string;
+  status?: number;
+  period?: string;
 };
 
-const StyledBox=styled.div `
-position:relative;
-overflow:hidden;
-&::before{
+const StyledBox = styled.div`
+  position: relative;
+  overflow: hidden;
+  &::before {
     content: "";
     position: absolute;
-    background:${props=>props.color};
+    background: ${(props) => props.color};
     width: 40%;
     top: -38%;
     left: -20%;
     transform: rotate(45deg);
     padding-top: 40%;
-}
-`
-const StyledText = styled(Typography) `
-position:absolute;
-top:0;
-left:0;
-transform: rotate(-45deg);
-`
+  }
+`;
+const StyledText = styled(Typography)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-45deg);
+`;
 
 export const Lottery: React.FC<LotteryProps> = ({ src, title, status, period }) => {
     

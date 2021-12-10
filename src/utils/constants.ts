@@ -18,6 +18,19 @@ export const lotteryStatusObj = [
 ];
 
 
+export function yearListNextArr(yearNum: number) {
+  var min = new Date().getFullYear()
+  var max = min + yearNum
+  var years = []
+
+  for (var i = min; i <= max; i++) {
+    let obj = { label: i.toString(), value: i }
+    years.push(obj)
+  }
+  return years
+}
+
+
 
 export function yearListArr(yearNum: number) {
   var max = new Date().getFullYear()

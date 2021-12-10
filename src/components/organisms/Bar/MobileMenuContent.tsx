@@ -42,12 +42,7 @@ export const MobileMenuContent: React.FC = () => {
 
         {isLoggedIn && (
           <>
-            <NavLink
-              px="2rem"
-              py="1rem"
-              color="gray.700"
-              href="/user/dashboard/"
-            >
+            <NavLink px="2rem" py="1rem" color="gray.700" href="/user/mypage">
               <FlexBox alignItems="center">
                 <Box width="16px">
                   <IconPng>user</IconPng>
@@ -69,11 +64,11 @@ export const MobileMenuContent: React.FC = () => {
           </>
         )}
 
-        <Divider width="100%" mx="auto" />
+        <Divider height="1px" width="100%" mx="auto" />
 
         {isLoggedIn && (
           <>
-            <Divider width="100%" mx="auto" />
+            <Divider height="1px" width="100%" mx="auto" />
 
             <Box px="2rem" py="1rem" color="gray.700" onClick={handleLogout}>
               <FlexBox alignItems="center">

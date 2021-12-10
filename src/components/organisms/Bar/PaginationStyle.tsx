@@ -24,32 +24,35 @@ export const StyledPagination = styled.div`
         margin: 0px 5px;
         border-radius: 5px;
         outline: none;
-        border: 1px solid transparent;
-        border-radius: 50%;
+        color: ${getTheme("colors.gray.900")};
+        background-color: ${getTheme("colors.gray.500")};
         @media only screen and (max-width: 450px) {
           margin: 4px;
         }
       }
       &:not(.active):hover {
         a {
-          border: 1px solid ${getTheme("colors.primary.main")};
-          color: ${getTheme("colors.primary.main")};
+          color: ${getTheme("colors.gray.white")};
+          background-color: ${getTheme("colors.gray.900")};
         }
       }
     }
     .active {
       cursor: none;
       a {
-        border: 1px solid ${getTheme("colors.primary.main")};
-        color: ${getTheme("colors.primary.main")};
+        color: ${getTheme("colors.gray.white")};
+        background-color: ${getTheme("colors.gray.900")};
       }
     }
 
     .disabled {
       .control-button {
         cursor: none;
-        border: 1px solid ${getTheme("colors.primary.light")};
-        color: ${getTheme("colors.primary.light")};
+        color: ${getTheme("colors.gray.900")};
+        &:hover {
+          color: ${getTheme("colors.gray.white")};
+          background-color: ${getTheme("colors.gray.900")};
+        }
       }
     }
   }
@@ -58,7 +61,13 @@ export const StyledPagination = styled.div`
     height: 32px;
     width: 32px;
     min-width: 32px;
-    border: 1px solid ${getTheme("colors.primary.main")};
+    border-radius: 5px;
+    color: ${getTheme("colors.gray.900")};
+    background-color: ${getTheme("colors.gray.500")};
+    &:hover {
+      color: ${getTheme("colors.gray.white")};
+      background-color: ${getTheme("colors.gray.900")};
+    }
   }
 
   ${space}

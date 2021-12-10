@@ -1,5 +1,6 @@
 import { OneColumnLayout } from "components/templates";
 import { useFormik } from "formik";
+import { Route as ROUTES } from "utils";
 import {
   H6,
   Button,
@@ -12,12 +13,12 @@ import {
   Small,
   TextField,
   Span,
+  NavLink,
 } from "components/atoms";
-import { Card1, Logo } from "components/organisms";
+import { Card, Logo } from "components/organisms";
 import * as yup from "yup";
 import { authActions } from "redux/features";
 import { useAppDispatch } from "redux/app/hooks";
-import { Link } from "react-router-dom";
 
 const initialValues = {
   email: "",
@@ -53,10 +54,23 @@ const UserLoginPage = () => {
   return (
     <>
       <OneColumnLayout>
-        <Box bg="body.paper" mt="3rem" maxWidth="400px" mx="auto">
+        <Box
+          bg="body.paper"
+          maxWidth="800px"
+          mt="3rem"
+          shadow={6}
+          borderRadius={5}
+          mx="auto"
+        >
           <form onSubmit={handleSubmit}>
-            <Card1 mb="2rem" borderRadius={5} shadow={6}>
-              <Box mx="auto" mt="1rem" mb="2rem" maxWidth="200px">
+            <Card
+              pt="5rem"
+              px={{ _: "1rem", md: "0" }}
+              maxWidth="490px"
+              mx="auto"
+              boxShadow="none"
+            >
+              <Box mx="auto" mb="2rem" maxWidth="200px">
                 <Logo />
               </Box>
 
@@ -67,14 +81,14 @@ const UserLoginPage = () => {
               <FlexBox
                 justifyContent="center"
                 alignItems="center"
-                bg="#3B5998"
+                bg="#3b5a9a"
                 borderRadius={5}
-                height="40px"
+                height="60px"
                 color="white"
                 cursor="pointer"
                 mb="1rem"
               >
-                <Icon variant="small" defaultcolor="auto" mr="0.5rem">
+                <Icon variant="medium" defaultcolor="auto" mr="0.5rem">
                   facebook-filled-white
                 </Icon>
                 <Small fontWeight="600">Facebookでログインする</Small>
@@ -83,24 +97,42 @@ const UserLoginPage = () => {
               <FlexBox
                 justifyContent="center"
                 alignItems="center"
-                bg="#099DD9"
+                bg="#55acee"
                 borderRadius={5}
-                height="40px"
-                color="white"
+                height="60px"
+                color="primary"
                 cursor="pointer"
                 mb="1.5rem"
               >
-                <Icon variant="small" defaultcolor="auto" mr="0.5rem">
-                  twitter_filled
+                <Icon
+                  color="primary"
+                  variant="small"
+                  defaultcolor="auto"
+                  mr="0.5rem"
+                >
+                  twitter-1
                 </Icon>
-                <Small fontWeight="600">Twitterでログインする</Small>
+
+                <Small color="white" fontWeight="600">
+                  Twitterでログインする
+                </Small>
               </FlexBox>
 
-              <Box mb="1rem">
-                <Divider width="200px" mx="auto" />
-                <FlexBox justifyContent="center" mt="-14px">
-                  <Span color="text.muted" bg="body.paper" px="1rem">
-                    or
+              <Box mb="2rem">
+                <Divider
+                  height="1px"
+                  color="gray.500"
+                  width="320px"
+                  mx="auto"
+                />
+                <FlexBox justifyContent="center" mt="-10px">
+                  <Span
+                    fontSize="0.8rem"
+                    color="text.muted"
+                    bg="body.paper"
+                    px="1rem"
+                  >
+                    または
                   </Span>
                 </FlexBox>
               </Box>
@@ -118,7 +150,7 @@ const UserLoginPage = () => {
               />
               <TextField
                 name="password"
-                placeholder="*********"
+                placeholder="パスワード"
                 autoComplete="on"
                 fullwidth
                 type="password"
@@ -130,8 +162,8 @@ const UserLoginPage = () => {
               />
 
               <Button
-                mb="1.65rem"
                 variant="contained"
+                size="large"
                 color="primary"
                 type="submit"
                 fullwidth
@@ -140,65 +172,49 @@ const UserLoginPage = () => {
                 ログイン
               </Button>
 
-              <FlexBox justifyContent="flex-start" py="1rem">
-                <Link to="/user/password-forgot">
-                  <H6
-                    ml="0.5rem"
-                    borderBottom="1px solid"
-                    borderColor="gray.900"
-                    fontWeight={400}
-                  >
-                    パスワードを忘れた場合
+              <FlexBox justifyContent="center" py="1rem">
+                <NavLink href={ROUTES.USER_PASSWORD_FORGOT}>
+                  <H6 color="primary.blue" fontWeight={400}>
+                    パスワードを忘れた方はこちら
                   </H6>
-                </Link>
+                </NavLink>
               </FlexBox>
 
-              <FlexBox justifyContent="flex-start" mb="1.25rem">
-                <Link to="/user/register">
-                  <H6
-                    ml="0.5rem"
-                    borderBottom="1px solid"
-                    borderColor="gray.900"
-                    fontWeight={400}
-                  >
-                    アカウントを作成
-                  </H6>
-                </Link>
+              <FlexBox justifyContent="center" mb="1.25rem">
+                <NavLink
+                  textAlign="center"
+                  bg="gray.500"
+                  py="1.4rem"
+                  variant="button"
+                  href={ROUTES.USER_REGISTER}
+                >
+                  <H6 fontWeight={400}>新規登録</H6>
+                </NavLink>
               </FlexBox>
 
-              <Divider width="100%" mx="auto" />
+              <Divider height="1px" width="100%" mx="auto" mb="1.25rem" />
 
-              <FlexBox justifyContent="flex-start" py="1rem">
-                <Link to="/shop/login">
-                  <H6
-                    ml="0.5rem"
-                    borderBottom="1px solid"
-                    borderColor="gray.900"
-                    fontWeight={400}
-                  >
+              <FlexBox justifyContent="center" py="1rem">
+                <NavLink href={ROUTES.SHOP_LOGIN}>
+                  <H6 color="primary.blue" fontWeight={400}>
                     ショップログイン
                   </H6>
-                </Link>
+                </NavLink>
               </FlexBox>
 
-              <FlexBox justifyContent="flex-start" mb="1.25rem">
-                <Link to="/shop/register">
-                  <H6
-                    ml="0.5rem"
-                    borderBottom="1px solid"
-                    borderColor="gray.900"
-                    fontWeight={400}
-                  >
+              <FlexBox justifyContent="center" py="1rem">
+                <NavLink href={ROUTES.SHOP_REGISTER}>
+                  <H6 color="primary.blue" fontWeight={400}>
                     ショップを作成
                   </H6>
-                </Link>
+                </NavLink>
               </FlexBox>
-            </Card1>
+            </Card>
+            <Paragraph py="1rem" textAlign="center" fontSize="0.8rem">
+              &copy;Online Gacha
+            </Paragraph>
           </form>
         </Box>
-        <Paragraph mb="1rem" textAlign="center" fontSize="0.8rem">
-          &copy;Online Gacha
-        </Paragraph>
       </OneColumnLayout>
     </>
   );

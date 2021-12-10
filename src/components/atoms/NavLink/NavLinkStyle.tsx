@@ -11,17 +11,23 @@ import {
   variant,
   layout,
   LayoutProps,
+  BordersProps,
 } from "styled-system";
 
 interface StyledNavLinkProps {
   isCurrentRoute?: boolean;
   className?: string;
   [key: string]: unknown;
-  variant?: "hover";
+  variant?: "hover" | "button";
 }
 
 const StyledNavLink = styled.a<
-  StyledNavLinkProps & SpaceProps & ColorProps & LayoutProps & TypographyProps
+  StyledNavLinkProps &
+    SpaceProps &
+    ColorProps &
+    LayoutProps &
+    TypographyProps &
+    BordersProps
 >(
   ({ isCurrentRoute, theme }) =>
     systemCss({
@@ -48,6 +54,14 @@ const StyledNavLink = styled.a<
       prop: "variant",
       variants: {
         hover: {
+          "&:hover": {
+            color: `${theme.colors.gray.white} !important`,
+            backgroundColor: `${theme.colors.primary.main} !important`,
+          },
+        },
+        button: {
+          width: "100%",
+          borderRadius: "5px",
           "&:hover": {
             color: `${theme.colors.gray.white} !important`,
             backgroundColor: `${theme.colors.primary.main} !important`,

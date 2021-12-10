@@ -29,16 +29,29 @@ export const SiteNewsPage = lazy(
 
 /*lottery pages */
 export const SiteLotteryListPage = lazy(
-  ()=> import("pages/generals/SiteLotteryListPage")
+  () => import("pages/generals/SiteLotteryListPage")
 );
 
 /* user pages */
-export const MyPage = lazy(
-  () => import("pages/user/MyPage")
+export const UserMyPage = lazy(() => import("pages/user/UserMyPage"));
+export const UserFavoritePage = lazy(
+  () => import("pages/user/UserFavoritePage")
 );
-export const UserLoginPage = lazy(
-  () => import("pages/user/UserLoginPage")
+export const UserShippingAddressPage = lazy(
+  () => import("pages/user/UserShippingAddressPage")
 );
+
+export const UserCardPage = lazy(() => import("pages/user/UserCardPage"));
+export const UserPurchaseHistoryPage = lazy(
+  () => import("pages/user/UserPurchaseHistoryPage")
+);
+
+export const UserPurchaseHistoryDetailPage = lazy(
+  () => import("pages/user/UserPurchaseHistoryDetailPage")
+);
+
+/* user auth pages */
+export const UserLoginPage = lazy(() => import("pages/user/UserLoginPage"));
 export const UserNewPasswordPage = lazy(
   () => import("pages/user/UserNewPasswordPage")
 );

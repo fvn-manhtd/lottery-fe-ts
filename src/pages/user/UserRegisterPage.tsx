@@ -11,8 +11,14 @@ import {
   Paragraph,
   TextField,
   NavLink,
+  Icon,
+  Small,
+  Divider,
+  Span,
+  Typography,
+  Image,
 } from "components/atoms";
-import { Card1, Logo } from "components/organisms";
+import { Card, Logo } from "components/organisms";
 import * as yup from "yup";
 
 const initialValues = {
@@ -45,111 +51,180 @@ const UserRegisterPage = () => {
   return (
     <>
       <OneColumnLayout>
-        <main>
-          <Box bg="body.paper" mt="3rem" maxWidth="400px" mx="auto">
-            <form onSubmit={handleSubmit}>
-              <Card1 mb="2rem" borderRadius={5} shadow={6}>
-                <Box mx="auto" mt="1rem" mb="2rem" maxWidth="200px">
-                  <Logo />
-                </Box>
-                <H3 textAlign="center" mb="0.5rem">
-                  無料ではじめる
-                </H3>
+        <Box
+          bg="body.paper"
+          maxWidth="800px"
+          mt="3rem"
+          shadow={6}
+          borderRadius={5}
+          mx="auto"
+        >
+          <form onSubmit={handleSubmit}>
+            <Card
+              pt="5rem"
+              px={{ _: "1rem", md: "0" }}
+              maxWidth="490px"
+              mx="auto"
+              boxShadow="none"
+            >
+              <Box mx="auto" mt="1rem" mb="2rem" maxWidth="200px">
+                <Logo />
+              </Box>
+              <H3 textAlign="center" mb="0.5rem">
+                無料ではじめる
+              </H3>
 
-                <Paragraph textAlign="center" mb="1rem" fontSize="0.8rem">
-                  まずはアカウントを作成しましょう
-                </Paragraph>
+              <Paragraph textAlign="center" mb="1rem" fontSize="1rem">
+                まずはアカウントを作成しましょう
+              </Paragraph>
 
-                <TextField
-                  name="email"
-                  placeholder="メールアドレス"
-                  type="email"
-                  fullwidth
-                  mb="1rem"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.email || ""}
-                  errorText={touched.email && errors.email}
-                />
-                <TextField
-                  name="password"
-                  placeholder="*********"
-                  autoComplete="on"
-                  fullwidth
-                  type="password"
-                  mb="1rem"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.password || ""}
-                  errorText={touched.password && errors.password}
-                />
+              <FlexBox
+                justifyContent="center"
+                alignItems="center"
+                bg="#3b5a9a"
+                borderRadius={5}
+                height="60px"
+                color="white"
+                cursor="pointer"
+                mb="1rem"
+              >
+                <Icon variant="medium" defaultcolor="auto" mr="0.5rem">
+                  facebook-filled-white
+                </Icon>
+                <Small fontWeight="600">Facebookで新規登録</Small>
+              </FlexBox>
 
-                <CheckBox
-                  mb="1rem"
-                  name="agreement"
-                  color="secondary"
-                  checked={values.agreement}
-                  onChange={handleChange}
-                  errorText={touched.agreement && errors.agreement}
-                  label={
-                    <FlexBox>
-                      <NavLink href="/static-pages/usage-policy">
-                        <H6
-                          ml="0.5rem"
-                          borderBottom="1px solid"
-                          borderColor="gray.900"
-                          fontWeight={400}
-                        >
-                          利用規約
-                        </H6>
-                      </NavLink>
-                      <SemiSpan>および</SemiSpan>
-                      <NavLink href="/static-pages/privacy-policy">
-                        <H6
-                          ml="0.5rem"
-                          borderBottom="1px solid"
-                          borderColor="gray.900"
-                          fontWeight={400}
-                        >
-                          プライバシーポリシー
-                        </H6>
-                      </NavLink>
-                      <SemiSpan>に同意する</SemiSpan>
-                    </FlexBox>
-                  }
-                />
-
-                <Button
-                  mt="1.65rem"
-                  mb="1.65rem"
-                  variant="contained"
+              <FlexBox
+                justifyContent="center"
+                alignItems="center"
+                bg="#55acee"
+                borderRadius={5}
+                height="60px"
+                color="primary"
+                cursor="pointer"
+                mb="1.5rem"
+              >
+                <Icon
                   color="primary"
-                  type="submit"
-                  fullwidth
-                  borderRadius={5}
+                  variant="small"
+                  defaultcolor="auto"
+                  mr="0.5rem"
                 >
-                  アカウントを作成
-                </Button>
+                  twitter-1
+                </Icon>
 
-                <FlexBox justifyContent="flex-start" py="1rem">
-                  <NavLink href="/user/login">
-                    <H6
-                      ml="0.5rem"
-                      borderBottom="1px solid"
-                      borderColor="gray.900"
-                      fontWeight={400}
-                    >
-                      アカウントをお持ちの方はこちら
-                    </H6>
-                  </NavLink>
+                <Small color="white" fontWeight="600">
+                  Twitterで新規登録
+                </Small>
+              </FlexBox>
+
+              <Box mt="2rem" mb="1.5rem">
+                <Divider
+                  height="1px"
+                  color="gray.500"
+                  width="320px"
+                  mx="auto"
+                />
+                <FlexBox justifyContent="center" mt="-10px">
+                  <Span
+                    fontSize="0.8rem"
+                    color="text.muted"
+                    bg="body.paper"
+                    px="1rem"
+                  >
+                    または
+                  </Span>
                 </FlexBox>
-              </Card1>
-            </form>
-          </Box>
-          <Paragraph mb="1rem" textAlign="center" fontSize="0.8rem">
-            &copy;Online Gacha
-          </Paragraph>
-        </main>
+              </Box>
+
+              <Image
+                mb="1rem"
+                src="/assets/images/illustrator/login_step.png"
+                width="100%"
+                alt="Login"
+              />
+
+              <TextField
+                name="email"
+                placeholder="メールアドレス"
+                type="email"
+                fullwidth
+                mb="1rem"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email || ""}
+                errorText={touched.email && errors.email}
+              />
+              <TextField
+                name="password"
+                placeholder="パスワード"
+                autoComplete="on"
+                fullwidth
+                type="password"
+                mb="1rem"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.password || ""}
+                errorText={touched.password && errors.password}
+              />
+
+              <Typography textAlign="right" mb="2rem" color="gray.600">
+                ※半角英数字、数字を含む8文字以上
+              </Typography>
+
+              <CheckBox
+                mb="1rem"
+                name="agreement"
+                color="primary"
+                checked={values.agreement}
+                justfiyContent="center"
+                onChange={handleChange}
+                size={24}
+                errorText={touched.agreement && errors.agreement}
+                label={
+                  <FlexBox>
+                    <NavLink href="/static-pages/usage-policy">
+                      <H6 ml="0.5rem" color="primary.blue" fontWeight={400}>
+                        利用規約
+                      </H6>
+                    </NavLink>
+                    <SemiSpan>および</SemiSpan>
+                    <NavLink href="/static-pages/privacy-policy">
+                      <H6 ml="0.5rem" color="primary.blue" fontWeight={400}>
+                        プライバシーポリシー
+                      </H6>
+                    </NavLink>
+                    <SemiSpan>に同意する</SemiSpan>
+                  </FlexBox>
+                }
+              />
+
+              <Button
+                mt="1.65rem"
+                mb="1.65rem"
+                size="large"
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullwidth
+                borderRadius={5}
+              >
+                アカウントを作成
+              </Button>
+
+              <FlexBox justifyContent="center" py="1rem">
+                <NavLink href="/user/login">
+                  <H6 color="primary.blue" fontWeight={400}>
+                    アカウントをお持ちの方はこちら
+                  </H6>
+                </NavLink>
+              </FlexBox>
+            </Card>
+            <Paragraph py="1rem" textAlign="center" fontSize="0.8rem">
+              &copy;Online Gacha
+            </Paragraph>
+          </form>
+        </Box>
       </OneColumnLayout>
     </>
   );

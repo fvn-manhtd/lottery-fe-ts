@@ -1,4 +1,7 @@
 export * from './Lottery';
+export * from './LotteryFavorite';
 export * from './LotteryProduct';
-export * from './LotteryRankedProduct';
+export * from './LotteryPurchasedHistory';
 export * from './LotteryRankDescription';
+export * from './LotteryRankedProduct';
+

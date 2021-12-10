@@ -8,7 +8,7 @@ export const HeaderCart: React.FC = () => {
   let history = useHistory();
 
   const handleBackClick = async () => {
-    history.push("/");
+    history.goBack();
   };
 
   return (
