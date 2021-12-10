@@ -1,5 +1,4 @@
-import { LotteryDetailModel, LotteryListModel } from "models";
-import { NewsListModel } from "models/news";
+import { LotteryDetailModel, LotteryListModel, NewsListModel, NewsModel, SiteDataListModel } from "models";
 
 export const fakeLotteryList :LotteryListModel = {
   lotteries: [
@@ -158,10 +157,15 @@ export const fakeLotteryDetail: LotteryDetailModel = {
 };
 
 export const fakeNewsList: NewsListModel = {
+  pagination: {
+    _limit:10,
+    _page:1,
+    _total:10,
+  },
   news: [
     {
       id:1,
-      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
       date:"2021年00月00日 (金)",
     },
     {
@@ -182,7 +186,14 @@ export const fakeNewsList: NewsListModel = {
   ]
 }
 
-export const fakeStaticPageData = {
+export const fakeNewsDetail: NewsModel = {
+  id:1,
+  title:"サンプルタイトル",
+  content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+  date: "2021年00月00日 (金)"
+}
+
+export const fakeStaticPageData: SiteDataListModel = {
   contents: [
     {
       title:"タイトル",

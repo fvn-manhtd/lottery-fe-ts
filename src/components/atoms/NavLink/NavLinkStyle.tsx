@@ -38,6 +38,9 @@ const StyledNavLink = styled.a<
       "& svg polyline, svg polygon": {
         color: isCurrentRoute ? theme.colors.primary.main : "auto",
       },
+      whiteSpace: "nowrap",
+      overflow:"hidden",
+      textOverflow:"ellipsis",
     }),
 
   ({ theme }) =>

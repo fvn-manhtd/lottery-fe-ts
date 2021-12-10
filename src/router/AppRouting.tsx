@@ -11,6 +11,21 @@ export const ExamplePage = lazy(
 export const SiteUsagePolicyPage = lazy(
   ()=> import("pages/generals/SiteUsagePolicyPage")
 );
+export const SitePrivacyPolicyPage = lazy(
+  ()=> import("pages/generals/SitePrivacyPolicyPage")
+);
+export const SiteCompanyPage = lazy(
+  ()=> import("pages/generals/SiteCompanyPage")
+);
+export const SiteLegalInformationPage = lazy(
+  ()=> import("pages/generals/SiteLegalInformationPage")
+);
+export const SiteNewsListPage = lazy(
+  ()=> import("pages/generals/SiteNewsListPage")
+);
+export const SiteNewsPage = lazy(
+  ()=> import("pages/generals/SiteNewsPage")
+);
 
 /*lottery pages */
 export const SiteLotteryListPage = lazy(

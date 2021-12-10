@@ -11,7 +11,7 @@ const SiteCompanyPage = () => {
                     data.contents.map((value,index)=>{
                         return (
                             <Box key={index} mb={3}>
-                                <Paragraph fontWeight="bold" mb={2}>{index+1+"."}{value.title}</Paragraph>
+                                <Paragraph fontWeight="bold" mb={1}>{index+1+"."}{value.title}</Paragraph>
                                 <Paragraph>{value.text}</Paragraph>
                             </Box>
                         )

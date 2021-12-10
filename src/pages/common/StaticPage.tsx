@@ -16,12 +16,13 @@ export const StaticPage: React.FC<StaticPageProps> = ({ title, contents }) => {
           <Container>
             <Box 
               paddingY={{ _: 3, md: 40 }}
-              paddingX={{ _: 3, md: 6 }}>
+              paddingX={{ _: 2, md: 6 }}>
               <Box
                 bg="white"
                 shadow={4}
                 p={{_:"2rem",md:"3rem"}}>
                   <H3
+                    mb={2}
                     textAlign="center">{title}</H3>
                   <>
                     {contents}

@@ -1,3 +1,5 @@
+import { PaginationParams } from "./common";
+
 export interface NewsModel {
     id:number;
     title?:string;
@@ -6,5 +8,6 @@ export interface NewsModel {
 }
 
 export interface NewsListModel {
+    pagination?: PaginationParams,
     news:NewsModel[];
 }

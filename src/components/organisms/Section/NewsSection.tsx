@@ -1,4 +1,4 @@
-import { Container, FlexBox, H5, Paragraph, Typography } from "components/atoms";
+import { Box, Container, FlexBox, H5,  NavLink, Paragraph, Typography } from "components/atoms";
 import { NewsListModel } from "models/news"
 
 export const NewsSection: React.FC<NewsListModel> = ({news}) => {
@@ -31,7 +31,7 @@ export const NewsSection: React.FC<NewsListModel> = ({news}) => {
                                     key={value.id}
                                     mb={{_:3,md:"2rem"}}
                                     flexDirection={{_:"column",md:"inherit"}}>
-                                    <Paragraph mr={{_:0,md:5}}>{value.date}</Paragraph>
+                                    <Paragraph mr={{_:0,md:5}} minWidth="10rem">{value.date}</Paragraph>
                                     <Paragraph 
                                         ellipsis={true}
                                         borderBottom="1px solid white"
@@ -40,6 +40,11 @@ export const NewsSection: React.FC<NewsListModel> = ({news}) => {
                             )
                         })
                     }
+                    <Box textAlign="right">
+                        <NavLink 
+                            href="/news-list" 
+                            color="white">一覧を見る</NavLink>
+                    </Box>
                 </Container>
             </Container>
         </section>

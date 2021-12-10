@@ -21,7 +21,12 @@ export const Footer: React.FC = () => {
       title: "プライバシーポリシー",
       href: "/static-pages/privacy-policy",
     },
-    { id: 4, title: "お問い合わせ", href: "/contact" },
+    {
+      id: 4,
+      title: "会社情報",
+      href: "/static-pages/company",
+    },
+    { id: 5, title: "お問い合わせ", href: "/contact" },
   ];
   return (
     <footer>

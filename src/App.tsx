@@ -26,6 +26,11 @@ import {
   ShopLotteryListPage,
   ShopLotteryDetailPage,
   SiteUsagePolicyPage,
+  SiteCompanyPage,
+  SitePrivacyPolicyPage,
+  SiteLegalInformationPage,
+  SiteNewsListPage,
+  SiteNewsPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -52,6 +57,11 @@ export default function App() {
           <FancyRoute path="/" exact component={() => <SiteTopPage />} />
           <FancyRoute path="/example" exact component={() => <ExamplePage />} />
           <FancyRoute path="/static-pages/usage-policy" exact component={() => <SiteUsagePolicyPage />} />
+          <FancyRoute path="/static-pages/privacy-policy" exact component={() => <SitePrivacyPolicyPage />} />
+          <FancyRoute path="/static-pages/company" exact component={() => <SiteCompanyPage />} />
+          <FancyRoute path="/static-pages/legal-information" exact component={() => <SiteLegalInformationPage />} />
+          <FancyRoute path="/news-list" exact component={() => <SiteNewsListPage />} />
+          <FancyRoute path="/news/:id" exact component={() => <SiteNewsPage />} />
 
           {/* lottery page */}
           <FancyRoute path="/lotteries" exact component={() => <SiteLotteryListPage/>} />
