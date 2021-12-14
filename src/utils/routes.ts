@@ -30,7 +30,7 @@ export enum Route {
     SHOP_PASSWORD_FORGOT_CONFIRM_MAIL = "/shop/password-forgot-confirm-mail",
 
 
-    //Card
+    //Cart
     SHOPPING_CART = '/cart/shopping-cart',
     PAYMENT_METHOD = '/cart/payment-method',
     ORDER_CONFIRMATION = '/cart/order-confirmation',

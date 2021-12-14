@@ -12,6 +12,8 @@ import { DashBoardLayout } from "components/templates";
 import { useFormik } from "formik";
 import React from "react";
 import { yearListNextArr, monthListArr } from "utils";
+import * as yup from "yup";
+import valid from "card-validator";
 
 const UserCardPage: React.FC = () => {
   const initialValues = {
@@ -20,6 +22,25 @@ const UserCardPage: React.FC = () => {
     cartCustomerDate: "",
     cartCustomerCVC: "",
   };
+
+  const formSchema = yup.object().shape({
+    cartCustomerName: yup.string().required("カード名義を入力してください"),
+    cartCustomerNumber: yup
+      .string()
+      .test(
+        "test-number",
+        "カード番号を入力してください",
+        (value) => valid.number(value).isValid
+      ),
+    cartCustomerYear: yup.string().required("有効期限を入力してください"),
+    cartCustomerMonth: yup.string().required("有効期限を入力してください"),
+    cartCustomerCVC: yup
+      .number()
+      .typeError("セキュリティコードを入力してください")
+      .required("セキュリティコードを入力してください")
+      .min(0, "セキュリティコードを入力してください")
+      .max(1000, "セキュリティコードを入力してください"),
+  });
 
   const handleYearChange = (e) => {
     console.log(e);
@@ -32,10 +53,12 @@ const UserCardPage: React.FC = () => {
     console.log(values);
   };
 
-  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
-    onSubmit: handleFormSubmit,
-    initialValues,
-  });
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      onSubmit: handleFormSubmit,
+      initialValues,
+      validationSchema: formSchema,
+    });
 
   return (
     <DashBoardLayout>
@@ -90,6 +113,7 @@ const UserCardPage: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.cartCustomerName || ""}
+                errorText={touched.cartCustomerName && errors.cartCustomerName}
               />
             </Box>
           </FlexBox>
@@ -120,6 +144,9 @@ const UserCardPage: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.cartCustomerNumber || ""}
+                errorText={
+                  touched.cartCustomerNumber && errors.cartCustomerNumber
+                }
               />
             </Box>
           </FlexBox>
@@ -199,6 +226,7 @@ const UserCardPage: React.FC = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.cartCustomerCVC || ""}
+                errorText={touched.cartCustomerCVC && errors.cartCustomerCVC}
               />
             </Box>
           </FlexBox>

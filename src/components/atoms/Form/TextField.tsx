@@ -1,8 +1,5 @@
 import { cloneElement, InputHTMLAttributes, useEffect, useState } from "react";
-import { 
-  SpaceProps,   
-  BorderProps
-} from "styled-system";
+import { SpaceProps, BorderProps } from "styled-system";
 import { colorOptions } from "../../../interfaces";
 import { Box } from "../Box";
 import { SyledTextField, TextFieldWrapper } from "./TextFieldStyle";
@@ -13,11 +10,15 @@ export interface TextFieldProps {
   errorText?: any;
   id?: any;
   fullwidth?: boolean;
+  borderRadius?: string;
   endAdornment?: any;
 }
 
 export const TextField: React.FC<
-  InputHTMLAttributes<HTMLInputElement> & TextFieldProps & SpaceProps & BorderProps
+  InputHTMLAttributes<HTMLInputElement> &
+    TextFieldProps &
+    SpaceProps &
+    BorderProps
 > = ({ id, label, errorText, labelColor, endAdornment, ...props }) => {
   const [textId, setTextId] = useState(id);
 
@@ -36,6 +37,7 @@ export const TextField: React.FC<
     <TextFieldWrapper
       color={labelColor && `${labelColor}.main`}
       fullwidth={props.fullwidth}
+      borderRadius={props.borderRadius}
       {...spacingProps}
     >
       {label && <label htmlFor={textId}>{label}</label>}
@@ -53,5 +55,5 @@ export const TextField: React.FC<
 
 TextField.defaultProps = {
   color: "default",
-  borderRadius: 0,
+  borderRadius: "5px",
 };

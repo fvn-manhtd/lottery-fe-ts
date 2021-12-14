@@ -4,7 +4,8 @@ export type colorOptions =
   | "gradient"
   | "warn"
   | "error"
-  | "inherit";
+  | "inherit"
+  | "gray";
 
 export type deviceOptions = "xs" | "sm" | "md" | "lg";
 

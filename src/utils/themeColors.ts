@@ -41,6 +41,9 @@ const primaryColor = {
   light: "#FF6C00",
 
   text: "#ffffff",  
+
+  yellow: "#ffff00",
+  navy: "#056bb8"
 };
 
 const gradientColor = {

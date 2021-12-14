@@ -26,7 +26,8 @@ interface ButtonProps {
     | "contained"
     | "none"
     | "containedSecond"
-    | "danger";
+    | "danger"
+    | "outlinedSecond";
   fullwidth?: boolean;
 }
 export const Button = styled.button<
@@ -190,6 +191,17 @@ export const Button = styled.button<
             opacity: "0.7",
           },
         },
+        outlinedSecond: {
+          color: `${theme.colors[color]?.[900]}`,
+          border: "1px solid",
+          padding: "0.6rem",
+          fontSize: "0.7rem",
+          borderColor: `${theme.colors[color]?.[300]}`,
+          background: `${theme.colors[color]?.[400]}`,
+          "&:focus": {
+            boxShadow: `0px 1px 4px 0px ${theme.colors[color]?.[500]}`,
+          },
+        },
       },
     }),
   variant({
@@ -206,6 +218,9 @@ export const Button = styled.button<
       small: {
         height: "40px",
         fontSize: 14,
+      },
+      none: {
+        height: "auto",
       },
     },
   }),
