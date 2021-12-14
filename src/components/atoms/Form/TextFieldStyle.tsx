@@ -15,7 +15,7 @@ export const SyledTextField = styled.input<
       height: "50px",
       fontSize: "inherit",
       color: "body.text",
-      borderRadius: "5px",
+      borderRadius: props.borderRadius,
       border: "1px solid",
       borderColor: colors.gray[500],
       width: props.fullwidth ? "100%" : "inherit",

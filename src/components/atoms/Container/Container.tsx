@@ -9,12 +9,19 @@ import {
   position,
   PositionProps,
   space,
-  SpaceProps
+  SpaceProps,
+  shadow,
+  ShadowProps,
 } from "styled-system";
 import { layoutConstant } from "utils/constants";
 
 export const Container = styled.div<
-  LayoutProps & ColorProps & PositionProps & SpaceProps & FlexboxProps
+  LayoutProps &
+    ColorProps &
+    PositionProps &
+    SpaceProps &
+    FlexboxProps &
+    ShadowProps
 >`
   max-width: ${layoutConstant.containerWidth};
   margin-left: auto;
@@ -24,11 +31,10 @@ export const Container = styled.div<
     margin-left: 1rem;
     margin-right: 1rem;
   }
-
+  ${shadow}
   ${color}
   ${position}
   ${flexbox}
   ${layout}
   ${space}
 `;
-

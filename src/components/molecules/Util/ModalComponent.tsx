@@ -48,6 +48,7 @@ export const ModalComponent: React.FC<ModalProps> = ({
       </Box>
       <Modal
         isOpen={isModalOpen}
+        ariaHideApp={false}
         style={StyledModal(minHeight, maxWidth)}
         onRequestClose={() => {
           setIsModalOpen(false);

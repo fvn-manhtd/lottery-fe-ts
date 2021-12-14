@@ -28,6 +28,12 @@ import {
   UserCardPage,
   UserPurchaseHistoryPage,
   UserPurchaseHistoryDetailPage,
+  ShoppingCartPage,
+  PaymentMethodPage,
+  OrderConfirmationPage,
+  OrderCompletePage,
+  EffectStartPage,
+  EffectFinishPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -160,6 +166,39 @@ export default function App() {
             path={ROUTES.SHOP_PASSWORD_FORGOT_CONFIRM_MAIL}
             exact
             component={() => <ShopPasswordForgotConfirmMailPage />}
+          />
+
+          {/* cart pages */}
+
+          <FancyRoute
+            path={ROUTES.SHOPPING_CART}
+            exact
+            component={ShoppingCartPage}
+          />
+          <FancyRoute
+            path={ROUTES.PAYMENT_METHOD}
+            exact
+            component={ProtectedRoute(PaymentMethodPage)}
+          />
+          <FancyRoute
+            path={ROUTES.ORDER_CONFIRMATION}
+            exact
+            component={ProtectedRoute(OrderConfirmationPage)}
+          />
+          <FancyRoute
+            path={ROUTES.ORDER_COMPLETE}
+            exact
+            component={ProtectedRoute(OrderCompletePage)}
+          />
+          <FancyRoute
+            path={ROUTES.EFFECT_START}
+            exact
+            component={ProtectedRoute(EffectStartPage)}
+          />
+          <FancyRoute
+            path={ROUTES.EFFECT_FINISH}
+            exact
+            component={ProtectedRoute(EffectFinishPage)}
           />
 
           {/* error page */}
