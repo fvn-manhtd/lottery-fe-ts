@@ -82,33 +82,5 @@ export const fakeProductList = [
       image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",    
       prize: "A",
       quanity: 1
-  },  
-  {
-      id: 5,
-      title: "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
-      image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",    
-      prize: "A",
-      quanity: 1
-  },  
-  {
-      id: 6,
-      title: "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
-      image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",    
-      prize: "A",
-      quanity: 1
-  },  
-  {
-      id: 7,
-      title: "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
-      image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",    
-      prize: "A",
-      quanity: 1
-  },  
-  {
-      id: 8,
-      title: "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
-      image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",    
-      prize: "A",
-      quanity: 1
-  },  
+  }, 
 ];
