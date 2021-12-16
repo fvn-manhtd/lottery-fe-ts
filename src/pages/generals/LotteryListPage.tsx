@@ -3,17 +3,13 @@ import { LotteryList } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { Pagination } from "components/organisms";
-import { LotteryListModel } from "models";
+import { fakeLotteryList as lotteryList } from "utils/fakeData";
 
-interface LotteryListPageProps extends LotteryListModel {
-  isShopPage?: boolean;
-};
-
-export const LotteryListPage: React.FC<LotteryListPageProps> = ({ lotteries, isShopPage }) => {
+const LotteryListPage = () => {
 
   return (
     <>
-      <BaseLayout isShopPage={isShopPage}>
+      <BaseLayout>
         <main>
           <Container>
             <Box p={{ _: 0, md: 40 }}>
@@ -83,7 +79,7 @@ export const LotteryListPage: React.FC<LotteryListPageProps> = ({ lotteries, isS
               </Box>
 
               {/** lottery list */}
-              <LotteryList lotteries={lotteries}/>
+              <LotteryList lotteries={lotteryList.lotteries}/>
               
               {/* pagination */}
               <Box 
@@ -101,3 +97,5 @@ export const LotteryListPage: React.FC<LotteryListPageProps> = ({ lotteries, isS
     </>
   );
 };
+
+export default LotteryListPage;

@@ -2,7 +2,7 @@ import { Box, Paragraph } from "components/atoms";
 import { StaticPage } from "pages/common/StaticPage";
 import { fakeStaticPageData as data } from "utils/fakeData";
 
-const SiteLegalInformationPage = () => {
+const LegalInformationPage = () => {
     return (
         <>
             <StaticPage
@@ -22,4 +22,4 @@ const SiteLegalInformationPage = () => {
     )
 };
 
-export default SiteLegalInformationPage;
+export default LegalInformationPage;

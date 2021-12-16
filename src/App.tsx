@@ -6,9 +6,9 @@ import { useEffect, useMemo } from "react";
 import {
   ProtectedRoute,
   Loading,
-  SiteTopPage,
+  TopPage,
   ExamplePage,
-  SiteLotteryListPage,
+  LotteryListPage,
   UserMyPage,
   UserLoginPage,
   ShopLoginPage,
@@ -23,15 +23,12 @@ import {
   ShopPasswordForgotPage,
   ShopCreateAccountPage,
   ShopOperationSettingPage,
-  ShopTopPage,
-  ShopLotteryListPage,
-  ShopLotteryDetailPage,
-  SiteUsagePolicyPage,
-  SiteCompanyPage,
-  SitePrivacyPolicyPage,
-  SiteLegalInformationPage,
-  SiteNewsListPage,
-  SiteNewsDetailPage,
+  UsagePolicyPage,
+  CompanyPage,
+  PrivacyPolicyPage,
+  LegalInformationPage,
+  NewsListPage,
+  NewsDetailPage,
   UserFavoritePage,
   UserShippingAddressPage,
   UserCardPage,
@@ -67,9 +64,9 @@ export default function App() {
         <Switch>
           {/* general pages */}
           <FancyRoute 
-            path={ROUTES.TOP} 
+            path={ROUTES.HOME} 
             exact 
-            component={() => <SiteTopPage />} 
+            component={() => <TopPage />} 
           />
           <FancyRoute 
             path={ROUTES.EXAMPLE} 
@@ -79,39 +76,39 @@ export default function App() {
           <FancyRoute 
             path={ROUTES.STATIC_USAGE_POLICY} 
             exact 
-            component={() => <SiteUsagePolicyPage />} 
+            component={() => <UsagePolicyPage />} 
           />
           <FancyRoute 
             path={ROUTES.STATIC_POLICY} 
             exact 
-            component={() => <SitePrivacyPolicyPage />} 
+            component={() => <PrivacyPolicyPage />} 
           />
           <FancyRoute 
             path={ROUTES.STATIC_COMPANY} 
             exact 
-            component={() => <SiteCompanyPage />} 
+            component={() => <CompanyPage />} 
           />
           <FancyRoute 
             path={ROUTES.STATIC_LEGAL} 
             exact 
-            component={() => <SiteLegalInformationPage />} 
+            component={() => <LegalInformationPage />} 
           />
           <FancyRoute 
             path={ROUTES.NEWS_LIST} 
             exact 
-            component={() => <SiteNewsListPage />} 
+            component={() => <NewsListPage />} 
           />
           <FancyRoute 
             path={ROUTES.NEWS_DETAIL} 
             exact 
-            component={() => <SiteNewsDetailPage />} 
+            component={() => <NewsDetailPage />} 
           />
 
           {/* lottery pages */}
           <FancyRoute 
-            path={ROUTES.LOTTERY_LIST} 
+            path={ROUTES.LOTTERIES} 
             exact 
-            component={() => <SiteLotteryListPage/>} 
+            component={() => <LotteryListPage/>} 
           />
           <FancyRoute
             path={ROUTES.EXAMPLE}
@@ -216,23 +213,7 @@ export default function App() {
             component={() => <ShopPasswordForgotConfirmMailPage />}
           />
 
-          {/* shop front pages */}
-          <FancyRoute
-            path={ROUTES.SHOP_TOP}
-            exact
-            component={() => <ShopTopPage />}
-          />
-          <FancyRoute
-            path={ROUTES.SHOP_LOTTERY_LIST}
-            exact
-            component={() => <ShopLotteryListPage />}
-          />
-          <FancyRoute
-            path={ROUTES.SHOP_LOTTERY_DETAIL}
-            exact
-            component={() => <ShopLotteryDetailPage />}
           {/* cart pages */}
-          />
 
           <FancyRoute
             path={ROUTES.SHOPPING_CART}

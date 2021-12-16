@@ -23,14 +23,10 @@ import {
   Grid,
   Card1,
   Pagination,
-  LotteryRankedProduct,
   LotteryProduct,
   Lottery,
-  LotteryRankDescription,
   Breadcrumb,
   LotteryList,
-  PurchaseModal,
-  PurchaseCard,
   GridSection,
 } from "components/organisms";
 import { BaseLayout } from "components/templates";
@@ -294,14 +290,6 @@ const ExamplePage = () => {
           />
 
           <Box width="20%" mb={4} minWidth={180}>
-            <LotteryRankedProduct
-              src="http://placehold.jp/320x320.png"
-              rankTitle="A賞"
-              rank={1}
-            />
-          </Box>
-
-          <Box width="20%" mb={4} minWidth={180}>
             <LotteryProduct
               src="http://placehold.jp/320x320.png"
               title="商品タイトル商品タイトル"
@@ -316,32 +304,6 @@ const ExamplePage = () => {
               period="販売終了日　2021年00月00日(金)"
             />
           </Box>
-
-          <LotteryRankDescription
-            title="商品タイトル"
-            description="説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります。"
-            rankTitle="A賞"
-            rank={1}
-            probability={2}
-            products={[
-              {
-                src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
-                title: "商品タイトル商品タイトル",
-              },
-              {
-                src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
-                title: "商品タイトル商品タイトル",
-              },
-              {
-                src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
-                title: "商品タイトル商品タイトル",
-              },
-              {
-                src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
-                title: "商品タイトル商品タイトル",
-              },
-            ]}
-          />
 
           <LotteryList lotteries={[
             {
@@ -363,12 +325,9 @@ const ExamplePage = () => {
           ]}/>
 
           <ModalComponent
-            buttonElement={<div>purchase modal</div>}
-            content={<PurchaseModal/>}
+            buttonElement={<div>this is modal</div>}
+            content={<div>content</div>}
           ></ModalComponent>
-
-          <PurchaseCard times={1} color="blue"/>
-          <PurchaseCard times={10} color="red"/>
 
           <GridSection  
             title="セクション"

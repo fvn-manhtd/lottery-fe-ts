@@ -1,13 +1,13 @@
 export enum Route {
     //General Pages
-    TOP = '/',
+    HOME = '/',
     NEWS_LIST="/news-list",
     NEWS_DETAIL="/news/:id",
     CONTACT = "/contact",
     EXAMPLE = '/example',
 
     //Lottery
-    LOTTERY_LIST = '/lotteries',
+    LOTTERIES = '/lotteries',
     LOTTERY_DETAIL = '/lottery/:id',
     
     //User
@@ -33,11 +33,6 @@ export enum Route {
     SHOP_PASSWORD_FORGOT = "/shop/password-forgot",
     SHOP_NEW_PASSWORD = "/shop/new-password",
     SHOP_PASSWORD_FORGOT_CONFIRM_MAIL = "/shop/password-forgot-confirm-mail",
-
-    //Shop Front Pages
-    SHOP_TOP="/:shop",
-    SHOP_LOTTERY_LIST="/:shop/lotteries",
-    SHOP_LOTTERY_DETAIL="/:shop/lottery/:id",
 
     //Cart
     SHOPPING_CART = '/cart/shopping-cart',

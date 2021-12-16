@@ -2,7 +2,7 @@ import { Box, Container, Paragraph, H3 } from "components/atoms";
 import { BaseLayout } from "components/templates";
 import { fakeNewsDetail as newsDetailData } from "utils/fakeData";
 
-const SiteNewsDetailPage = () => {
+const NewsDetailPage = () => {
     return (
         <BaseLayout>
             <main>
@@ -20,4 +20,4 @@ const SiteNewsDetailPage = () => {
     )
 }
 
-export default SiteNewsDetailPage;
+export default NewsDetailPage;

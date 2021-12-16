@@ -32,10 +32,10 @@ export const NewsSection: React.FC<NewsListModel> = ({news}) => {
                                     mb={{_:3,md:"2rem"}}
                                     flexDirection={{_:"column",md:"inherit"}}>
                                     <Paragraph mr={{_:0,md:5}} minWidth="10rem">{value.date}</Paragraph>
-                                    <Paragraph 
-                                        ellipsis={true}
-                                        borderBottom="1px solid white"
-                                        >{value.content}</Paragraph>
+                                    
+                                    <NavLink 
+                                        href={"/news/"+value.id}
+                                        color="white">{value.content}</NavLink>
                                 </FlexBox>
                             )
                         })

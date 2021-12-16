@@ -2,34 +2,36 @@ import { FlexBox, Spinner } from "components/atoms";
 import { lazy } from "react";
 
 /* homepage */
-export const SiteTopPage = lazy(
-  () => import("pages/generals/SiteTopPage")
+export const TopPage = lazy(
+  () => import("pages/generals/TopPage")
 );
 export const ExamplePage = lazy(
   () => import("pages/generals/ExamplePage")
 );
-export const SiteUsagePolicyPage = lazy(
-  ()=> import("pages/generals/SiteUsagePolicyPage")
+
+export const NewsListPage = lazy(
+  ()=> import("pages/generals/NewsListPage")
 );
-export const SitePrivacyPolicyPage = lazy(
-  ()=> import("pages/generals/SitePrivacyPolicyPage")
+export const NewsDetailPage = lazy(
+  ()=> import("pages/generals/NewsDetailPage")
 );
-export const SiteCompanyPage = lazy(
-  ()=> import("pages/generals/SiteCompanyPage")
+/* static pages */
+export const UsagePolicyPage = lazy(
+  ()=> import("pages/static/UsagePolicyPage")
 );
-export const SiteLegalInformationPage = lazy(
-  ()=> import("pages/generals/SiteLegalInformationPage")
+export const PrivacyPolicyPage = lazy(
+  ()=> import("pages/static/PrivacyPolicyPage")
 );
-export const SiteNewsListPage = lazy(
-  ()=> import("pages/generals/SiteNewsListPage")
+export const CompanyPage = lazy(
+  ()=> import("pages/static/CompanyPage")
 );
-export const SiteNewsDetailPage = lazy(
-  ()=> import("pages/generals/SiteNewsDetailPage")
+export const LegalInformationPage = lazy(
+  ()=> import("pages/static/LegalInformationPage")
 );
 
 /*lottery pages */
-export const SiteLotteryListPage = lazy(
-  () => import("pages/generals/SiteLotteryListPage")
+export const LotteryListPage = lazy(
+  () => import("pages/generals/LotteryListPage")
 );
 
 /* user pages */
@@ -91,16 +93,6 @@ export const ShopOperationSettingPage = lazy(
   () => import("pages/shop/ShopOperationSettingPage")
 );
 
-/** shop front pages */
-export const ShopTopPage = lazy(
-  () => import("pages/shop/ShopTopPage")
-);
-export const ShopLotteryListPage = lazy(
-  () => import("pages/shop/ShopLotteryListPage")
-);
-export const ShopLotteryDetailPage = lazy(
-  () => import("pages/shop/ShopLotteryDetailPage")
-);
 /* Cart pages */
 export const ShoppingCartPage = lazy(
   () => import("pages/cart/ShoppingCartPage")

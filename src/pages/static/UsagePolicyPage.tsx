@@ -2,11 +2,11 @@ import { Box, Paragraph } from "components/atoms";
 import { StaticPage } from "pages/common/StaticPage";
 import { fakeStaticPageData as data } from "utils/fakeData";
 
-const SitePrivacyPolicyPage = () => {
+const UsagePolicyPage = () => {
     return (
         <>
             <StaticPage
-                title="プライバシーポリシー"
+                title="利用規約"
                 contents={
                     data.contents.map((value,index)=>{
                         return (
@@ -22,4 +22,4 @@ const SitePrivacyPolicyPage = () => {
     )
 };
 
-export default SitePrivacyPolicyPage;
+export default UsagePolicyPage;

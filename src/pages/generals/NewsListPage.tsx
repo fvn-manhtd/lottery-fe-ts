@@ -3,7 +3,7 @@ import { Pagination } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import { fakeNewsList as newsListData } from "utils/fakeData";
 
-const SiteNewsListPage = () => {
+const NewsListPage = () => {
     return (
         <>
             <BaseLayout>
@@ -39,4 +39,4 @@ const SiteNewsListPage = () => {
     )
 }
 
-export default SiteNewsListPage;
+export default NewsListPage;

@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from "components/atoms";
 import {  LotteryList } from "components/organisms";
 import { BaseLayout } from "components/templates";
-import { LotteryListModel } from "models";
+import { fakeLotteryList as lotteryList } from "utils/fakeData";
 import {
   CarouselProvider,
   Slider,
@@ -15,22 +15,18 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import { lotteryStatusObj } from "utils/constants";
 import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
 
-interface TopPageProps extends LotteryListModel {
-  isShopPage?: boolean;
-};
-
-export const TopPage:React.FC<TopPageProps> = ({ lotteries, isShopPage }) => {
+const TopPage = () => {
 
   return (
     <>
-      <BaseLayout isShopPage={isShopPage}>
+      <BaseLayout>
         <main>
           {/* carousel lottery list */}
           <CarouselStyle>
             <CarouselProvider
               naturalSlideWidth={100}
               naturalSlideHeight={62}
-              totalSlides={lotteries.length}
+              totalSlides={lotteryList.lotteries.length}
               visibleSlides={1}
               currentSlide={0}
               infinite={true}
@@ -38,7 +34,7 @@ export const TopPage:React.FC<TopPageProps> = ({ lotteries, isShopPage }) => {
               interval={5000}
             >
               <Slider>
-                {lotteries.map((value, index) => {
+                {lotteryList.lotteries.map((value, index) => {
                   return (
                     <Slide index={index} className={"carousel__slide-"+value.status} key={value.id}>
                       {
@@ -142,7 +138,7 @@ export const TopPage:React.FC<TopPageProps> = ({ lotteries, isShopPage }) => {
               </Box>
 
               {/** lottery list */}
-              <LotteryList lotteries={lotteries}/>
+              <LotteryList lotteries={lotteryList.lotteries}/>
             
             </Box>
           </Container>
@@ -152,3 +148,4 @@ export const TopPage:React.FC<TopPageProps> = ({ lotteries, isShopPage }) => {
   );
 };
 
+export default TopPage;
