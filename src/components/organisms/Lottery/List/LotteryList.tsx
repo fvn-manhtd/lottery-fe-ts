@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import { Box } from "components/atoms";
 import { Lottery } from "components/organisms";
-import { Lottery as LotteryModel } from "models/lottery";
-
-type LotteryListProps = {
-    lotteries:LotteryModel[];
-};
+import { LotteryListModel } from "models";
 
 const StyledBox = styled.div `
 display: grid;
@@ -16,7 +12,7 @@ justify-content: center;
 }
 `
 
-export const LotteryList: React.FC<LotteryListProps> = ({ lotteries }) => {
+export const LotteryList: React.FC<LotteryListModel> = ({ lotteries }) => {
     return (
         <StyledBox>
             {lotteries.map((value) => {

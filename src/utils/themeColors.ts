@@ -4,8 +4,10 @@ const gray = {
   700: "#37414A",
   650: "#898989",
   600: "#7D879C", 
+  550: "#e5e5e5",
   500: "#C9C9C9", //Border Color
   400: "#F6F7FB", 
+  350: "#a0a0a0",
   300: "#E3E9EF",
   200: "#F3F5F9", 
   100: "#F6F9FC",
@@ -18,6 +20,7 @@ const textColor = {
   hint: gray[600],
   muted: gray[600],
   disabled: gray[400],
+  link: "#0095ed",
 };
 
 const bodyColor = {
@@ -47,9 +50,10 @@ const primaryColor = {
 };
 
 const gradientColor = {
-  100: 'linear-gradient(90deg, #FA6C00 0%, #F4C521 100%)',
+  100: 'linear-gradient(90deg, #ED378E 0%, #FA6268 100%)',
   200: 'linear-gradient(90deg, #06DC74 0%, #6CD625 100%)',
-  300: 'linear-gradient(90deg, #725DDF 0%, #84B5D3 100%)',
+  300: 'linear-gradient(90deg, #FA6268 0%, #F4C521 100%)',
+  400: 'linear-gradient(90deg, #725DDF 0%, #84B5D3 100%)',
   text: "#ffffff"
 };
 

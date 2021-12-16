@@ -2,11 +2,37 @@ import { FlexBox, Spinner } from "components/atoms";
 import { lazy } from "react";
 
 /* homepage */
-export const HomePage = lazy(() => import("pages/generals/HomePage"));
-export const ExamplePage = lazy(() => import("pages/generals/ExamplePage"));
+export const TopPage = lazy(
+  () => import("pages/generals/TopPage")
+);
+export const ExamplePage = lazy(
+  () => import("pages/generals/ExamplePage")
+);
+
+export const NewsListPage = lazy(
+  ()=> import("pages/generals/NewsListPage")
+);
+export const NewsDetailPage = lazy(
+  ()=> import("pages/generals/NewsDetailPage")
+);
+/* static pages */
+export const UsagePolicyPage = lazy(
+  ()=> import("pages/static/UsagePolicyPage")
+);
+export const PrivacyPolicyPage = lazy(
+  ()=> import("pages/static/PrivacyPolicyPage")
+);
+export const CompanyPage = lazy(
+  ()=> import("pages/static/CompanyPage")
+);
+export const LegalInformationPage = lazy(
+  ()=> import("pages/static/LegalInformationPage")
+);
 
 /*lottery pages */
-export const LotteriesPage = lazy(() => import("pages/generals/Lotteries"));
+export const LotteryListPage = lazy(
+  () => import("pages/generals/LotteryListPage")
+);
 
 /* user pages */
 export const UserMyPage = lazy(() => import("pages/user/UserMyPage"));
@@ -45,7 +71,9 @@ export const UserRegisterConfirmMailPage = lazy(
 );
 
 /* shop pages */
-export const ShopLoginPage = lazy(() => import("pages/shop/ShopLoginPage"));
+export const ShopLoginPage = lazy(
+  () => import("pages/shop/ShopLoginPage")
+);
 export const ShopNewPasswordPage = lazy(
   () => import("pages/shop/ShopNewPasswordPage")
 );

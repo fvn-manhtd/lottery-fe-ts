@@ -3,16 +3,16 @@ import { LotteryList } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { Pagination } from "components/organisms";
-import { fakeLotteryList } from "utils/fakeData";
+import { fakeLotteryList as lotteryList } from "utils/fakeData";
 
-const Lotteries = () => {
+const LotteryListPage = () => {
 
   return (
     <>
       <BaseLayout>
         <main>
           <Container>
-            <Box p={[0, 0, 40, 40]}>
+            <Box p={{ _: 0, md: 40 }}>
               
               {/*title*/}
               <Box marginY="2rem"> 
@@ -79,7 +79,7 @@ const Lotteries = () => {
               </Box>
 
               {/** lottery list */}
-              <LotteryList lotteries={fakeLotteryList}/>
+              <LotteryList lotteries={lotteryList.lotteries}/>
               
               {/* pagination */}
               <Box 
@@ -98,4 +98,4 @@ const Lotteries = () => {
   );
 };
 
-export default Lotteries;
+export default LotteryListPage;

@@ -1,4 +1,5 @@
 import { Box, Paragraph, Image } from "components/atoms";
+import { Card } from "components/organisms";
 
 type LotteryProductProps = {
   src: string;
@@ -11,7 +12,8 @@ export const LotteryProduct: React.FC<LotteryProductProps> = ({
 }) => {
   return (
     <Box>
-      <Image width="100%" src={src} borderRadius={20} alt="商品画像" />
+      <Card hoverEffect={true} borderRadius={20}>
+        <Image width="100%" src={src} borderRadius={20} alt="商品画像" /></Card>
       <Paragraph
         color="text.primary"
         fontWeight="regular"

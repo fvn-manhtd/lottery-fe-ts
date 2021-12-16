@@ -26,6 +26,7 @@ type BoxProps = {
   cursor?: string;
   transition?: string;
   transform?: string;
+  boxShadow?: string;
   style?: CSSProperties;
 };
 
@@ -41,8 +42,8 @@ export const Box = styled.div<
     TypographyProps &
     BackgroundProps
 >(
-  ({ shadow, cursor, transition, transform, theme }) => ({
-    boxShadow: theme.shadows[shadow],
+  ({ shadow, cursor, transition, transform, boxShadow, theme }) => ({
+    boxShadow: boxShadow?boxShadow:theme.shadows[shadow],
     cursor,
     transition,
     transform,

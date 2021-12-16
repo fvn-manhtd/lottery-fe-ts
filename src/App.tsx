@@ -6,9 +6,9 @@ import { useEffect, useMemo } from "react";
 import {
   ProtectedRoute,
   Loading,
-  HomePage,
+  TopPage,
   ExamplePage,
-  LotteriesPage,
+  LotteryListPage,
   UserMyPage,
   UserLoginPage,
   ShopLoginPage,
@@ -23,6 +23,12 @@ import {
   ShopPasswordForgotPage,
   ShopCreateAccountPage,
   ShopOperationSettingPage,
+  UsagePolicyPage,
+  CompanyPage,
+  PrivacyPolicyPage,
+  LegalInformationPage,
+  NewsListPage,
+  NewsDetailPage,
   UserFavoritePage,
   UserShippingAddressPage,
   UserCardPage,
@@ -56,19 +62,58 @@ export default function App() {
     <>
       <Suspense fallback={<Loading />}>
         <Switch>
-          {/* home page */}
-          <FancyRoute path={ROUTES.HOME} exact component={() => <HomePage />} />
+          {/* general pages */}
+          <FancyRoute 
+            path={ROUTES.HOME} 
+            exact 
+            component={() => <TopPage />} 
+          />
+          <FancyRoute 
+            path={ROUTES.EXAMPLE} 
+            exact 
+            component={() => <ExamplePage />} 
+          />
+          <FancyRoute 
+            path={ROUTES.STATIC_USAGE_POLICY} 
+            exact 
+            component={() => <UsagePolicyPage />} 
+          />
+          <FancyRoute 
+            path={ROUTES.STATIC_POLICY} 
+            exact 
+            component={() => <PrivacyPolicyPage />} 
+          />
+          <FancyRoute 
+            path={ROUTES.STATIC_COMPANY} 
+            exact 
+            component={() => <CompanyPage />} 
+          />
+          <FancyRoute 
+            path={ROUTES.STATIC_LEGAL} 
+            exact 
+            component={() => <LegalInformationPage />} 
+          />
+          <FancyRoute 
+            path={ROUTES.NEWS_LIST} 
+            exact 
+            component={() => <NewsListPage />} 
+          />
+          <FancyRoute 
+            path={ROUTES.NEWS_DETAIL} 
+            exact 
+            component={() => <NewsDetailPage />} 
+          />
+
+          {/* lottery pages */}
+          <FancyRoute 
+            path={ROUTES.LOTTERIES} 
+            exact 
+            component={() => <LotteryListPage/>} 
+          />
           <FancyRoute
             path={ROUTES.EXAMPLE}
             exact
             component={() => <ExamplePage />}
-          />
-
-          {/* lottery page */}
-          <FancyRoute
-            path={ROUTES.LOTTERIES}
-            exact
-            component={() => <LotteriesPage />}
           />
 
           {/* user pages */}

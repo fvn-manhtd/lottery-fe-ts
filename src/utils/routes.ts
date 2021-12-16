@@ -1,5 +1,10 @@
 export enum Route {
+    //General Pages
     HOME = '/',
+    NEWS_LIST="/news-list",
+    NEWS_DETAIL="/news/:id",
+    CONTACT = "/contact",
+    EXAMPLE = '/example',
 
     //Lottery
     LOTTERIES = '/lotteries',
@@ -29,7 +34,6 @@ export enum Route {
     SHOP_NEW_PASSWORD = "/shop/new-password",
     SHOP_PASSWORD_FORGOT_CONFIRM_MAIL = "/shop/password-forgot-confirm-mail",
 
-
     //Cart
     SHOPPING_CART = '/cart/shopping-cart',
     PAYMENT_METHOD = '/cart/payment-method',
@@ -39,13 +43,11 @@ export enum Route {
     EFFECT_FINISH = '/cart/effect-finish',
 
     //Static Pages
-    EXAMPLE = '/example',
+    
     STATIC_GUIDELINE = "/static-pages/guideline",
     STATIC_USAGE_POLICY = "/static-pages/usage-policy",
     STATIC_LEGAL = "/static-pages/legal-information",
     STATIC_POLICY = "/static-pages/privacy-policy",
-
-
-    CONTACT = "/contact",
+    STATIC_COMPANY = "/static-pages/company",
 
 }

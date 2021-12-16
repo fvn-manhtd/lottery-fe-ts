@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from "components/atoms";
 import {  LotteryList } from "components/organisms";
 import { BaseLayout } from "components/templates";
+import { fakeLotteryList as lotteryList } from "utils/fakeData";
 import {
   CarouselProvider,
   Slider,
@@ -12,10 +13,9 @@ import {
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { lotteryStatusObj } from "utils/constants";
-import { CarouselStyle, StyledLabelText } from "./HomePageStyle";
-import { fakeLotteryList } from "utils/fakeData";
+import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
 
-const HomePage = () => {
+const TopPage = () => {
 
   return (
     <>
@@ -26,7 +26,7 @@ const HomePage = () => {
             <CarouselProvider
               naturalSlideWidth={100}
               naturalSlideHeight={62}
-              totalSlides={fakeLotteryList.length}
+              totalSlides={lotteryList.lotteries.length}
               visibleSlides={1}
               currentSlide={0}
               infinite={true}
@@ -34,9 +34,9 @@ const HomePage = () => {
               interval={5000}
             >
               <Slider>
-                {fakeLotteryList.map((value, index) => {
+                {lotteryList.lotteries.map((value, index) => {
                   return (
-                    <Slide index={index} className={"carousel__slide-"+value.status}>
+                    <Slide index={index} className={"carousel__slide-"+value.status} key={value.id}>
                       {
                       value.status<=2?
                       <StyledLabelText 
@@ -97,7 +97,7 @@ const HomePage = () => {
             </CarouselProvider>
           </CarouselStyle>
           <Container>
-            <Box p={[0, 0, 40, 40]}>
+            <Box p={{ _: 0, md: 40 }}>
 
               {/* title */}
               <Box marginY="2rem">
@@ -138,7 +138,7 @@ const HomePage = () => {
               </Box>
 
               {/** lottery list */}
-              <LotteryList lotteries={fakeLotteryList}/>
+              <LotteryList lotteries={lotteryList.lotteries}/>
             
             </Box>
           </Container>
@@ -148,4 +148,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default TopPage;

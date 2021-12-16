@@ -38,7 +38,7 @@ const UserFavoritePage = () => {
 
         <Box mb="2rem">
           <Grid container spacing={6}>
-            {fakeLotteryList.map((item) => (
+            {fakeLotteryList.lotteries.map((item) => (
               <Grid item lg={3} sm={6} xs={12} key={item.id}>
                 <LotteryFavorite
                   src={item.image}

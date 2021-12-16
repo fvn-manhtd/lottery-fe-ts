@@ -23,11 +23,11 @@ import {
   Grid,
   Card1,
   Pagination,
-  LotteryRankedProduct,
   LotteryProduct,
   Lottery,
-  LotteryRankDescription,
   Breadcrumb,
+  LotteryList,
+  GridSection,
 } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import { colors } from "utils";
@@ -289,20 +289,6 @@ const ExamplePage = () => {
             alt="image"
           />
 
-          {[{ src: "http://placehold.jp/320x320.png", rank: "A賞" }].map(
-            (value, index) => {
-              return (
-                <Box width="20%" mb={4} minWidth={180} key={index}>
-                  <LotteryRankedProduct
-                    src={value.src}
-                    index={index}
-                    rank={value.rank}
-                  />
-                </Box>
-              );
-            }
-          )}
-
           <Box width="20%" mb={4} minWidth={180}>
             <LotteryProduct
               src="http://placehold.jp/320x320.png"
@@ -310,70 +296,54 @@ const ExamplePage = () => {
             />
           </Box>
 
-          <Box display="flex" flexWrap="wrap">
-            <Box width="30%" mb={4} minWidth={250} mr={3}>
-              <Lottery
-                src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
-                title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
-                status={1}
-                period="販売終了日　2021年00月00日(金)"
-              />
-            </Box>
-            <Box width="30%" mb={4} minWidth={250} mr={3}>
-              <Lottery
-                src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
-                title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
-                status={2}
-                period="販売終了日　2021年00月00日(金)"
-              />
-            </Box>
-            <Box width="30%" mb={4} minWidth={250} mr={3}>
-              <Lottery
-                src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
-                title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
-                status={3}
-                period="販売終了日　2021年00月00日(金)"
-              />
-            </Box>
-            <Box width="30%" mb={4} minWidth={250}>
-              <Lottery
-                src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
-                title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
-                status={4}
-                period="COMING SOON!"
-              />
-            </Box>
+          <Box width="30%" mb={4} minWidth={250} mr={3}>
+            <Lottery
+              src="https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg"
+              title="スクラッチのタイトルが入りますスクラッチのタイトルが入ります"
+              status={1}
+              period="販売終了日　2021年00月00日(金)"
+            />
           </Box>
 
-          <LotteryRankDescription
-            title="商品タイトル"
-            description="説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります説明文が入ります。"
-            rank="A賞"
-            probability={2}
-            products={[
-              {
-                src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
-                title: "商品タイトル商品タイトル",
-              },
-              {
-                src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
-                title: "商品タイトル商品タイトル",
-              },
-              {
-                src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
-                title: "商品タイトル商品タイトル",
-              },
-              {
-                src: "https://files.bts-official.jp/files/img/profile2106/BTS_all.jpg",
-                title: "商品タイトル商品タイトル",
-              },
-            ]}
-          />
+          <LotteryList lotteries={[
+            {
+              id: 1,
+              title:
+                "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
+              image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",
+              startedAt: "2021/00/00",
+              status: 1,
+            },
+            {
+              id: 2,
+              title:
+                "スクラッチのタイトルが入ります。スクラッチのタイトルが入ります。",
+              image: "https://www.bs11.jp/anime/img/selection_project_main.jpg",
+              startedAt: "2021/00/00",
+              status: 2,
+            }
+          ]}/>
 
           <ModalComponent
-            buttonElement={<div>click me</div>}
-            content={<Box width="20%" mr={4} minWidth={180}></Box>}
+            buttonElement={<div>this is modal</div>}
+            content={<div>content</div>}
           ></ModalComponent>
+
+          <GridSection  
+            title="セクション"
+            subTitle="SECTION"
+                content={
+                <>
+                    <Button mb={10} size="small" variant="text" color="primary">
+                      {" "}
+                      This is Button
+                    </Button>
+                    <Button mb={10} size="small" variant="text" color="primary">
+                      {" "}
+                      This is Button
+                    </Button>
+                </>}
+            />
 
           <Spinner
             size={60}

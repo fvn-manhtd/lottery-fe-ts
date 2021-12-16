@@ -1,4 +1,4 @@
-export interface Lottery {
+export interface LotteryModel {
     id: number
     title?: string
     status?: number
@@ -17,5 +17,11 @@ export interface Lottery {
     shippingFee?: string
     deliveryDetail?: string
     publishedAt?: string
-    publicStatus?: string
+    publicStatus?: string,
+    url?:string,
 }
+
+export interface LotteryListModel {
+    lotteries:LotteryModel[];
+}
+

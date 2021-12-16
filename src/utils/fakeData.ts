@@ -1,4 +1,7 @@
-export const fakeLotteryList = [
+import { LotteryListModel, NewsListModel, NewsModel, SiteDataListModel } from "models";
+
+export const fakeLotteryList :LotteryListModel = {
+  lotteries: [
       {
         id: 1,
         title:
@@ -39,8 +42,70 @@ export const fakeLotteryList = [
         startedAt: "2021/00/00",
         status: 1,
       },
-];
-    
+  ]
+}
+
+export const fakeNewsList: NewsListModel = {
+  pagination: {
+    _limit:10,
+    _page:1,
+    _total:10,
+  },
+  news: [
+    {
+      id:1,
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      date:"2021年00月00日 (金)",
+    },
+    {
+      id:2,
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      date:"2021年00月00日 (金)",
+    },
+    {
+      id:3,
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      date:"2021年00月00日 (金)",
+    },
+    {
+      id:4,
+      content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+      date:"2021年00月00日 (金)",
+    },
+  ]
+}
+
+export const fakeNewsDetail: NewsModel = {
+  id:1,
+  title:"サンプルタイトル",
+  content:"お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。お知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入りますお知らせ内容が入ります。",
+  date: "2021年00月00日 (金)"
+}
+
+export const fakeStaticPageData: SiteDataListModel = {
+  contents: [
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+    {
+      title:"タイトル",
+      text:"サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト"
+    },
+  ]
+}
 
 export const fakeLotteryPurchasedHistoryList = [
   {
@@ -52,7 +117,6 @@ export const fakeLotteryPurchasedHistoryList = [
       paymethod: "VISA"              
   },      
 ];
-
 
 export const fakeProductList = [
   {

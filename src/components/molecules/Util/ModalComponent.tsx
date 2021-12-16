@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { Box, Icon } from "components/atoms";
+import { Box, Icon, FlexBox } from "components/atoms";
 
 export type ModalProps = {
   buttonElement: JSX.Element;
@@ -43,7 +43,7 @@ export const ModalComponent: React.FC<ModalProps> = ({
 
   return (
     <div>
-      <Box cursor="pointer" onClick={() => setIsModalOpen(true)}>
+      <Box onClick={() => setIsModalOpen(true)}>
         {buttonElement}
       </Box>
       <Modal
@@ -54,6 +54,27 @@ export const ModalComponent: React.FC<ModalProps> = ({
           setIsModalOpen(false);
         }}
       >
+        <FlexBox 
+          borderRadius="50%" 
+          bg="gray.350" 
+          width={35} 
+          height={35}
+          color="white"
+          border="2px solid white"
+          alignItems="center"
+          justifyContent="center"
+          position="absolute"
+          top={-15}
+          right={-15}
+          cursor="pointer"
+          onClick={() => {
+            setIsModalOpen(false);
+          }}
+          >
+          <Icon variant="medium">
+            close
+          </Icon>
+        </FlexBox>
         {content}
 
         <Box
