@@ -3,11 +3,10 @@ import { Footer, Header, Menu, NewsSection, RegisterSection } from "components/o
 import styled from "styled-components";
 import { getTheme } from "utils/utils";
 import { ReactNode } from "hoist-non-react-statics/node_modules/@types/react";
-import { fakeNewsList as newsList } from "utils/fakeData";  // memo: get data from an higher component such as App.tsx and store them in redux store, and retrieve them here.
+import { fakeNewsList as newsList } from "utils/fakeData";  
 
 type BaseLayoutProps = {
   children: ReactNode;
-  isShopPage?: boolean;
 };
 
 const BaseLayoutStyle = styled.div`
@@ -16,7 +15,7 @@ const BaseLayoutStyle = styled.div`
   }
 `;
 
-export const BaseLayout: React.FC<BaseLayoutProps> = ({ children, isShopPage }) => {
+export const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
   return (
     <BaseLayoutStyle>
       <Header />
@@ -29,16 +28,9 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({ children, isShopPage }) 
 
       <NewsSection news={newsList.news} />
 
-      {
-        isShopPage?
-        <div>shopのフッター</div>:
-        <Footer />
-      }
+      <Footer />
 
     </BaseLayoutStyle>
   );
 };
 
-BaseLayout.defaultProps = {
-  isShopPage:false,
-}
