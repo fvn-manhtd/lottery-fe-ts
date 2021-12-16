@@ -43,7 +43,7 @@ const UserPurchaseHistoryDetailPage: React.FC = () => {
                 日付:
               </Typography>
               <Typography fontSize="14px">
-                {format(new Date(), "dd MMM, yyyy")}
+                {format(new Date(), "yyyy/MM/dd")}
               </Typography>
             </FlexBox>
           </TableRow>

@@ -39,7 +39,6 @@ export enum Route {
     SHOP_LOTTERY_LIST="/:shop/lotteries",
     SHOP_LOTTERY_DETAIL="/:shop/lottery/:id",
 
-
     //Cart
     SHOPPING_CART = '/cart/shopping-cart',
     PAYMENT_METHOD = '/cart/payment-method',

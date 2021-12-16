@@ -69,3 +69,25 @@ export function dayListArr() {
 }
 
 export const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+
+
+
+export const stepperList = [
+  {
+    title: "カート",
+    icon: "card-white",
+  },
+  {
+    title: "お支払い方法",
+    icon: "credit-white",
+  },
+  {
+    title: "最終確認",
+    icon: "check-list-white",
+  },
+  {
+    title: "注文完了",
+    icon: "complete-white",
+  },
+];

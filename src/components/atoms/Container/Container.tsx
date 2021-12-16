@@ -9,7 +9,9 @@ import {
   position,
   PositionProps,
   space,
-  SpaceProps
+  SpaceProps,
+  shadow,
+  ShadowProps,
 } from "styled-system";
 import { layoutConstant } from "utils/constants";
 
@@ -19,7 +21,13 @@ type ContainerProps = {
 };
 
 export const Container = styled.div<
-  LayoutProps & ColorProps & PositionProps & SpaceProps & FlexboxProps & ContainerProps
+  LayoutProps &
+    ColorProps &
+    PositionProps &
+    SpaceProps &
+    FlexboxProps &
+    ShadowProps &
+    ContainerProps
 >`
   max-width: ${props=>props.isAlwaysFullWidth?"unset":layoutConstant.containerWidth};
   margin-left: auto;
@@ -29,11 +37,10 @@ export const Container = styled.div<
     margin-left:${props=>props.isSPFullWidth || props.isAlwaysFullWidth? "unset": "1rem"};
     margin-right:${props=>props.isSPFullWidth|| props.isAlwaysFullWidth ? "unset": "1rem"};
   }
-
+  ${shadow}
   ${color}
   ${position}
   ${flexbox}
   ${layout}
   ${space}
 `;
-

@@ -101,6 +101,23 @@ export const ShopLotteryListPage = lazy(
 export const ShopLotteryDetailPage = lazy(
   () => import("pages/shop/ShopLotteryDetailPage")
 );
+/* Cart pages */
+export const ShoppingCartPage = lazy(
+  () => import("pages/cart/ShoppingCartPage")
+);
+export const PaymentMethodPage = lazy(
+  () => import("pages/cart/PaymentMethodPage")
+);
+export const OrderConfirmationPage = lazy(
+  () => import("pages/cart/OrderConfirmationPage")
+);
+export const OrderCompletePage = lazy(
+  () => import("pages/cart/OrderCompletePage")
+);
+export const EffectStartPage = lazy(() => import("pages/cart/EffectStartPage"));
+export const EffectFinishPage = lazy(
+  () => import("pages/cart/EffectFinishPage")
+);
 
 /* error pages */
 export const Error404Page = lazy(() => import("pages/generals/Error404Page"));
