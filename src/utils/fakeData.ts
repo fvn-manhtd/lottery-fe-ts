@@ -287,3 +287,5 @@ export const fakeProductList = [
       quanity: 1
   },  
 ];
+
+

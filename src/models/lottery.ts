@@ -20,7 +20,8 @@ export interface LotteryModel {
     shippingFee?: string
     deliveryDetail?: string
     publishedAt?: string
-    publicStatus?: string
+    publicStatus?: string,
+    url?:string,
 }
 
 export interface LotteryListModel {
