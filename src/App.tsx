@@ -40,6 +40,7 @@ import {
   OrderCompletePage,
   EffectStartPage,
   EffectFinishPage,
+  ContactPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -102,6 +103,11 @@ export default function App() {
             path={ROUTES.NEWS_DETAIL} 
             exact 
             component={() => <NewsDetailPage />} 
+          />
+          <FancyRoute 
+            path={ROUTES.CONTACT} 
+            exact 
+            component={() => <ContactPage />} 
           />
 
           {/* lottery pages */}
