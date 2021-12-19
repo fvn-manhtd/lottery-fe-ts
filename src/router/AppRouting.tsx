@@ -15,6 +15,9 @@ export const NewsListPage = lazy(
 export const NewsDetailPage = lazy(
   ()=> import("pages/generals/NewsDetailPage")
 );
+export const ContactPage = lazy(
+  ()=> import("pages/generals/ContactPage")
+);
 /* static pages */
 export const UsagePolicyPage = lazy(
   ()=> import("pages/static/UsagePolicyPage")
