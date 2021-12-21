@@ -1,7 +1,6 @@
 import { Box, Container, Typography } from "components/atoms";
 import {  LotteryList } from "components/organisms";
 import { BaseLayout } from "components/templates";
-import { fakeLotteryList as lotteryList } from "utils/fakeData";
 import {
   CarouselProvider,
   Slider,
@@ -14,8 +13,18 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { lotteryStatusObj } from "utils/constants";
 import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
+import { useDispatch, useSelector } from "react-redux";
+import { getLotteries, selectLotteries } from "redux/features";
+import { useEffect } from "react";
+import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
 
 const TopPage = () => {
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    dispatch(getLotteries());
+  },[dispatch])
+  const lotteries=useSelector(selectLotteries).data;
+  console.log(lotteries);
 
   return (
     <>

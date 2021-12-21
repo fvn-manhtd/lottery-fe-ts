@@ -1,11 +1,41 @@
 import { Box, Container, Typography, Button } from "components/atoms";
-import { LotteryList } from "components/organisms";
+import { LotteryList, Pagination } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { Pagination } from "components/organisms";
-import { fakeLotteryList as lotteryList } from "utils/fakeData";
+import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
+import { useDispatch, useSelector } from "react-redux";
+import { getLotteries, selectLotteries } from "redux/features";
+import { useEffect } from "react";
+import { getSearchQueryObj, Route } from "utils";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+
+const StyledLink = styled.a `
+display:contents;
+`
 
 const LotteryListPage = () => {
+  
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    dispatch(getLotteries());
+  },[dispatch])
+  const lotteries=useSelector(selectLotteries);
+  console.log(lotteries);
+
+  
+  const statusButton = [
+    {status:1,text:"販売中"},
+    {status:2,text:"終了間際"},
+    {status:3,text:"販売予定"}
+  ]
+
+  
+  const history=useHistory();
+  const changeRoute=(data)=>{
+    const page=data+1;
+    history.push(Route.LOTTERIES+"?status="+getSearchQueryObj('status')+"&page="+page)
+  }
 
   return (
     <>
@@ -58,24 +88,33 @@ const LotteryListPage = () => {
                 width={{ _: "90%", md: "60%" }}
                 margin="0 auto 2.5rem auto"
               >
-                <Button 
-                  fullwidth={true}
-                  variant="contained" 
-                  color="secondary" 
-                  borderRadius="10px"
-                  marginX={1}>販売中</Button>
-                <Button
-                  fullwidth={true} 
-                  variant="outlined" 
-                  color="secondary"
-                  borderRadius="10px"
-                  marginX={1}>終了間際</Button>
-                <Button
-                  fullwidth={true} 
-                  variant="outlined" 
-                  color="secondary"
-                  borderRadius="10px"
-                  marginX={1}>販売予定</Button>
+                {
+                  statusButton.map((value,index)=>{
+                    if(value.status==getSearchQueryObj('status')) {
+                      return (
+                        <StyledLink href={Route.LOTTERIES+"?status="+value.status} key={index}>
+                          <Button 
+                            fullwidth={true}
+                            variant="contained" 
+                            color="primary" 
+                            borderRadius="10px"
+                            marginX={1}>{value.text}</Button>
+                        </StyledLink>
+                      )}
+                    else {
+                      return (
+                        <StyledLink href={Route.LOTTERIES+"?status="+value.status} key={index}>
+                          <Button 
+                            fullwidth={true}
+                            variant="outlined" 
+                            color="secondary" 
+                            borderRadius="10px"
+                            marginX={1}>{value.text}</Button>
+                        </StyledLink>
+                      )
+                    }
+                  })
+                }
               </Box>
 
               {/** lottery list */}
@@ -87,7 +126,12 @@ const LotteryListPage = () => {
               justifyContent="center"
               width="90%"
               margin="1rem auto">
-                <Pagination pageCount={10}/>
+                <Pagination 
+                pageCount={lotteries.data.pagination.last_page}
+                onChange={(data) => {
+                  changeRoute(data)
+                }}
+                />
               </Box>
             
             </Box>

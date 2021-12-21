@@ -23,3 +23,10 @@ export const convertHexToRGB = (hex) => {
   }
 };
 
+export const getSearchQueryObj = (key) => {
+  const searchQuery=location.search;
+  const queryObj = {}
+  searchQuery.slice(1).split('&').map((str) => queryObj[str.split('=')[0]] = str.split('=')[1] )
+  return queryObj[key];
+};
+

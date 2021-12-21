@@ -1,8 +1,9 @@
 import { all } from "redux-saga/effects"
-import { authSaga } from "redux/features"
+import { authSaga, handleGetLotteryIndex } from "redux/features"
 
 export default function* rootSaga() {    
     yield all([
-        authSaga()
-    ])
+        authSaga(),
+        handleGetLotteryIndex(),
+    ]);
 }

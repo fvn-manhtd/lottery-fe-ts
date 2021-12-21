@@ -1,5 +1,6 @@
 import { FlexBox, NavLink } from "components/atoms";
 import React from "react";
+import { Route } from "utils";
 
 export const Menu: React.FC = () => {
   return (
@@ -12,7 +13,7 @@ export const Menu: React.FC = () => {
     >
       <NavLink
         as="div"
-        href="/"
+        href={Route.LOTTERIES+"?status=1"}
         color="gray.white"
         px={{ _: "0rem", md: "2rem" }}
         py={{ _: "1rem", md: "1rem" }}
