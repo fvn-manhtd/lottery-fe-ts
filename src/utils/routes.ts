@@ -50,4 +50,9 @@ export enum Route {
     STATIC_POLICY = "/static-pages/privacy-policy",
     STATIC_COMPANY = "/static-pages/company",
 
+};
+
+const BaseUrl=process.env.REACT_APP_API_BASE_URL;
+export const ApiRoute = {
+    'LOTTERY_INDEX' : BaseUrl+"/lotteries",
 }

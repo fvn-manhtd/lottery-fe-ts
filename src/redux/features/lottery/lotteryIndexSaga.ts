@@ -1,13 +1,13 @@
 import axios from "axios";
 import { call, put } from "redux-saga/effects";
 import { setLotteries } from "./lotteryIndexSlice";
+import { ApiRoute } from "utils";
 
 function requestGetLotteryIndex(){
     const searchQuery=location.search;
-    console.log(searchQuery)
     return axios.request({
         method:'get',
-        url:'http://localhost/api/lotteries'+searchQuery
+        url:ApiRoute.LOTTERY_INDEX+searchQuery
     });
 };
 
