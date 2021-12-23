@@ -23,8 +23,8 @@ const TopPage = () => {
   useEffect(()=>{
     dispatch(getLotteries());
   },[dispatch])
-  const lotteries=useSelector(selectLotteries).data;
-  console.log(lotteries);
+  const lotteries=useSelector(selectLotteries);
+  console.log(lotteries.lotteries);
 
   return (
     <>

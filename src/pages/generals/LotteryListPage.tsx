@@ -21,7 +21,7 @@ const LotteryListPage = () => {
     dispatch(getLotteries());
   },[dispatch])
   const lotteries=useSelector(selectLotteries);
-  console.log(lotteries);
+  console.log(lotteries.lotteries);
 
   
   const statusButton = [
@@ -127,7 +127,7 @@ const LotteryListPage = () => {
               width="90%"
               margin="1rem auto">
                 <Pagination 
-                pageCount={lotteries.data.pagination.last_page}
+                pageCount={lotteries.pagination.last_page}
                 onChange={(data) => {
                   changeRoute(data)
                 }}
