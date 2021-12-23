@@ -50,4 +50,8 @@ export enum Route {
     STATIC_POLICY = "/static-pages/privacy-policy",
     STATIC_COMPANY = "/static-pages/company",
 
+};
+
+export const ApiRoute = {
+    'LOTTERY_INDEX' : "/lotteries",
 }
