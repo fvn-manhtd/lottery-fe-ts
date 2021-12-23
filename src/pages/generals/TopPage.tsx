@@ -24,7 +24,7 @@ const TopPage = () => {
     dispatch(getLotteries());
   },[dispatch])
   const lotteries=useSelector(selectLotteries);
-  console.log(lotteries.lotteries);
+  console.log(lotteries.data.lotteries);
 
   return (
     <>
