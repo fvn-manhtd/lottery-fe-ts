@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "components/atoms";
-import {  LotteryList } from "components/organisms";
+import { LotteryList } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import {
   CarouselProvider,
@@ -19,12 +19,12 @@ import { useEffect } from "react";
 import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
 
 const TopPage = () => {
-  const dispatch=useDispatch();
-  useEffect(()=>{
+  const dispatch = useDispatch();
+  useEffect(() => {
     dispatch(getLotteries());
-  },[dispatch])
-  const lotteries=useSelector(selectLotteries);
-  console.log(lotteries.data.lotteries);
+  }, [dispatch]);
+  const lotteries = useSelector(selectLotteries);
+  console.log(lotteries);
 
   return (
     <>
@@ -45,26 +45,32 @@ const TopPage = () => {
               <Slider>
                 {lotteryList.lotteries.map((value, index) => {
                   return (
-                    <Slide index={index} className={"carousel__slide-"+value.status} key={value.id}>
-                      {
-                      value.status<=2?
-                      <StyledLabelText 
-                        color="white" 
-                        fontWeight={600} 
-                        pt={["4%","4%","4%","4%"]} 
-                        ml={["-1%","-1%","unset","unset"]} 
-                        fontSize={["0.8rem","1.4rem","1rem","1.4rem"]}>
-                        {lotteryStatusObj[value.status-1].text}
-                      </StyledLabelText >:
-                      <StyledLabelText  
-                        color="white" 
-                        fontWeight={600} 
-                        pt={["4%","4%","4%","4%"]} 
-                        ml={["-1%","-2%","-1%","-1%"]} 
-                        fontSize={["0.6rem","1.1rem","0.8rem","1.2rem"]}>
-                        {lotteryStatusObj[value.status-1].text}
-                      </StyledLabelText >
-                      }
+                    <Slide
+                      index={index}
+                      className={"carousel__slide-" + value.status}
+                      key={value.id}
+                    >
+                      {value.status <= 2 ? (
+                        <StyledLabelText
+                          color="white"
+                          fontWeight={600}
+                          pt={["4%", "4%", "4%", "4%"]}
+                          ml={["-1%", "-1%", "unset", "unset"]}
+                          fontSize={["0.8rem", "1.4rem", "1rem", "1.4rem"]}
+                        >
+                          {lotteryStatusObj[value.status - 1].text}
+                        </StyledLabelText>
+                      ) : (
+                        <StyledLabelText
+                          color="white"
+                          fontWeight={600}
+                          pt={["4%", "4%", "4%", "4%"]}
+                          ml={["-1%", "-2%", "-1%", "-1%"]}
+                          fontSize={["0.6rem", "1.1rem", "0.8rem", "1.2rem"]}
+                        >
+                          {lotteryStatusObj[value.status - 1].text}
+                        </StyledLabelText>
+                      )}
                       <Box
                         position="absolute"
                         bottom={0}
@@ -107,7 +113,6 @@ const TopPage = () => {
           </CarouselStyle>
           <Container>
             <Box p={{ _: 0, md: 40 }}>
-
               {/* title */}
               <Box marginY="2rem">
                 <Typography
@@ -147,8 +152,7 @@ const TopPage = () => {
               </Box>
 
               {/** lottery list */}
-              <LotteryList lotteries={lotteryList.lotteries}/>
-            
+              <LotteryList lotteries={lotteryList.lotteries} />
             </Box>
           </Container>
         </main>
