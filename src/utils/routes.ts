@@ -53,5 +53,13 @@ export enum Route {
 };
 
 export const ApiRoute = {
-    'LOTTERY_INDEX' : "/lotteries",
+    'LOTTERY_INDEX' : '/lotteries',
+
+
+    'AUTH': {
+        'LOGIN': '/users/login',
+        'REGISTER': '/users/register',
+        'OAUTH_TWITTER': "/oauth/twitter",
+        'OAUTH_FACEBOOK': "/oauth/facebook",
+    },
 }

@@ -44,6 +44,8 @@ import {
 } from "router";
 
 import { Suspense } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FancyRoute = (props) => {
   useMemo(() => {
@@ -64,57 +66,53 @@ export default function App() {
       <Suspense fallback={<Loading />}>
         <Switch>
           {/* general pages */}
-          <FancyRoute 
-            path={ROUTES.HOME} 
-            exact 
-            component={() => <TopPage />} 
+          <FancyRoute path={ROUTES.HOME} exact component={() => <TopPage />} />
+          <FancyRoute
+            path={ROUTES.EXAMPLE}
+            exact
+            component={() => <ExamplePage />}
           />
-          <FancyRoute 
-            path={ROUTES.EXAMPLE} 
-            exact 
-            component={() => <ExamplePage />} 
+          <FancyRoute
+            path={ROUTES.STATIC_USAGE_POLICY}
+            exact
+            component={() => <UsagePolicyPage />}
           />
-          <FancyRoute 
-            path={ROUTES.STATIC_USAGE_POLICY} 
-            exact 
-            component={() => <UsagePolicyPage />} 
+          <FancyRoute
+            path={ROUTES.STATIC_POLICY}
+            exact
+            component={() => <PrivacyPolicyPage />}
           />
-          <FancyRoute 
-            path={ROUTES.STATIC_POLICY} 
-            exact 
-            component={() => <PrivacyPolicyPage />} 
+          <FancyRoute
+            path={ROUTES.STATIC_COMPANY}
+            exact
+            component={() => <CompanyPage />}
           />
-          <FancyRoute 
-            path={ROUTES.STATIC_COMPANY} 
-            exact 
-            component={() => <CompanyPage />} 
+          <FancyRoute
+            path={ROUTES.STATIC_LEGAL}
+            exact
+            component={() => <LegalInformationPage />}
           />
-          <FancyRoute 
-            path={ROUTES.STATIC_LEGAL} 
-            exact 
-            component={() => <LegalInformationPage />} 
+          <FancyRoute
+            path={ROUTES.NEWS_LIST}
+            exact
+            component={() => <NewsListPage />}
           />
-          <FancyRoute 
-            path={ROUTES.NEWS_LIST} 
-            exact 
-            component={() => <NewsListPage />} 
+          <FancyRoute
+            path={ROUTES.NEWS_DETAIL}
+            exact
+            component={() => <NewsDetailPage />}
           />
-          <FancyRoute 
-            path={ROUTES.NEWS_DETAIL} 
-            exact 
-            component={() => <NewsDetailPage />} 
-          />
-          <FancyRoute 
-            path={ROUTES.CONTACT} 
-            exact 
-            component={() => <ContactPage />} 
+          <FancyRoute
+            path={ROUTES.CONTACT}
+            exact
+            component={() => <ContactPage />}
           />
 
           {/* lottery pages */}
-          <FancyRoute 
-            path={ROUTES.LOTTERIES} 
-            exact 
-            component={() => <LotteryListPage/>} 
+          <FancyRoute
+            path={ROUTES.LOTTERIES}
+            exact
+            component={() => <LotteryListPage />}
           />
           <FancyRoute
             path={ROUTES.EXAMPLE}
@@ -256,6 +254,7 @@ export default function App() {
           <FancyRoute path="**" component={() => <Error404Page />} />
         </Switch>
       </Suspense>
+      <ToastContainer autoClose={2000} />
     </>
   );
 }
