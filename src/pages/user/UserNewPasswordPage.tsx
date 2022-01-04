@@ -60,6 +60,7 @@ const UserNewPasswordPage = () => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       toast.error("そのメールアドレスのユーザーが見つかりません", {
         autoClose: 7000,
       });

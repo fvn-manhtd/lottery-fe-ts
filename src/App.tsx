@@ -41,11 +41,13 @@ import {
   EffectStartPage,
   EffectFinishPage,
   ContactPage,
+  UserRegisterConfirmMailPage,
 } from "router";
 
 import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserRegisterCompletePage from "pages/user/UserRegisterCompletePage";
 
 const FancyRoute = (props) => {
   useMemo(() => {
@@ -177,6 +179,18 @@ export default function App() {
             path={ROUTES.USER_REGISTER}
             exact
             component={() => <UserRegisterPage />}
+          />
+
+          <FancyRoute
+            path={ROUTES.USER_REGISTER_CONFIRM_MAIL}
+            exact
+            component={() => <UserRegisterConfirmMailPage />}
+          />
+
+          <FancyRoute
+            path={ROUTES.USER_REGISTER_COMPLETE}
+            exact
+            component={() => <UserRegisterCompletePage />}
           />
 
           {/* shop auth pages */}

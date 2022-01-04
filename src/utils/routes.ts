@@ -13,9 +13,11 @@ export enum Route {
     //User
     USER_LOGIN = '/user/login',
     USER_REGISTER = '/user/register',
+    USER_REGISTER_CONFIRM_MAIL = '/user/register-confirm-email',
+    USER_REGISTER_COMPLETE = '/user/register-complete',
     USER_PASSWORD_FORGOT = '/user/password-forgot',    
     USER_PASSWORD_RESET = '/user/password/reset/:resetToken/:resetEmail', 
-    USER_PASSWORD_FORGOT_CONFIRM_MAIL  = 'password-forgot-confirm-mail',
+    USER_PASSWORD_FORGOT_CONFIRM_MAIL  = '/user/password-forgot-confirm-mail',
     USER_MYAPGE = '/user/mypage',
     USER_FAVORITE = '/user/favorite',
     USER_PURCHASED_HISTORY = '/user/purchased-history',

@@ -27,10 +27,15 @@ export const authApi = {
         const url = ApiRoute.AUTH.RESET_PASSWORD;
         return axiosClient.post(url, credentials);
     },
-    logout() {
+    register(credentials) {
+        const url = ApiRoute.AUTH.REGISTER;
+        return axiosClient.post(url, credentials);
+    },
+    logout(){
         const url = ApiRoute.AUTH.LOGOUT;
         return axiosClient.get(url);
-    }
+    },
+    
 
 }
 

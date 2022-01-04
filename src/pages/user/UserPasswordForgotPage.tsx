@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import { push } from "connected-react-router";
 import { useAppDispatch } from "redux/app/hooks";
 import { useState } from "react";
+import { Route as ROUTES } from "utils";
 
 const initialValues = {
   email: "",
@@ -42,7 +43,7 @@ const UserPasswordForgotPage = () => {
       const { status } = response;
       if (status === 200) {
         setLoading(false);
-        dispatch(push("/"));
+        dispatch(push(ROUTES.USER_PASSWORD_FORGOT_CONFIRM_MAIL));
       } else {
         toast.error("そのメールアドレスのユーザーが見つかりません", {
           autoClose: 7000,
@@ -50,6 +51,7 @@ const UserPasswordForgotPage = () => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       toast.error("そのメールアドレスのユーザーが見つかりません", {
         autoClose: 7000,
       });

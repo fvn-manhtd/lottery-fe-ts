@@ -2,7 +2,7 @@ import { OneColumnLayout } from "components/templates";
 import { NavLink, Button, H3, Box, Paragraph } from "components/atoms";
 import { Card, Logo } from "components/organisms";
 
-const UserRegisterConfirmMailPage = () => {
+const UserRegisterCompletePage = () => {
   return (
     <>
       <OneColumnLayout>
@@ -29,7 +29,7 @@ const UserRegisterConfirmMailPage = () => {
             </H3>
 
             <Paragraph textAlign="center" mb="1rem" fontSize="0.8rem">
-              メールにメッセージが送信されたことを確認してください。
+              メールを確認しましたので、ログインしてください。
             </Paragraph>
 
             <NavLink href="/user/login">
@@ -54,4 +54,4 @@ const UserRegisterConfirmMailPage = () => {
   );
 };
 
-export default UserRegisterConfirmMailPage;
+export default UserRegisterCompletePage;

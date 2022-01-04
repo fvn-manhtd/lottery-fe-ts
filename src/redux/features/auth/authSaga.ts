@@ -3,6 +3,7 @@ import { authApi } from 'api';
 import { push } from "connected-react-router";
 import { toast } from "react-toastify";
 import { call, fork, put, take } from "redux-saga/effects";
+import { Route as ROUTES } from "utils";
 import { authActions, LoginPayLoad } from "./authSlice";
 
 function* handleLogin(payload: LoginPayLoad) {
@@ -10,8 +11,8 @@ function* handleLogin(payload: LoginPayLoad) {
 
     try {                    
         const response = yield call(authApi.login, payload);
-        const { status } = response;
-        if (status === 200) {
+        const { status, data } = response;
+        if (status === 200 && data.status === 'success') {
             yield put(authActions.loginSucess());
             localStorage.setItem("isLoggedIn", "yes");
             yield put(push("/"));    
@@ -22,42 +23,6 @@ function* handleLogin(payload: LoginPayLoad) {
         toast.error("ご登録のメールアドレスとパスワードが一致しません。ご確認の上、もう一度ご入力ください。", { autoClose: 7000 });
         yield fork(authSaga);
     }    
-}
-
-function* handleLogout() {
-    // Redirect to Login page
-    console.log("Handle Logout");
-    try {
-        const response = yield call(authApi.logout);
-        const { status } = response;
-        if (status === 200) {
-            yield put(authActions.logout());
-            yield put(push('/user/login'));
-            localStorage.removeItem("isLoggedIn");
-        }
-    } catch (error) {
-        console.log(error);        
-    }
-    
-}
-
-
-function* watchLoginFlow() {
-    while (true) {
-        console.log("Watch Login");
-        const isLoggedIn = Boolean(localStorage.getItem('isLoggedIn'));
-        
-        if (!isLoggedIn) {                     
-            // get action from dispatch
-            const action: PayloadAction<LoginPayLoad> = yield take(authActions.login.type)
-            yield fork(handleLogin, action.payload)
-            
-        }
-        
-        // Listening dispatch action logout from user    
-        yield take(authActions.logout.type)
-        yield call(handleLogout)
-    }
 }
 
 function* handleSocialLogin(payload: string) {
@@ -85,6 +50,24 @@ function* handleSocialLogin(payload: string) {
     }    
 }
 
+function* watchLoginFlow() {
+    while (true) {
+        console.log("Watch Login");
+        const isLoggedIn = Boolean(localStorage.getItem('isLoggedIn'));
+        
+        if (!isLoggedIn) {                     
+            // get action from dispatch
+            const action: PayloadAction<LoginPayLoad> = yield take(authActions.login.type)
+            yield fork(handleLogin, action.payload)
+            
+        }
+        
+        // Listening dispatch action logout from user    
+        yield take(authActions.logout.type)
+        yield call(handleLogout)
+    }
+}
+
 function* watchSocialLoginFlow() {
     while (true) {
         console.log("Watch Social Login");
@@ -98,6 +81,20 @@ function* watchSocialLoginFlow() {
         yield take(authActions.logout.type)
         yield call(handleLogout)
     }
+}
+
+function* handleLogout() {
+    // Redirect to Login page
+    console.log("Handle Logout");
+    try {
+        yield call(authApi.logout);
+        yield put(push(ROUTES.USER_LOGIN));
+        localStorage.removeItem("isLoggedIn");
+        yield put(authActions.logout());
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
 
 export function* authSaga() {    
