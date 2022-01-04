@@ -19,6 +19,14 @@ export const authApi = {
         const url = ApiRoute.AUTH.OAUTH_FACEBOOK;
         return axiosClient.get(url);
     },
+    sendResetLinkEmail(email) {
+        const url = ApiRoute.AUTH.SEND_RESET_PASSWORD_EMAIL;
+        return axiosClient.post(url, email);
+    },
+    resetPassword(credentials) {
+        const url = ApiRoute.AUTH.RESET_PASSWORD;
+        return axiosClient.post(url, credentials);
+    },
     logout() {
         const url = ApiRoute.AUTH.LOGOUT;
         return axiosClient.get(url);

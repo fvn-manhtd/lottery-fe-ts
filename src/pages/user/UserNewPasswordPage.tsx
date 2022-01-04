@@ -1,22 +1,69 @@
 import { OneColumnLayout } from "components/templates";
 import { useFormik } from "formik";
-import { Button, H3, Box, Paragraph, TextField } from "components/atoms";
+import {
+  Button,
+  H3,
+  Box,
+  Paragraph,
+  TextField,
+  Spinner,
+  Small,
+} from "components/atoms";
 import { Card, Logo } from "components/organisms";
 import * as yup from "yup";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { authApi } from "api";
+import { Route as ROUTES } from "utils";
+import { push } from "connected-react-router";
+import { useAppDispatch } from "redux/app/hooks";
 
 const initialValues = {
   password: "",
-  confirmPassword: "",
+  password_confirmation: "",
 };
 
 const formSchema = yup.object().shape({
   password: yup.string().required("パスワードを入力してください"),
-  confirmPassword: yup.string().required("再入力パスワード"),
+  password_confirmation: yup.string().required("再入力パスワード"),
 });
 
 const UserNewPasswordPage = () => {
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const [getTokenEmail, setTokenEmail] = useState({ email: "", token: "" });
+  const { resetToken, resetEmail } = useParams();
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setTokenEmail({
+      email: decodeURIComponent(resetEmail).replace(/\+/g, " "),
+      token: resetToken,
+    });
+  }, [resetToken, resetEmail]);
+
+  console.log(getTokenEmail);
+
+  const handleFormSubmit = async (values) => {
+    const objResetPassword = {
+      ...values,
+      email: getTokenEmail.email,
+      token: getTokenEmail.token,
+    };
+    setLoading(true);
+    try {
+      const response = await authApi.resetPassword(objResetPassword);
+      const { status } = response;
+      if (status === 200) {
+        setLoading(false);
+        dispatch(push(ROUTES.USER_LOGIN));
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("そのメールアドレスのユーザーが見つかりません", {
+        autoClose: 7000,
+      });
+    }
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -66,7 +113,7 @@ const UserNewPasswordPage = () => {
               />
 
               <TextField
-                name="confirmPassword"
+                name="password_confirmation"
                 placeholder="再入力パスワード"
                 autoComplete="on"
                 fullwidth
@@ -74,8 +121,10 @@ const UserNewPasswordPage = () => {
                 mb="1rem"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.confirmPassword || ""}
-                errorText={touched.confirmPassword && errors.confirmPassword}
+                value={values.password_confirmation || ""}
+                errorText={
+                  touched.password_confirmation && errors.password_confirmation
+                }
               />
 
               <Button
@@ -85,8 +134,25 @@ const UserNewPasswordPage = () => {
                 type="submit"
                 fullwidth
                 borderRadius={5}
+                disabled={loading}
               >
-                パスワードをリセット
+                {loading ? (
+                  <>
+                    <Spinner
+                      size={16}
+                      border="2px solid"
+                      borderColor="primary.light"
+                      borderTop="2px solid white"
+                    ></Spinner>
+                    <Small ml="0.5rem" color="white" fontWeight="600">
+                      リセット中です
+                    </Small>
+                  </>
+                ) : (
+                  <Small color="white" fontWeight="600">
+                    パスワードをリセット
+                  </Small>
+                )}
               </Button>
             </Card>
             <Paragraph py="1rem" textAlign="center" fontSize="0.8rem">

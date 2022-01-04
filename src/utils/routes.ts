@@ -14,7 +14,7 @@ export enum Route {
     USER_LOGIN = '/user/login',
     USER_REGISTER = '/user/register',
     USER_PASSWORD_FORGOT = '/user/password-forgot',    
-    USER_NEW_PASSWORD = '/user/new-password', 
+    USER_PASSWORD_RESET = '/user/password/reset/:resetToken/:resetEmail', 
     USER_PASSWORD_FORGOT_CONFIRM_MAIL  = 'password-forgot-confirm-mail',
     USER_MYAPGE = '/user/mypage',
     USER_FAVORITE = '/user/favorite',
@@ -63,5 +63,8 @@ export const ApiRoute = {
         'OAUTH_TWITTER': "/users/oauth/twitter",
         'OAUTH_FACEBOOK': "/users/oauth/facebook",
         'LOGOUT': '/users/logout',
+
+        'SEND_RESET_PASSWORD_EMAIL': '/users/password/email',
+        'RESET_PASSWORD': '/users/password/reset',
     },
 }

@@ -9,9 +9,16 @@ import {
   Paragraph,
   TextField,
   NavLink,
+  Spinner,
+  Small,
 } from "components/atoms";
 import { Card, Logo } from "components/organisms";
 import * as yup from "yup";
+import { authApi } from "api";
+import { toast } from "react-toastify";
+import { push } from "connected-react-router";
+import { useAppDispatch } from "redux/app/hooks";
+import { useState } from "react";
 
 const initialValues = {
   email: "",
@@ -25,7 +32,29 @@ const formSchema = yup.object().shape({
 });
 
 const UserPasswordForgotPage = () => {
-  const handleFormSubmit = () => {};
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const handleFormSubmit = async (value) => {
+    setLoading(true);
+    try {
+      const response = await authApi.sendResetLinkEmail(value);
+      const { status } = response;
+      if (status === 200) {
+        setLoading(false);
+        dispatch(push("/"));
+      } else {
+        toast.error("そのメールアドレスのユーザーが見つかりません", {
+          autoClose: 7000,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("そのメールアドレスのユーザーが見つかりません", {
+        autoClose: 7000,
+      });
+    }
+  };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -84,8 +113,25 @@ const UserPasswordForgotPage = () => {
                 size="large"
                 fullwidth
                 borderRadius={5}
+                disabled={loading}
               >
-                配信する
+                {loading ? (
+                  <>
+                    <Spinner
+                      size={16}
+                      border="2px solid"
+                      borderColor="primary.light"
+                      borderTop="2px solid white"
+                    ></Spinner>
+                    <Small ml="0.5rem" color="white" fontWeight="600">
+                      配信中です
+                    </Small>
+                  </>
+                ) : (
+                  <Small color="white" fontWeight="600">
+                    配信する
+                  </Small>
+                )}
               </Button>
 
               <FlexBox justifyContent="center" py="1rem">

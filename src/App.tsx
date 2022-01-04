@@ -159,7 +159,7 @@ export default function App() {
             component={() => <UserLoginPage />}
           />
           <FancyRoute
-            path={ROUTES.USER_NEW_PASSWORD}
+            path={ROUTES.USER_PASSWORD_RESET}
             exact
             component={() => <UserNewPasswordPage />}
           />
