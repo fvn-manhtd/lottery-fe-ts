@@ -1,8 +1,8 @@
 import { LotteryModel } from "./lottery";
 
 export interface User {
-    id: number
-    email: string
+    id?: number
+    email?: string
     lastName?: string
     firstName?: string
     lastNameKana?: string

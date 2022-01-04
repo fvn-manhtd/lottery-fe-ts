@@ -20,6 +20,21 @@ import { Card, Logo } from "components/organisms";
 import * as yup from "yup";
 import { authActions, selectIsLogging } from "redux/features";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
+import styled from "styled-components";
+
+const TwitterButton = styled(Button)`
+  background-color: #55acee;
+  border-color: #55acee;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+`;
+
+const FacebookButton = styled(Button)`
+  background-color: #3b5a9a;
+  border-color: #3b5a9a;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+`;
 
 const initialValues = {
   email: "",
@@ -47,8 +62,9 @@ const UserLoginPage = () => {
     );
   };
 
-  const handleTwitterLogin = () => {
-    dispatch(authActions.twitterLogin());
+  const handleSocialLogin = (type) => {
+    console.log(type);
+    dispatch(authActions.socialLogin(type));
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -84,46 +100,74 @@ const UserLoginPage = () => {
               ログイン
             </H3>
 
-            <FlexBox
-              justifyContent="center"
-              alignItems="center"
-              bg="#3b5a9a"
-              borderRadius={5}
-              height="60px"
-              color="white"
-              cursor="pointer"
-              mb="1rem"
-            >
-              <Icon variant="medium" defaultcolor="auto" mr="0.5rem">
-                facebook-filled-white
-              </Icon>
-              <Small fontWeight="600">Facebookでログインする</Small>
-            </FlexBox>
-
-            <FlexBox
-              justifyContent="center"
-              alignItems="center"
-              bg="#55acee"
-              borderRadius={5}
-              height="60px"
+            <FacebookButton
+              variant="contained"
+              size="large"
               color="primary"
-              cursor="pointer"
-              mb="1.5rem"
-              onClick={handleTwitterLogin}
+              type="submit"
+              fullwidth
+              borderRadius={5}
+              disabled={isLogging}
+              onClick={() => handleSocialLogin("facebook")}
             >
-              <Icon
-                color="primary"
-                variant="small"
-                defaultcolor="auto"
-                mr="0.5rem"
-              >
-                twitter-1
-              </Icon>
+              {isLogging ? (
+                <>
+                  <Spinner
+                    size={16}
+                    border="2px solid"
+                    borderColor="#3b5a9a"
+                    borderTop="2px solid white"
+                  ></Spinner>
+                  <Small ml="0.5rem" color="white" fontWeight="600">
+                    ログイン中です
+                  </Small>
+                </>
+              ) : (
+                <>
+                  <Icon variant="medium" defaultcolor="auto">
+                    facebook-filled-white
+                  </Icon>
+                  <Small ml="0.5rem" fontWeight="600">
+                    Facebookでログインする
+                  </Small>
+                </>
+              )}
+            </FacebookButton>
 
-              <Small color="white" fontWeight="600">
-                Twitterでログインする
-              </Small>
-            </FlexBox>
+            <TwitterButton
+              variant="contained"
+              size="large"
+              color="primary"
+              type="submit"
+              fullwidth
+              borderRadius={5}
+              disabled={isLogging}
+              onClick={() => handleSocialLogin("twitter")}
+            >
+              {isLogging ? (
+                <>
+                  <Spinner
+                    size={16}
+                    border="2px solid"
+                    borderColor="#55acee"
+                    borderTop="2px solid white"
+                  ></Spinner>
+                  <Small ml="0.5rem" color="white" fontWeight="600">
+                    ログイン中です
+                  </Small>
+                </>
+              ) : (
+                <>
+                  <Icon color="primary" variant="small" defaultcolor="auto">
+                    twitter-1
+                  </Icon>
+
+                  <Small ml="0.5rem" color="white" fontWeight="600">
+                    Twitterでログインする
+                  </Small>
+                </>
+              )}
+            </TwitterButton>
 
             <Box mb="2rem">
               <Divider height="1px" color="gray.500" width="320px" mx="auto" />
@@ -173,7 +217,7 @@ const UserLoginPage = () => {
                 borderRadius={5}
                 disabled={isLogging}
               >
-                {isLogging && (
+                {isLogging ? (
                   <>
                     <Spinner
                       size={16}
@@ -181,9 +225,15 @@ const UserLoginPage = () => {
                       borderColor="primary.light"
                       borderTop="2px solid white"
                     ></Spinner>
+                    <Small ml="0.5rem" color="white" fontWeight="600">
+                      ログイン中です
+                    </Small>
                   </>
+                ) : (
+                  <Small color="white" fontWeight="600">
+                    ログイン
+                  </Small>
                 )}
-                &nbsp; {isLogging ? "ログイン中です..." : "ログイン"}
               </Button>
             </form>
 

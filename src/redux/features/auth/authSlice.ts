@@ -18,18 +18,18 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        twitterLogin(state) {
+        socialLogin(state, _action:PayloadAction<string>) {
             state.logging = true            
         },
-        login(state, action: PayloadAction<LoginPayLoad>) {
+        login(state, _action:PayloadAction<LoginPayLoad>) {
             state.logging = true            
         },
-        loginSucess(state, action: PayloadAction<string>) {            
-            state.isLoggedIn = true            
-            state.logging = false            
+        loginSucess(state) {
+            state.isLoggedIn = true
+            state.logging = false
         },
-        loginFailed(state, action: PayloadAction<string>) {
-            state.logging = false            
+        loginFailed(state) {
+            state.logging = false
         },
         logout(state) {
             state.isLoggedIn = false

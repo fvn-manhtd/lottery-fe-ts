@@ -57,9 +57,11 @@ export const ApiRoute = {
 
 
     'AUTH': {
+        'CHECK_AUTH': '/users/check-auth',
         'LOGIN': '/users/login',
         'REGISTER': '/users/register',
-        'OAUTH_TWITTER': "/oauth/twitter",
-        'OAUTH_FACEBOOK': "/oauth/facebook",
+        'OAUTH_TWITTER': "/users/oauth/twitter",
+        'OAUTH_FACEBOOK': "/users/oauth/facebook",
+        'LOGOUT': '/users/logout',
     },
 }

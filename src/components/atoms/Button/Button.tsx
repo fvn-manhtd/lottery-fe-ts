@@ -59,16 +59,17 @@ export const Button = styled.button<
         boxShadow: 3, //shadows[3]
       },
       "&:disabled": {
-        bg: "text.disabled",
-        color: "text.hint",
-        borderColor: "text.disabled",
-        cursor: "unset",
-        "svg path": {
-          fill: "text.hint",
-        },
-        "svg polyline, svg polygon": {
-          color: "text.hint",
-        },
+        opacity: "0.7",
+        // bg: "text.disabled",
+        // color: "text.hint",
+        // borderColor: "text.disabled",
+        // cursor: "unset",
+        // "svg path": {
+        //   fill: "text.hint",
+        // },
+        // "svg polyline, svg polygon": {
+        //   color: "text.hint",
+        // },
       },
     }),
   ({ theme, color }) =>
