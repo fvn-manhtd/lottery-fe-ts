@@ -53,8 +53,8 @@ const UserLoginPage = () => {
   const dispatch = useAppDispatch();
   const isLogging = useAppSelector(selectIsLogging);
 
-  const handleFormSubmit = (values) => {
-    dispatch(
+  const handleFormSubmit = async (values) => {
+    await dispatch(
       authActions.login({
         email: values.email,
         password: values.password,
@@ -62,9 +62,8 @@ const UserLoginPage = () => {
     );
   };
 
-  const handleSocialLogin = (type) => {
-    console.log(type);
-    dispatch(authActions.socialLogin(type));
+  const handleSocialLogin = async (type) => {
+    await dispatch(authActions.socialLogin(type));
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =

@@ -64,7 +64,7 @@ function* watchLoginFlow() {
         
         // Listening dispatch action logout from user    
         yield take(authActions.logout.type)
-        yield call(handleLogout)
+        yield fork(handleLogout)
     }
 }
 
@@ -87,13 +87,17 @@ function* handleLogout() {
     // Redirect to Login page
     console.log("Handle Logout");
     try {
-        yield call(authApi.logout);
-        yield put(push(ROUTES.USER_LOGIN));
-        localStorage.removeItem("isLoggedIn");
-        yield put(authActions.logout());
+        const response = yield call(authApi.logout);
+        const { status, data } = response;
+        if (status === 200 && data.status === 'success') {
+            yield put(push(ROUTES.USER_LOGIN));
+            localStorage.removeItem("isLoggedIn");
+            yield put(authActions.logout());    
+        }        
     } catch (error) {
         console.log(error);
     }
+    
     
 }
 

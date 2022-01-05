@@ -13,19 +13,19 @@ import {
 } from "components/atoms";
 import { MobileMenu, MobileMenuContent } from "components/organisms";
 import { Logo } from "./Logo";
-import { useAppDispatch, useAppSelector } from "redux/app/hooks";
-import { authActions, selectIsLoggedIn } from "redux/features";
+import { useAppDispatch } from "redux/app/hooks";
+import { authActions } from "redux/features";
 import { Route as ROUTES } from "utils";
 
 export const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
   const toggleMobileMenu = () => setOpen(!open);
 
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
 
   const dispatch = useAppDispatch();
-  const handleLogout = () => {
-    dispatch(authActions.logout());
+  const handleLogout = async () => {
+    await dispatch(authActions.logout());
   };
 
   const menuHandle = (

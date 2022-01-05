@@ -9,11 +9,11 @@ import {
 } from "components/atoms";
 import React from "react";
 
-import { authActions, selectIsLoggedIn } from "redux/features";
-import { useAppSelector, useAppDispatch } from "redux/app/hooks";
+import { authActions } from "redux/features";
+import { useAppDispatch } from "redux/app/hooks";
 
 export const MobileMenuContent: React.FC = () => {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     dispatch(authActions.logout());

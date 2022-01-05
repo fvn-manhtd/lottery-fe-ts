@@ -65,8 +65,9 @@ const UserRegisterPage = () => {
   const dispatch = useAppDispatch();
   const isLogging = useAppSelector(selectIsLogging);
   const [loading, setLoading] = useState(false);
-  const handleSocialLogin = (type) => {
-    dispatch(authActions.socialLogin(type));
+
+  const handleSocialLogin = async (type) => {
+    await dispatch(authActions.socialLogin(type));
   };
 
   const handleFormSubmit = async (values) => {

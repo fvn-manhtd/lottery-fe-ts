@@ -6,18 +6,8 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "utils/history";
-import { GlobalStyles, saveState, theme } from "utils";
+import { GlobalStyles, theme } from "utils";
 import { ThemeProvider } from "styled-components";
-import { debounce } from "lodash";
-
-// here we subscribe to the store changes
-store.subscribe(
-  // we use debounce to save the state once each 800ms
-  // for better performances in case multiple changes occur in a short time
-  debounce(() => {
-    saveState(store.getState());
-  }, 800)
-);
 
 ReactDOM.render(
   <StrictMode>

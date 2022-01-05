@@ -16,9 +16,6 @@ import { useFormik } from "formik";
 import styled from "styled-components";
 import { stepperList } from "utils";
 import { useHistory } from "react-router-dom";
-
-import { useAppSelector } from "redux/app/hooks";
-import { selectIsLoggedIn } from "redux/features";
 import { useState, useEffect } from "react";
 import { StyledModal } from "components/molecules";
 import Modal from "react-modal";
@@ -56,7 +53,7 @@ const ShoppingCartPage: React.FC = () => {
     onSubmit: handleFormSubmit,
   });
 
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
 
   useEffect(() => {
     if (!isLoggedIn) {
