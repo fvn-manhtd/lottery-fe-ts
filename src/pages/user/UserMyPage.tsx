@@ -6,6 +6,8 @@ import {
   TextField,
   Typography,
   Paragraph,
+  Small,
+  Spinner,
 } from "components/atoms";
 import { DashBoardLayout } from "components/templates";
 import * as yup from "yup";
@@ -13,25 +15,46 @@ import { useFormik } from "formik";
 import { StyledModal } from "components/molecules";
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
+import { authActions, selectCurrentUser } from "redux/features";
+import { currentUserApi } from "api";
+import { Route as ROUTES } from "utils";
+import { push } from "connected-react-router";
 
 const UserMyPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const currentUser = useAppSelector(selectCurrentUser);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const initialValues = {
-    email: "manh@example.com",
-    password: "123123123",
+    email: currentUser ? currentUser.email : "",
+    password: "",
   };
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+    setLoading(true);
+    try {
+      const { status, data } = await currentUserApi.account({
+        password: values.password,
+      });
+      if (status === 200 && data.status === "success") {
+        setLoading(false);
+        localStorage.removeItem("isLoggedIn");
+        dispatch(authActions.logout());
+        dispatch(push(ROUTES.USER_LOGIN));
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   const formSchema = yup.object().shape({
-    email: yup
+    password: yup
       .string()
-      .email("正式なメールアドレスを入力して下さい")
-      .required("メールを入力してください"),
-    password: yup.string().required("パスワードを入力してください"),
+      .required("パスワードを入力してください")
+      .min(8, "半角英数字、数字を含む8文字以上"),
   });
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -78,6 +101,7 @@ const UserMyPage: React.FC = () => {
                   onChange={handleChange}
                   value={values.email || ""}
                   errorText={touched.email && errors.email}
+                  readOnly
                 />
               </Box>
             </FlexBox>
@@ -126,8 +150,25 @@ const UserMyPage: React.FC = () => {
               type="submit"
               fullwidth
               borderRadius={5}
+              disabled={loading}
             >
-              情報を変更
+              {loading ? (
+                <>
+                  <Spinner
+                    size={16}
+                    border="2px solid"
+                    borderColor="primary.light"
+                    borderTop="2px solid white"
+                  ></Spinner>
+                  <Small ml="0.5rem" color="white" fontWeight="600">
+                    情報を変更中です
+                  </Small>
+                </>
+              ) : (
+                <Small color="white" fontWeight="600">
+                  情報を変更
+                </Small>
+              )}
             </Button>
 
             <Box cursor="pointer" onClick={() => setIsModalOpen(true)}>

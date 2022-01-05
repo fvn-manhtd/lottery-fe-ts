@@ -69,4 +69,15 @@ export const ApiRoute = {
         'SEND_RESET_PASSWORD_EMAIL': '/users/password/email',
         'RESET_PASSWORD': '/users/password/reset',
     },
+
+    'CURRENT_USER': {
+        'SELF': '/users/self',
+        'ACCOUNT': '/users/self/account',
+        'ADDRESS': '/users/self/address',
+        'CARD': '/users/self/card',
+        'LEAVE': '/users/self/leave',
+        'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id'
+    }
+
+
 }

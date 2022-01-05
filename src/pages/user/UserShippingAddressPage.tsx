@@ -10,19 +10,23 @@ import { DashBoardLayout } from "components/templates";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { usePostalJp } from "use-postal-jp";
+import { useAppSelector } from "redux/app/hooks";
+import { selectCurrentUser } from "redux/features";
 
 const UserShippingAddressPage: React.FC = () => {
   const [value, setValue] = useState("");
   const [address, loading, error] = usePostalJp(value, value.length >= 7);
 
+  const currentUser = useAppSelector(selectCurrentUser);
+
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    firstNameKana: "",
-    lastNameKana: "",
-    postCode: "",
-    address: "",
-    phone: "",
+    firstName: currentUser ? currentUser.first_name : "",
+    lastName: currentUser ? currentUser.last_name : "",
+    firstNameKana: currentUser ? currentUser.first_name_kana : "",
+    lastNameKana: currentUser ? currentUser.last_name_kana : "",
+    postCode: currentUser ? currentUser.post_code : "",
+    address: currentUser ? currentUser.address : "",
+    phone: currentUser ? currentUser.phone_number : "",
   };
 
   const handleYubinbangoChange = (e) => {
@@ -211,6 +215,7 @@ const UserShippingAddressPage: React.FC = () => {
                     placeholder=""
                     fullwidth
                     type="text"
+                    value={values.postCode || ""}
                     onChange={handleYubinbangoChange}
                   />
                 </Box>

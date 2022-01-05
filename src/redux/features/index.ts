@@ -1,2 +1,3 @@
 export * from './auth'
-export * from './lottery'
+export * from './currentUser'
+

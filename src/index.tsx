@@ -8,15 +8,21 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "utils/history";
 import { GlobalStyles, theme } from "utils";
 import { ThemeProvider } from "styled-components";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
+let persistor = persistStore(store);
 
 ReactDOM.render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </PersistGate>
       </Provider>
     </ThemeProvider>
   </StrictMode>,

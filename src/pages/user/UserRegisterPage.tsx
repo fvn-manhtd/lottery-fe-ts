@@ -71,15 +71,12 @@ const UserRegisterPage = () => {
   };
 
   const handleFormSubmit = async (values) => {
-    // Distpatch Action Register
     setLoading(true);
     try {
-      const response = await authApi.register({
+      const { status, data } = await authApi.register({
         email: values.email,
         password: values.password,
       });
-      const { status, data } = response;
-      console.log(status, data);
       if (status === 201 && data.status === "success") {
         setLoading(false);
         dispatch(push(ROUTES.USER_REGISTER_CONFIRM_MAIL));

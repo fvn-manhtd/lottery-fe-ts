@@ -4,22 +4,29 @@ import { push } from "connected-react-router";
 import { toast } from "react-toastify";
 import { call, fork, put, take } from "redux-saga/effects";
 import { Route as ROUTES } from "utils";
+import { currentUserActions, currentUserSaga } from "../currentUser";
 import { authActions, LoginPayLoad } from "./authSlice";
 
 function* handleLogin(payload: LoginPayLoad) {
     console.log("Handle Login");
 
     try {                    
-        const response = yield call(authApi.login, payload);
-        const { status, data } = response;
+        const {status, data} = yield call(authApi.login, payload);        
         if (status === 200 && data.status === 'success') {
             yield put(authActions.loginSucess());
             localStorage.setItem("isLoggedIn", "yes");
-            yield put(push("/"));    
+            yield put(push("/"));            
+
+            // // Get Current User
+            // // Get Card Info
+            // // Get Favorite List
+            // // Register Customer ID to Payjp
+            yield call(currentUserSaga);
         }        
         
     } catch (error) {
-        yield put(authActions.loginFailed())
+        yield put(authActions.loginFailed());
+        localStorage.removeItem("isLoggedIn");
         toast.error("ご登録のメールアドレスとパスワードが一致しません。ご確認の上、もう一度ご入力ください。", { autoClose: 7000 });
         yield fork(authSaga);
     }    
@@ -30,14 +37,12 @@ function* handleSocialLogin(payload: string) {
     
     try {   
         if (payload === 'twitter') {
-            const response = yield call(authApi.loginWithTwitter);
-            const { data, status } = response;
+            const { data, status } = yield call(authApi.loginWithTwitter);            
             if (status === 200) {
                window.location.href = data.data;
             } 
         } else if (payload === 'facebook') {
-            const response = yield call(authApi.loginWithFacebook);
-            const { data, status } = response;
+            const { data, status } = yield call(authApi.loginWithFacebook);            
             if (status === 200) {
                window.location.href = data.data;
             } 
@@ -62,9 +67,9 @@ function* watchLoginFlow() {
             
         }
         
-        // Listening dispatch action logout from user    
-        yield take(authActions.logout.type)
-        yield fork(handleLogout)
+        // Listening dispatch action logout from user            
+        yield take(authActions.logout.type);
+        yield call(handleLogout);
     }
 }
 
@@ -78,8 +83,8 @@ function* watchSocialLoginFlow() {
             
         }        
         // Listening dispatch action logout from user    
-        yield take(authActions.logout.type)
-        yield call(handleLogout)
+        yield take(authActions.logout.type);
+        yield call(handleLogout);
     }
 }
 
@@ -87,12 +92,13 @@ function* handleLogout() {
     // Redirect to Login page
     console.log("Handle Logout");
     try {
-        const response = yield call(authApi.logout);
-        const { status, data } = response;
+        const { status, data } = yield call(authApi.logout);        
         if (status === 200 && data.status === 'success') {
             yield put(push(ROUTES.USER_LOGIN));
             localStorage.removeItem("isLoggedIn");
-            yield put(authActions.logout());    
+            yield put(authActions.logout());
+            yield put(currentUserActions.unSetCurrentUser());
+            yield put(currentUserActions.unSetCurrentUserCard());
         }        
     } catch (error) {
         console.log(error);

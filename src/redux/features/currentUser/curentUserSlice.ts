@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "models";
+import { User, UserCard } from "models";
 
 export interface CurrentUserSlice {
-    data: User,
+    self: User,
+    card: UserCard[],
 }
 const initialState: CurrentUserSlice = {
-    data: {}
+    self: {},
+    card: [],
 }
 
 
@@ -14,11 +16,18 @@ const currentUserSlice = createSlice({
     initialState,
     reducers: {
         unSetCurrentUser(state) {
-            state.data = {};
+            state.self = {};
         },
         setCurrentUser(state, action:PayloadAction<User>) {
-            state.data = action.payload;
+            state.self = action.payload;
         },
+
+        unSetCurrentUserCard(state) {
+            state.card = [];
+        },
+        setCurrentUserCard(state, action:PayloadAction<UserCard[]>) {
+            state.card = action.payload;
+        }
     }
 })
 
@@ -26,7 +35,8 @@ const currentUserSlice = createSlice({
 export const currentUserActions = currentUserSlice.actions
 
 //Selector
-export const getCurrentUser = (state: { currentUser: { data: User } }) => state.currentUser.data
+export const selectCurrentUser = (state: { currentUser: { self: User } }) => state.currentUser.self
+export const selectCurrentUserCard = (state: { currentUser: { card: UserCard } }) => state.currentUser.card
 
 
 //Reducer
