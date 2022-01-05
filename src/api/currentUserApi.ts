@@ -30,6 +30,10 @@ export const currentUserApi = {
         const url = ApiRoute.CURRENT_USER.REGISTER_PAY_CUSTOMER_ID;
         return axiosClient.get(url);
     },
+    leave() {
+        const url = ApiRoute.CURRENT_USER.LEAVE;
+        return axiosClient.get(url);
+    }
 
 }
 

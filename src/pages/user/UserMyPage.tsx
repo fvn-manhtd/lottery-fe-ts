@@ -32,6 +32,22 @@ const UserMyPage: React.FC = () => {
     password: "",
   };
 
+  const handleLeave = async () => {
+    setLoading(true);
+    try {
+      const { status, data } = await currentUserApi.leave();
+      if (status === 200 && data.status === "success") {
+        setLoading(false);
+        localStorage.removeItem("isLoggedIn");
+        dispatch(authActions.logout());
+        dispatch(push(ROUTES.USER_LOGIN));
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   const handleFormSubmit = async (values) => {
     setLoading(true);
     try {
@@ -157,7 +173,7 @@ const UserMyPage: React.FC = () => {
                   <Spinner
                     size={16}
                     border="2px solid"
-                    borderColor="primary.light"
+                    borderColor="secondary.900"
                     borderTop="2px solid white"
                   ></Spinner>
                   <Small ml="0.5rem" color="white" fontWeight="600">
@@ -223,7 +239,9 @@ const UserMyPage: React.FC = () => {
                       setIsModalOpen(false);
                     }}
                   >
-                    キャンセル
+                    <Small color="white" fontWeight="600">
+                      キャンセル
+                    </Small>
                   </Button>
                   <Button
                     mx="1rem"
@@ -233,8 +251,25 @@ const UserMyPage: React.FC = () => {
                     type="submit"
                     fullwidth
                     borderRadius={5}
+                    onClick={() => handleLeave()}
                   >
-                    削除する
+                    {loading ? (
+                      <>
+                        <Spinner
+                          size={16}
+                          border="2px solid"
+                          borderColor="primary.dark"
+                          borderTop="2px solid white"
+                        ></Spinner>
+                        <Small ml="0.5rem" color="white" fontWeight="600">
+                          削除中です
+                        </Small>
+                      </>
+                    ) : (
+                      <Small color="white" fontWeight="600">
+                        削除する
+                      </Small>
+                    )}
                   </Button>
                 </FlexBox>
               </Box>

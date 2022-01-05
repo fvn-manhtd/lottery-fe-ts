@@ -1,4 +1,4 @@
-import { ApiRoute, Route as ROUTES } from "utils";
+import { Route as ROUTES } from "utils";
 import { Route, Switch } from "react-router-dom";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
@@ -48,10 +48,6 @@ import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserRegisterCompletePage from "pages/user/UserRegisterCompletePage";
-import axios from "axios";
-import { axiosClient } from "api";
-import { useDispatch } from "react-redux";
-import { authActions } from "redux/features";
 
 const FancyRoute = (props) => {
   useMemo(() => {

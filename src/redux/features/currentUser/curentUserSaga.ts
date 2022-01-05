@@ -12,7 +12,7 @@ function* getCurrentUserCard() {
         }
     } catch (error) {
         yield put(currentUserActions.unSetCurrentUserCard);
-        toast.error("エラーが発生しました", { autoClose: 7000 });
+        toast.error("カード情報のエラーが発生しました", { autoClose: 7000 });
     }
 }
 
@@ -24,11 +24,24 @@ function* getCurrentUser() {
         }
     } catch (error) {
         yield put(currentUserActions.unSetCurrentUser);
-        toast.error("エラーが発生しました", { autoClose: 7000 });
+        toast.error("ユーザー情報のエラーが発生しました", { autoClose: 7000 });
+    }
+}
+
+function* registerCustomerToPayjp() {
+    try {
+        const { status, data } = yield call(currentUserApi.registerPayCustomerID);
+        if (status === 200 && data.status === 'success') {
+            yield put(currentUserActions.setPayjpCustomerID(data.id))
+        }
+    } catch (error) {
+        yield put(currentUserActions.unSetCurrentUser);
+        toast.error("ユーザー情報のエラーが発生しました", { autoClose: 7000 });
     }
 }
 
 export function* currentUserSaga() {    
+    yield fork(registerCustomerToPayjp);
     yield fork(getCurrentUser);
     yield fork(getCurrentUserCard);
 }

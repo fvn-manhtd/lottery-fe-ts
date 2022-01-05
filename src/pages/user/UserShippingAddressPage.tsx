@@ -19,6 +19,8 @@ const UserShippingAddressPage: React.FC = () => {
 
   const currentUser = useAppSelector(selectCurrentUser);
 
+  console.log(currentUser);
+
   const initialValues = {
     firstName: currentUser ? currentUser.first_name : "",
     lastName: currentUser ? currentUser.last_name : "",
@@ -157,12 +159,12 @@ const UserShippingAddressPage: React.FC = () => {
                   </Box>
                   <Box width="80%">
                     <TextField
-                      name="firstName"
+                      name="firstNameKana"
                       type="text"
                       fullwidth
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.firstName || ""}
+                      value={values.firstNameKana || ""}
                     />
                   </Box>
                 </FlexBox>
@@ -177,12 +179,12 @@ const UserShippingAddressPage: React.FC = () => {
                   </Box>
                   <Box width="80%">
                     <TextField
-                      name="lastName"
+                      name="lastNameKana"
                       type="text"
                       fullwidth
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.lastName || ""}
+                      value={values.lastNameKana || ""}
                     />
                   </Box>
                 </FlexBox>
