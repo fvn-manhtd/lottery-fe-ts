@@ -3,7 +3,7 @@ import { Box } from "components/atoms";
 import { Lottery } from "components/organisms";
 import { LotteryListModel } from "models";
 
-const StyledBox = styled.div `
+export const LotteryListStyledBox = styled.div `
 display: grid;
 grid-template-columns: repeat(auto-fill, 33%);
 justify-content: center;
@@ -14,7 +14,7 @@ justify-content: center;
 
 export const LotteryList: React.FC<LotteryListModel> = ({ lotteries }) => {
     return (
-        <StyledBox>
+        <LotteryListStyledBox>
             {lotteries.map((value) => {
                 return (
                     <Box
@@ -31,6 +31,6 @@ export const LotteryList: React.FC<LotteryListModel> = ({ lotteries }) => {
                     </Box>
                 );
             })}
-        </StyledBox>
+        </LotteryListStyledBox>
     )
 }

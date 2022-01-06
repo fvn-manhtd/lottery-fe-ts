@@ -32,7 +32,7 @@ const TopPage = () => {
               naturalSlideHeight={62}
               totalSlides={lotteryList.lotteries.length}
               visibleSlides={1}
-              currentSlide={0}
+              currentSlide={1}
               infinite={true}
               isPlaying={true}
               interval={5000}

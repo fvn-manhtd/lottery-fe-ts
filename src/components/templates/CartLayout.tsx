@@ -18,12 +18,17 @@ const listStaticPage = [
   { id: 4, title: "お問い合わせ", href: ROUTES.CONTACT },
 ];
 
-export const CartLayout: React.FC = ({ children }) => (
+type CartLayoutProps = {
+  children:JSX.Element,
+  pageTitle?:string,
+}
+
+export const CartLayout: React.FC<CartLayoutProps> = ({ children, pageTitle }) => (
   <>
     <HeaderCart />
 
     <Typography as="h2" textAlign="center" my="3rem">
-      カート
+      {pageTitle?pageTitle:"カート"}
     </Typography>
     <Box bg="gray.400" my="3rem">
       {children}

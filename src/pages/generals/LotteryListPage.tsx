@@ -34,7 +34,6 @@ const LotteryListPage = () => {
         <main>
           <Container>
             <Box p={{ _: 0, md: 40 }}>
-              
               {/*title*/}
               <Box marginY="2rem"> 
                 <Typography
