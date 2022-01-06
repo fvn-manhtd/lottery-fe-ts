@@ -3,26 +3,18 @@ import { LotteryList, Pagination } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
-import { useDispatch, useSelector } from "react-redux";
-import { getLotteries, selectLotteries } from "redux/features";
-import { useEffect } from "react";
 import { getSearchQueryObj, Route } from "utils";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import lotteryApi from "api/lotteryApi";
 
 const StyledLink = styled.a `
 display:contents;
 `
-
 const LotteryListPage = () => {
-  
-  const dispatch=useDispatch();
-  useEffect(()=>{
-    dispatch(getLotteries());
-  },[dispatch])
-  const lotteries=useSelector(selectLotteries);
-  console.log(lotteries.data.lotteries);
 
+  const data=lotteryApi();
+  console.log(data);
   
   const statusButton = [
     {status:1,text:"販売中"},
@@ -30,7 +22,6 @@ const LotteryListPage = () => {
     {status:3,text:"販売予定"}
   ]
 
-  
   const history=useHistory();
   const changeRoute=(data)=>{
     const page=data+1;
@@ -43,7 +34,6 @@ const LotteryListPage = () => {
         <main>
           <Container>
             <Box p={{ _: 0, md: 40 }}>
-              
               {/*title*/}
               <Box marginY="2rem"> 
                 <Typography
@@ -127,7 +117,7 @@ const LotteryListPage = () => {
               width="90%"
               margin="1rem auto">
                 <Pagination 
-                pageCount={lotteries.data.pagination.last_page}
+                pageCount={data.data.data.pagination.last_page}
                 onChange={(data) => {
                   changeRoute(data)
                 }}

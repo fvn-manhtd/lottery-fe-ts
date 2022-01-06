@@ -1,14 +1,13 @@
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
-import { authReducer, lotteryIndexReducer } from 'redux/features';
+import { authReducer } from 'redux/features';
 import { history, loadState } from 'utils';
 import rootSaga from './rootSaga';
 
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  lotteries: lotteryIndexReducer,
   router: connectRouter(history)  
 })
 

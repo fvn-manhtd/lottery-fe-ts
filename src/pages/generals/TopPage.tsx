@@ -13,18 +13,13 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { lotteryStatusObj } from "utils/constants";
 import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
-import { useDispatch, useSelector } from "react-redux";
-import { getLotteries, selectLotteries } from "redux/features";
-import { useEffect } from "react";
 import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
+import lotteryApi from "api/lotteryApi";
 
 const TopPage = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getLotteries());
-  }, [dispatch]);
-  const lotteries = useSelector(selectLotteries);
-  console.log(lotteries);
+
+  const lottery=lotteryApi();
+  console.log(lottery);
 
   return (
     <>
@@ -37,7 +32,7 @@ const TopPage = () => {
               naturalSlideHeight={62}
               totalSlides={lotteryList.lotteries.length}
               visibleSlides={1}
-              currentSlide={0}
+              currentSlide={1}
               infinite={true}
               isPlaying={true}
               interval={5000}

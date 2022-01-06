@@ -11,7 +11,7 @@ const Error404Page = () => {
   };
 
   return (
-    <CartLayout>
+    <CartLayout pageTitle="ページが見つかりませんでした">
       <FlexBox
         flexDirection="column"
         justifyContent="center"
