@@ -5,25 +5,30 @@ import {
   FlexBox,
   TextField,
   Typography,
+  Spinner,
+  Small,
 } from "components/atoms";
 import { DashBoardLayout } from "components/templates";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { usePostalJp } from "use-postal-jp";
-import { useAppSelector } from "redux/app/hooks";
-import { selectCurrentUser } from "redux/features";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
+import { currentUserActions, selectCurrentUser } from "redux/features";
 import * as yup from "yup";
 import { phoneRegExp } from "utils";
+import { currentUserApi } from "api";
+import { toast } from "react-toastify";
 
 const formSchema = yup.object().shape({
-  firstName: yup.string().nullable().required("姓を入力してください"),
-  lastName: yup.string().nullable().required("名を入力してください"),
-  firstNameKana: yup.string().nullable().required("セイを入力してください"),
-  lastNameKana: yup.string().nullable().required("メイを入力してください"),
-  postCode: yup.string().nullable().required("郵便番号を入力してください"),
-  formAddress: yup.string().nullable().required("住所を入力してください"),
-  phone: yup
+  first_name: yup.string().nullable().required("姓を入力してください"),
+  last_name: yup.string().nullable().required("名を入力してください"),
+  first_name_kana: yup.string().nullable().required("セイを入力してください"),
+  last_name_kana: yup.string().nullable().required("メイを入力してください"),
+  post_code: yup.string().nullable().required("郵便番号を入力してください"),
+  address: yup.string().nullable(),
+  phone_number: yup
     .string()
+    .nullable()
     .matches(phoneRegExp, "電話番号を入力してください")
     .min(8, "電話番号を入力してください")
     .max(12, "電話番号を入力してください"),
@@ -31,6 +36,7 @@ const formSchema = yup.object().shape({
 
 const UserShippingAddressPage: React.FC = () => {
   const [yubinBango, setyubinBango] = useState("");
+  const [spin, setSpin] = useState(false);
 
   const [address, loading, error] = usePostalJp(
     yubinBango,
@@ -38,26 +44,46 @@ const UserShippingAddressPage: React.FC = () => {
   );
 
   const currentUser = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
 
   const initialValues = {
-    firstName: currentUser ? currentUser.first_name : "",
-    lastName: currentUser ? currentUser.last_name : "",
-    firstNameKana: currentUser ? currentUser.first_name_kana : "",
-    lastNameKana: currentUser ? currentUser.last_name_kana : "",
-    postCode: currentUser ? currentUser.post_code : "",
-    formAddress: currentUser ? currentUser.address : "",
-    formPrefecture: currentUser ? currentUser.prefecture : "",
-    phone: currentUser ? currentUser.phone_number : "",
+    first_name: currentUser ? currentUser.first_name : "",
+    last_name: currentUser ? currentUser.last_name : "",
+    first_name_kana: currentUser ? currentUser.first_name_kana : "",
+    last_name_kana: currentUser ? currentUser.last_name_kana : "",
+    post_code: currentUser ? currentUser.post_code : "",
+    address: currentUser ? currentUser.address : "",
+    prefecture: currentUser ? currentUser.prefecture : "",
+    phone_number: currentUser ? currentUser.phone_number : "",
   };
 
   const handlePostCodeChange = (e) => {
     const { value } = e.target;
     setyubinBango(value);
-    setFieldValue("postCode", value);
+    setFieldValue("post_code", value);
   };
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+    let prefecture = address ? address.prefecture : currentUser.prefecture;
+    const addressInfo = { ...values, prefecture };
+    setSpin(true);
+
+    try {
+      let userInfo = {
+        ...addressInfo,
+        email: currentUser.email,
+        id: currentUser.id,
+      };
+      const { status, data } = await currentUserApi.address(addressInfo);
+      if (status === 200 && data.status === "success") {
+        setSpin(false);
+        dispatch(currentUserActions.setCurrentUser(userInfo));
+        toast.success("情報を変更しました。", { autoClose: 7000 });
+      }
+    } catch (error) {
+      console.log(error);
+      setSpin(false);
+    }
   };
 
   const {
@@ -122,13 +148,13 @@ const UserShippingAddressPage: React.FC = () => {
                   </Box>
                   <Box width="80%">
                     <TextField
-                      name="firstName"
+                      name="first_name"
                       type="text"
                       fullwidth
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.firstName || ""}
-                      errorText={touched.firstName && errors.firstName}
+                      value={values.first_name}
+                      errorText={touched.first_name && errors.first_name}
                     />
                   </Box>
                 </FlexBox>
@@ -143,13 +169,13 @@ const UserShippingAddressPage: React.FC = () => {
                   </Box>
                   <Box width="80%">
                     <TextField
-                      name="lastName"
+                      name="last_name"
                       type="text"
                       fullwidth
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.lastName || ""}
-                      errorText={touched.lastName && errors.lastName}
+                      value={values.last_name}
+                      errorText={touched.last_name && errors.last_name}
                     />
                   </Box>
                 </FlexBox>
@@ -191,13 +217,15 @@ const UserShippingAddressPage: React.FC = () => {
                   </Box>
                   <Box width="80%">
                     <TextField
-                      name="firstNameKana"
+                      name="first_name_kana"
                       type="text"
                       fullwidth
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.firstNameKana || ""}
-                      errorText={touched.firstNameKana && errors.firstNameKana}
+                      value={values.first_name_kana}
+                      errorText={
+                        touched.first_name_kana && errors.first_name_kana
+                      }
                     />
                   </Box>
                 </FlexBox>
@@ -212,13 +240,15 @@ const UserShippingAddressPage: React.FC = () => {
                   </Box>
                   <Box width="80%">
                     <TextField
-                      name="lastNameKana"
+                      name="last_name_kana"
                       type="text"
                       fullwidth
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.lastNameKana || ""}
-                      errorText={touched.lastNameKana && errors.lastNameKana}
+                      value={values.last_name_kana}
+                      errorText={
+                        touched.last_name_kana && errors.last_name_kana
+                      }
                     />
                   </Box>
                 </FlexBox>
@@ -251,42 +281,49 @@ const UserShippingAddressPage: React.FC = () => {
                   mb="1rem"
                   alignItems="center"
                 >
-                  <Box width="100%" mb="1rem">
+                  <Box width="100%" mb="0.5rem">
                     郵便番号
                   </Box>
                   <Box width="100%">
                     <TextField
-                      name="postCode"
+                      name="post_code"
                       placeholder=""
                       fullwidth
                       type="text"
                       onBlur={handleBlur}
-                      value={values.postCode || ""}
+                      value={values.post_code}
                       onChange={handlePostCodeChange}
-                      errorText={touched.postCode && errors.postCode}
+                      errorText={touched.post_code && errors.post_code}
                     />
+                    {!loading && error && (
+                      <Typography mt="1rem" color="error.main">
+                        {error && error.message === "Bad request"
+                          ? "郵便番号が正しくありません"
+                          : ""}
+                      </Typography>
+                    )}
                   </Box>
                 </FlexBox>
 
                 <Box maxWidth="220px" mb="1rem">
                   <TextField
-                    name="formPrefecture"
+                    name="prefecture"
                     placeholder=""
                     fullwidth
                     type="text"
-                    value={values.formPrefecture || ""}
+                    onBlur={handleBlur}
                     onChange={handleChange}
+                    value={address ? address.prefecture : values.prefecture}
                   />
                 </Box>
 
                 <TextField
-                  name="formAddress"
+                  name="address"
                   fullwidth
-                  mb="1rem"
+                  type="text"
                   onBlur={handleBlur}
-                  value={values.formAddress || ""}
                   onChange={handleChange}
-                  errorText={touched.formAddress && errors.formAddress}
+                  value={values.address}
                 />
               </Box>
             </FlexBox>
@@ -312,12 +349,12 @@ const UserShippingAddressPage: React.FC = () => {
               </Box>
               <Box mb={{ _: "1rem", md: "0" }} width={{ _: "100%", md: "60%" }}>
                 <TextField
-                  name="phone"
+                  name="phone_number"
                   fullwidth
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.phone || ""}
-                  errorText={touched.phone && errors.phone}
+                  value={values.phone_number}
+                  errorText={touched.phone && errors.phone_number}
                 />
               </Box>
             </FlexBox>
@@ -346,7 +383,23 @@ const UserShippingAddressPage: React.FC = () => {
               fullwidth
               borderRadius={5}
             >
-              情報を変更
+              {spin ? (
+                <>
+                  <Spinner
+                    size={16}
+                    border="2px solid"
+                    borderColor="secondary.900"
+                    borderTop="2px solid white"
+                  ></Spinner>
+                  <Small ml="0.5rem" color="white" fontWeight="600">
+                    情報を変更中です
+                  </Small>
+                </>
+              ) : (
+                <Small color="white" fontWeight="600">
+                  情報を変更
+                </Small>
+              )}
             </Button>
           </FlexBox>
         </form>

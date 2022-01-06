@@ -13,7 +13,7 @@ import { DashBoardLayout } from "components/templates";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { StyledModal } from "components/molecules";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { authActions, selectCurrentUser } from "redux/features";

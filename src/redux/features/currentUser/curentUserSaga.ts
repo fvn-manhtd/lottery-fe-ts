@@ -41,7 +41,7 @@ function* registerCustomerToPayjp() {
 }
 
 export function* currentUserSaga() {    
-    yield fork(registerCustomerToPayjp);
+    // yield fork(registerCustomerToPayjp);
     yield fork(getCurrentUser);
-    yield fork(getCurrentUserCard);
+    // yield fork(getCurrentUserCard);
 }
