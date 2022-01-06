@@ -6,31 +6,31 @@ import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからの�
 import { getSearchQueryObj, Route } from "utils";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import lotteryApi from "api/lotteryApi";
 
-const StyledLink = styled.a`
-  display: contents;
+
+const StyledLink = styled.a `
+display:contents;
 `;
 
-const LotteryListPage = () => {
-  const lotteries = [];
 
+const LotteryListPage = () => {
+
+  const data=lotteryApi();
+  console.log(data);
+  
   const statusButton = [
     { status: 1, text: "販売中" },
     { status: 2, text: "終了間際" },
     { status: 3, text: "販売予定" },
   ];
 
-  const history = useHistory();
-  const changeRoute = (data) => {
-    const page = data + 1;
-    history.push(
-      Route.LOTTERIES +
-        "?status=" +
-        getSearchQueryObj("status") +
-        "&page=" +
-        page
-    );
-  };
+  const history=useHistory();
+  const changeRoute=(data)=>{
+    const page=data+1;
+    history.push(Route.LOTTERIES+"?status="+getSearchQueryObj('status')+"&page="+page)
+  }
+
 
   return (
     <>
@@ -125,17 +125,17 @@ const LotteryListPage = () => {
               <LotteryList lotteries={lotteryList.lotteries} />
 
               {/* pagination */}
-              <Box
-                display="flex"
-                justifyContent="center"
-                width="90%"
-                margin="1rem auto"
-              >
-                <Pagination
-                  pageCount={lotteries.data.pagination.last_page}
-                  onChange={(data) => {
-                    changeRoute(data);
-                  }}
+
+              <Box 
+              display="flex"
+              justifyContent="center"
+              width="90%"
+              margin="1rem auto">
+                <Pagination 
+                pageCount={data.data.data.pagination.last_page}
+                onChange={(data) => {
+                  changeRoute(data)
+                }}
                 />
               </Box>
             </Box>

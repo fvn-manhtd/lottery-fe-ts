@@ -1,8 +1,8 @@
-import { ApiRoute } from "utils";
+import { ApiRoute, suspend } from "utils";
 import { axiosClient } from "api";
 import { ListResponse, LotteryModel } from "models";
 
-export const lotteryApi={
+const lotteryApi={
     getAll(): Promise<ListResponse<LotteryModel>> {
         const searchQuery=location.search;
         const url = ApiRoute.LOTTERY_INDEX+searchQuery;
@@ -10,3 +10,4 @@ export const lotteryApi={
     }
 };
 
+export default suspend(lotteryApi.getAll());

@@ -9,6 +9,7 @@ import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import { authReducer, currentUserReducer } from 'redux/features';
 import { history } from 'utils';
+
 import rootSaga from './rootSaga';
 
 

@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 export const axiosClient = axios.create({
     withCredentials: true,
@@ -15,6 +16,9 @@ axiosClient.interceptors.request.use(function (config: AxiosRequestConfig) {
     return config;
   }, function (error) {
     // Do something with request error
+    if (error.response.data.message) {
+      error.message = error.response.data.message
+    }
     return Promise.reject(error);
   });
 
@@ -22,10 +26,17 @@ axiosClient.interceptors.request.use(function (config: AxiosRequestConfig) {
 axiosClient.interceptors.response.use(function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    return response;
+    if(response.data.status==="success"){
+      return response;
+    }else{
+      return toast.error((response.data.message), { autoClose: 10000, toastId: 1, });
+    }
   }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    if (error.response.data.message) {
+      error.message = error.response.data.message
+    }
     return Promise.reject(error);
     
   });
