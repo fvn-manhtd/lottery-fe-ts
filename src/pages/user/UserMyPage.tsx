@@ -13,7 +13,7 @@ import { DashBoardLayout } from "components/templates";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { StyledModal } from "components/molecules";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { authActions, selectCurrentUser } from "redux/features";
@@ -117,7 +117,7 @@ const UserMyPage: React.FC = () => {
                   onChange={handleChange}
                   value={values.email || ""}
                   errorText={touched.email && errors.email}
-                  readOnly
+                  disabled
                 />
               </Box>
             </FlexBox>

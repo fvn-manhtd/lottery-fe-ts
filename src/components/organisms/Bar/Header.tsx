@@ -16,6 +16,7 @@ import { Logo } from "./Logo";
 import { useAppDispatch } from "redux/app/hooks";
 import { authActions } from "redux/features";
 import { Route as ROUTES } from "utils";
+import { push } from "connected-react-router";
 
 export const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -74,7 +75,12 @@ export const Header: React.FC = () => {
           >
             {isLoggedIn && (
               <>
-                <NavLink ml={40} color="gray.700" href={ROUTES.SHOPPING_CART}>
+                <Box
+                  ml={40}
+                  color="gray.700"
+                  cursor="pointer"
+                  onClick={() => dispatch(push(ROUTES.SHOPPING_CART))}
+                >
                   <FlexBox position="relative" alignItems="center">
                     <Box width="16px" color="primary.main">
                       <Icon defaultcolor="currentColor" variant="medium">
@@ -107,13 +113,16 @@ export const Header: React.FC = () => {
                       カート
                     </Typography>
                   </FlexBox>
-                </NavLink>
+                </Box>
               </>
             )}
 
             {!isLoggedIn && (
               <>
-                <NavLink href={ROUTES.USER_LOGIN}>
+                <Box
+                  cursor="pointer"
+                  onClick={() => dispatch(push(ROUTES.USER_LOGIN))}
+                >
                   <FlexBox alignItems="center">
                     <Box width="16px">
                       <IconPng>login</IconPng>
@@ -127,7 +136,7 @@ export const Header: React.FC = () => {
                       ログイン
                     </Typography>
                   </FlexBox>
-                </NavLink>
+                </Box>
               </>
             )}
 
@@ -152,11 +161,12 @@ export const Header: React.FC = () => {
               }
             >
               <FlexBox flexDirection="column">
-                <NavLink
+                <Box
                   px="1rem"
                   py="0.5rem"
                   color="gray.700"
-                  href={ROUTES.USER_MYAPGE}
+                  cursor="pointer"
+                  onClick={() => dispatch(push(ROUTES.USER_MYAPGE))}
                 >
                   <FlexBox alignItems="center">
                     <Box width="16px">
@@ -166,13 +176,14 @@ export const Header: React.FC = () => {
                       マイページ
                     </Typography>
                   </FlexBox>
-                </NavLink>
+                </Box>
 
-                <NavLink
+                <Box
                   px="1rem"
                   py="0.5rem"
                   color="gray.700"
-                  href={ROUTES.USER_FAVORITE}
+                  cursor="pointer"
+                  onClick={() => dispatch(push(ROUTES.USER_FAVORITE))}
                 >
                   <FlexBox alignItems="center">
                     <Box width="18px" color="primary.main">
@@ -182,7 +193,7 @@ export const Header: React.FC = () => {
                     </Box>
                     <Typography ml={10}>お気に入り</Typography>
                   </FlexBox>
-                </NavLink>
+                </Box>
 
                 <NavLink
                   px="1rem"
@@ -227,7 +238,11 @@ export const Header: React.FC = () => {
             justifyContent="flex-end"
             display={{ _: "flex", lg: "none" }}
           >
-            <NavLink color="gray.700" href={ROUTES.SHOPPING_CART}>
+            <Box
+              cursor="pointer"
+              color="gray.700"
+              onClick={() => dispatch(push(ROUTES.SHOPPING_CART))}
+            >
               <FlexBox
                 position="relative"
                 alignItems="center"
@@ -261,7 +276,7 @@ export const Header: React.FC = () => {
                   </Tiny>
                 </FlexBox>
               </FlexBox>
-            </NavLink>
+            </Box>
           </Box>
         </Box>
       </FlexBox>

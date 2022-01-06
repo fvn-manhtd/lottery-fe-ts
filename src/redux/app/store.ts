@@ -35,7 +35,8 @@ export const store = configureStore({
     serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       }
-  }).concat(sagaMiddleware, routerMiddleware(history)),  
+  }).concat(sagaMiddleware, routerMiddleware(history)),
+  devTools: process.env.REACT_APP_DEV_TOOLS
 });
 
 sagaMiddleware.run(rootSaga)

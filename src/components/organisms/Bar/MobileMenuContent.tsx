@@ -70,7 +70,13 @@ export const MobileMenuContent: React.FC = () => {
           <>
             <Divider height="1px" width="100%" mx="auto" />
 
-            <Box px="2rem" py="1rem" color="gray.700" onClick={handleLogout}>
+            <Box
+              cursor="pointer"
+              px="2rem"
+              py="1rem"
+              color="gray.700"
+              onClick={handleLogout}
+            >
               <FlexBox alignItems="center">
                 <Box width="16px">
                   <IconPng>logout</IconPng>
