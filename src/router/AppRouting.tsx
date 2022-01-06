@@ -63,6 +63,10 @@ export const UserRegisterConfirmMailPage = lazy(
   () => import("pages/user/UserRegisterConfirmMailPage")
 );
 
+export const UserRegisterCompletePage = lazy(
+  () => import("pages/user/UserRegisterCompletePage")
+);
+
 /* shop pages */
 export const ShopLoginPage = lazy(() => import("pages/shop/ShopLoginPage"));
 export const ShopNewPasswordPage = lazy(

@@ -42,16 +42,18 @@ import {
   EffectFinishPage,
   ContactPage,
   UserRegisterConfirmMailPage,
-  UserRegisterCompletePage
+  UserRegisterCompletePage,
 } from "router";
 
 import { Suspense } from "react";
 
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary } from "react-error-boundary";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LotteryIndexSkeletonPage, TopPageSkeletonPage } from "components/organisms";
-
+import {
+  LotteryIndexSkeletonPage,
+  TopPageSkeletonPage,
+} from "components/organisms";
 
 const FancyRoute = (props) => {
   useMemo(() => {
@@ -67,22 +69,19 @@ const FancyRoute = (props) => {
 };
 
 export default function App() {
-  
-  const location=useLocation();
-  const preservedRoutes: Array<string> = [ROUTES.HOME,ROUTES.LOTTERIES];
+  const location = useLocation();
+  const preservedRoutes: Array<string> = [ROUTES.HOME, ROUTES.LOTTERIES];
 
   return (
     <>
-
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-          
         {/* lottery index page */}
         <Suspense fallback={<LotteryIndexSkeletonPage />}>
           <Switch>
-            <FancyRoute 
-              path={ROUTES.LOTTERIES} 
-              exact 
-              component={() => <LotteryListPage/>} 
+            <FancyRoute
+              path={ROUTES.LOTTERIES}
+              exact
+              component={() => <LotteryListPage />}
             />
           </Switch>
         </Suspense>
@@ -90,10 +89,10 @@ export default function App() {
         {/* top page */}
         <Suspense fallback={<TopPageSkeletonPage />}>
           <Switch>
-            <FancyRoute 
-              path={ROUTES.HOME} 
-              exact 
-              component={() => <TopPage/>} 
+            <FancyRoute
+              path={ROUTES.HOME}
+              exact
+              component={() => <TopPage />}
             />
           </Switch>
         </Suspense>
@@ -101,42 +100,73 @@ export default function App() {
         {/* general pages */}
         <Suspense fallback={<Loading />}>
           <Switch>
-            <FancyRoute 
-              path={ROUTES.STATIC_USAGE_POLICY} 
-              exact 
-              component={() => <UsagePolicyPage />} 
+            <FancyRoute
+              path={ROUTES.STATIC_USAGE_POLICY}
+              exact
+              component={() => <UsagePolicyPage />}
             />
-            <FancyRoute 
-              path={ROUTES.STATIC_POLICY} 
-              exact 
-              component={() => <PrivacyPolicyPage />} 
+            <FancyRoute
+              path={ROUTES.STATIC_POLICY}
+              exact
+              component={() => <PrivacyPolicyPage />}
             />
-            <FancyRoute 
-              path={ROUTES.STATIC_COMPANY} 
-              exact 
-              component={() => <CompanyPage />} 
+            <FancyRoute
+              path={ROUTES.STATIC_COMPANY}
+              exact
+              component={() => <CompanyPage />}
             />
-            <FancyRoute 
-              path={ROUTES.STATIC_LEGAL} 
-              exact 
-              component={() => <LegalInformationPage />} 
+            <FancyRoute
+              path={ROUTES.STATIC_LEGAL}
+              exact
+              component={() => <LegalInformationPage />}
             />
-            <FancyRoute 
-              path={ROUTES.NEWS_LIST} 
-              exact 
-              component={() => <NewsListPage />} 
+            <FancyRoute
+              path={ROUTES.NEWS_LIST}
+              exact
+              component={() => <NewsListPage />}
             />
-            <FancyRoute 
-              path={ROUTES.NEWS_DETAIL} 
-              exact 
-              component={() => <NewsDetailPage />} 
+            <FancyRoute
+              path={ROUTES.NEWS_DETAIL}
+              exact
+              component={() => <NewsDetailPage />}
             />
-            <FancyRoute 
-              path={ROUTES.CONTACT} 
-              exact 
-              component={() => <ContactPage />} 
+            <FancyRoute
+              path={ROUTES.CONTACT}
+              exact
+              component={() => <ContactPage />}
             />
 
+            {/* user pages */}
+            <FancyRoute
+              path={ROUTES.USER_MYAPGE}
+              exact
+              component={ProtectedRoute(UserMyPage)}
+            />
+            <FancyRoute
+              path={ROUTES.USER_FAVORITE}
+              exact
+              component={ProtectedRoute(UserFavoritePage)}
+            />
+            <FancyRoute
+              path={ROUTES.USER_SHIPPING_ADDRESS}
+              exact
+              component={ProtectedRoute(UserShippingAddressPage)}
+            />
+            <FancyRoute
+              path={ROUTES.USER_CARD}
+              exact
+              component={ProtectedRoute(UserCardPage)}
+            />
+            <FancyRoute
+              path={ROUTES.USER_PURCHASED_HISTORY}
+              exact
+              component={ProtectedRoute(UserPurchaseHistoryPage)}
+            />
+            <FancyRoute
+              path={ROUTES.USER_PURCHASED_HISTORY_DETAIL}
+              exact
+              component={ProtectedRoute(UserPurchaseHistoryDetailPage)}
+            />
 
             {/* user auth pages */}
             <FancyRoute
@@ -175,33 +205,6 @@ export default function App() {
               path={ROUTES.USER_REGISTER_COMPLETE}
               exact
               component={() => <UserRegisterCompletePage />}
-            />
-
-            {/* user auth pages */}
-            <FancyRoute
-              path={ROUTES.USER_LOGIN}
-              exact
-              component={() => <UserLoginPage />}
-            />
-            <FancyRoute
-              path={ROUTES.USER_NEW_PASSWORD}
-              exact
-              component={() => <UserNewPasswordPage />}
-            />
-            <FancyRoute
-              path={ROUTES.USER_PASSWORD_FORGOT}
-              exact
-              component={() => <UserPasswordForgotPage />}
-            />
-            <FancyRoute
-              path={ROUTES.USER_PASSWORD_FORGOT_CONFIRM_MAIL}
-              exact
-              component={() => <UserPasswordForgotConfirmMailPage />}
-            />
-            <FancyRoute
-              path={ROUTES.USER_REGISTER}
-              exact
-              component={() => <UserRegisterPage />}
             />
 
             {/* shop auth pages */}
@@ -279,11 +282,9 @@ export default function App() {
               component={() => <ExamplePage />}
             />
             {/* error page */}
-            {
-              !preservedRoutes.includes(location.pathname) &&
+            {!preservedRoutes.includes(location.pathname) && (
               <FancyRoute path="**" component={() => <Error404Page />} />
-            }
-            
+            )}
           </Switch>
         </Suspense>
       </ErrorBoundary>
