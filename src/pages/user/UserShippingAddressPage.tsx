@@ -78,7 +78,10 @@ const UserShippingAddressPage: React.FC = () => {
       if (status === 200 && data.status === "success") {
         setSpin(false);
         dispatch(currentUserActions.setCurrentUser(userInfo));
-        toast.success("情報を変更しました。", { autoClose: 7000 });
+        toast.success("情報を変更しました。", {
+          autoClose: 7000,
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       }
     } catch (error) {
       console.log(error);

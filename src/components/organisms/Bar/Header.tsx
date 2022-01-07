@@ -119,10 +119,7 @@ export const Header: React.FC = () => {
 
             {!isLoggedIn && (
               <>
-                <Box
-                  cursor="pointer"
-                  onClick={() => dispatch(push(ROUTES.USER_LOGIN))}
-                >
+                <NavLink href={ROUTES.USER_LOGIN}>
                   <FlexBox alignItems="center">
                     <Box width="16px">
                       <IconPng>login</IconPng>
@@ -136,7 +133,7 @@ export const Header: React.FC = () => {
                       ログイン
                     </Typography>
                   </FlexBox>
-                </Box>
+                </NavLink>
               </>
             )}
 
@@ -161,12 +158,11 @@ export const Header: React.FC = () => {
               }
             >
               <FlexBox flexDirection="column">
-                <Box
+                <NavLink
                   px="1rem"
                   py="0.5rem"
                   color="gray.700"
-                  cursor="pointer"
-                  onClick={() => dispatch(push(ROUTES.USER_MYAPGE))}
+                  href={ROUTES.USER_MYAPGE}
                 >
                   <FlexBox alignItems="center">
                     <Box width="16px">
@@ -176,14 +172,13 @@ export const Header: React.FC = () => {
                       マイページ
                     </Typography>
                   </FlexBox>
-                </Box>
+                </NavLink>
 
-                <Box
+                <NavLink
                   px="1rem"
                   py="0.5rem"
                   color="gray.700"
-                  cursor="pointer"
-                  onClick={() => dispatch(push(ROUTES.USER_FAVORITE))}
+                  href={ROUTES.USER_FAVORITE}
                 >
                   <FlexBox alignItems="center">
                     <Box width="18px" color="primary.main">
@@ -193,7 +188,7 @@ export const Header: React.FC = () => {
                     </Box>
                     <Typography ml={10}>お気に入り</Typography>
                   </FlexBox>
-                </Box>
+                </NavLink>
 
                 <NavLink
                   px="1rem"
@@ -233,14 +228,15 @@ export const Header: React.FC = () => {
             </Menu>
           </Box>
 
+          {/* Shopping Cart Icon on Mobile */}
           <Box
             alignItems="center"
             justifyContent="flex-end"
             display={{ _: "flex", lg: "none" }}
           >
             <Box
-              cursor="pointer"
               color="gray.700"
+              cursor="pointer"
               onClick={() => dispatch(push(ROUTES.SHOPPING_CART))}
             >
               <FlexBox

@@ -17,10 +17,8 @@ import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからの�
 import lotteryApi from "api/lotteryApi";
 
 const TopPage = () => {
-
-  const lottery=lotteryApi();
+  const lottery = lotteryApi();
   console.log(lottery);
-
 
   return (
     <>
