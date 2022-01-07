@@ -244,9 +244,8 @@ const UserLoginPage = () => {
               </NavLink>
             </FlexBox>
 
-            <FlexBox justifyContent="center" mb="1.25rem">
+            <FlexBox justifyContent="center" mb="2.25rem">
               <NavLink
-                textAlign="center"
                 bg="gray.500"
                 py="1.4rem"
                 variant="button"

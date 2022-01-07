@@ -99,6 +99,7 @@ function* handleLogout() {
             yield put(authActions.logout());
             yield put(currentUserActions.unSetCurrentUser());
             yield put(currentUserActions.unSetCurrentUserCard());
+            yield put(currentUserActions.unSetPayjpCustomerID());
         }        
     } catch (error) {
         console.log(error);

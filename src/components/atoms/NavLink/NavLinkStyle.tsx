@@ -63,9 +63,10 @@ const StyledNavLink = styled(Link)<
         button: {
           width: "100%",
           borderRadius: "5px",
+          textAlign: "center",
           "&:hover": {
             color: `${theme.colors.gray.white} !important`,
-            backgroundColor: `${theme.colors.primary.main} !important`,
+            backgroundColor: `${theme.colors.primary.light} !important`,
           },
         },
       },

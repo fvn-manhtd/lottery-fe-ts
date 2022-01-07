@@ -92,7 +92,9 @@ const UserPasswordForgotPage = () => {
               </H3>
 
               <Paragraph textAlign="center" mb="1rem" fontSize="0.8rem">
-                ご登録されているメールアドレスをご入力ください。パスワードの再設定を行うためのメールをお送りいたします。
+                ご登録されているメールアドレスをご入力ください。
+                <br />
+                パスワードの再設定を行うためのメールをお送りいたします。
               </Paragraph>
 
               <TextField

@@ -22,9 +22,9 @@ export const currentUserApi = {
         const url = ApiRoute.CURRENT_USER.CARD;
         return axiosClient.post(url, cardInfo);
     },
-    deleteCard() {
+    deleteCard(cardID) {
         const url = ApiRoute.CURRENT_USER.CARD;
-        return axiosClient.delete(url);
+        return axiosClient.delete(url, cardID);
     },
     registerPayCustomerID() {
         const url = ApiRoute.CURRENT_USER.REGISTER_PAY_CUSTOMER_ID;

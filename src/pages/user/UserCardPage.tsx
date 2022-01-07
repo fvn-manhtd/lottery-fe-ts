@@ -1,9 +1,26 @@
-import { Box, Divider, FlexBox, Typography } from "components/atoms";
+import {
+  Box,
+  Divider,
+  FlexBox,
+  H5,
+  Icon,
+  TableRow,
+  Typography,
+} from "components/atoms";
 import { DashBoardLayout } from "components/templates";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PayjpCheckout from "hooks/PayjpCheckout";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
+import {
+  currentUserActions,
+  selectCurrentUserCard,
+  selectPayjpCustomerID,
+} from "redux/features";
+import { currentUserApi } from "api";
+import { Card } from "components/organisms";
 
 const UserCardPage: React.FC = () => {
+  const [userCard, setUserCard] = useState([]);
   const payjpCheckoutProps = {
     dataKey: process.env.REACT_APP_PAPJP_PUBLIC_KEY,
     dataText: "クレジットカード追加",
@@ -16,6 +33,60 @@ const UserCardPage: React.FC = () => {
       console.log("onFailedHandler", payload && payload.message);
     },
   };
+
+  const payjpCustomerID = useAppSelector(selectPayjpCustomerID);
+  const currentUserCard = useAppSelector(selectCurrentUserCard);
+
+  const dispatch = useAppDispatch();
+
+  const registerCustomerToPayjp = async () => {
+    try {
+      const { data } = await currentUserApi.registerPayCustomerID();
+      await dispatch(currentUserActions.setPayjpCustomerID(data.id));
+    } catch (error) {
+      console.log(error);
+      await dispatch(currentUserActions.unSetPayjpCustomerID());
+    }
+  };
+
+  const getCustomerCard = async () => {
+    try {
+      const { data } = await currentUserApi.getCard();
+      await dispatch(currentUserActions.setCurrentUserCard(data.data.data));
+      if (data.data.data.length != 0) {
+        await setUserCard(data.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+      await dispatch(currentUserActions.unSetCurrentUserCard());
+      await setUserCard([]);
+    }
+  };
+
+  const handleRemoveCard = async (cardID) => {
+    try {
+      let obj = {
+        card_id: cardID,
+      };
+      await currentUserApi.deleteCard(obj);
+      let newCurrentUserCard = currentUserCard.filter(
+        (card) => card.id != cardID
+      );
+      console.log(newCurrentUserCard);
+      await dispatch(currentUserActions.setCurrentUserCard(newCurrentUserCard));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Get and set payjp customer id
+  useEffect(() => {
+    if (!Boolean(payjpCustomerID)) {
+      registerCustomerToPayjp();
+    } else {
+      getCustomerCard();
+    }
+  }, [payjpCustomerID]);
 
   return (
     <DashBoardLayout>
@@ -39,6 +110,39 @@ const UserCardPage: React.FC = () => {
         <div className="payjpButtonArea">
           <PayjpCheckout {...payjpCheckoutProps} />
         </div>
+
+        {userCard.map((item) => (
+          <TableRow my="1rem" padding="6px 18px" key={item.id}>
+            <FlexBox alignItems="center" m="6px">
+              <Card width="42px" height="28px" mr="10px" elevation={4}>
+                <img
+                  width="100%"
+                  src={`/assets/images/payment-methods/${item.brand.toLowerCase()}.svg`}
+                  alt={item.brand}
+                />
+              </Card>
+              <H5 className="pre" m="6px">
+                {item.name}
+              </H5>
+            </FlexBox>
+            <Typography className="pre" m="6px">
+              **** **** **** {item.last4}
+            </Typography>
+            <Typography className="pre" m="6px">
+              {item.exp_month}/{item.exp_year}
+            </Typography>
+
+            <Typography className="pre" textAlign="center" color="text.muted">
+              <Icon
+                variant="small"
+                defaultcolor="currentColor"
+                onClick={() => handleRemoveCard(item.id)}
+              >
+                delete
+              </Icon>
+            </Typography>
+          </TableRow>
+        ))}
       </Box>
     </DashBoardLayout>
   );

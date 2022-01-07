@@ -46,7 +46,7 @@ export const currentUserActions = currentUserSlice.actions
 
 //Selector
 export const selectCurrentUser = (state: { currentUser: { self: User } }) => state.currentUser.self
-export const selectCurrentUserCard = (state: { currentUser: { card: UserCard } }) => state.currentUser.card
+export const selectCurrentUserCard = (state: { currentUser: { card: UserCard[] } }) => state.currentUser.card
 export const selectPayjpCustomerID = (state: { currentUser: { payjp_customer_id: string } }) => state.currentUser.payjp_customer_id
 
 
