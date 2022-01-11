@@ -16,11 +16,6 @@ function* handleLogin(payload: LoginPayLoad) {
             yield put(authActions.loginSucess());
             localStorage.setItem("isLoggedIn", "yes");
             yield put(push("/"));            
-
-            // // Get Current User
-            // // Get Card Info
-            // // Get Favorite List
-            // // Register Customer ID to Payjp
             yield call(currentUserSaga);
         }        
         
@@ -97,8 +92,6 @@ function* handleLogout() {
             yield put(push(ROUTES.USER_LOGIN));
             localStorage.removeItem("isLoggedIn");
             yield put(authActions.logout());
-            yield put(currentUserActions.unSetCurrentUser());
-            yield put(currentUserActions.unSetCurrentUserCard());
             yield put(currentUserActions.unSetPayjpCustomerID());
         }        
     } catch (error) {

@@ -63,6 +63,9 @@ const UserMyPage: React.FC = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
+      dispatch(authActions.loginFailed());
+      dispatch(push(ROUTES.USER_LOGIN));
+      localStorage.removeItem("isLoggedIn");
     }
   };
 

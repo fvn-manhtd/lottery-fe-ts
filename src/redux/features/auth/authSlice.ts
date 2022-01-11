@@ -29,6 +29,7 @@ const authSlice = createSlice({
             state.logging = false
         },
         loginFailed(state) {
+            state.isLoggedIn = false
             state.logging = false
         },
         logout(state) {

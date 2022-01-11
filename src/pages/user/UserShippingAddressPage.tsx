@@ -13,11 +13,17 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { usePostalJp } from "use-postal-jp";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
-import { currentUserActions, selectCurrentUser } from "redux/features";
+import {
+  authActions,
+  currentUserActions,
+  selectCurrentUser,
+} from "redux/features";
 import * as yup from "yup";
 import { phoneRegExp } from "utils";
 import { currentUserApi } from "api";
 import { toast } from "react-toastify";
+import { Route as ROUTES } from "utils";
+import { push } from "connected-react-router";
 
 const formSchema = yup.object().shape({
   first_name: yup.string().nullable().required("姓を入力してください"),
@@ -31,7 +37,8 @@ const formSchema = yup.object().shape({
     .nullable()
     .matches(phoneRegExp, "電話番号を入力してください")
     .min(8, "電話番号を入力してください")
-    .max(12, "電話番号を入力してください"),
+    .max(12, "電話番号を入力してください")
+    .required("郵便番号を入力してください"),
 });
 
 const UserShippingAddressPage: React.FC = () => {
@@ -85,7 +92,14 @@ const UserShippingAddressPage: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error("権限がありませんログインしてからお試しください。", {
+        autoClose: 7000,
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       setSpin(false);
+      dispatch(authActions.loginFailed());
+      dispatch(push(ROUTES.USER_LOGIN));
+      localStorage.removeItem("isLoggedIn");
     }
   };
 
@@ -357,7 +371,7 @@ const UserShippingAddressPage: React.FC = () => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.phone_number}
-                  errorText={touched.phone && errors.phone_number}
+                  errorText={touched.phone_number && errors.phone_number}
                 />
               </Box>
             </FlexBox>
