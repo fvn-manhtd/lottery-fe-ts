@@ -6,11 +6,11 @@ export interface LoginPayLoad {
 }
 export interface AuthSlice {
     isLoggedIn: Boolean,
-    logging: Boolean
+    logging: Boolean,    
 }
 const initialState: AuthSlice = {
     isLoggedIn: false,
-    logging: false
+    logging: false,    
 }
 
 
@@ -18,21 +18,26 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login(state, action: PayloadAction<LoginPayLoad>) {
-            state.logging = true
-            console.log(action)
+        socialLogin(state, _action:PayloadAction<string>) {
+            state.logging = true            
         },
-        loginSucess(state) {            
+        login(state, _action:PayloadAction<LoginPayLoad>) {
+            state.logging = true            
+        },
+        loginSucess(state) {
             state.isLoggedIn = true
             state.logging = false
         },
-        loginFailed(state, action: PayloadAction<string>) {
+        loginFailed(state) {
+            state.isLoggedIn = false
             state.logging = false
-            console.log(action)
         },
         logout(state) {
             state.isLoggedIn = false
             state.logging = false
+        },
+        reset(state) {
+
         }
     }
 })

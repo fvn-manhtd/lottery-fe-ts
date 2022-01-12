@@ -9,9 +9,17 @@ import {
   Paragraph,
   TextField,
   NavLink,
+  Spinner,
+  Small,
 } from "components/atoms";
 import { Card, Logo } from "components/organisms";
 import * as yup from "yup";
+import { authApi } from "api";
+import { toast } from "react-toastify";
+import { push } from "connected-react-router";
+import { useAppDispatch } from "redux/app/hooks";
+import { useState } from "react";
+import { Route as ROUTES } from "utils";
 
 const initialValues = {
   email: "",
@@ -25,7 +33,30 @@ const formSchema = yup.object().shape({
 });
 
 const UserPasswordForgotPage = () => {
-  const handleFormSubmit = () => {};
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const handleFormSubmit = async (value) => {
+    setLoading(true);
+    try {
+      const response = await authApi.sendResetLinkEmail(value);
+      const { status } = response;
+      if (status === 200) {
+        setLoading(false);
+        dispatch(push(ROUTES.USER_PASSWORD_FORGOT_CONFIRM_MAIL));
+      } else {
+        toast.error("そのメールアドレスのユーザーが見つかりません", {
+          autoClose: 7000,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("そのメールアドレスのユーザーが見つかりません", {
+        autoClose: 7000,
+      });
+    }
+  };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -61,7 +92,9 @@ const UserPasswordForgotPage = () => {
               </H3>
 
               <Paragraph textAlign="center" mb="1rem" fontSize="0.8rem">
-                ご登録されているメールアドレスをご入力ください。パスワードの再設定を行うためのメールをお送りいたします。
+                ご登録されているメールアドレスをご入力ください。
+                <br />
+                パスワードの再設定を行うためのメールをお送りいたします。
               </Paragraph>
 
               <TextField
@@ -84,8 +117,25 @@ const UserPasswordForgotPage = () => {
                 size="large"
                 fullwidth
                 borderRadius={5}
+                disabled={loading}
               >
-                配信する
+                {loading ? (
+                  <>
+                    <Spinner
+                      size={16}
+                      border="2px solid"
+                      borderColor="primary.light"
+                      borderTop="2px solid white"
+                    ></Spinner>
+                    <Small ml="0.5rem" color="white" fontWeight="600">
+                      配信中です
+                    </Small>
+                  </>
+                ) : (
+                  <Small color="white" fontWeight="600">
+                    配信する
+                  </Small>
+                )}
               </Button>
 
               <FlexBox justifyContent="center" py="1rem">

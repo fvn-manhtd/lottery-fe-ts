@@ -34,8 +34,8 @@ export const MyPageMenu: React.FC = () => {
   const location = useLocation();
 
   const dispatch = useAppDispatch();
-  const handleLogout = () => {
-    dispatch(authActions.logout());
+  const handleLogout = async () => {
+    await dispatch(authActions.logout());
   };
 
   return (
@@ -75,7 +75,7 @@ export const MyPageMenu: React.FC = () => {
       <Menu
         direction="top_right"
         handler={
-          <NavLink
+          <Box
             py="1rem"
             px="0.8rem"
             bg={
@@ -86,7 +86,7 @@ export const MyPageMenu: React.FC = () => {
                 : ""
             }
             color="gray.white"
-            href="#!"
+            cursor="pointer"
           >
             <FlexBox flexDirection="column" alignItems="center">
               <Box mb="5px" width="24px">
@@ -94,7 +94,7 @@ export const MyPageMenu: React.FC = () => {
               </Box>
               <Typography fontSize="0.8rem">アカウント</Typography>
             </FlexBox>
-          </NavLink>
+          </Box>
         }
       >
         <FlexBox flexDirection="column" bg="gray.800">
@@ -132,11 +132,11 @@ export const MyPageMenu: React.FC = () => {
         </FlexBox>
       </Menu>
 
-      <NavLink
+      <Box
         py="1rem"
         px="0.8rem"
         color="gray.white"
-        href="#!"
+        cursor="pointer"
         onClick={handleLogout}
       >
         <FlexBox flexDirection="column" alignItems="center">
@@ -145,7 +145,7 @@ export const MyPageMenu: React.FC = () => {
           </Box>
           <Typography fontSize="0.8rem">ログアウト</Typography>
         </FlexBox>
-      </NavLink>
+      </Box>
     </MyPageStyledBox>
   );
 };

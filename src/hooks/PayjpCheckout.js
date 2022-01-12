@@ -70,16 +70,25 @@ class PayjpCheckout extends Component {
         dataNamePlaceholder?: ?string;
     };
 
-    componentWillMount() {
-        // Checkout のパラメータ data-on-created で指定する関数名の文字列が window を想定しているため
+    // componentWillMount() {
+    //     // Checkout のパラメータ data-on-created で指定する関数名の文字列が window を想定しているため
+    //     window.reactPayjpCheckoutOnCreated = this.onCreated;
+    //     window.reactPayjpCheckoutOnFailed = this.onFailed;
+    //     window.reactPayjpCheckoutContext = this;
+    //     // カード情報が不正のときに window.alert が payjp の checkout から呼ばれるため
+    //     window.alert = () => {};
+    // }
+
+    componentDidMount() {
+
+         // Checkout のパラメータ data-on-created で指定する関数名の文字列が window を想定しているため
         window.reactPayjpCheckoutOnCreated = this.onCreated;
         window.reactPayjpCheckoutOnFailed = this.onFailed;
         window.reactPayjpCheckoutContext = this;
         // カード情報が不正のときに window.alert が payjp の checkout から呼ばれるため
-        window.alert = () => {};
-    }
+        window.alert = () => { };
+        
 
-    componentDidMount() {
         this.payjpCheckoutRef && this.payjpCheckoutRef.appendChild(this.script);
     }
 

@@ -14,11 +14,27 @@ import {
   TextField,
   Span,
   NavLink,
+  Spinner,
 } from "components/atoms";
 import { Card, Logo } from "components/organisms";
 import * as yup from "yup";
-import { authActions } from "redux/features";
-import { useAppDispatch } from "redux/app/hooks";
+import { authActions, selectIsLogging } from "redux/features";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
+import styled from "styled-components";
+
+const TwitterButton = styled(Button)`
+  background-color: #55acee;
+  border-color: #55acee;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+`;
+
+const FacebookButton = styled(Button)`
+  background-color: #3b5a9a;
+  border-color: #3b5a9a;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+`;
 
 const initialValues = {
   email: "",
@@ -35,13 +51,19 @@ const formSchema = yup.object().shape({
 
 const UserLoginPage = () => {
   const dispatch = useAppDispatch();
-  const handleFormSubmit = (values) => {
-    dispatch(
+  const isLogging = useAppSelector(selectIsLogging);
+
+  const handleFormSubmit = async (values) => {
+    await dispatch(
       authActions.login({
         email: values.email,
         password: values.password,
       })
     );
+  };
+
+  const handleSocialLogin = async (type) => {
+    await dispatch(authActions.socialLogin(type));
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -62,81 +84,105 @@ const UserLoginPage = () => {
           borderRadius={5}
           mx="auto"
         >
-          <form onSubmit={handleSubmit}>
-            <Card
-              pt="5rem"
-              px={{ _: "1rem", md: "0" }}
-              maxWidth="490px"
-              mx="auto"
-              boxShadow="none"
+          <Card
+            pt="5rem"
+            px={{ _: "1rem", md: "0" }}
+            maxWidth="490px"
+            mx="auto"
+            boxShadow="none"
+          >
+            <Box mx="auto" mb="2rem" maxWidth="200px">
+              <Logo />
+            </Box>
+
+            <H3 textAlign="center" mb="1rem">
+              ログイン
+            </H3>
+
+            <FacebookButton
+              variant="contained"
+              size="large"
+              color="primary"
+              type="submit"
+              fullwidth
+              borderRadius={5}
+              disabled={isLogging}
+              onClick={() => handleSocialLogin("facebook")}
             >
-              <Box mx="auto" mb="2rem" maxWidth="200px">
-                <Logo />
-              </Box>
+              {isLogging ? (
+                <>
+                  <Spinner
+                    size={16}
+                    border="2px solid"
+                    borderColor="#3b5a9a"
+                    borderTop="2px solid white"
+                  ></Spinner>
+                  <Small ml="0.5rem" color="white" fontWeight="600">
+                    ログイン中です
+                  </Small>
+                </>
+              ) : (
+                <>
+                  <Icon variant="medium" defaultcolor="auto">
+                    facebook-filled-white
+                  </Icon>
+                  <Small ml="0.5rem" fontWeight="600">
+                    Facebookでログインする
+                  </Small>
+                </>
+              )}
+            </FacebookButton>
 
-              <H3 textAlign="center" mb="1rem">
-                ログイン
-              </H3>
+            <TwitterButton
+              variant="contained"
+              size="large"
+              color="primary"
+              type="submit"
+              fullwidth
+              borderRadius={5}
+              disabled={isLogging}
+              onClick={() => handleSocialLogin("twitter")}
+            >
+              {isLogging ? (
+                <>
+                  <Spinner
+                    size={16}
+                    border="2px solid"
+                    borderColor="#55acee"
+                    borderTop="2px solid white"
+                  ></Spinner>
+                  <Small ml="0.5rem" color="white" fontWeight="600">
+                    ログイン中です
+                  </Small>
+                </>
+              ) : (
+                <>
+                  <Icon color="primary" variant="small" defaultcolor="auto">
+                    twitter-1
+                  </Icon>
 
-              <FlexBox
-                justifyContent="center"
-                alignItems="center"
-                bg="#3b5a9a"
-                borderRadius={5}
-                height="60px"
-                color="white"
-                cursor="pointer"
-                mb="1rem"
-              >
-                <Icon variant="medium" defaultcolor="auto" mr="0.5rem">
-                  facebook-filled-white
-                </Icon>
-                <Small fontWeight="600">Facebookでログインする</Small>
-              </FlexBox>
+                  <Small ml="0.5rem" color="white" fontWeight="600">
+                    Twitterでログインする
+                  </Small>
+                </>
+              )}
+            </TwitterButton>
 
-              <FlexBox
-                justifyContent="center"
-                alignItems="center"
-                bg="#55acee"
-                borderRadius={5}
-                height="60px"
-                color="primary"
-                cursor="pointer"
-                mb="1.5rem"
-              >
-                <Icon
-                  color="primary"
-                  variant="small"
-                  defaultcolor="auto"
-                  mr="0.5rem"
+            <Box mb="2rem">
+              <Divider height="1px" color="gray.500" width="320px" mx="auto" />
+              <FlexBox justifyContent="center" mt="-10px">
+                <Span
+                  fontSize="0.8rem"
+                  color="text.muted"
+                  bg="body.paper"
+                  px="1rem"
                 >
-                  twitter-1
-                </Icon>
-
-                <Small color="white" fontWeight="600">
-                  Twitterでログインする
-                </Small>
+                  または
+                </Span>
               </FlexBox>
+            </Box>
 
-              <Box mb="2rem">
-                <Divider
-                  height="1px"
-                  color="gray.500"
-                  width="320px"
-                  mx="auto"
-                />
-                <FlexBox justifyContent="center" mt="-10px">
-                  <Span
-                    fontSize="0.8rem"
-                    color="text.muted"
-                    bg="body.paper"
-                    px="1rem"
-                  >
-                    または
-                  </Span>
-                </FlexBox>
-              </Box>
-
+            <form onSubmit={handleSubmit}>
               <TextField
                 name="email"
                 placeholder="メールアドレス"
@@ -168,52 +214,68 @@ const UserLoginPage = () => {
                 type="submit"
                 fullwidth
                 borderRadius={5}
+                disabled={isLogging}
               >
-                ログイン
+                {isLogging ? (
+                  <>
+                    <Spinner
+                      size={16}
+                      border="2px solid"
+                      borderColor="primary.light"
+                      borderTop="2px solid white"
+                    ></Spinner>
+                    <Small ml="0.5rem" color="white" fontWeight="600">
+                      ログイン中です
+                    </Small>
+                  </>
+                ) : (
+                  <Small color="white" fontWeight="600">
+                    ログイン
+                  </Small>
+                )}
               </Button>
+            </form>
 
-              <FlexBox justifyContent="center" py="1rem">
-                <NavLink href={ROUTES.USER_PASSWORD_FORGOT}>
-                  <H6 color="primary.blue" fontWeight={400}>
-                    パスワードを忘れた方はこちら
-                  </H6>
-                </NavLink>
-              </FlexBox>
+            <FlexBox justifyContent="center" py="1rem">
+              <NavLink href={ROUTES.USER_PASSWORD_FORGOT}>
+                <H6 color="primary.blue" fontWeight={400}>
+                  パスワードを忘れた方はこちら
+                </H6>
+              </NavLink>
+            </FlexBox>
 
-              <FlexBox justifyContent="center" mb="1.25rem">
-                <NavLink
-                  textAlign="center"
-                  bg="gray.500"
-                  py="1.4rem"
-                  variant="button"
-                  href={ROUTES.USER_REGISTER}
-                >
-                  <H6 fontWeight={400}>新規登録</H6>
-                </NavLink>
-              </FlexBox>
+            <FlexBox justifyContent="center" mb="2.25rem">
+              <NavLink
+                bg="gray.500"
+                py="1.4rem"
+                variant="button"
+                href={ROUTES.USER_REGISTER}
+              >
+                <H6 fontWeight={400}>新規登録</H6>
+              </NavLink>
+            </FlexBox>
 
-              <Divider height="1px" width="100%" mx="auto" mb="1.25rem" />
+            <Divider height="1px" width="100%" mx="auto" mb="1.25rem" />
 
-              <FlexBox justifyContent="center" py="1rem">
-                <NavLink href={ROUTES.SHOP_LOGIN}>
-                  <H6 color="primary.blue" fontWeight={400}>
-                    ショップログイン
-                  </H6>
-                </NavLink>
-              </FlexBox>
+            <FlexBox justifyContent="center" py="1rem">
+              <NavLink href={ROUTES.SHOP_LOGIN}>
+                <H6 color="primary.blue" fontWeight={400}>
+                  ショップログイン
+                </H6>
+              </NavLink>
+            </FlexBox>
 
-              <FlexBox justifyContent="center" py="1rem">
-                <NavLink href={ROUTES.SHOP_REGISTER}>
-                  <H6 color="primary.blue" fontWeight={400}>
-                    ショップを作成
-                  </H6>
-                </NavLink>
-              </FlexBox>
-            </Card>
-            <Paragraph py="1rem" textAlign="center" fontSize="0.8rem">
-              &copy;Online Gacha
-            </Paragraph>
-          </form>
+            <FlexBox justifyContent="center" py="1rem">
+              <NavLink href={ROUTES.SHOP_REGISTER}>
+                <H6 color="primary.blue" fontWeight={400}>
+                  ショップを作成
+                </H6>
+              </NavLink>
+            </FlexBox>
+          </Card>
+          <Paragraph py="1rem" textAlign="center" fontSize="0.8rem">
+            &copy;Online Gacha
+          </Paragraph>
         </Box>
       </OneColumnLayout>
     </>

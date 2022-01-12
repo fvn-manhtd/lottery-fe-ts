@@ -17,7 +17,7 @@ export const NavLink: React.FC<
   return (
     <StyledNavLink
       className={className}
-      href={href}
+      to={href}
       style={style}
       variant={variant}
       {...props}

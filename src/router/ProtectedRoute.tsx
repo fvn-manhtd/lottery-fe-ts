@@ -1,14 +1,14 @@
-import { useAppDispatch, useAppSelector } from "redux/app/hooks";
-import { selectIsLoggedIn } from "redux/features";
+import { useAppDispatch } from "redux/app/hooks";
 import { push } from "connected-react-router";
+import { Route as ROUTES } from "utils";
 
 export const ProtectedRoute = (ProtectedComponent) => {
   return (props) => {
     if (typeof window !== "undefined") {
-      const isLoggedIn = useAppSelector(selectIsLoggedIn);
+      const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
       const dispatch = useAppDispatch();
       if (!isLoggedIn) {
-        dispatch(push("/user/login"));
+        dispatch(push(ROUTES.USER_LOGIN));
       } else {
         return <ProtectedComponent {...props} />;
       }

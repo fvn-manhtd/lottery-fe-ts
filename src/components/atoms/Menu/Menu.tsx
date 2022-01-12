@@ -45,8 +45,8 @@ const StyledMenu = styled.div<SpaceProps & { direction: string }>(
 
       top_right: {
         ".menu-item-holder": {
-          left: ["0", "100%"],
-          top: ["100%", "0"],
+          left: ["0", "0", "100%"], // responsive array 0, 425, 768, 1024
+          top: ["100%", "100%", "0"], // responsive array 0, 425, 768, 1024
           minWidth: "160px",
           padding: "0",
         },

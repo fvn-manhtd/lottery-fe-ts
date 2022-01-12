@@ -9,14 +9,14 @@ import {
 } from "components/atoms";
 import React from "react";
 
-import { authActions, selectIsLoggedIn } from "redux/features";
-import { useAppSelector, useAppDispatch } from "redux/app/hooks";
+import { authActions } from "redux/features";
+import { useAppDispatch } from "redux/app/hooks";
 
 export const MobileMenuContent: React.FC = () => {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
   const dispatch = useAppDispatch();
-  const handleLogout = () => {
-    dispatch(authActions.logout());
+  const handleLogout = async () => {
+    await dispatch(authActions.logout());
   };
 
   return (
@@ -70,7 +70,13 @@ export const MobileMenuContent: React.FC = () => {
           <>
             <Divider height="1px" width="100%" mx="auto" />
 
-            <Box px="2rem" py="1rem" color="gray.700" onClick={handleLogout}>
+            <Box
+              cursor="pointer"
+              px="2rem"
+              py="1rem"
+              color="gray.700"
+              onClick={handleLogout}
+            >
               <FlexBox alignItems="center">
                 <Box width="16px">
                   <IconPng>logout</IconPng>

@@ -13,19 +13,20 @@ import {
 } from "components/atoms";
 import { MobileMenu, MobileMenuContent } from "components/organisms";
 import { Logo } from "./Logo";
-import { useAppDispatch, useAppSelector } from "redux/app/hooks";
-import { authActions, selectIsLoggedIn } from "redux/features";
+import { useAppDispatch } from "redux/app/hooks";
+import { authActions } from "redux/features";
 import { Route as ROUTES } from "utils";
+import { push } from "connected-react-router";
 
 export const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
   const toggleMobileMenu = () => setOpen(!open);
 
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
 
   const dispatch = useAppDispatch();
-  const handleLogout = () => {
-    dispatch(authActions.logout());
+  const handleLogout = async () => {
+    await dispatch(authActions.logout());
   };
 
   const menuHandle = (
@@ -74,7 +75,12 @@ export const Header: React.FC = () => {
           >
             {isLoggedIn && (
               <>
-                <NavLink ml={40} color="gray.700" href={ROUTES.SHOPPING_CART}>
+                <Box
+                  ml={40}
+                  color="gray.700"
+                  cursor="pointer"
+                  onClick={() => dispatch(push(ROUTES.SHOPPING_CART))}
+                >
                   <FlexBox position="relative" alignItems="center">
                     <Box width="16px" color="primary.main">
                       <Icon defaultcolor="currentColor" variant="medium">
@@ -107,7 +113,7 @@ export const Header: React.FC = () => {
                       カート
                     </Typography>
                   </FlexBox>
-                </NavLink>
+                </Box>
               </>
             )}
 
@@ -222,12 +228,17 @@ export const Header: React.FC = () => {
             </Menu>
           </Box>
 
+          {/* Shopping Cart Icon on Mobile */}
           <Box
             alignItems="center"
             justifyContent="flex-end"
             display={{ _: "flex", lg: "none" }}
           >
-            <NavLink color="gray.700" href={ROUTES.SHOPPING_CART}>
+            <Box
+              color="gray.700"
+              cursor="pointer"
+              onClick={() => dispatch(push(ROUTES.SHOPPING_CART))}
+            >
               <FlexBox
                 position="relative"
                 alignItems="center"
@@ -261,7 +272,7 @@ export const Header: React.FC = () => {
                   </Tiny>
                 </FlexBox>
               </FlexBox>
-            </NavLink>
+            </Box>
           </Box>
         </Box>
       </FlexBox>

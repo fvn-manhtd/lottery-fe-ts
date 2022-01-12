@@ -1,12 +1,11 @@
 import { CartLayout } from "components/templates";
 import { FlexBox, Box, Button, Image } from "components/atoms";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const Error404Page = () => {
-  const history = useHistory();
-
-  const handleGoBack = async () => {
+  let history = useHistory();
+  const handleGoBack = () => {
     history.goBack();
   };
 

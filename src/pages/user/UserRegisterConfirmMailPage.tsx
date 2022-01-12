@@ -25,7 +25,7 @@ const UserRegisterConfirmMailPage = () => {
               <Logo />
             </Box>
             <H3 textAlign="center" mb="0.5rem">
-              無料ではじめる
+              新規会員登録
             </H3>
 
             <Paragraph textAlign="center" mb="1rem" fontSize="0.8rem">

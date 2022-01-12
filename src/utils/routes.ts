@@ -13,9 +13,11 @@ export enum Route {
     //User
     USER_LOGIN = '/user/login',
     USER_REGISTER = '/user/register',
+    USER_REGISTER_CONFIRM_MAIL = '/user/register-confirm-email',
+    USER_REGISTER_COMPLETE = '/user/register-complete',
     USER_PASSWORD_FORGOT = '/user/password-forgot',    
-    USER_NEW_PASSWORD = '/user/new-password', 
-    USER_PASSWORD_FORGOT_CONFIRM_MAIL  = 'password-forgot-confirm-mail',
+    USER_PASSWORD_RESET = '/user/password/reset/:resetToken/:resetEmail', 
+    USER_PASSWORD_FORGOT_CONFIRM_MAIL  = '/user/password-forgot-confirm-mail',
     USER_MYAPGE = '/user/mypage',
     USER_FAVORITE = '/user/favorite',
     USER_PURCHASED_HISTORY = '/user/purchased-history',
@@ -53,5 +55,29 @@ export enum Route {
 };
 
 export const ApiRoute = {
-    'LOTTERY_INDEX' : "/lotteries",
+    'LOTTERY_INDEX' : '/lotteries',
+
+
+    'AUTH': {
+        'CHECK_AUTH': '/users/check-auth',
+        'LOGIN': '/users/login',
+        'REGISTER': '/users/register',
+        'OAUTH_TWITTER': "/users/oauth/twitter",
+        'OAUTH_FACEBOOK': "/users/oauth/facebook",
+        'LOGOUT': '/users/logout',
+
+        'SEND_RESET_PASSWORD_EMAIL': '/users/password/email',
+        'RESET_PASSWORD': '/users/password/reset',
+    },
+
+    'CURRENT_USER': {
+        'SELF': '/users/self',
+        'ACCOUNT': '/users/self/account',
+        'ADDRESS': '/users/self/address',
+        'CARD': '/users/self/card',
+        'LEAVE': '/users/self/leave',
+        'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id'
+    }
+
+
 }

@@ -8,25 +8,29 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import lotteryApi from "api/lotteryApi";
 
+
 const StyledLink = styled.a `
 display:contents;
-`
+`;
+
+
 const LotteryListPage = () => {
 
   const data=lotteryApi();
   console.log(data);
   
   const statusButton = [
-    {status:1,text:"販売中"},
-    {status:2,text:"終了間際"},
-    {status:3,text:"販売予定"}
-  ]
+    { status: 1, text: "販売中" },
+    { status: 2, text: "終了間際" },
+    { status: 3, text: "販売予定" },
+  ];
 
   const history=useHistory();
   const changeRoute=(data)=>{
     const page=data+1;
     history.push(Route.LOTTERIES+"?status="+getSearchQueryObj('status')+"&page="+page)
   }
+
 
   return (
     <>
@@ -35,7 +39,7 @@ const LotteryListPage = () => {
           <Container>
             <Box p={{ _: 0, md: 40 }}>
               {/*title*/}
-              <Box marginY="2rem"> 
+              <Box marginY="2rem">
                 <Typography
                   textAlign={["center", "center", "unset"]}
                   as="h1"
@@ -71,46 +75,57 @@ const LotteryListPage = () => {
                   </Typography>
                 </Box>
               </Box>
-              
+
               {/* button list */}
               <Box
                 display="flex"
                 width={{ _: "90%", md: "60%" }}
                 margin="0 auto 2.5rem auto"
               >
-                {
-                  statusButton.map((value,index)=>{
-                    if(value.status==getSearchQueryObj('status')) {
-                      return (
-                        <StyledLink href={Route.LOTTERIES+"?status="+value.status} key={index}>
-                          <Button 
-                            fullwidth={true}
-                            variant="contained" 
-                            color="primary" 
-                            borderRadius="10px"
-                            marginX={1}>{value.text}</Button>
-                        </StyledLink>
-                      )}
-                    else {
-                      return (
-                        <StyledLink href={Route.LOTTERIES+"?status="+value.status} key={index}>
-                          <Button 
-                            fullwidth={true}
-                            variant="outlined" 
-                            color="secondary" 
-                            borderRadius="10px"
-                            marginX={1}>{value.text}</Button>
-                        </StyledLink>
-                      )
-                    }
-                  })
-                }
+                {statusButton.map((value, index) => {
+                  if (value.status == getSearchQueryObj("status")) {
+                    return (
+                      <StyledLink
+                        href={Route.LOTTERIES + "?status=" + value.status}
+                        key={index}
+                      >
+                        <Button
+                          fullwidth={true}
+                          variant="contained"
+                          color="primary"
+                          borderRadius="10px"
+                          marginX={1}
+                        >
+                          {value.text}
+                        </Button>
+                      </StyledLink>
+                    );
+                  } else {
+                    return (
+                      <StyledLink
+                        href={Route.LOTTERIES + "?status=" + value.status}
+                        key={index}
+                      >
+                        <Button
+                          fullwidth={true}
+                          variant="outlined"
+                          color="secondary"
+                          borderRadius="10px"
+                          marginX={1}
+                        >
+                          {value.text}
+                        </Button>
+                      </StyledLink>
+                    );
+                  }
+                })}
               </Box>
 
               {/** lottery list */}
-              <LotteryList lotteries={lotteryList.lotteries}/>
-              
+              <LotteryList lotteries={lotteryList.lotteries} />
+
               {/* pagination */}
+
               <Box 
               display="flex"
               justifyContent="center"
@@ -123,7 +138,6 @@ const LotteryListPage = () => {
                 }}
                 />
               </Box>
-            
             </Box>
           </Container>
         </main>

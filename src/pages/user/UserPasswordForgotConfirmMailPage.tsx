@@ -30,6 +30,7 @@ const UserPasswordForgotConfirmMailPage = () => {
 
             <Paragraph textAlign="center" mb="1rem" fontSize="0.8rem">
               ご入力いただきましたメールアドレスへ新パスワード設定URLを送信しました。
+              <br />
               ご確認の上、新しいパスワードへ変更ください。
             </Paragraph>
 

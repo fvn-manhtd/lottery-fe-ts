@@ -1,24 +1,49 @@
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
+import {
+  FLUSH, PAUSE,
+  PERSIST, persistReducer, PURGE,
+  REGISTER, REHYDRATE
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
-import { authReducer } from 'redux/features';
-import { history, loadState } from 'utils';
+import { authReducer, currentUserReducer } from 'redux/features';
+import { history } from 'utils';
 import rootSaga from './rootSaga';
 
 
-const rootReducer = combineReducers({
-  auth: authReducer,
-  router: connectRouter(history)  
-})
 
+const persistConfig = {
+  key: 'gacha',
+  storage,
+}
+
+const combinedReducer = combineReducers({
+  auth: authReducer,
+  currentUser: currentUserReducer,
+  router: connectRouter(history)  
+});
+
+const rootReducer = (state, action) => {
+  if (action.type === 'auth/reset') {
+    state = undefined;
+  }
+  return combinedReducer(state, action);
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 // Create the saga middleware
 const sagaMiddleware = createSagaMiddleware()
 
 export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware, routerMiddleware(history)),
-  preloadedState: loadState(),
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      }
+  }).concat(sagaMiddleware, routerMiddleware(history)),
+  devTools: Boolean(process.env.REACT_APP_DEV_TOOLS)
 });
 
 sagaMiddleware.run(rootSaga)

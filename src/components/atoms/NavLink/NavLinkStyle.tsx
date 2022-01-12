@@ -13,6 +13,7 @@ import {
   LayoutProps,
   BordersProps,
 } from "styled-system";
+import { Link } from "react-router-dom";
 
 interface StyledNavLinkProps {
   isCurrentRoute?: boolean;
@@ -21,7 +22,7 @@ interface StyledNavLinkProps {
   variant?: "hover" | "button";
 }
 
-const StyledNavLink = styled.a<
+const StyledNavLink = styled(Link)<
   StyledNavLinkProps &
     SpaceProps &
     ColorProps &
@@ -45,8 +46,8 @@ const StyledNavLink = styled.a<
         color: isCurrentRoute ? theme.colors.primary.main : "auto",
       },
       whiteSpace: "nowrap",
-      overflow:"hidden",
-      textOverflow:"ellipsis",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     }),
 
   ({ theme }) =>
@@ -62,9 +63,10 @@ const StyledNavLink = styled.a<
         button: {
           width: "100%",
           borderRadius: "5px",
+          textAlign: "center",
           "&:hover": {
             color: `${theme.colors.gray.white} !important`,
-            backgroundColor: `${theme.colors.primary.main} !important`,
+            backgroundColor: `${theme.colors.primary.light} !important`,
           },
         },
       },
