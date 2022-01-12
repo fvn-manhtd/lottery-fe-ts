@@ -4,7 +4,7 @@ import { push } from "connected-react-router";
 import { toast } from "react-toastify";
 import { call, fork, put, take } from "redux-saga/effects";
 import { Route as ROUTES } from "utils";
-import { currentUserSaga } from "../currentUser";
+import { currentUserActions } from "..";
 import { authActions, LoginPayLoad } from "./authSlice";
 
 function* handleLogin(payload: LoginPayLoad) {
@@ -15,8 +15,8 @@ function* handleLogin(payload: LoginPayLoad) {
         if (status === 200 && data.status === 'success') {
             yield put(authActions.loginSucess());
             localStorage.setItem("isLoggedIn", "yes");
-            yield put(push("/"));           
-            yield call(currentUserSaga);
+            yield put(push(ROUTES.HOME));
+            yield put(currentUserActions.setCurrentUser(data.data.user));
         }        
         
     } catch (error) {
