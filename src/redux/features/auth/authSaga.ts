@@ -15,7 +15,7 @@ function* handleLogin(payload: LoginPayLoad) {
         if (status === 200 && data.status === 'success') {
             yield put(authActions.loginSucess());
             localStorage.setItem("isLoggedIn", "yes");
-            yield put(push("/"));            
+            yield put(push("/"));           
             yield call(currentUserSaga);
         }        
         
@@ -83,7 +83,7 @@ function* watchSocialLoginFlow() {
     }
 }
 
-function* unSetAllState() {
+function* unSetAllState() {    
     yield put(push(ROUTES.USER_LOGIN));
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("persist:gacha");
@@ -93,12 +93,10 @@ function* unSetAllState() {
 function* handleLogout() {
     // Redirect to Login page
     console.log("Handle Logout");
+     
     try {
-        const { status, data } = yield call(authApi.logout);        
-        if (status === 200 && data.status === 'success') {
-            yield call(unSetAllState);
-            
-        }        
+        yield fork(unSetAllState);
+        yield call(authApi.logout);       
     } catch (error) {
         console.log(error);
     }
