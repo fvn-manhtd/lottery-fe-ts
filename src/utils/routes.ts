@@ -75,6 +75,7 @@ export const ApiRoute = {
         'ACCOUNT': '/users/self/account',
         'ADDRESS': '/users/self/address',
         'CARD': '/users/self/card',
+        'DEFAULT_CARD': '/users/self/default-card',
         'LEAVE': '/users/self/leave',
         'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id'
     }

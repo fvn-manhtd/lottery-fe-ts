@@ -28,6 +28,7 @@ export const HeaderDashboard: React.FC = () => {
               width="50px"
               display="flex"
               justifyContent="center"
+              cursor="pointer"
               onClick={handleBackClick}
             >
               <Icon defaultcolor="currentColor" variant="medium">

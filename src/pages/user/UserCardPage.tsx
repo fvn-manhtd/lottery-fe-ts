@@ -7,6 +7,7 @@ import {
   TableRow,
   Typography,
   Spinner,
+  Small,
 } from "components/atoms";
 import { DashBoardLayout } from "components/templates";
 import React, { Suspense, useEffect, useState } from "react";
@@ -15,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import {
   currentUserActions,
   selectCurrentUserCard,
+  selectDefaultCardID,
   selectPayjpCustomerID,
 } from "redux/features";
 import { currentUserApi } from "api";
@@ -38,6 +40,7 @@ const UserCardPage: React.FC = () => {
 
   const payjpCustomerID = useAppSelector(selectPayjpCustomerID);
   const currentUserCard = useAppSelector(selectCurrentUserCard);
+  const defaultCard = useAppSelector(selectDefaultCardID);
 
   const dispatch = useAppDispatch();
 
@@ -59,8 +62,9 @@ const UserCardPage: React.FC = () => {
     try {
       const { data } = await currentUserApi.saveCard({
         token: cardToken,
+        pay_customer_id: payjpCustomerID,
       });
-      dispatch(currentUserActions.setCurrentUserCard(data.data.data));
+      dispatch(currentUserActions.setCurrentUserCard(data.data.cards.data));
       toast.success("カードを追加しました。", {
         autoClose: 7000,
       });
@@ -75,24 +79,29 @@ const UserCardPage: React.FC = () => {
   };
 
   const getCustomerCard = async () => {
+    setLoading(true);
     try {
       const { data } = await currentUserApi.getCard();
-      dispatch(currentUserActions.setCurrentUserCard(data.data.data));
+      dispatch(currentUserActions.setCurrentUserCard(data.data.cards));
+      dispatch(currentUserActions.setDefaultCard(data.data.default_card));
+      setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error("顧客リストを取得できません", {
         autoClose: 7000,
       });
+      setLoading(false);
     }
   };
 
   const handleRemoveCard = async (cardID) => {
     setLoading(true);
     try {
-      const { data } = await currentUserApi.deleteCard({
+      await currentUserApi.deleteCard({
         card_id: cardID,
       });
-      dispatch(currentUserActions.setCurrentUserCard(data.data.data));
+      dispatch(currentUserActions.removeOneCard(cardID));
+      dispatch(currentUserActions.unSetDefaultCard());
       toast.success("カードを削除しました。", {
         autoClose: 7000,
       });
@@ -100,6 +109,27 @@ const UserCardPage: React.FC = () => {
     } catch (error) {
       console.log(error);
       toast.error("カードを削除できません", {
+        autoClose: 7000,
+      });
+      setLoading(false);
+    }
+  };
+
+  const handleSetDefaultCard = async (cardID) => {
+    setLoading(true);
+    try {
+      const { data } = await currentUserApi.setDefaultCard({
+        card_id: cardID,
+        pay_customer_id: payjpCustomerID,
+      });
+      dispatch(currentUserActions.setDefaultCard(data.data.card_default_id));
+      toast.success("カードを設定しました。", {
+        autoClose: 7000,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("カードを設定できません", {
         autoClose: 7000,
       });
       setLoading(false);
@@ -138,6 +168,28 @@ const UserCardPage: React.FC = () => {
           <PayjpCheckout {...payjpCheckoutProps} />
         </Box>
 
+        <FlexBox display={{ _: "none", lg: "block" }}>
+          <TableRow my="1rem" padding="6px 18px">
+            <Typography fontWeight={700} className="pre" m="6px">
+              ブランド/カード名
+            </Typography>
+            <Typography fontWeight={700} className="pre" m="6px">
+              カード番号
+            </Typography>
+            <Typography fontWeight={700} className="pre" m="6px">
+              月/年
+            </Typography>
+
+            <Typography fontWeight={700} className="pre" textAlign="center">
+              ステータス
+            </Typography>
+
+            <Typography fontWeight={700} className="pre" textAlign="center">
+              削除
+            </Typography>
+          </TableRow>
+        </FlexBox>
+
         {loading && (
           <>
             <Box mt="1rem" mb="1rem">
@@ -151,12 +203,8 @@ const UserCardPage: React.FC = () => {
           </>
         )}
 
-        {!loading && currentUserCard.length === 0 && (
-          <Box my="1rem">カードがありません。</Box>
-        )}
-
-        <Suspense fallback={<div>Loading...</div>}>
-          {currentUserCard.map((item) => (
+        {currentUserCard &&
+          currentUserCard.map((item) => (
             <TableRow my="1rem" padding="6px 18px" key={item.id}>
               <FlexBox alignItems="center" m="6px">
                 <Card width="42px" height="28px" mr="10px" elevation={4}>
@@ -177,16 +225,57 @@ const UserCardPage: React.FC = () => {
                 {item.exp_month}/{item.exp_year}
               </Typography>
 
-              <Typography className="pre" textAlign="center" color="text.muted">
-                <Box cursor="pointer" onClick={() => handleRemoveCard(item.id)}>
-                  <Icon variant="small" defaultcolor="currentColor">
-                    delete
-                  </Icon>
+              <Typography
+                mx="auto"
+                className="pre"
+                textAlign="center"
+                color="text.muted"
+              >
+                <Box display="flex" justifyContent="center">
+                  {defaultCard && String(defaultCard) != String(item.id) && (
+                    <Box
+                      cursor="pointer"
+                      bg="gray.300"
+                      borderRadius="50%"
+                      p="0.6rem"
+                      color="text.muted"
+                      onClick={() => handleSetDefaultCard(item.id)}
+                    >
+                      <Icon variant="small" defaultcolor="currentColor">
+                        edit
+                      </Icon>
+                    </Box>
+                  )}
+
+                  {defaultCard && String(defaultCard) == String(item.id) && (
+                    <Small>デフォルトカード</Small>
+                  )}
+                </Box>
+              </Typography>
+
+              <Typography
+                mx="auto"
+                className="pre"
+                textAlign="center"
+                color="text.muted"
+              >
+                <Box display="flex" justifyContent="center">
+                  <Box
+                    cursor="pointer"
+                    bg="gray.300"
+                    borderRadius="50%"
+                    p="0.6rem"
+                    color="text.muted"
+                    onClick={() => handleRemoveCard(item.id)}
+                  >
+                    <Icon variant="small" defaultcolor="currentColor">
+                      delete
+                    </Icon>
+                  </Box>
                 </Box>
               </Typography>
             </TableRow>
           ))}
-        </Suspense>
       </Box>
     </DashBoardLayout>
   );

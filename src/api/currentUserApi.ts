@@ -22,6 +22,10 @@ export const currentUserApi = {
         const url = ApiRoute.CURRENT_USER.CARD;
         return axiosClient.post(url, cardInfo);
     },
+    setDefaultCard(cardInfo) {
+        const url = ApiRoute.CURRENT_USER.DEFAULT_CARD;
+        return axiosClient.post(url, cardInfo);
+    },
     deleteCard(cardID) {        
         const url = ApiRoute.CURRENT_USER.CARD;
         return axiosClient.delete(url, { data: cardID });
