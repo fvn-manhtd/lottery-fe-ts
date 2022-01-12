@@ -157,6 +157,7 @@ export default function App() {
               exact
               component={ProtectedRoute(UserCardPage)}
             />
+
             <FancyRoute
               path={ROUTES.USER_PURCHASED_HISTORY}
               exact

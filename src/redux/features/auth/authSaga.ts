@@ -4,7 +4,7 @@ import { push } from "connected-react-router";
 import { toast } from "react-toastify";
 import { call, fork, put, take } from "redux-saga/effects";
 import { Route as ROUTES } from "utils";
-import { currentUserActions, currentUserSaga } from "../currentUser";
+import { currentUserSaga } from "../currentUser";
 import { authActions, LoginPayLoad } from "./authSlice";
 
 function* handleLogin(payload: LoginPayLoad) {
@@ -83,16 +83,21 @@ function* watchSocialLoginFlow() {
     }
 }
 
+function* unSetAllState() {
+    yield put(push(ROUTES.USER_LOGIN));
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("persist:gacha");
+    yield put(authActions.reset());
+}
+
 function* handleLogout() {
     // Redirect to Login page
     console.log("Handle Logout");
     try {
         const { status, data } = yield call(authApi.logout);        
         if (status === 200 && data.status === 'success') {
-            yield put(push(ROUTES.USER_LOGIN));
-            localStorage.removeItem("isLoggedIn");
-            yield put(authActions.logout());
-            yield put(currentUserActions.unSetPayjpCustomerID());
+            yield call(unSetAllState);
+            
         }        
     } catch (error) {
         console.log(error);

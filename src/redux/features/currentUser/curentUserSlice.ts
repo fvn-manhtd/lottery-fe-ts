@@ -27,10 +27,10 @@ const currentUserSlice = createSlice({
         unSetCurrentUserCard(state) {
             state.card = [];
         },
+        
         setCurrentUserCard(state, action:PayloadAction<UserCard[]>) {
             state.card = action.payload;
         },
-
         
         unSetPayjpCustomerID(state) {
             state.payjp_customer_id = '';

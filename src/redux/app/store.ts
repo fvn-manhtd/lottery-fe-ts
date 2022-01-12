@@ -9,8 +9,8 @@ import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import { authReducer, currentUserReducer } from 'redux/features';
 import { history } from 'utils';
-
 import rootSaga from './rootSaga';
+
 
 
 const persistConfig = {
@@ -18,12 +18,18 @@ const persistConfig = {
   storage,
 }
 
-
-const rootReducer = combineReducers({
+const combinedReducer = combineReducers({
   auth: authReducer,
   currentUser: currentUserReducer,
   router: connectRouter(history)  
-})
+});
+
+const rootReducer = (state, action) => {
+  if (action.type === 'auth/reset') {
+    state = undefined;
+  }
+  return combinedReducer(state, action);
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
@@ -37,7 +43,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       }
   }).concat(sagaMiddleware, routerMiddleware(history)),
-  devTools: process.env.REACT_APP_DEV_TOOLS
+  devTools: Boolean(process.env.REACT_APP_DEV_TOOLS)
 });
 
 sagaMiddleware.run(rootSaga)

@@ -13,7 +13,7 @@ import { DashBoardLayout } from "components/templates";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { StyledModal } from "components/molecules";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Modal from "react-modal";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { authActions, selectCurrentUser } from "redux/features";
@@ -101,184 +101,201 @@ const UserMyPage: React.FC = () => {
           width="100%"
           backgroundColor="gray.500"
         ></Divider>
-        <form onSubmit={handleSubmit}>
-          <Box mb="2rem" maxWidth="900px">
-            <FlexBox
-              alignItems="center"
-              flexDirection={{ _: "column", md: "row" }}
-              mb="1rem"
-            >
-              <Box mb={{ _: "1rem", md: "0" }} width={{ _: "100%", md: "30%" }}>
-                メールアドレス
-              </Box>
-              <Box mb={{ _: "1rem", md: "0" }} width={{ _: "100%", md: "70%" }}>
-                <TextField
-                  name="email"
-                  type="email"
-                  fullwidth
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.email || ""}
-                  errorText={touched.email && errors.email}
-                  disabled
-                />
-              </Box>
-            </FlexBox>
-            <FlexBox
-              alignItems="center"
-              flexDirection={{ _: "column", md: "row" }}
-              mb="1rem"
-            >
-              <Box mb={{ _: "1rem", md: "0" }} width={{ _: "100%", md: "30%" }}>
-                パスワード
-              </Box>
-              <Box mb={{ _: "1rem", md: "0" }} width={{ _: "100%", md: "70%" }}>
-                <TextField
-                  name="password"
-                  autoComplete="on"
-                  fullwidth
-                  type="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.password || ""}
-                  errorText={touched.password && errors.password}
-                />
-              </Box>
-            </FlexBox>
-          </Box>
 
-          <Divider
-            height="1px"
-            mb="2rem"
-            width="100%"
-            backgroundColor="gray.500"
-          ></Divider>
-
-          <FlexBox
-            justifyContent="center"
-            flexDirection="column"
-            maxWidth="320px"
-            mx="auto"
-            alignItems="center"
-          >
-            <Button
-              mb="1rem"
-              variant="containedSecond"
-              size="large"
-              color="secondary"
-              type="submit"
-              fullwidth
-              borderRadius={5}
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <Spinner
-                    size={16}
-                    border="2px solid"
-                    borderColor="secondary.900"
-                    borderTop="2px solid white"
-                  ></Spinner>
-                  <Small ml="0.5rem" color="white" fontWeight="600">
-                    情報を変更中です
-                  </Small>
-                </>
-              ) : (
-                <Small color="white" fontWeight="600">
-                  情報を変更
-                </Small>
-              )}
-            </Button>
-
-            <Box cursor="pointer" onClick={() => setIsModalOpen(true)}>
-              <Typography
-                color="primary.dark"
-                borderBottom="1px solid"
-                borderColor="primary.dark"
-              >
-                アカウントを削除
-              </Typography>
-            </Box>
-
-            <Modal
-              isOpen={isModalOpen}
-              style={StyledModal("180px", "600px")}
-              ariaHideApp={false}
-              onRequestClose={() => {
-                setIsModalOpen(false);
-              }}
-            >
-              <Box
-                textAlign="center"
-                p="2rem"
-                justifyContent="center"
-                minWidth={180}
-              >
-                <Typography
-                  color="primary.second"
-                  fontWeight={600}
-                  fontSize="1.4rem"
-                  mb="2rem"
+        <Suspense fallback={<div>Loading...</div>}>
+          {currentUser && (
+            <form onSubmit={handleSubmit}>
+              <Box mb="2rem" maxWidth="900px">
+                <FlexBox
+                  alignItems="center"
+                  flexDirection={{ _: "column", md: "row" }}
+                  mb="1rem"
                 >
-                  アカウントを削除しますか？
-                </Typography>
-
-                <Paragraph fontSize="1rem" mb="2rem">
-                  アカウントを削除するとお気に入り情報や
-                  <br />
-                  ご登録情報がすべて削除されます。
-                </Paragraph>
-
-                <FlexBox maxWidth="">
-                  <Button
-                    mx="1rem"
-                    variant="containedSecond"
-                    size="small"
-                    color="secondary"
-                    type="submit"
-                    fullwidth
-                    borderRadius={5}
-                    onClick={() => {
-                      setIsModalOpen(false);
-                    }}
+                  <Box
+                    mb={{ _: "1rem", md: "0" }}
+                    width={{ _: "100%", md: "30%" }}
                   >
-                    <Small color="white" fontWeight="600">
-                      キャンセル
-                    </Small>
-                  </Button>
-                  <Button
-                    mx="1rem"
-                    variant="danger"
-                    size="small"
-                    color="primary"
-                    type="submit"
-                    fullwidth
-                    borderRadius={5}
-                    onClick={() => handleLeave()}
+                    メールアドレス
+                  </Box>
+                  <Box
+                    mb={{ _: "1rem", md: "0" }}
+                    width={{ _: "100%", md: "70%" }}
                   >
-                    {loading ? (
-                      <>
-                        <Spinner
-                          size={16}
-                          border="2px solid"
-                          borderColor="primary.dark"
-                          borderTop="2px solid white"
-                        ></Spinner>
-                        <Small ml="0.5rem" color="white" fontWeight="600">
-                          削除中です
-                        </Small>
-                      </>
-                    ) : (
-                      <Small color="white" fontWeight="600">
-                        削除する
-                      </Small>
-                    )}
-                  </Button>
+                    <TextField
+                      name="email"
+                      type="email"
+                      fullwidth
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.email || ""}
+                      errorText={touched.email && errors.email}
+                      disabled
+                    />
+                  </Box>
+                </FlexBox>
+                <FlexBox
+                  alignItems="center"
+                  flexDirection={{ _: "column", md: "row" }}
+                  mb="1rem"
+                >
+                  <Box
+                    mb={{ _: "1rem", md: "0" }}
+                    width={{ _: "100%", md: "30%" }}
+                  >
+                    パスワード
+                  </Box>
+                  <Box
+                    mb={{ _: "1rem", md: "0" }}
+                    width={{ _: "100%", md: "70%" }}
+                  >
+                    <TextField
+                      name="password"
+                      autoComplete="on"
+                      fullwidth
+                      type="password"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.password || ""}
+                      errorText={touched.password && errors.password}
+                    />
+                  </Box>
                 </FlexBox>
               </Box>
-            </Modal>
-          </FlexBox>
-        </form>
+
+              <Divider
+                height="1px"
+                mb="2rem"
+                width="100%"
+                backgroundColor="gray.500"
+              ></Divider>
+
+              <FlexBox
+                justifyContent="center"
+                flexDirection="column"
+                maxWidth="320px"
+                mx="auto"
+                alignItems="center"
+              >
+                <Button
+                  mb="1rem"
+                  variant="containedSecond"
+                  size="large"
+                  color="secondary"
+                  type="submit"
+                  fullwidth
+                  borderRadius={5}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Spinner
+                        size={16}
+                        border="2px solid"
+                        borderColor="secondary.900"
+                        borderTop="2px solid white"
+                      ></Spinner>
+                      <Small ml="0.5rem" color="white" fontWeight="600">
+                        情報を変更中です
+                      </Small>
+                    </>
+                  ) : (
+                    <Small color="white" fontWeight="600">
+                      情報を変更
+                    </Small>
+                  )}
+                </Button>
+
+                <Box cursor="pointer" onClick={() => setIsModalOpen(true)}>
+                  <Typography
+                    color="primary.dark"
+                    borderBottom="1px solid"
+                    borderColor="primary.dark"
+                  >
+                    アカウントを削除
+                  </Typography>
+                </Box>
+
+                <Modal
+                  isOpen={isModalOpen}
+                  style={StyledModal("180px", "600px")}
+                  ariaHideApp={false}
+                  onRequestClose={() => {
+                    setIsModalOpen(false);
+                  }}
+                >
+                  <Box
+                    textAlign="center"
+                    p="2rem"
+                    justifyContent="center"
+                    minWidth={180}
+                  >
+                    <Typography
+                      color="primary.second"
+                      fontWeight={600}
+                      fontSize="1.4rem"
+                      mb="2rem"
+                    >
+                      アカウントを削除しますか？
+                    </Typography>
+
+                    <Paragraph fontSize="1rem" mb="2rem">
+                      アカウントを削除するとお気に入り情報や
+                      <br />
+                      ご登録情報がすべて削除されます。
+                    </Paragraph>
+
+                    <FlexBox maxWidth="">
+                      <Button
+                        mx="1rem"
+                        variant="containedSecond"
+                        size="small"
+                        color="secondary"
+                        type="submit"
+                        fullwidth
+                        borderRadius={5}
+                        onClick={() => {
+                          setIsModalOpen(false);
+                        }}
+                      >
+                        <Small color="white" fontWeight="600">
+                          キャンセル
+                        </Small>
+                      </Button>
+                      <Button
+                        mx="1rem"
+                        variant="danger"
+                        size="small"
+                        color="primary"
+                        type="submit"
+                        fullwidth
+                        borderRadius={5}
+                        onClick={() => handleLeave()}
+                      >
+                        {loading ? (
+                          <>
+                            <Spinner
+                              size={16}
+                              border="2px solid"
+                              borderColor="primary.dark"
+                              borderTop="2px solid white"
+                            ></Spinner>
+                            <Small ml="0.5rem" color="white" fontWeight="600">
+                              削除中です
+                            </Small>
+                          </>
+                        ) : (
+                          <Small color="white" fontWeight="600">
+                            削除する
+                          </Small>
+                        )}
+                      </Button>
+                    </FlexBox>
+                  </Box>
+                </Modal>
+              </FlexBox>
+            </form>
+          )}
+        </Suspense>
       </Box>
     </DashBoardLayout>
   );

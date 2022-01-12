@@ -13,17 +13,11 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { usePostalJp } from "use-postal-jp";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
-import {
-  authActions,
-  currentUserActions,
-  selectCurrentUser,
-} from "redux/features";
+import { currentUserActions, selectCurrentUser } from "redux/features";
 import * as yup from "yup";
 import { phoneRegExp } from "utils";
 import { currentUserApi } from "api";
 import { toast } from "react-toastify";
-import { Route as ROUTES } from "utils";
-import { push } from "connected-react-router";
 
 const formSchema = yup.object().shape({
   first_name: yup.string().nullable().required("姓を入力してください"),
@@ -87,19 +81,14 @@ const UserShippingAddressPage: React.FC = () => {
         dispatch(currentUserActions.setCurrentUser(userInfo));
         toast.success("情報を変更しました。", {
           autoClose: 7000,
-          position: toast.POSITION.BOTTOM_RIGHT,
         });
       }
     } catch (error) {
       console.log(error);
       toast.error("権限がありませんログインしてからお試しください。", {
         autoClose: 7000,
-        position: toast.POSITION.BOTTOM_RIGHT,
       });
       setSpin(false);
-      dispatch(authActions.loginFailed());
-      dispatch(push(ROUTES.USER_LOGIN));
-      localStorage.removeItem("isLoggedIn");
     }
   };
 

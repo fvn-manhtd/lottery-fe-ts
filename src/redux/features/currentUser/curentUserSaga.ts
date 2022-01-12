@@ -13,8 +13,7 @@ function* getCurrentUser() {
     } catch (error) {
         yield put(currentUserActions.unSetCurrentUser);        
         toast.error("権限がありませんログインしてからお試しください。", {
-            autoClose: 7000,
-            position: toast.POSITION.BOTTOM_RIGHT,
+            autoClose: 7000
         });
     }
 }
