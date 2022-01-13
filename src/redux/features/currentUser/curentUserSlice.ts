@@ -3,14 +3,12 @@ import { User, UserCard } from "models";
 
 export interface CurrentUserSlice {
     self: User,
-    card: UserCard[],
-    payjp_customer_id: string,
+    card: UserCard[],    
     default_card : string
 }
 const initialState: CurrentUserSlice = {
     self: {},
     card: [],
-    payjp_customer_id: '',
     default_card: '',
 }
 
@@ -38,15 +36,6 @@ const currentUserSlice = createSlice({
             state.card = state.card.filter((item) => String(item.id) !== action.payload);
         },
         
-        unSetPayjpCustomerID(state) {
-            state.payjp_customer_id = '';
-        },
-        setPayjpCustomerID(state, action:PayloadAction<string>) {
-            state.payjp_customer_id = action.payload;
-        },
-
-        
-
         unSetDefaultCard(state) {
             state.default_card = '';
         },
@@ -62,7 +51,6 @@ export const currentUserActions = currentUserSlice.actions
 //Selector
 export const selectCurrentUser = (state: { currentUser: { self: User } }) => state.currentUser.self
 export const selectCurrentUserCard = (state: { currentUser: { card: UserCard[] } }) => state.currentUser.card
-export const selectPayjpCustomerID = (state: { currentUser: { payjp_customer_id: string } }) => state.currentUser.payjp_customer_id
 export const selectDefaultCardID = (state: { currentUser: { default_card: string } }) => state.currentUser.default_card
 
 

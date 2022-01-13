@@ -10,14 +10,13 @@ import {
   Small,
 } from "components/atoms";
 import { DashBoardLayout } from "components/templates";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PayjpCheckout from "hooks/PayjpCheckout";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import {
   currentUserActions,
   selectCurrentUserCard,
   selectDefaultCardID,
-  selectPayjpCustomerID,
 } from "redux/features";
 import { currentUserApi } from "api";
 import { Card } from "components/organisms";
@@ -38,7 +37,6 @@ const UserCardPage: React.FC = () => {
     },
   };
 
-  const payjpCustomerID = useAppSelector(selectPayjpCustomerID);
   const currentUserCard = useAppSelector(selectCurrentUserCard);
   const defaultCard = useAppSelector(selectDefaultCardID);
 
@@ -46,35 +44,12 @@ const UserCardPage: React.FC = () => {
 
   const registerCustomerToPayjp = async () => {
     try {
-      const { data } = await currentUserApi.registerPayCustomerID();
-      dispatch(currentUserActions.setPayjpCustomerID(data.id));
+      await currentUserApi.registerPayCustomerID();
     } catch (error) {
       console.log(error);
-      await dispatch(currentUserActions.unSetPayjpCustomerID());
-      toast.error("カードを追加できません", {
+      toast.error("PayJPでIDは登録できませんでした。", {
         autoClose: 7000,
       });
-    }
-  };
-
-  const saveCustomerCard = async (cardToken) => {
-    setLoading(true);
-    try {
-      const { data } = await currentUserApi.saveCard({
-        token: cardToken,
-        pay_customer_id: payjpCustomerID,
-      });
-      dispatch(currentUserActions.setCurrentUserCard(data.data.cards.data));
-      toast.success("カードを追加しました。", {
-        autoClose: 7000,
-      });
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      toast.error("カードを追加できません", {
-        autoClose: 7000,
-      });
-      setLoading(false);
     }
   };
 
@@ -87,7 +62,28 @@ const UserCardPage: React.FC = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("顧客リストを取得できません", {
+      toast.error("カードは取得できませんでした。", {
+        autoClose: 7000,
+      });
+      setLoading(false);
+    }
+  };
+
+  const saveCustomerCard = async (cardToken) => {
+    setLoading(true);
+    try {
+      const { data } = await currentUserApi.saveCard({
+        token: cardToken,
+      });
+      dispatch(currentUserActions.setCurrentUserCard(data.data.cards));
+      dispatch(currentUserActions.setDefaultCard(data.data.default_card));
+      toast.success("カードは登録できました。", {
+        autoClose: 7000,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("カードは登録できませんでした。", {
         autoClose: 7000,
       });
       setLoading(false);
@@ -97,18 +93,18 @@ const UserCardPage: React.FC = () => {
   const handleRemoveCard = async (cardID) => {
     setLoading(true);
     try {
-      await currentUserApi.deleteCard({
+      const { data } = await currentUserApi.deleteCard({
         card_id: cardID,
       });
       dispatch(currentUserActions.removeOneCard(cardID));
-      dispatch(currentUserActions.unSetDefaultCard());
-      toast.success("カードを削除しました。", {
+      dispatch(currentUserActions.setDefaultCard(data.data.default_card));
+      toast.success("カードは削除できました。", {
         autoClose: 7000,
       });
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードを削除できません", {
+      toast.error("カードは削除できませんでした", {
         autoClose: 7000,
       });
       setLoading(false);
@@ -120,16 +116,15 @@ const UserCardPage: React.FC = () => {
     try {
       const { data } = await currentUserApi.setDefaultCard({
         card_id: cardID,
-        pay_customer_id: payjpCustomerID,
       });
       dispatch(currentUserActions.setDefaultCard(data.data.card_default_id));
-      toast.success("カードを設定しました。", {
+      toast.success("カードは追加できました。", {
         autoClose: 7000,
       });
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードを設定できません", {
+      toast.error("カードは追加できませんでした。", {
         autoClose: 7000,
       });
       setLoading(false);
@@ -138,12 +133,13 @@ const UserCardPage: React.FC = () => {
 
   // Get and set payjp customer id
   useEffect(() => {
-    if (!Boolean(payjpCustomerID)) {
+    console.log(Boolean(defaultCard));
+    if (Boolean(defaultCard)) {
       registerCustomerToPayjp();
     } else {
       getCustomerCard();
     }
-  }, [payjpCustomerID]);
+  }, [defaultCard]);
 
   return (
     <DashBoardLayout>
@@ -203,6 +199,12 @@ const UserCardPage: React.FC = () => {
           </>
         )}
 
+        {!loading && currentUserCard && currentUserCard.length === 0 && (
+          <Box mt="1rem" mb="1rem">
+            カードはありません。
+          </Box>
+        )}
+
         {currentUserCard &&
           currentUserCard.map((item) => (
             <TableRow my="1rem" padding="6px 18px" key={item.id}>
@@ -232,7 +234,7 @@ const UserCardPage: React.FC = () => {
                 color="text.muted"
               >
                 <Box display="flex" justifyContent="center">
-                  {defaultCard && String(defaultCard) != String(item.id) && (
+                  {defaultCard && String(defaultCard) !== String(item.id) && (
                     <Box
                       cursor="pointer"
                       bg="gray.300"
