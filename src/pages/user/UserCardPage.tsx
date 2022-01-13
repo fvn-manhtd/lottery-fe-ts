@@ -42,17 +42,6 @@ const UserCardPage: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const registerCustomerToPayjp = async () => {
-    try {
-      await currentUserApi.registerPayCustomerID();
-    } catch (error) {
-      console.log(error);
-      toast.error("PayJPでIDは登録できませんでした。", {
-        autoClose: 7000,
-      });
-    }
-  };
-
   const getCustomerCard = async () => {
     setLoading(true);
     try {
@@ -133,13 +122,8 @@ const UserCardPage: React.FC = () => {
 
   // Get and set payjp customer id
   useEffect(() => {
-    console.log(Boolean(defaultCard));
-    if (Boolean(defaultCard)) {
-      registerCustomerToPayjp();
-    } else {
-      getCustomerCard();
-    }
-  }, [defaultCard]);
+    getCustomerCard();
+  }, []);
 
   return (
     <DashBoardLayout>

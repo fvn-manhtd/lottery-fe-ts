@@ -17,9 +17,9 @@ function* getCurrentUser() {
     }
 }
 
-function* registerCustomerToPayjp() {
+export function* registerCustomerToPayjp() {
     try {
-        call(currentUserApi.registerPayCustomerID);        
+        yield call(currentUserApi.registerPayCustomerID);        
     } catch (error) {        
         toast.error("カードが登録できませんでした。", { autoClose: 7000 });
     }
