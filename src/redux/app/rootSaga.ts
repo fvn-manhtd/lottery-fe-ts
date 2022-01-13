@@ -1,23 +1,29 @@
-import { authApi } from "api";
+import { currentUserApi } from "api";
+import { push } from "connected-react-router";
 import { all, call, put } from "redux-saga/effects";
-import { authActions, authSaga, currentUserSaga } from "redux/features";
+import { authActions, authSaga, currentUserActions, registerCustomerToPayjp } from "redux/features";
+import { Route as ROUTES } from "utils";
 
 function* checkAuth() {
     const isLoggedIn = Boolean(localStorage.getItem('isLoggedIn'));
     if (!isLoggedIn) {
         console.log("Check Auth");
         try {
-            const response = yield call(authApi.checkAuth);
-            const { status } = response;
-            if (status === 200) {            
+
+            const { status, data } = yield call(currentUserApi.self);
+            if (status === 200 && data.status === 'success') {
+                yield put(push(ROUTES.HOME));
+                localStorage.setItem("isLoggedIn", "yes");                                
                 yield put(authActions.loginSucess());
-                localStorage.setItem("isLoggedIn", "yes");                
-                yield call(currentUserSaga);
-            } 
+                yield put(currentUserActions.setCurrentUser(data.data.user))                
+                yield call(registerCustomerToPayjp);                
+                window.location.href = ROUTES.HOME;
+                
+            }
         } catch (error) {
+            console.log(error);
             yield put(authActions.loginFailed());
-            localStorage.removeItem("isLoggedIn");
-            console.log(error.response);
+            localStorage.removeItem("isLoggedIn");            
         }
     }    
 }

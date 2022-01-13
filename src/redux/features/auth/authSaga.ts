@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { call, fork, put, take } from "redux-saga/effects";
 import { Route as ROUTES } from "utils";
 import { currentUserActions } from "..";
+import { registerCustomerToPayjp } from "../currentUser/curentUserSaga";
 import { authActions, LoginPayLoad } from "./authSlice";
 
 function* handleLogin(payload: LoginPayLoad) {
@@ -16,7 +17,8 @@ function* handleLogin(payload: LoginPayLoad) {
             yield put(authActions.loginSucess());
             localStorage.setItem("isLoggedIn", "yes");
             yield put(push(ROUTES.HOME));
-            yield put(currentUserActions.setCurrentUser(data.data.user));            
+            yield put(currentUserActions.setCurrentUser(data.data.user));
+            yield call(registerCustomerToPayjp);
         }        
         
     } catch (error) {
@@ -34,12 +36,12 @@ function* handleSocialLogin(payload: string) {
         if (payload === 'twitter') {
             const { data, status } = yield call(authApi.loginWithTwitter);            
             if (status === 200) {
-               window.location.href = data.data;
+                window.location.href = data.data;
             } 
         } else if (payload === 'facebook') {
             const { data, status } = yield call(authApi.loginWithFacebook);            
             if (status === 200) {
-               window.location.href = data.data;
+                window.location.href = data.data;
             } 
         }         
         
@@ -83,20 +85,17 @@ function* watchSocialLoginFlow() {
     }
 }
 
-function* unSetAllState() {    
-    yield put(push(ROUTES.USER_LOGIN));
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("persist:gacha");
-    yield put(authActions.reset());
-}
 
 function* handleLogout() {
     // Redirect to Login page
     console.log("Handle Logout");
      
-    try {
-        yield fork(unSetAllState);
-        yield call(authApi.logout);       
+    try {            
+        yield put(push(ROUTES.USER_LOGIN));
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("persist:gacha");
+        yield put(authActions.reset());
+        yield call(authApi.logout);        
     } catch (error) {
         console.log(error);
     }
