@@ -11,7 +11,7 @@ function* getCurrentUser() {
             yield put(currentUserActions.setCurrentUser(data.data.user))
         }
     } catch (error) {        
-        toast.error("権限がありませんログインしてからお試しください。", {
+        toast.error("ユーザー情報が所得できませんでした。", {
             autoClose: 7000
         });
     }
@@ -19,12 +19,9 @@ function* getCurrentUser() {
 
 function* registerCustomerToPayjp() {
     try {
-        const { status, data } = yield call(currentUserApi.registerPayCustomerID);
-        if (status === 200 && data.status === 'success') {
-            yield put(currentUserActions.setPayjpCustomerID(data.id))
-        }
+        call(currentUserApi.registerPayCustomerID);        
     } catch (error) {        
-        toast.error("エラーが発生しました", { autoClose: 7000 });
+        toast.error("カードが登録できませんでした。", { autoClose: 7000 });
     }
 }
 

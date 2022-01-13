@@ -16,7 +16,7 @@ function* handleLogin(payload: LoginPayLoad) {
             yield put(authActions.loginSucess());
             localStorage.setItem("isLoggedIn", "yes");
             yield put(push(ROUTES.HOME));
-            yield put(currentUserActions.setCurrentUser(data.data.user));
+            yield put(currentUserActions.setCurrentUser(data.data.user));            
         }        
         
     } catch (error) {

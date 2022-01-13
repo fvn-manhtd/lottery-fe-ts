@@ -11,7 +11,7 @@ function* checkAuth() {
             const { status } = response;
             if (status === 200) {            
                 yield put(authActions.loginSucess());
-                localStorage.setItem("isLoggedIn", "yes");
+                localStorage.setItem("isLoggedIn", "yes");                
                 yield call(currentUserSaga);
             } 
         } catch (error) {
