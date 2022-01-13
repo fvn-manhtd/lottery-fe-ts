@@ -47,7 +47,7 @@ const UserCardPage: React.FC = () => {
       await currentUserApi.registerPayCustomerID();
     } catch (error) {
       console.log(error);
-      toast.error("PayJPが登録できませんでした。", {
+      toast.error("PayJPでIDは登録できませんでした。", {
         autoClose: 7000,
       });
     }
@@ -62,7 +62,7 @@ const UserCardPage: React.FC = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("顧客リストカードが取得できませんでした。", {
+      toast.error("カードは取得できませんでした。", {
         autoClose: 7000,
       });
       setLoading(false);
@@ -77,13 +77,13 @@ const UserCardPage: React.FC = () => {
       });
       dispatch(currentUserActions.setCurrentUserCard(data.data.cards));
       dispatch(currentUserActions.setDefaultCard(data.data.default_card));
-      toast.success("カードが登録できました。", {
+      toast.success("カードは登録できました。", {
         autoClose: 7000,
       });
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードが登録できませんでした。", {
+      toast.error("カードは登録できませんでした。", {
         autoClose: 7000,
       });
       setLoading(false);
@@ -98,13 +98,13 @@ const UserCardPage: React.FC = () => {
       });
       dispatch(currentUserActions.removeOneCard(cardID));
       dispatch(currentUserActions.setDefaultCard(data.data.default_card));
-      toast.success("カードが削除できました。", {
+      toast.success("カードは削除できました。", {
         autoClose: 7000,
       });
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードが削除できませんでした", {
+      toast.error("カードは削除できませんでした", {
         autoClose: 7000,
       });
       setLoading(false);
@@ -118,13 +118,13 @@ const UserCardPage: React.FC = () => {
         card_id: cardID,
       });
       dispatch(currentUserActions.setDefaultCard(data.data.card_default_id));
-      toast.success("カードを設定しました。", {
+      toast.success("カードは追加できました。", {
         autoClose: 7000,
       });
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードを設定できません", {
+      toast.error("カードは追加できませんでした。", {
         autoClose: 7000,
       });
       setLoading(false);
@@ -201,7 +201,7 @@ const UserCardPage: React.FC = () => {
 
         {!loading && currentUserCard && currentUserCard.length === 0 && (
           <Box mt="1rem" mb="1rem">
-            カードがありません。
+            カードはありません。
           </Box>
         )}
 
@@ -234,7 +234,7 @@ const UserCardPage: React.FC = () => {
                 color="text.muted"
               >
                 <Box display="flex" justifyContent="center">
-                  {!defaultCard && (
+                  {defaultCard && String(defaultCard) !== String(item.id) && (
                     <Box
                       cursor="pointer"
                       bg="gray.300"
