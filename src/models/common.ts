@@ -2,6 +2,7 @@ export interface PaginationParams {
     _limit: number
     _page: number
     _total: number
+    last_page: number
 }
 
 export interface ListResponse<T> {

@@ -50,6 +50,7 @@ export const fakeNewsList: NewsListModel = {
     _limit:10,
     _page:1,
     _total:10,
+    last_page:10,
   },
   news: [
     {
