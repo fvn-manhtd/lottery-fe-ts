@@ -85,9 +85,6 @@ const UserShippingAddressPage: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("権限がありませんログインしてからお試しください。", {
-        autoClose: 7000,
-      });
       setSpin(false);
     }
   };

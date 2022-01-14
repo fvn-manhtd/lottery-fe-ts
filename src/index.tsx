@@ -14,6 +14,7 @@ import { axiosClient } from "api";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Route as ROUTES } from "utils";
 import { authActions } from "redux/features";
+import { toast } from "react-toastify";
 
 let persistor = persistStore(store);
 
@@ -40,28 +41,42 @@ axiosClient.interceptors.request.use(
     return config;
   },
   function (error) {
-    if (error.response.data.message) {
-      error.message = error.response.data.message;
-    }
     return Promise.reject(error);
   }
 );
 
 axiosClient.interceptors.response.use(
   function (response: AxiosResponse) {
-    return response;
+    const { status, data } = response;
+    if ((status === 200 || status === 201) && data.status === "success")
+      return response;
   },
   function (error) {
-    if (error.response.data.message) {
-      error.message = error.response.data.message;
-    }
-    const { status } = error.response;
-    if (status === 401) {
-      dispatch(authActions.logout());
-      dispatch(push(ROUTES.USER_LOGIN));
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("persist:gacha");
-      dispatch(authActions.reset());
+    const { status, data } = error.response;
+    switch (status) {
+      case 401: // HTTP_UNAUTHORIZED
+        dispatch(push(ROUTES.USER_LOGIN));
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("persist:gacha");
+        dispatch(authActions.reset());
+        toast.error(data.message, { autoClose: 7000 });
+
+        break;
+
+      case 400: // HTTP_BAD_REQUEST
+      case 403: // HTTP_FORBIDDEN
+      case 404: // HTTP_NOT_FOUND
+      case 422: // HTTP_UNPROCESSABLE_ENTITY
+      case 500: // HTTP_INTERNAL_SERVER_ERROR
+        toast.error(data.message, {
+          autoClose: 7000,
+        });
+        break;
+      default:
+        toast.error(data.message, {
+          autoClose: 7000,
+        });
+        break;
     }
     return Promise.reject(error);
   }

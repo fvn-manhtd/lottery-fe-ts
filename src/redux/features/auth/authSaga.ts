@@ -1,7 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { authApi } from 'api';
 import { push } from "connected-react-router";
-import { toast } from "react-toastify";
 import { call, fork, put, take } from "redux-saga/effects";
 import { Route as ROUTES } from "utils";
 import { currentUserActions } from "..";
@@ -22,9 +21,9 @@ function* handleLogin(payload: LoginPayLoad) {
         }        
         
     } catch (error) {
+        
         yield put(authActions.loginFailed());
         localStorage.removeItem("isLoggedIn");
-        toast.error("ご登録のメールアドレスとパスワードが一致しません。ご確認の上、もう一度ご入力ください。", { autoClose: 7000 });
         yield fork(authSaga);
     }    
 }
@@ -46,8 +45,7 @@ function* handleSocialLogin(payload: string) {
         }         
         
     } catch (error) {
-        yield put(authActions.loginFailed())
-        toast.error("ログインに失敗しました。", { autoClose: 7000 });
+        yield put(authActions.loginFailed())        
         yield fork(authSaga);
     }    
 }

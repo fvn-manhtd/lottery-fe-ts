@@ -11,7 +11,7 @@ function* getCurrentUser() {
             yield put(currentUserActions.setCurrentUser(data.data.user))
         }
     } catch (error) {        
-        toast.error("ユーザー情報が所得できませんでした。", {
+        toast.error("ユーザー情報は所得できませんでした。", {
             autoClose: 7000
         });
     }
@@ -21,7 +21,7 @@ export function* registerCustomerToPayjp() {
     try {
         yield call(currentUserApi.registerPayCustomerID);        
     } catch (error) {        
-        toast.error("カードが登録できませんでした。", { autoClose: 7000 });
+        toast.error("カードは登録できませんでした。", { autoClose: 7000 });
     }
 }
 

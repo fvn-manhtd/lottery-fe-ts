@@ -51,9 +51,6 @@ const UserCardPage: React.FC = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードは取得できませんでした。", {
-        autoClose: 7000,
-      });
       setLoading(false);
     }
   };
@@ -72,9 +69,6 @@ const UserCardPage: React.FC = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードは登録できませんでした。", {
-        autoClose: 7000,
-      });
       setLoading(false);
     }
   };
@@ -93,9 +87,6 @@ const UserCardPage: React.FC = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードは削除できませんでした", {
-        autoClose: 7000,
-      });
       setLoading(false);
     }
   };
@@ -113,9 +104,6 @@ const UserCardPage: React.FC = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("カードは追加できませんでした。", {
-        autoClose: 7000,
-      });
       setLoading(false);
     }
   };
