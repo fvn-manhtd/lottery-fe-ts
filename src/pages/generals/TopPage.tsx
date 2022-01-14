@@ -15,7 +15,7 @@ import { lotteryStatusObj } from "utils/constants";
 import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
 import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
 import { lotteryApi } from "api/lotteryApi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ListResponse, LotteryModel } from "models";
@@ -23,12 +23,14 @@ import { ListResponse, LotteryModel } from "models";
 const TopPage = () => {
   const [loading, setLoading] = useState(true);
   const [lotteries, setLotteries] = useState<ListResponse<LotteryModel>>();
+  const isScreenMounted = useRef(true);
   console.log(lotteries);
 
   const getLotteryIndex = async () => {
     setLoading(true);
     try {
       const data = await lotteryApi.getAll();
+      if (!isScreenMounted.current) return;
       setLotteries(data.data.data);
       setLoading(false);
     } catch (error) {
@@ -39,6 +41,8 @@ const TopPage = () => {
 
   useEffect(() => {
     getLotteryIndex();
+
+    return () => (isScreenMounted.current = false);
   }, []);
 
   return (
