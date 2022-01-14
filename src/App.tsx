@@ -43,6 +43,7 @@ import {
   ContactPage,
   UserRegisterConfirmMailPage,
   UserRegisterCompletePage,
+  GuideLinePage,
 } from "router";
 
 import { Suspense } from "react";
@@ -63,17 +64,12 @@ const FancyRoute = (props) => {
 };
 
 export default function App() {
-
   return (
     <>
       {/* general pages */}
       <Suspense fallback={<Loading />}>
         <Switch>
-          <FancyRoute
-            path={ROUTES.HOME}
-            exact
-            component={() => <TopPage />}
-          />
+          <FancyRoute path={ROUTES.HOME} exact component={() => <TopPage />} />
           <FancyRoute
             path={ROUTES.LOTTERIES}
             exact
@@ -98,6 +94,11 @@ export default function App() {
             path={ROUTES.STATIC_LEGAL}
             exact
             component={() => <LegalInformationPage />}
+          />
+          <FancyRoute
+            path={ROUTES.STATIC_GUIDELINE}
+            exact
+            component={() => <GuideLinePage />}
           />
           <FancyRoute
             path={ROUTES.NEWS_LIST}
@@ -263,7 +264,6 @@ export default function App() {
           />
           {/* error page */}
           <FancyRoute path="**" component={() => <Error404Page />} />
-
         </Switch>
       </Suspense>
       <ToastContainer autoClose={2000} />

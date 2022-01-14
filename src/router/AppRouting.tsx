@@ -22,6 +22,8 @@ export const LegalInformationPage = lazy(
   () => import("pages/static/LegalInformationPage")
 );
 
+export const GuideLinePage = lazy(() => import("pages/static/GuideLinePage"));
+
 /*lottery pages */
 export const LotteryListPage = lazy(
   () => import("pages/generals/LotteryListPage")

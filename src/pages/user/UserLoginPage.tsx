@@ -21,6 +21,8 @@ import * as yup from "yup";
 import { authActions, selectIsLogging } from "redux/features";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import styled from "styled-components";
+import { useEffect } from "react";
+import { push } from "connected-react-router";
 
 const TwitterButton = styled(Button)`
   background-color: #55acee;
@@ -52,6 +54,7 @@ const formSchema = yup.object().shape({
 const UserLoginPage = () => {
   const dispatch = useAppDispatch();
   const isLogging = useAppSelector(selectIsLogging);
+  const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
 
   const handleFormSubmit = async (values) => {
     await dispatch(
@@ -72,6 +75,10 @@ const UserLoginPage = () => {
       initialValues,
       validationSchema: formSchema,
     });
+
+  useEffect(() => {
+    if (isLoggedIn) dispatch(push(ROUTES.HOME));
+  }, [isLoggedIn]);
 
   return (
     <>
