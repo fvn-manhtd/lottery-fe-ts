@@ -1,5 +1,9 @@
 import { Box, Container, Typography, Button } from "components/atoms";
-import { LotteryList, Pagination, LotterySkeletonCard } from "components/organisms";
+import {
+  LotteryList,
+  Pagination,
+  LotterySkeletonCard,
+} from "components/organisms";
 import { BaseLayout } from "components/templates";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
@@ -11,20 +15,21 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ListResponse, LotteryModel } from "models";
 
-const StyledLink = styled.a `
-display:contents;
+const StyledLink = styled.a`
+  display: contents;
 `;
 
 const LotteryListPage = () => {
-  
   const [loading, setLoading] = useState(true);
-  const [lotteries,setLotteries] = useState<ListResponse<LotteryModel>>();
+  const [lotteries, setLotteries] = useState<ListResponse<LotteryModel>>();
+  const isScreenMounted = useRef(true);
   console.log(lotteries);
 
   const getLotteryIndex = async () => {
     setLoading(true);
     try {
       const data = await lotteryApi.getAll();
+      if (!isScreenMounted.current) return;
       setLotteries(data.data.data);
       setLoading(false);
     } catch (error) {
@@ -36,22 +41,29 @@ const LotteryListPage = () => {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getLotteryIndex();
-  },[]);
 
-  
+    return () => (isScreenMounted.current = false);
+  }, []);
+
   const statusButton = [
     { status: 1, text: "販売中" },
     { status: 2, text: "終了間際" },
     { status: 3, text: "販売予定" },
   ];
 
-  const history=useHistory();
-  const changeRoute=(data)=>{
-    const page=data+1;
-    history.push(Route.LOTTERIES+"?status="+getSearchQueryObj('status')+"&page="+page)
-  }
+  const history = useHistory();
+  const changeRoute = (data) => {
+    const page = data + 1;
+    history.push(
+      Route.LOTTERIES +
+        "?status=" +
+        getSearchQueryObj("status") +
+        "&page=" +
+        page
+    );
+  };
 
   return (
     <>
@@ -143,26 +155,27 @@ const LotteryListPage = () => {
               </Box>
 
               {/** lottery list */}
-              {loading&&<LotterySkeletonCard/>}
-              {!loading && lotteries &&
+              {loading && <LotterySkeletonCard />}
+              {!loading && lotteries && (
                 <LotteryList lotteries={lotteryList.lotteries} />
-              }
+              )}
 
               {/* pagination */}
-              {!loading && lotteries &&
-                <Box 
-                display="flex"
-                justifyContent="center"
-                width="90%"
-                margin="1rem auto">
-                  <Pagination 
-                  pageCount={lotteries.pagination.last_page}
-                  onChange={(data) => {
-                    changeRoute(data)
-                  }}
+              {!loading && lotteries && (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  width="90%"
+                  margin="1rem auto"
+                >
+                  <Pagination
+                    pageCount={lotteries.pagination.last_page}
+                    onChange={(data) => {
+                      changeRoute(data);
+                    }}
                   />
                 </Box>
-              }
+              )}
             </Box>
           </Container>
         </main>

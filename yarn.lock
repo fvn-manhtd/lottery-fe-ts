@@ -11693,11 +11693,6 @@ use-postal-jp@^2.0.1:
   resolved "https://registry.yarnpkg.com/use-postal-jp/-/use-postal-jp-2.0.1.tgz#9cf170a37e87776d4b4f75b14ce36d109fd755cd"
   integrity sha512-jXWF8y/Utd9XHc97dxS35osm+dng/k+0N22l/Wqs4j2JWFRSvedNoUzKF8stf6udCqUFCO3eqzE2h74p1tbgiQ==
 
-use-state-if-mounted@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/use-state-if-mounted/-/use-state-if-mounted-1.0.4.tgz#5ea9ba8702b88016a973b192a0617f4732cfcc4f"
-  integrity sha512-odkuB5IZxABvag46XZmUyY+FrienKt+6f2JAo52pvpU5C32K99EvADg1VxjIUaVbh5eHhOVQQ6q4wWm2WEZYyg==
-
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
