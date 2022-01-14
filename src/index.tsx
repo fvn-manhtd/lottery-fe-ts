@@ -63,9 +63,13 @@ axiosClient.interceptors.response.use(
 
         break;
 
+      case 404: // HTTP_NOT_FOUND
+        toast.error("サーバーエラーが起きました", {
+          autoClose: 7000,
+        });
+        break;
       case 400: // HTTP_BAD_REQUEST
       case 403: // HTTP_FORBIDDEN
-      case 404: // HTTP_NOT_FOUND
       case 422: // HTTP_UNPROCESSABLE_ENTITY
       case 500: // HTTP_INTERNAL_SERVER_ERROR
         toast.error(data.message, {

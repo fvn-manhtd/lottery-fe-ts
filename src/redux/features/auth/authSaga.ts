@@ -89,7 +89,7 @@ function* handleLogout() {
     console.log("Handle Logout");
      
     try {            
-        yield put(push(ROUTES.USER_LOGIN));
+        yield put(push(ROUTES.HOME));
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("persist:gacha");
         yield put(authActions.reset());
