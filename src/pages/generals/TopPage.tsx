@@ -15,30 +15,37 @@ import { lotteryStatusObj } from "utils/constants";
 import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
 import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
 import { lotteryApi } from "api/lotteryApi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { ListResponse, LotteryModel } from "models";
+import { RequestListResponse, LotteryListModel } from "models";
 
 const TopPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [lotteries, setLotteries] = useState<ListResponse<LotteryModel>>();
-  console.log(lotteries);
+  const [request,setRequest]=useState<RequestListResponse<LotteryListModel>>({
+    data:null,loading:true
+  });
+  const isScreenMounted = useRef(true);
+
+  if(request.data){
+    console.log(request.data);
+  };
 
   const getLotteryIndex = async () => {
-    setLoading(true);
+    if (!isScreenMounted.current) return;
+    setRequest({data:null,loading:true});
     try {
       const data = await lotteryApi.getAll();
-      setLotteries(data.data.data);
-      setLoading(false);
+      if (!isScreenMounted.current) return;
+      setRequest({data:data.data.data,loading:false});
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setRequest({data:null,loading:false});
     }
   };
 
   useEffect(() => {
     getLotteryIndex();
+    return () => {isScreenMounted.current = false};
   }, []);
 
   return (
@@ -57,7 +64,7 @@ const TopPage = () => {
               isPlaying={true}
               interval={5000}
             >
-              {loading && (
+              {request.loading && (
                 <Slider>
                   <Slide index={1}>
                     <Skeleton height="100%" />
@@ -70,7 +77,7 @@ const TopPage = () => {
                   </Slide>
                 </Slider>
               )}
-              {!loading && lotteries && (
+              {!request.loading && request.data && (
                 <Slider>
                   {lotteryList.lotteries.map((value, index) => {
                     return (
@@ -182,8 +189,8 @@ const TopPage = () => {
               </Box>
 
               {/** lottery list */}
-              {loading && <LotterySkeletonCard />}
-              {!loading && lotteries && (
+              {request.loading && <LotterySkeletonCard />}
+              {!request.loading && request.data && (
                 <LotteryList lotteries={lotteryList.lotteries} />
               )}
             </Box>

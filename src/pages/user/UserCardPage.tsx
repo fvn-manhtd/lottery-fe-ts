@@ -10,7 +10,7 @@ import {
   Small,
 } from "components/atoms";
 import { DashBoardLayout } from "components/templates";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PayjpCheckout from "hooks/PayjpCheckout";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import {
@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
 
 const UserCardPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const isScreenMounted = useRef(true);
   const payjpCheckoutProps = {
     dataKey: process.env.REACT_APP_PAPJP_PUBLIC_KEY,
     dataText: "クレジットカード追加",
@@ -46,6 +47,7 @@ const UserCardPage: React.FC = () => {
     setLoading(true);
     try {
       const { data } = await currentUserApi.getCard();
+      if (!isScreenMounted.current) return;
       dispatch(currentUserActions.setCurrentUserCard(data.data.cards));
       dispatch(currentUserActions.setDefaultCard(data.data.default_card));
       setLoading(false);
@@ -111,6 +113,8 @@ const UserCardPage: React.FC = () => {
   // Get and set payjp customer id
   useEffect(() => {
     getCustomerCard();
+
+    return () => (isScreenMounted.current = false);
   }, []);
 
   return (

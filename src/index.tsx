@@ -59,6 +59,8 @@ axiosClient.interceptors.response.use(
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("persist:gacha");
         dispatch(authActions.reset());
+        dispatch(authActions.loginFailed());
+        window.location.href = ROUTES.USER_LOGIN;
         toast.error(data.message, { autoClose: 7000 });
 
         break;

@@ -1,5 +1,9 @@
 import { Box, Container, Typography, Button } from "components/atoms";
-import { LotteryList, Pagination, LotterySkeletonCard } from "components/organisms";
+import {
+  LotteryList,
+  Pagination,
+  LotterySkeletonCard,
+} from "components/organisms";
 import { BaseLayout } from "components/templates";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
@@ -7,51 +11,58 @@ import { getSearchQueryObj, Route } from "utils";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { lotteryApi } from "api/lotteryApi";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { ListResponse, LotteryModel } from "models";
+import { useEffect, useState, useRef } from "react";
+import { LotteryListModel, RequestListResponse } from "models";
 
-const StyledLink = styled.a `
-display:contents;
+const StyledLink = styled.a`
+  display: contents;
 `;
 
 const LotteryListPage = () => {
-  
-  const [loading, setLoading] = useState(true);
-  const [lotteries,setLotteries] = useState<ListResponse<LotteryModel>>();
-  console.log(lotteries);
+  const [request,setRequest]=useState<RequestListResponse<LotteryListModel>>({
+    data:null,loading:true
+  });
+  const isScreenMounted = useRef(true);
+
+  if(request.data){
+    console.log(request.data);
+  };
 
   const getLotteryIndex = async () => {
-    setLoading(true);
+    if (!isScreenMounted.current) return;
+    setRequest({data:null,loading:true});
     try {
       const data = await lotteryApi.getAll();
-      setLotteries(data.data.data);
-      setLoading(false);
+      if (!isScreenMounted.current) return;
+      setRequest({data:data.data.data,loading:false})
     } catch (error) {
       console.log(error);
-      toast.error("データを取得できませんでした。", {
-        autoClose: 7000,
-      });
-      setLoading(false);
+      setRequest({data:null,loading:false});
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getLotteryIndex();
-  },[]);
+    return () => {isScreenMounted.current = false};
+  }, []);
 
-  
   const statusButton = [
     { status: 1, text: "販売中" },
     { status: 2, text: "終了間際" },
     { status: 3, text: "販売予定" },
   ];
 
-  const history=useHistory();
-  const changeRoute=(data)=>{
-    const page=data+1;
-    history.push(Route.LOTTERIES+"?status="+getSearchQueryObj('status')+"&page="+page)
-  }
+  const history = useHistory();
+  const changeRoute = (data) => {
+    const page = data + 1;
+    history.push(
+      Route.LOTTERIES +
+        "?status=" +
+        getSearchQueryObj("status") +
+        "&page=" +
+        page
+    );
+  };
 
   return (
     <>
@@ -143,26 +154,27 @@ const LotteryListPage = () => {
               </Box>
 
               {/** lottery list */}
-              {loading&&<LotterySkeletonCard/>}
-              {!loading && lotteries &&
+              {request.loading && <LotterySkeletonCard />}
+              {!request.loading && request.data && (
                 <LotteryList lotteries={lotteryList.lotteries} />
-              }
+              )}
 
               {/* pagination */}
-              {!loading && lotteries &&
-                <Box 
-                display="flex"
-                justifyContent="center"
-                width="90%"
-                margin="1rem auto">
-                  <Pagination 
-                  pageCount={lotteries.pagination.last_page}
-                  onChange={(data) => {
-                    changeRoute(data)
-                  }}
+              {!request.loading && request.data && (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  width="90%"
+                  margin="1rem auto"
+                >
+                  <Pagination
+                    pageCount={request.data.pagination.last_page}
+                    onChange={(data) => {
+                      changeRoute(data);
+                    }}
                   />
                 </Box>
-              }
+              )}
             </Box>
           </Container>
         </main>
