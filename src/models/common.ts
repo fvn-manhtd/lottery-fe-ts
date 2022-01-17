@@ -10,6 +10,11 @@ export interface ListResponse<T> {
     pagination: PaginationParams
 }
 
+export interface RequestListResponse<T> {
+    data: ListResponse<T>,
+    loading: boolean
+}
+
 export interface ListParams {
     _page: number
     _limit: number
