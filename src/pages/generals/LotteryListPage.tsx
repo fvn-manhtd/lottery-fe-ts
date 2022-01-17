@@ -11,40 +11,39 @@ import { getSearchQueryObj, Route } from "utils";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { lotteryApi } from "api/lotteryApi";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { ListResponse, LotteryModel } from "models";
+import { useEffect, useState, useRef } from "react";
+import { LotteryListModel, RequestListResponse } from "models";
 
 const StyledLink = styled.a`
   display: contents;
 `;
 
 const LotteryListPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [lotteries, setLotteries] = useState<ListResponse<LotteryModel>>();
+  const [request,setRequest]=useState<RequestListResponse<LotteryListModel>>({
+    data:null,loading:true
+  });
   const isScreenMounted = useRef(true);
-  console.log(lotteries);
+
+  if(request.data){
+    console.log(request.data);
+  };
 
   const getLotteryIndex = async () => {
-    setLoading(true);
+    if (!isScreenMounted.current) return;
+    setRequest({data:null,loading:true});
     try {
       const data = await lotteryApi.getAll();
       if (!isScreenMounted.current) return;
-      setLotteries(data.data.data);
-      setLoading(false);
+      setRequest({data:data.data.data,loading:false})
     } catch (error) {
       console.log(error);
-      toast.error("データを取得できませんでした。", {
-        autoClose: 7000,
-      });
-      setLoading(false);
+      setRequest({data:null,loading:false});
     }
   };
 
   useEffect(() => {
     getLotteryIndex();
-
-    return () => (isScreenMounted.current = false);
+    return () => {isScreenMounted.current = false};
   }, []);
 
   const statusButton = [
@@ -155,13 +154,13 @@ const LotteryListPage = () => {
               </Box>
 
               {/** lottery list */}
-              {loading && <LotterySkeletonCard />}
-              {!loading && lotteries && (
+              {request.loading && <LotterySkeletonCard />}
+              {!request.loading && request.data && (
                 <LotteryList lotteries={lotteryList.lotteries} />
               )}
 
               {/* pagination */}
-              {!loading && lotteries && (
+              {!request.loading && request.data && (
                 <Box
                   display="flex"
                   justifyContent="center"
@@ -169,7 +168,7 @@ const LotteryListPage = () => {
                   margin="1rem auto"
                 >
                   <Pagination
-                    pageCount={lotteries.pagination.last_page}
+                    pageCount={request.data.pagination.last_page}
                     onChange={(data) => {
                       changeRoute(data);
                     }}
