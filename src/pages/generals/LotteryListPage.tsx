@@ -7,44 +7,32 @@ import {
 import { BaseLayout } from "components/templates";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
-import { getSearchQueryObj, Route } from "utils";
+import { getSearchQueryObj, Route as ROUTES } from "utils";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { lotteryApi } from "api/lotteryApi";
-import { useEffect, useState, useRef } from "react";
-import { LotteryListModel, RequestListResponse } from "models";
+import { useQuery } from "react-query";
+import { ListResponse, LotteryModel } from "models";
 
 const StyledLink = styled.a`
   display: contents;
 `;
 
 const LotteryListPage = () => {
-  const [request,setRequest]=useState<RequestListResponse<LotteryListModel>>({
-    data:null,loading:true
-  });
-  const isScreenMounted = useRef(true);
-
-  if(request.data){
-    console.log(request.data);
-  };
-
-  const getLotteryIndex = async () => {
-    if (!isScreenMounted.current) return;
-    setRequest({data:null,loading:true});
-    try {
-      const data = await lotteryApi.getAll();
-      if (!isScreenMounted.current) return;
-      setRequest({data:data.data.data,loading:false})
-    } catch (error) {
-      console.log(error);
-      setRequest({data:null,loading:false});
+  const { data: lotteriesData, isLoading: isLoadingLotteries } = useQuery<
+    ListResponse<LotteryModel>
+  >(
+    "lotteries",
+    async () => {
+      const res = await lotteryApi.getAll();
+      return res.data.data;
+    },
+    {
+      staleTime: 5 * 60 * 1000, // cache data 5min
+      refetchInterval: 5 * 60 * 1000, // auto refetch after 5 min
+      refetchIntervalInBackground: true,
     }
-  };
-
-  useEffect(() => {
-    getLotteryIndex();
-    return () => {isScreenMounted.current = false};
-  }, []);
+  );
 
   const statusButton = [
     { status: 1, text: "販売中" },
@@ -56,7 +44,7 @@ const LotteryListPage = () => {
   const changeRoute = (data) => {
     const page = data + 1;
     history.push(
-      Route.LOTTERIES +
+      ROUTES.LOTTERIES +
         "?status=" +
         getSearchQueryObj("status") +
         "&page=" +
@@ -118,7 +106,7 @@ const LotteryListPage = () => {
                   if (value.status == getSearchQueryObj("status")) {
                     return (
                       <StyledLink
-                        href={Route.LOTTERIES + "?status=" + value.status}
+                        href={ROUTES.LOTTERIES + "?status=" + value.status}
                         key={index}
                       >
                         <Button
@@ -135,7 +123,7 @@ const LotteryListPage = () => {
                   } else {
                     return (
                       <StyledLink
-                        href={Route.LOTTERIES + "?status=" + value.status}
+                        href={ROUTES.LOTTERIES + "?status=" + value.status}
                         key={index}
                       >
                         <Button
@@ -154,13 +142,13 @@ const LotteryListPage = () => {
               </Box>
 
               {/** lottery list */}
-              {request.loading && <LotterySkeletonCard />}
-              {!request.loading && request.data && (
+              {isLoadingLotteries && <LotterySkeletonCard />}
+              {!isLoadingLotteries && lotteriesData && (
                 <LotteryList lotteries={lotteryList.lotteries} />
               )}
 
               {/* pagination */}
-              {!request.loading && request.data && (
+              {!isLoadingLotteries && lotteriesData && (
                 <Box
                   display="flex"
                   justifyContent="center"
@@ -168,7 +156,9 @@ const LotteryListPage = () => {
                   margin="1rem auto"
                 >
                   <Pagination
-                    pageCount={request.data.pagination.last_page}
+                    pageCount={
+                      lotteriesData && lotteriesData.pagination.last_page
+                    }
                     onChange={(data) => {
                       changeRoute(data);
                     }}

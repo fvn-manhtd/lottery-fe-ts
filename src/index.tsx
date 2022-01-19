@@ -15,6 +15,10 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Route as ROUTES } from "utils";
 import { authActions } from "redux/features";
 import { toast } from "react-toastify";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
 
 let persistor = persistStore(store);
 
@@ -25,7 +29,10 @@ const router = (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ConnectedRouter history={history}>
-            <App />
+            <QueryClientProvider client={queryClient}>
+              <App />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
           </ConnectedRouter>
         </PersistGate>
       </Provider>

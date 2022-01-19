@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
     {
       id: 3,
       title: "プライバシーポリシー",
-      href: ROUTES.STATIC_LEGAL,
+      href: ROUTES.STATIC_POLICY,
     },
     {
       id: 4,
