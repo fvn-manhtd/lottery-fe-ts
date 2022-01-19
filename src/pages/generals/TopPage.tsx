@@ -31,8 +31,8 @@ const TopPage = () => {
       return res.data.data;
     },
     {
-      staleTime: 0.5 * 60 * 1000, // cache data 30s
-      refetchInterval: 0.5 * 60 * 1000, // auto refetch after 30s
+      staleTime: 5 * 60 * 1000, // cache data 5min
+      refetchInterval: 5 * 60 * 1000, // auto refetch after 5 min
       refetchIntervalInBackground: true,
     }
   );
