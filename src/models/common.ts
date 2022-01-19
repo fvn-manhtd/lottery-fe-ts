@@ -1,14 +1,21 @@
-export interface PaginationParams {
-    _limit: number
-    _page: number
-    _total: number
+    export interface PaginationParams {
+    current_page: number
+    from: number
     last_page: number
+    last_page_url: string
+    next_page_url: string
+    prev_page_url: string
+    per_page: number
+    to: number
+    total: number
 }
 
-export interface ListResponse<T> {
+export interface ListResponse<T> {  
     data: T[],
-    pagination: PaginationParams
+    pagination?: PaginationParams
+    
 }
+
 
 export interface RequestListResponse<T> {
     data: ListResponse<T>,

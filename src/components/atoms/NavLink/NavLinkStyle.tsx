@@ -55,6 +55,7 @@ const StyledNavLink = styled(Link)<
       prop: "variant",
       variants: {
         hover: {
+          textAlign: "center",
           "&:hover": {
             color: `${theme.colors.gray.white} !important`,
             backgroundColor: `${theme.colors.primary.main} !important`,
