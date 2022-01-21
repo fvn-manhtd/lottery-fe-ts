@@ -3,13 +3,18 @@ import { lazy } from "react";
 
 /* homepage */
 export const TopPage = lazy(() => import("pages/generals/TopPage"));
-export const ExamplePage = lazy(() => import("pages/generals/ExamplePage"));
 
 export const NewsListPage = lazy(() => import("pages/generals/NewsListPage"));
 export const NewsDetailPage = lazy(
   () => import("pages/generals/NewsDetailPage")
 );
 export const ContactPage = lazy(() => import("pages/generals/ContactPage"));
+export const ContactConfirmPage = lazy(
+  () => import("pages/generals/ContactConfirmPage")
+);
+export const ContactCompletePage = lazy(
+  () => import("pages/generals/ContactCompletePage")
+);
 /* static pages */
 export const UsagePolicyPage = lazy(
   () => import("pages/static/UsagePolicyPage")

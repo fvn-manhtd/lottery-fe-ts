@@ -114,7 +114,9 @@ const UserCardPage: React.FC = () => {
   useEffect(() => {
     getCustomerCard();
 
-    return () => (isScreenMounted.current = false);
+    return () => {
+      isScreenMounted.current = false;
+    };
   }, []);
 
   return (
