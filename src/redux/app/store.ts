@@ -7,7 +7,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
-import { authReducer, currentUserReducer } from 'redux/features';
+import { authReducer, currentUserReducer, storeObjectReducer } from 'redux/features';
 import { history } from 'utils';
 import rootSaga from './rootSaga';
 
@@ -21,6 +21,7 @@ const persistConfig = {
 const combinedReducer = combineReducers({
   auth: authReducer,
   currentUser: currentUserReducer,
+  storeObject: storeObjectReducer,
   router: connectRouter(history)  
 });
 

@@ -43,7 +43,6 @@ import {
 import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ContactProvider } from "context";
 
 const FancyRoute = (props) => {
   useMemo(() => {
@@ -106,23 +105,21 @@ export default function App() {
             component={() => <NewsDetailPage />}
           />
 
-          <ContactProvider>
-            <FancyRoute
-              path={ROUTES.CONTACT}
-              exact
-              component={() => <ContactPage />}
-            />
-            <FancyRoute
-              path={ROUTES.CONTACT_CONFIRM}
-              exact
-              component={() => <ContactConfirmPage />}
-            />
-            <FancyRoute
-              path={ROUTES.CONTACT_COMPLETE}
-              exact
-              component={() => <ContactCompletePage />}
-            />
-          </ContactProvider>
+          <FancyRoute
+            path={ROUTES.CONTACT}
+            exact
+            component={() => <ContactPage />}
+          />
+          <FancyRoute
+            path={ROUTES.CONTACT_CONFIRM}
+            exact
+            component={() => <ContactConfirmPage />}
+          />
+          <FancyRoute
+            path={ROUTES.CONTACT_COMPLETE}
+            exact
+            component={() => <ContactCompletePage />}
+          />
 
           {/* user pages */}
           <FancyRoute

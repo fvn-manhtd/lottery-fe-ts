@@ -11,11 +11,11 @@ import { BaseLayout } from "components/templates";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { phoneRegExp } from "utils";
-import { useContext, useEffect } from "react";
-import { ContactContext } from "context";
-import { useAppDispatch } from "redux/app/hooks";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { push } from "connected-react-router";
 import { Route as ROUTES } from "utils";
+import { selectStoreObject, storeObjectActions } from "redux/features";
 
 const formSchema = yup.object().shape({
   name: yup.string().required("お名前を入力して下さい"),
@@ -29,20 +29,21 @@ const formSchema = yup.object().shape({
 });
 
 const ContactPage = () => {
-  const formData = useContext(ContactContext);
   const dispatch = useAppDispatch();
 
+  const formData = useAppSelector(selectStoreObject);
+
   const handleFormSubmit = (value) => {
-    formData.setContact(value);
+    dispatch(storeObjectActions.setObject(value));
     dispatch(push(ROUTES.CONTACT_CONFIRM));
   };
 
   const initialValues = {
-    name: formData ? formData.contact.name : "",
-    phone: formData ? formData.contact.phone : "",
-    email: formData ? formData.contact.email : "",
-    title: formData ? formData.contact.title : "",
-    content: formData ? formData.contact.content : "",
+    name: formData ? formData.name : "",
+    phone: formData ? formData.phone : "",
+    email: formData ? formData.email : "",
+    title: formData ? formData.title : "",
+    content: formData ? formData.content : "",
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
