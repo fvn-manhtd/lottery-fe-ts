@@ -4,6 +4,8 @@ export enum Route {
     NEWS_LIST="/news-list",
     NEWS_DETAIL="/news/:id",
     CONTACT = "/contact",
+    CONTACT_CONFIRM = "/contact/confirm",
+    CONTACT_COMPLETE = "/contact/complete",
     EXAMPLE = '/example',
 
     //Lottery
@@ -55,7 +57,9 @@ export enum Route {
 };
 
 export const ApiRoute = {
-    'LOTTERY_INDEX' : '/lotteries',
+    'LOTTERY_INDEX': '/lotteries',
+    
+    'CONTACT' : '/mall/contact',
 
 
     'AUTH': {

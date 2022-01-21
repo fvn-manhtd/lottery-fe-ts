@@ -7,22 +7,14 @@ import {
   ProtectedRoute,
   Loading,
   TopPage,
-  ExamplePage,
   LotteryListPage,
   UserMyPage,
   UserLoginPage,
-  ShopLoginPage,
   Error404Page,
   UserNewPasswordPage,
   UserPasswordForgotPage,
   UserPasswordForgotConfirmMailPage,
   UserRegisterPage,
-  ShopRegisterPage,
-  ShopNewPasswordPage,
-  ShopPasswordForgotConfirmMailPage,
-  ShopPasswordForgotPage,
-  ShopCreateAccountPage,
-  ShopOperationSettingPage,
   UsagePolicyPage,
   CompanyPage,
   PrivacyPolicyPage,
@@ -44,11 +36,14 @@ import {
   UserRegisterConfirmMailPage,
   UserRegisterCompletePage,
   GuideLinePage,
+  ContactConfirmPage,
+  ContactCompletePage,
 } from "router";
 
 import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ContactProvider } from "context";
 
 const FancyRoute = (props) => {
   useMemo(() => {
@@ -110,11 +105,24 @@ export default function App() {
             exact
             component={() => <NewsDetailPage />}
           />
-          <FancyRoute
-            path={ROUTES.CONTACT}
-            exact
-            component={() => <ContactPage />}
-          />
+
+          <ContactProvider>
+            <FancyRoute
+              path={ROUTES.CONTACT}
+              exact
+              component={() => <ContactPage />}
+            />
+            <FancyRoute
+              path={ROUTES.CONTACT_CONFIRM}
+              exact
+              component={() => <ContactConfirmPage />}
+            />
+            <FancyRoute
+              path={ROUTES.CONTACT_COMPLETE}
+              exact
+              component={() => <ContactCompletePage />}
+            />
+          </ContactProvider>
 
           {/* user pages */}
           <FancyRoute
@@ -188,43 +196,6 @@ export default function App() {
             component={() => <UserRegisterCompletePage />}
           />
 
-          {/* shop auth pages */}
-          <FancyRoute
-            path={ROUTES.SHOP_LOGIN}
-            exact
-            component={() => <ShopLoginPage />}
-          />
-          <FancyRoute
-            path={ROUTES.SHOP_REGISTER}
-            exact
-            component={() => <ShopRegisterPage />}
-          />
-          <FancyRoute
-            path={ROUTES.SHOP_REGISTER_CREATE_ACCOUNT}
-            exact
-            component={() => <ShopCreateAccountPage />}
-          />
-          <FancyRoute
-            path={ROUTES.SHOP_REGISTER_OPERATION_SETTING}
-            exact
-            component={() => <ShopOperationSettingPage />}
-          />
-          <FancyRoute
-            path={ROUTES.SHOP_PASSWORD_FORGOT}
-            exact
-            component={() => <ShopPasswordForgotPage />}
-          />
-          <FancyRoute
-            path={ROUTES.SHOP_NEW_PASSWORD}
-            exact
-            component={() => <ShopNewPasswordPage />}
-          />
-          <FancyRoute
-            path={ROUTES.SHOP_PASSWORD_FORGOT_CONFIRM_MAIL}
-            exact
-            component={() => <ShopPasswordForgotConfirmMailPage />}
-          />
-
           {/* cart pages */}
           <FancyRoute
             path={ROUTES.SHOPPING_CART}
@@ -256,12 +227,7 @@ export default function App() {
             exact
             component={ProtectedRoute(EffectFinishPage)}
           />
-          {/** other */}
-          <FancyRoute
-            path={ROUTES.EXAMPLE}
-            exact
-            component={() => <ExamplePage />}
-          />
+
           {/* error page */}
           <FancyRoute path="**" component={() => <Error404Page />} />
         </Switch>
