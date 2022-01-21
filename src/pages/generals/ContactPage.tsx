@@ -24,8 +24,14 @@ const formSchema = yup.object().shape({
     .string()
     .required("メールアドレスを入力して下さい")
     .email("正式なメールアドレスを入力して下さい"),
-  content: yup.string().max(1500, "件名は1500文字以内で入力して下さい"),
-  title: yup.string().max(250, "件名は250文字以内で入力して下さい"),
+  content: yup
+    .string()
+    .max(3000, "件名は3000文字以内で入力して下さい")
+    .required("内容を入力して下さい"),
+  title: yup
+    .string()
+    .max(250, "件名は250文字以内で入力して下さい")
+    .required("件名を入力して下さい"),
 });
 
 const ContactPage = () => {
