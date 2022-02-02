@@ -1,13 +1,16 @@
-import { PaginationParams } from "./common";
 
+import { PaginationParams } from "./common";
 export interface NewsModel {
-    id:number;
+    id?:number;
     title?:string;
-    content?:string;
+    content?: string;
+    external?:string;
     date?:string;
 }
 
 export interface NewsListModel {
-    pagination?: PaginationParams,
-    news:NewsModel[];
+    news?: NewsModel[];
+    pagination?: PaginationParams;
+    
 }
+

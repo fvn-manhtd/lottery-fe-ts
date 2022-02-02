@@ -1,142 +1,37 @@
-import { Box, Container, Typography } from "components/atoms";
-import { LotteryList, LotterySkeletonCard } from "components/organisms";
-import { BaseLayout } from "components/templates";
+import { Box, Container, FlexBox, Spinner, Typography } from "components/atoms";
 import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext,
-  Image,
-  DotGroup,
-} from "pure-react-carousel";
-import "pure-react-carousel/dist/react-carousel.es.css";
-import { lotteryStatusObj } from "utils/constants";
-import { CarouselStyle, StyledLabelText } from "./TopPageStyle";
-import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { useQuery } from "react-query";
-import { lotteryApi } from "api";
-import { ListResponse, LotteryModel } from "models";
+  Carousel,
+  Head,
+  LotteryList,
+  LotterySkeletonCard,
+} from "components/organisms";
+import { BaseLayout } from "components/templates";
+import { siteMetaSetting } from "utils";
+import { useGetLotteriesQuery } from "api";
 
 const TopPage = () => {
-  const { data: lotteriesData, isLoading: isLoadingLotteries } = useQuery<
-    ListResponse<LotteryModel>
-  >(
-    "lotteries",
-    async () => {
-      const res = await lotteryApi.getAll();
-      console.log(res);
-      return res.data.data;
-    },
-    {
-      staleTime: 5 * 60 * 1000, // cache data 5min
-      refetchInterval: 5 * 60 * 1000, // auto refetch after 5 min
-      refetchIntervalInBackground: true,
-    }
-  );
+  const {
+    data: lotteriesData,
+    isLoading,
+    isFetching,
+  } = useGetLotteriesQuery({
+    limitArg: 12,
+    pageArg: 1,
+  });
 
   return (
     <>
+      <Head title={siteMetaSetting.title} />
       <BaseLayout>
         <main>
           {/* carousel lottery list */}
-          <CarouselStyle>
-            <CarouselProvider
-              naturalSlideWidth={100}
-              naturalSlideHeight={62}
-              totalSlides={lotteryList.lotteries.length}
-              visibleSlides={1}
-              currentSlide={1}
-              infinite={true}
-              isPlaying={true}
-              interval={5000}
-            >
-              {isLoadingLotteries && (
-                <Slider>
-                  <Slide index={1}>
-                    <Skeleton height="100%" />
-                  </Slide>
-                  <Slide index={1}>
-                    <Skeleton height="100%" />
-                  </Slide>
-                  <Slide index={1}>
-                    <Skeleton height="100%" />
-                  </Slide>
-                </Slider>
-              )}
-              {!isLoadingLotteries && lotteriesData && (
-                <Slider>
-                  {lotteryList.lotteries.map((value, index) => {
-                    return (
-                      <Slide
-                        index={index}
-                        className={"carousel__slide-" + value.status}
-                        key={value.id}
-                      >
-                        {value.status <= 2 ? (
-                          <StyledLabelText
-                            color="white"
-                            fontWeight={600}
-                            pt={["4%", "4%", "4%", "4%"]}
-                            ml={["-1%", "-1%", "unset", "unset"]}
-                            fontSize={["0.8rem", "1.4rem", "1rem", "1.4rem"]}
-                          >
-                            {lotteryStatusObj[value.status - 1].text}
-                          </StyledLabelText>
-                        ) : (
-                          <StyledLabelText
-                            color="white"
-                            fontWeight={600}
-                            pt={["4%", "4%", "4%", "4%"]}
-                            ml={["-1%", "-2%", "-1%", "-1%"]}
-                            fontSize={["0.6rem", "1.1rem", "0.8rem", "1.2rem"]}
-                          >
-                            {lotteryStatusObj[value.status - 1].text}
-                          </StyledLabelText>
-                        )}
-                        <Box
-                          position="absolute"
-                          bottom={0}
-                          backgroundColor="rgba(0,0,0,0.5)"
-                          width="100%"
-                          textAlign="left"
-                          paddingY={["0.5rem", "0.5rem", "0.8rem", "1.2rem"]}
-                          paddingX={["1rem", "1rem", "1.2rem", "1.8rem"]}
-                        >
-                          <Typography
-                            fontWeight="500"
-                            as="h4"
-                            fontFamily="Noto Sans CJK JP"
-                            color="#ffff00"
-                            fontSize={["0.8rem", "0.8rem", "0.9rem", "1rem"]}
-                            margin={0}
-                          >
-                            販売終了日　{value.startedAt}
-                          </Typography>
-                          <Typography
-                            fontWeight="600"
-                            as="h1"
-                            fontFamily="Noto Sans CJK JP"
-                            color="white"
-                            fontSize={["0.8rem", "1rem", "1.2rem", "1.45rem"]}
-                            margin={0}
-                          >
-                            {value.title}
-                          </Typography>
-                        </Box>
-                        <Image src={value.image} hasMasterSpinner={true} />
-                      </Slide>
-                    );
-                  })}
-                </Slider>
-              )}
-              <DotGroup></DotGroup>
-              <ButtonBack>◀︎</ButtonBack>
-              <ButtonNext>▶︎</ButtonNext>
-            </CarouselProvider>
-          </CarouselStyle>
+          <Carousel
+            lotteries={lotteriesData?.lotteries}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            showDots={true}
+            showArrow={true}
+          />
           <Container>
             <Box p={{ _: 0, md: 40 }}>
               {/* title */}
@@ -178,9 +73,28 @@ const TopPage = () => {
               </Box>
 
               {/** lottery list */}
-              {isLoadingLotteries && <LotterySkeletonCard />}
-              {!isLoadingLotteries && lotteriesData && (
-                <LotteryList lotteries={lotteryList.lotteries} />
+
+              {lotteriesData === undefined && (isLoading || isFetching) && (
+                <Box mb="3rem">
+                  <LotterySkeletonCard />
+                </Box>
+              )}
+
+              {lotteriesData && (isLoading || isFetching) && (
+                <FlexBox justifyContent="center" mb="2rem">
+                  <Spinner
+                    size={30}
+                    border="2px solid"
+                    borderColor="primary.main"
+                    borderTop="2px solid white"
+                  ></Spinner>
+                </FlexBox>
+              )}
+
+              {!isLoading && lotteriesData && (
+                <Box mb="3rem">
+                  <LotteryList lotteries={lotteriesData.lotteries} />
+                </Box>
               )}
             </Box>
           </Container>

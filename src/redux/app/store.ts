@@ -1,4 +1,6 @@
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { lotteryApi, newsApi } from 'api';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import {
   FLUSH, PAUSE,
@@ -15,12 +17,15 @@ import rootSaga from './rootSaga';
 
 const persistConfig = {
   key: 'gacha',
+  blacklist: ['newsApi', 'lotteryApi'],
   storage,
 }
 
 const combinedReducer = combineReducers({
   auth: authReducer,
   currentUser: currentUserReducer,
+  [newsApi.reducerPath]: newsApi.reducer,
+  [lotteryApi.reducerPath]: lotteryApi.reducer,
   storeObject: storeObjectReducer,
   router: connectRouter(history)  
 });
@@ -43,9 +48,11 @@ export const store = configureStore({
     serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       }
-  }).concat(sagaMiddleware, routerMiddleware(history)),
-  devTools: Boolean(process.env.REACT_APP_DEV_TOOLS)
+  }).concat(newsApi.middleware,lotteryApi.middleware,sagaMiddleware, routerMiddleware(history)),
+  devTools: process.env.NODE_ENV !== 'production'
 });
+
+setupListeners(store.dispatch);
 
 sagaMiddleware.run(rootSaga)
 

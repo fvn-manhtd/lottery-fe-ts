@@ -12,7 +12,7 @@ import {
   Spinner,
   Small,
 } from "components/atoms";
-import { Card, Logo } from "components/organisms";
+import { Card, Logo, Head } from "components/organisms";
 import * as yup from "yup";
 import { authApi } from "api";
 import { toast } from "react-toastify";
@@ -67,6 +67,7 @@ const UserPasswordForgotPage = () => {
 
   return (
     <>
+      <Head title="パスワードの再設定" />
       <OneColumnLayout>
         <Box
           bg="body.paper"

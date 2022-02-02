@@ -9,7 +9,7 @@ import {
   Spinner,
   Small,
 } from "components/atoms";
-import { Card, Logo } from "components/organisms";
+import { Card, Head, Logo } from "components/organisms";
 import * as yup from "yup";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -31,7 +31,7 @@ const formSchema = yup.object().shape({
 
 const UserNewPasswordPage = () => {
   const [getTokenEmail, setTokenEmail] = useState({ email: "", token: "" });
-  const { resetToken, resetEmail } = useParams();
+  const { resetToken, resetEmail } = useParams(null);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -76,6 +76,7 @@ const UserNewPasswordPage = () => {
 
   return (
     <>
+      <Head title="新しパスワード" />
       <OneColumnLayout>
         <Box
           bg="body.paper"

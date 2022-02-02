@@ -11,6 +11,11 @@ export const StyledPagination = styled.div`
     align-items: center;
     list-style-type: none;
     padding: 0px;
+    .control-button {
+      border: 1px solid ${getTheme("colors.gray.900")};
+      background-color: ${getTheme("colors.gray.white")};
+      border-radius: 0;
+    }
 
     li {
       cursor: pointer;
@@ -22,10 +27,11 @@ export const StyledPagination = styled.div`
         height: 32px;
         width: 32px;
         margin: 0px 5px;
-        border-radius: 5px;
+        border-radius: 0;
         outline: none;
         color: ${getTheme("colors.gray.900")};
-        background-color: ${getTheme("colors.gray.500")};
+        background-color: ${getTheme("colors.gray.white")};
+        border: 1px solid ${getTheme("colors.gray.900")};
         @media only screen and (max-width: 450px) {
           margin: 4px;
         }

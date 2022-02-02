@@ -15,10 +15,8 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Route as ROUTES } from "utils";
 import { authActions } from "redux/features";
 import { toast } from "react-toastify";
-import { ReactQueryDevtools } from "react-query/devtools";
-
-import { QueryClient, QueryClientProvider } from "react-query";
-const queryClient = new QueryClient();
+import { HelmetProvider } from "react-helmet-async";
+import ScrollToTop from "hooks/scrollToTop";
 
 let persistor = persistStore(store);
 
@@ -29,10 +27,10 @@ const router = (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ConnectedRouter history={history}>
-            <QueryClientProvider client={queryClient}>
+            <HelmetProvider>
+              <ScrollToTop />
               <App />
-              <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
+            </HelmetProvider>
           </ConnectedRouter>
         </PersistGate>
       </Provider>
