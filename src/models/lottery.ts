@@ -1,27 +1,30 @@
+import { PaginationParams } from "./common";
+
+export interface LotteryModelDetail {
+    id?: number;
+    title?: string;
+    image?: string;
+    thumbnailImage?: string;
+    startedAt?: string;
+    endedAt?: string;
+    status?: number;
+    rankedProducts?: [];
+}
 export interface LotteryModel {
-    id: number
-    title?: string
-    status?: number
-    description?: string
-    image?: string
-    thumbnailImage?: string
-    lotteryEffectPackageId?: string
-    lotteryRank?: string
-    rankLabelDescription?: string
-    rankProbability?: string
-    productLotteryMethod?: string
-    startedAt?: string
-    endedAt?: string
-    personLotteryLimit?: string
-    shippingMethod?: string
-    shippingFee?: string
-    deliveryDetail?: string
-    publishedAt?: string
-    publicStatus?: string,
-    url?:string,
+    lottery?: LotteryModelDetail;
+    ranks?: Rank[];
 }
-
 export interface LotteryListModel {
-    lotteries:LotteryModel[];
+    lotteries: LotteryModelDetail[];
+    pagination?: PaginationParams;
 }
 
+export interface Rank{
+    id?: number;
+    title?: string;
+    description?: string;
+    rankTitle?: string;
+    rank?: number;
+    probability?: string;
+    lotteryProducts?: []
+}

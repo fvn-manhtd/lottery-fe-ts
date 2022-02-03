@@ -1,4 +1,7 @@
 import { themeGet } from "@styled-system/theme-get";
+import dayjs from "dayjs";
+import "dayjs/locale/ja";
+dayjs.locale("ja");
 
 export const getTheme = (query: string, fallback?: string) =>
   themeGet(query, fallback);
@@ -30,3 +33,9 @@ export const getSearchQueryObj = (key) => {
   return queryObj[key];
 };
 
+export const formatJapanDate = (date) => {
+  return dayjs(date).format("YYYY年MM月DD日 (dd)");
+}
+export const formatNormalDate = (date) => {
+  return dayjs(date).format("yyyy/MM/dd");
+}

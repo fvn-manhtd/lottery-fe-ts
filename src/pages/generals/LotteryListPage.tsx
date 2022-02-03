@@ -1,65 +1,85 @@
-import { Box, Container, Typography, Button } from "components/atoms";
+import {
+  FlexBox,
+  Box,
+  Container,
+  Typography,
+  Button,
+  Spinner,
+} from "components/atoms";
 import {
   LotteryList,
   Pagination,
   LotterySkeletonCard,
+  Head,
 } from "components/organisms";
 import { BaseLayout } from "components/templates";
-import "pure-react-carousel/dist/react-carousel.es.css";
-import { fakeLotteryList as lotteryList } from "utils/fakeData"; //apiからのデータがないのでフェイクデータを表示中
-import { getSearchQueryObj, Route as ROUTES } from "utils";
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
-import { lotteryApi } from "api/lotteryApi";
-import { useQuery } from "react-query";
-import { ListResponse, LotteryModel } from "models";
-
-const StyledLink = styled.a`
-  display: contents;
-`;
+import { getSearchQueryObj, Route as ROUTES, statusButton } from "utils";
+import { useGetLotteriesQuery } from "api";
+import { useAppDispatch } from "redux/app/hooks";
+import { push } from "connected-react-router";
+import { useState, useEffect, useRef } from "react";
 
 const LotteryListPage = () => {
-  const { data: lotteriesData, isLoading: isLoadingLotteries } = useQuery<
-    ListResponse<LotteryModel>
-  >(
-    "lotteries",
-    async () => {
-      const res = await lotteryApi.getAll();
-      return res.data.data;
-    },
-    {
-      staleTime: 5 * 60 * 1000, // cache data 5min
-      refetchInterval: 5 * 60 * 1000, // auto refetch after 5 min
-      refetchIntervalInBackground: true,
+  const [pagination, setPagination] = useState(1);
+  const [limit, setLimit] = useState(12);
+  const dispatch = useAppDispatch();
+
+  let currentStatus = getSearchQueryObj("status");
+
+  let myRef = useRef(null);
+
+  const {
+    data: lotteriesData,
+    isLoading,
+    isFetching,
+  } = useGetLotteriesQuery({ limitArg: limit, pageArg: pagination });
+
+  const handleChangePagination = (value) => {
+    dispatch(push(`${ROUTES.LOTTERIES}?page=${value}`));
+    setPagination(value);
+  };
+
+  const handleStatusChange = (value) => {
+    dispatch(push(`${ROUTES.LOTTERIES}?status=${value}`));
+  };
+
+  useEffect(() => {
+    if (currentStatus && currentStatus != undefined) {
+      setLimit(100);
+      setPagination(1);
+    } else {
+      setLimit(12);
     }
-  );
+  }, [currentStatus]);
 
-  const statusButton = [
-    { status: 1, text: "販売中" },
-    { status: 2, text: "終了間際" },
-    { status: 3, text: "販売予定" },
-  ];
+  useEffect(() => {
+    window.scrollTo({ behavior: "smooth", top: myRef.current.offsetTop });
+  }, [currentStatus, pagination]);
 
-  const history = useHistory();
-  const changeRoute = (data) => {
-    const page = data + 1;
-    history.push(
-      ROUTES.LOTTERIES +
-        "?status=" +
-        getSearchQueryObj("status") +
-        "&page=" +
-        page
-    );
+  const filterStatusData = (data, value) => {
+    if (value == 1) {
+      //[未調整]新着(開始1週間以内):1 販売中:2
+      return data.filter((item) => item.status == 1 || item.status == 2);
+    } else if (value == 2) {
+      // 終了間際(期限1週間以内):3
+      return data.filter((item) => item.status == 3);
+    } else if (value == 3) {
+      // 販売予定:4
+      return data.filter((item) => item.status == 4);
+    } else {
+      return data;
+    }
   };
 
   return (
     <>
+      <Head title="NOW ON SALE＆COMING SOON 販売中/近日発売予定" />
       <BaseLayout>
         <main>
           <Container>
             <Box p={{ _: 0, md: 40 }}>
               {/*title*/}
-              <Box marginY="2rem">
+              <Box ref={myRef} marginY="2rem">
                 <Typography
                   textAlign={["center", "center", "unset"]}
                   as="h1"
@@ -97,74 +117,82 @@ const LotteryListPage = () => {
               </Box>
 
               {/* button list */}
-              <Box
-                display="flex"
+              <FlexBox
                 width={{ _: "90%", md: "60%" }}
                 margin="0 auto 2.5rem auto"
+                justifyContent="center"
               >
                 {statusButton.map((value, index) => {
-                  if (value.status == getSearchQueryObj("status")) {
-                    return (
-                      <StyledLink
-                        href={ROUTES.LOTTERIES + "?status=" + value.status}
-                        key={index}
+                  return (
+                    <Box key={index} width="calc(100% / 3)" mx="0.5rem">
+                      <Button
+                        fullwidth={true}
+                        variant={
+                          value.status == currentStatus
+                            ? "contained"
+                            : "outlined"
+                        }
+                        color={
+                          value.status == currentStatus
+                            ? "primary"
+                            : "secondary"
+                        }
+                        borderRadius="10px"
+                        onClick={() => handleStatusChange(value.status)}
                       >
-                        <Button
-                          fullwidth={true}
-                          variant="contained"
-                          color="primary"
-                          borderRadius="10px"
-                          marginX={1}
-                        >
-                          {value.text}
-                        </Button>
-                      </StyledLink>
-                    );
-                  } else {
-                    return (
-                      <StyledLink
-                        href={ROUTES.LOTTERIES + "?status=" + value.status}
-                        key={index}
-                      >
-                        <Button
-                          fullwidth={true}
-                          variant="outlined"
-                          color="secondary"
-                          borderRadius="10px"
-                          marginX={1}
-                        >
-                          {value.text}
-                        </Button>
-                      </StyledLink>
-                    );
-                  }
+                        {value.text}
+                      </Button>
+                    </Box>
+                  );
                 })}
-              </Box>
+              </FlexBox>
 
               {/** lottery list */}
-              {isLoadingLotteries && <LotterySkeletonCard />}
-              {!isLoadingLotteries && lotteriesData && (
-                <LotteryList lotteries={lotteryList.lotteries} />
+
+              {lotteriesData === undefined && (isLoading || isFetching) && (
+                <Box mb="3rem">
+                  <LotterySkeletonCard />
+                </Box>
               )}
 
-              {/* pagination */}
-              {!isLoadingLotteries && lotteriesData && (
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  width="90%"
-                  margin="1rem auto"
-                >
-                  <Pagination
-                    pageCount={
-                      lotteriesData && lotteriesData.pagination.last_page
-                    }
-                    onChange={(data) => {
-                      changeRoute(data);
-                    }}
+              {lotteriesData && (isLoading || isFetching) && (
+                <FlexBox justifyContent="center" mb="2rem">
+                  <Spinner
+                    size={30}
+                    border="2px solid"
+                    borderColor="primary.main"
+                    borderTop="2px solid white"
+                  ></Spinner>
+                </FlexBox>
+              )}
+
+              {lotteriesData && (
+                <Box mb="3rem">
+                  <LotteryList
+                    lotteries={filterStatusData(
+                      lotteriesData.lotteries,
+                      currentStatus
+                    )}
                   />
                 </Box>
               )}
+
+              {/* pagination */}
+              {!isLoading &&
+                lotteriesData &&
+                lotteriesData.pagination.per_page != 100 && (
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    width="90%"
+                    margin="1rem auto 3rem auto"
+                  >
+                    <Pagination
+                      onChange={(data) => handleChangePagination(data)}
+                      pageCount={lotteriesData.pagination.last_page}
+                    />
+                  </Box>
+                )}
             </Box>
           </Container>
         </main>

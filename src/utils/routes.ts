@@ -54,12 +54,21 @@ export enum Route {
     STATIC_POLICY = "/static-pages/privacy-policy",
     STATIC_COMPANY = "/static-pages/company",
 
+    ERROR = "/not-found",
+
 };
 
-export const ApiRoute = {
-    'LOTTERY_INDEX': '/lotteries',
+export const ApiRoute = {    
+        
     
-    'CONTACT' : '/mall/contact',
+    'LOTTERY_INDEX': '/lotteries',
+
+    'LOTTERY_DETAIL': '/lottery',
+
+    'CONTACT': '/shop/contact',
+    
+    'NEWS_LIST': '/mall/news',
+    'NEWS_DETAIL' : '/mall/news',
 
 
     'AUTH': {

@@ -91,3 +91,10 @@ export const stepperList = [
     icon: "complete-white",
   },
 ];
+
+
+export const statusButton = [        
+    { status: 1, text: "販売中" },
+    { status: 2, text: "終了間際" },
+    { status: 3, text: "販売予定" },
+  ];

@@ -1,46 +1,55 @@
-import { CartLayout } from "components/templates";
-import { FlexBox, Box, Button, Image } from "components/atoms";
+import { OneColumnLayout } from "components/templates";
+import { FlexBox, Box, Button, Image, Typography } from "components/atoms";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useAppDispatch } from "redux/app/hooks";
+import { goBack } from "connected-react-router";
+import { Head } from "components/organisms";
 
 const Error404Page = () => {
-  let history = useHistory();
+  const dispatch = useAppDispatch();
   const handleGoBack = () => {
-    history.goBack();
+    dispatch(goBack());
   };
 
   return (
-    <CartLayout pageTitle="ページが見つかりませんでした">
-      <FlexBox
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        px="1rem"
-      >
-        <Box maxWidth="500px" mx="auto">
-          <Image
-            src="/assets/images/illustrator/404.png"
-            width="100%"
-            alt="404"
-          />
-        </Box>
-        <FlexBox flexWrap="wrap">
-          <Button
-            variant="outlined"
-            color="primary"
-            m="0.5rem"
-            onClick={handleGoBack}
-          >
-            前へ戻る
-          </Button>
-          <Link to="/">
-            <Button variant="contained" color="primary" m="0.5rem">
-              トップ
+    <>
+      <Head title="ページが見当たりません" />
+
+      <OneColumnLayout>
+        <FlexBox
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          px="1rem"
+        >
+          <Typography as="h1" color="primary.main" mt="3rem" mb="0.5rem">
+            ページが見当たりません
+          </Typography>
+          <Box maxWidth="500px" mx="auto">
+            <Image
+              src="/assets/images/illustrator/404.png"
+              width="100%"
+              alt="404"
+            />
+          </Box>
+          <FlexBox flexWrap="wrap">
+            <Button
+              variant="outlined"
+              color="primary"
+              m="0.5rem"
+              onClick={handleGoBack}
+            >
+              前へ戻る
             </Button>
-          </Link>
+            <Link to="/">
+              <Button variant="contained" color="primary" m="0.5rem">
+                トップ
+              </Button>
+            </Link>
+          </FlexBox>
         </FlexBox>
-      </FlexBox>
-    </CartLayout>
+      </OneColumnLayout>
+    </>
   );
 };
 

@@ -16,7 +16,7 @@ import {
   NavLink,
   Spinner,
 } from "components/atoms";
-import { Card, Logo } from "components/organisms";
+import { Card, Logo, Head } from "components/organisms";
 import * as yup from "yup";
 import { authActions, selectIsLogging } from "redux/features";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
@@ -82,6 +82,7 @@ const UserLoginPage = () => {
 
   return (
     <>
+      <Head title="ログイン" />
       <OneColumnLayout>
         <Box
           bg="body.paper"

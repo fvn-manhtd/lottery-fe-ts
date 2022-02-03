@@ -19,7 +19,7 @@ import {
   Image,
   Spinner,
 } from "components/atoms";
-import { Card, Logo } from "components/organisms";
+import { Card, Head, Logo } from "components/organisms";
 import * as yup from "yup";
 import styled from "styled-components";
 import { authActions, selectIsLogging } from "redux/features";
@@ -96,6 +96,7 @@ const UserRegisterPage = () => {
 
   return (
     <>
+      <Head title="無料ではじめる" />
       <OneColumnLayout>
         <Box
           bg="body.paper"

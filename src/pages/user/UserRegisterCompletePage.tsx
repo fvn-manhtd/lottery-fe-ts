@@ -1,10 +1,11 @@
 import { OneColumnLayout } from "components/templates";
 import { NavLink, Button, H3, Box, Paragraph } from "components/atoms";
-import { Card, Logo } from "components/organisms";
+import { Card, Logo, Head } from "components/organisms";
 
 const UserRegisterCompletePage = () => {
   return (
     <>
+      <Head title="新規会員登録" />
       <OneColumnLayout>
         <Box
           bg="body.paper"

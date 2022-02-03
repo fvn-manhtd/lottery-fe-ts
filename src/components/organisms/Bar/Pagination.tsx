@@ -19,7 +19,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   ...props
 }) => {
   const handlePageChange = async (page) => {
-    if (onChange) onChange(page.selected);
+    if (onChange) onChange(page.selected + 1);
   };
 
   return (
@@ -31,6 +31,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             overflow="hidden"
             height="auto"
             padding="6px"
+            bg="gray.white"
           >
             <Icon defaultcolor="currentColor" variant="small">
               chevron-left
