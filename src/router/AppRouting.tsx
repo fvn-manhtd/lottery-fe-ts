@@ -63,27 +63,6 @@ export const UserRegisterCompletePage = lazy(
   () => import("pages/user/UserRegisterCompletePage")
 );
 
-/* shop pages */
-export const ShopLoginPage = lazy(() => import("pages/shop/ShopLoginPage"));
-export const ShopNewPasswordPage = lazy(
-  () => import("pages/shop/ShopNewPasswordPage")
-);
-export const ShopPasswordForgotConfirmMailPage = lazy(
-  () => import("pages/shop/ShopPasswordForgotConfirmMailPage")
-);
-export const ShopPasswordForgotPage = lazy(
-  () => import("pages/shop/ShopPasswordForgotPage")
-);
-export const ShopRegisterPage = lazy(
-  () => import("pages/shop/ShopRegisterPage")
-);
-export const ShopCreateAccountPage = lazy(
-  () => import("pages/shop/ShopCreateAccountPage")
-);
-export const ShopOperationSettingPage = lazy(
-  () => import("pages/shop/ShopOperationSettingPage")
-);
-
 /* Cart pages */
 export const ShoppingCartPage = lazy(
   () => import("pages/cart/ShoppingCartPage")

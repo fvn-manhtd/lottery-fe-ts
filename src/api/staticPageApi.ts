@@ -8,7 +8,7 @@ export const staticPageApi = createApi({
     reducerPath: "staticPageApi",
     baseQuery: baseQueryWithRetry,
     keepUnusedDataFor: 60 * 100, // 100 mins 
-    refetchOnFocus: true,
+    refetchOnFocus: false,
     refetchOnReconnect: true,
     endpoints: (build) => ({
         getStaticPages: build.query({

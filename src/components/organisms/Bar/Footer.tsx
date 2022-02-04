@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
             flexDirection={{ _: "column", lg: "row" }}
             justifyContent="space-between"
           >
-            <Box width="260px" mb={{ _: "2rem", lg: 0 }}>
+            <Box width="260px" mx="auto" mb={{ _: "2rem", lg: 0 }}>
               <Logo />
             </Box>
 
