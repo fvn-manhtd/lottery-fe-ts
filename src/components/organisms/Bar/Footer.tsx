@@ -14,15 +14,15 @@ export const Footer: React.FC = () => {
         <Container>
           <FlexBox
             mx="auto"
-            alignItems="flex-start"
+            alignItems={{ _: "center", lg: "flex-start" }}
             flexDirection={{ _: "column", lg: "row" }}
             justifyContent="space-between"
           >
-            <Box width="260px" mx="auto" mb={{ _: "2rem", lg: 0 }}>
+            <Box width="260px" mb={{ _: "2rem", lg: 0 }}>
               <Logo />
             </Box>
 
-            <Box width={{ _: 1, md: 2 / 4 }}>
+            <Box width={{ _: 1, md: 3 / 4, lg: 2 / 4 }}>
               {isLoading && (
                 <Box
                   height={{ _: "120px", lg: "30px" }}
