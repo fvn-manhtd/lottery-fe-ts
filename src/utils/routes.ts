@@ -47,6 +47,8 @@ export enum Route {
     EFFECT_FINISH = '/cart/effect-finish',
 
     //Static Pages
+
+    STATIC_PAGE = "/static-pages/:name",
     
     STATIC_GUIDELINE = "/static-pages/guideline",
     STATIC_USAGE_POLICY = "/static-pages/usage-policy",
@@ -91,7 +93,10 @@ export const ApiRoute = {
         'DEFAULT_CARD': '/users/self/default-card',
         'LEAVE': '/users/self/leave',
         'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id'
-    }
+    },
+
+
+    'STATIC_API' : '/pages'    
 
 
 }

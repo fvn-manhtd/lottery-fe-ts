@@ -16,18 +16,7 @@ export const ContactCompletePage = lazy(
   () => import("pages/generals/ContactCompletePage")
 );
 /* static pages */
-export const UsagePolicyPage = lazy(
-  () => import("pages/static/UsagePolicyPage")
-);
-export const PrivacyPolicyPage = lazy(
-  () => import("pages/static/PrivacyPolicyPage")
-);
-export const CompanyPage = lazy(() => import("pages/static/CompanyPage"));
-export const LegalInformationPage = lazy(
-  () => import("pages/static/LegalInformationPage")
-);
-
-export const GuideLinePage = lazy(() => import("pages/static/GuideLinePage"));
+export const StaticPage = lazy(() => import("pages/generals/StaticPage"));
 
 /*lottery pages */
 export const LotteryListPage = lazy(
