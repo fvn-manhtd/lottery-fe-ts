@@ -16,18 +16,7 @@ export const ContactCompletePage = lazy(
   () => import("pages/generals/ContactCompletePage")
 );
 /* static pages */
-export const UsagePolicyPage = lazy(
-  () => import("pages/static/UsagePolicyPage")
-);
-export const PrivacyPolicyPage = lazy(
-  () => import("pages/static/PrivacyPolicyPage")
-);
-export const CompanyPage = lazy(() => import("pages/static/CompanyPage"));
-export const LegalInformationPage = lazy(
-  () => import("pages/static/LegalInformationPage")
-);
-
-export const GuideLinePage = lazy(() => import("pages/static/GuideLinePage"));
+export const StaticPage = lazy(() => import("pages/generals/StaticPage"));
 
 /*lottery pages */
 export const LotteryListPage = lazy(
@@ -72,27 +61,6 @@ export const UserRegisterConfirmMailPage = lazy(
 
 export const UserRegisterCompletePage = lazy(
   () => import("pages/user/UserRegisterCompletePage")
-);
-
-/* shop pages */
-export const ShopLoginPage = lazy(() => import("pages/shop/ShopLoginPage"));
-export const ShopNewPasswordPage = lazy(
-  () => import("pages/shop/ShopNewPasswordPage")
-);
-export const ShopPasswordForgotConfirmMailPage = lazy(
-  () => import("pages/shop/ShopPasswordForgotConfirmMailPage")
-);
-export const ShopPasswordForgotPage = lazy(
-  () => import("pages/shop/ShopPasswordForgotPage")
-);
-export const ShopRegisterPage = lazy(
-  () => import("pages/shop/ShopRegisterPage")
-);
-export const ShopCreateAccountPage = lazy(
-  () => import("pages/shop/ShopCreateAccountPage")
-);
-export const ShopOperationSettingPage = lazy(
-  () => import("pages/shop/ShopOperationSettingPage")
 );
 
 /* Cart pages */

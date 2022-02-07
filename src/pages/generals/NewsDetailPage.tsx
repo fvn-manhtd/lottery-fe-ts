@@ -34,8 +34,6 @@ const NewsDetailPage = () => {
     { url: "", description: newsItem ? newsItem?.title : "" },
   ];
 
-  console.log(newsItem);
-
   return (
     <>
       <Head title={newsItem?.title} />

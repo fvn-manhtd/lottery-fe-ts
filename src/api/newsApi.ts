@@ -24,11 +24,14 @@ export const newsApi = createApi({
                 
         }),
         getNewsById: build.query<NewsModel, number>({
-            query: (id) => ({
-                url: `${ApiRoute.NEWS_DETAIL}/${id}`,
-                validateStatus: (response, result) =>
-                    response.status === 200 && !result.isError
-            }),
+            query: (id) => {
+                console.log(id);
+                return {
+                    url: `${ApiRoute.NEWS_DETAIL}/${id}`,
+                    validateStatus: (response, result) =>
+                        response.status === 200 && !result.isError
+                }
+            },
             transformResponse: (response: { data: { news: NewsModel } }) => {
                 return response.data.news;
             },

@@ -15,10 +15,6 @@ import {
   UserPasswordForgotPage,
   UserPasswordForgotConfirmMailPage,
   UserRegisterPage,
-  UsagePolicyPage,
-  CompanyPage,
-  PrivacyPolicyPage,
-  LegalInformationPage,
   NewsListPage,
   NewsDetailPage,
   UserFavoritePage,
@@ -35,9 +31,9 @@ import {
   ContactPage,
   UserRegisterConfirmMailPage,
   UserRegisterCompletePage,
-  GuideLinePage,
   ContactConfirmPage,
   ContactCompletePage,
+  StaticPage,
 } from "router";
 
 import { Suspense } from "react";
@@ -70,29 +66,9 @@ export default function App() {
             component={() => <LotteryListPage />}
           />
           <FancyRoute
-            path={ROUTES.STATIC_USAGE_POLICY}
+            path={ROUTES.STATIC_PAGE}
             exact
-            component={() => <UsagePolicyPage />}
-          />
-          <FancyRoute
-            path={ROUTES.STATIC_POLICY}
-            exact
-            component={() => <PrivacyPolicyPage />}
-          />
-          <FancyRoute
-            path={ROUTES.STATIC_COMPANY}
-            exact
-            component={() => <CompanyPage />}
-          />
-          <FancyRoute
-            path={ROUTES.STATIC_LEGAL}
-            exact
-            component={() => <LegalInformationPage />}
-          />
-          <FancyRoute
-            path={ROUTES.STATIC_GUIDELINE}
-            exact
-            component={() => <GuideLinePage />}
+            component={() => <StaticPage />}
           />
           <FancyRoute
             path={ROUTES.NEWS_LIST}

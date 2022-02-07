@@ -1,35 +1,20 @@
 import React from "react";
 import { FlexBox, Container, NavLink, Box, Paragraph } from "components/atoms";
-import { Route as ROUTES } from "utils";
 import { Logo } from "./Logo";
+import Skeleton from "react-loading-skeleton";
+import { useGetStaticPagesQuery } from "api";
+import { Route as ROUTES } from "utils";
 
 export const Footer: React.FC = () => {
-  const listStaticPage = [
-    { id: 1, title: "ご利用規約", href: ROUTES.STATIC_USAGE_POLICY },
-    {
-      id: 2,
-      title: "特定商取引法に基づく表示",
-      href: ROUTES.STATIC_LEGAL,
-    },
-    {
-      id: 3,
-      title: "プライバシーポリシー",
-      href: ROUTES.STATIC_POLICY,
-    },
-    {
-      id: 4,
-      title: "会社情報",
-      href: ROUTES.STATIC_COMPANY,
-    },
-    { id: 5, title: "お問い合わせ", href: ROUTES.CONTACT },
-  ];
+  const { data: listStaticPage, isLoading } = useGetStaticPagesQuery({});
+
   return (
     <footer>
       <Box pt={115} pb={60}>
         <Container>
           <FlexBox
             mx="auto"
-            alignItems="center"
+            alignItems={{ _: "center", lg: "flex-start" }}
             flexDirection={{ _: "column", lg: "row" }}
             justifyContent="space-between"
           >
@@ -37,28 +22,53 @@ export const Footer: React.FC = () => {
               <Logo />
             </Box>
 
-            <Box width={{ _: 1, md: 3 / 4 }}>
-              <FlexBox
-                justifyContent={{ _: "center", lg: "flex-end" }}
-                flexDirection={{ _: "column", lg: "row" }}
-                fontSize="1rem"
-                fontWeight="bold"
-                textAlign="center"
-              >
-                {listStaticPage.map((value) => {
-                  return (
+            <Box width={{ _: 1, md: 3 / 4, lg: 2 / 4 }}>
+              {isLoading && (
+                <Box
+                  height={{ _: "120px", lg: "30px" }}
+                  mb={{ _: "2rem", lg: "1rem" }}
+                >
+                  <Skeleton width="100%" height="100%"></Skeleton>
+                </Box>
+              )}
+
+              {listStaticPage && (
+                <>
+                  <FlexBox
+                    justifyContent={{ _: "center", lg: "flex-end" }}
+                    flexDirection={{ _: "column", lg: "row" }}
+                    fontSize="1rem"
+                    fontWeight="bold"
+                    textAlign="center"
+                    flexWrap="wrap"
+                  >
+                    {listStaticPage
+                      .filter((item) => item.public_status == 1)
+                      .map((value) => {
+                        return (
+                          <NavLink
+                            key={value.id}
+                            color="gray.700"
+                            mb="1rem"
+                            ml={{ _: 0, lg: "3rem" }}
+                            href={"/static-pages/" + value.label}
+                          >
+                            {value.title}
+                          </NavLink>
+                        );
+                      })}
+
                     <NavLink
-                      key={value.id}
                       color="gray.700"
                       mb="1rem"
                       ml={{ _: 0, lg: "3rem" }}
-                      href={value.href}
+                      href={ROUTES.CONTACT}
                     >
-                      {value.title}
+                      お問い合わせ
                     </NavLink>
-                  );
-                })}
-              </FlexBox>
+                  </FlexBox>
+                </>
+              )}
             </Box>
           </FlexBox>
           <Paragraph
