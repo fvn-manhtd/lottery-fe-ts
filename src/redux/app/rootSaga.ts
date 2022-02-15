@@ -31,6 +31,6 @@ function* checkAuth() {
 export default function* rootSaga() {    
     yield all([
         checkAuth(),
-        authSaga(),        
+        authSaga(),
     ]);
 }

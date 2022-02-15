@@ -8,6 +8,7 @@ export interface LotteryModelDetail {
     startedAt?: string;
     endedAt?: string;
     status?: number;
+    url?: string;
     rankedProducts?: [];
 }
 export interface LotteryModel {

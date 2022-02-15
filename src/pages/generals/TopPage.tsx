@@ -1,4 +1,11 @@
-import { Box, Container, FlexBox, Spinner, Typography } from "components/atoms";
+import {
+  Box,
+  Container,
+  FlexBox,
+  Spinner,
+  Typography,
+  NavLink,
+} from "components/atoms";
 import {
   Carousel,
   Head,
@@ -6,7 +13,7 @@ import {
   LotterySkeletonCard,
 } from "components/organisms";
 import { BaseLayout } from "components/templates";
-import { siteMetaSetting } from "utils";
+import { siteMetaSetting, Route as ROUTES } from "utils";
 import { useGetLotteriesQuery } from "api";
 
 const TopPage = () => {
@@ -92,9 +99,21 @@ const TopPage = () => {
               )}
 
               {!isLoading && lotteriesData && (
-                <Box mb="3rem">
-                  <LotteryList lotteries={lotteriesData.lotteries} />
-                </Box>
+                <>
+                  <Box mb="3rem">
+                    <LotteryList lotteries={lotteriesData.lotteries} />
+                  </Box>
+                  <FlexBox
+                    justifyContent="center"
+                    maxWidth="200px"
+                    mx="auto"
+                    mb="3rem"
+                  >
+                    <NavLink variant="button" href={ROUTES.LOTTERIES}>
+                      一覧を見る
+                    </NavLink>
+                  </FlexBox>
+                </>
               )}
             </Box>
           </Container>

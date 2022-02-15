@@ -46,7 +46,10 @@ export const Header: React.FC = () => {
         justifyContent="space-between"
         height={{ _: "60px", md: "80px" }}
         px={10}
-        position="relative"
+        position="fixed"
+        top="0"
+        left="0"
+        width="100%"
         zIndex={991}
       >
         <Box width={{ _: "20%", lg: "30%" }}>
@@ -75,10 +78,8 @@ export const Header: React.FC = () => {
           >
             {isLoggedIn && (
               <>
-                <Box
-                  ml={40}
-                  color="gray.700"
-                  cursor="pointer"
+                <Button
+                  variant="text"
                   onClick={() => dispatch(push(ROUTES.SHOPPING_CART))}
                 >
                   <FlexBox position="relative" alignItems="center">
@@ -113,13 +114,16 @@ export const Header: React.FC = () => {
                       カート
                     </Typography>
                   </FlexBox>
-                </Box>
+                </Button>
               </>
             )}
 
             {!isLoggedIn && (
               <>
-                <NavLink href={ROUTES.USER_LOGIN}>
+                <Button
+                  variant="text"
+                  onClick={() => dispatch(push(ROUTES.USER_LOGIN))}
+                >
                   <FlexBox alignItems="center">
                     <Box width="16px">
                       <IconPng>login</IconPng>
@@ -133,7 +137,7 @@ export const Header: React.FC = () => {
                       ログイン
                     </Typography>
                   </FlexBox>
-                </NavLink>
+                </Button>
               </>
             )}
 
@@ -141,7 +145,7 @@ export const Header: React.FC = () => {
               ml={20}
               direction="right"
               handler={
-                <Button variant="none" className="dropdown-handler">
+                <Button variant="text" className="dropdown-handler">
                   <Box width="16px">
                     <IconPng>user</IconPng>
                   </Box>

@@ -49,7 +49,7 @@ const StaticPage = () => {
       />
       <BaseLayout>
         <main>
-          <Container>
+          <Container pt="5px">
             <Breadcrumb my={20} breadcrumbList={breadcrumbList} />
 
             {(isLoading || isFetching || staticData == undefined) && (

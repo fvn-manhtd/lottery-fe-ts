@@ -8,7 +8,7 @@ export interface NavLinkProps extends SpaceProps, ColorProps, TypographyProps {
   as?: string;
   style?: CSSProperties;
   className?: string;
-  variant?: "hover" | "button";
+  variant?: "hover" | "button" | "hover_button" | "register_button";
 }
 
 export const NavLink: React.FC<

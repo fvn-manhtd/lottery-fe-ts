@@ -63,11 +63,34 @@ const StyledNavLink = styled(Link)<
         },
         button: {
           width: "100%",
-          borderRadius: "5px",
+          borderRadius: "30px",
           textAlign: "center",
+          padding: "12px 16px",
+          border: "1px solid",
+          bg: `${theme.colors.primary.light}`,
+          color: `${theme.colors.primary.text}`,
+          borderColor: `${theme.colors.primary.light}`,
           "&:hover": {
-            color: `${theme.colors.gray.white} !important`,
-            backgroundColor: `${theme.colors.primary.light} !important`,
+            color: `${theme.colors.primary.light} !important`,
+            bg: "transparent",
+          },
+        },
+        hover_button: {
+          "&:hover": {
+            opacity: 0.7,
+          },
+        },
+        register_button: {
+          width: "100%",
+          textAlign: "center",
+          borderRadius: "5px",
+          padding: "12px 16px",
+          border: "1px solid",
+          bg: `${theme.colors.primary.light}`,
+          color: `${theme.colors.primary.text}`,
+          "&:hover": {
+            color: `${theme.colors.primary.light} !important`,
+            bg: "transparent",
           },
         },
       },

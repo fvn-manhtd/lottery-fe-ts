@@ -96,7 +96,15 @@ export const ApiRoute = {
     },
 
 
-    'STATIC_API' : '/pages'    
+    'STATIC_API': '/pages',
+    
+    'CART': {
+        'LIST': '/cart',
+        'VERIFY': '/cart/verify',
+        'SHOP_CONFIG': '/cart/shop_config',
+        'DELETE': '/cart/ticket',
+        'ORDER': '/cart/order'
+    }
 
 
 }

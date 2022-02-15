@@ -4,7 +4,6 @@ import { push } from "connected-react-router";
 import { call, fork, put, take } from "redux-saga/effects";
 import { Route as ROUTES } from "utils";
 import { currentUserActions } from "..";
-import { registerCustomerToPayjp } from "../currentUser/curentUserSaga";
 import { authActions, LoginPayLoad } from "./authSlice";
 
 function* handleLogin(payload: LoginPayLoad) {
@@ -17,7 +16,7 @@ function* handleLogin(payload: LoginPayLoad) {
             localStorage.setItem("isLoggedIn", "yes");
             yield put(push(ROUTES.HOME));
             yield put(currentUserActions.setCurrentUser(data.data.user));
-            yield call(registerCustomerToPayjp);
+            // yield call(registerCustomerToPayjp);
         }        
         
     } catch (error) {
