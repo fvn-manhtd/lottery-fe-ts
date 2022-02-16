@@ -3,7 +3,7 @@ import { baseQuery } from 'api';
 import { NewsListModel, NewsModel } from 'models';
 import { ApiRoute } from "utils";
 
-const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 0 });
 
 export const newsApi = createApi({
     reducerPath: "newsApi",

@@ -2,7 +2,7 @@ import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from 'api';
 import { ApiRoute } from "utils";
 
-const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 0 });
 
 export const staticPageApi = createApi({
     reducerPath: "staticPageApi",

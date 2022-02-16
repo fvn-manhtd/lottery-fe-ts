@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { Box, Icon, FlexBox } from "components/atoms";
 
@@ -7,6 +7,7 @@ export type ModalProps = {
   content: JSX.Element;
   minHeight?: string;
   maxWidth?: string;
+  onClose?: boolean;
 };
 
 export const StyledModal = (minHeight, maxWidth) => {
@@ -38,14 +39,17 @@ export const ModalComponent: React.FC<ModalProps> = ({
   content,
   minHeight,
   maxWidth,
+  onClose,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    if (onClose) setIsModalOpen(false);
+  }, [onClose]);
+
   return (
     <div>
-      <Box onClick={() => setIsModalOpen(true)}>
-        {buttonElement}
-      </Box>
+      <Box onClick={() => setIsModalOpen(true)}>{buttonElement}</Box>
       <Modal
         isOpen={isModalOpen}
         ariaHideApp={false}
@@ -54,10 +58,10 @@ export const ModalComponent: React.FC<ModalProps> = ({
           setIsModalOpen(false);
         }}
       >
-        <FlexBox 
-          borderRadius="50%" 
-          bg="gray.350" 
-          width={35} 
+        <FlexBox
+          borderRadius="50%"
+          bg="gray.350"
+          width={35}
           height={35}
           color="white"
           border="2px solid white"
@@ -70,10 +74,8 @@ export const ModalComponent: React.FC<ModalProps> = ({
           onClick={() => {
             setIsModalOpen(false);
           }}
-          >
-          <Icon variant="medium">
-            close
-          </Icon>
+        >
+          <Icon variant="medium">close</Icon>
         </FlexBox>
         {content}
 

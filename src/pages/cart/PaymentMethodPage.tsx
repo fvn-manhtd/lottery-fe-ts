@@ -8,17 +8,23 @@ import {
   RadioButton,
   Typography,
   TextField,
+  Spinner,
+  Small,
 } from "components/atoms";
 import { CartLayout } from "components/templates";
 import { Stepper } from "components/organisms";
-import { phoneRegExp, stepperList } from "utils";
-import { useHistory } from "react-router-dom";
+import { phoneRegExp, stepperList, Route as ROUTES } from "utils";
+
 import styled from "styled-components";
 import { ModalComponent } from "components/molecules";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { usePostalJp } from "use-postal-jp";
 import { useState } from "react";
+import { currentUserActions, selectCurrentUser } from "redux/features";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
+import { currentUserApi } from "api";
+import { push } from "connected-react-router";
 
 const ShippingButton = styled(Button)`
   max-width: 320px;
@@ -27,43 +33,90 @@ const ShippingButton = styled(Button)`
   border-radius: 5px;
 `;
 
-const initialValues = {
-  name: "",
-  phone: "",
-  province: "",
-  building: "",
-};
-
 const formSchema = yup.object().shape({
-  name: yup.string().required("お名前を入力してください"),
-  phone: yup.string().matches(phoneRegExp, "電話番号を入力してください"),
-  province: yup.string().required("町村字番地を入力してください"),
+  first_name: yup.string().nullable().required("姓を入力してください"),
+  last_name: yup.string().nullable().required("名を入力してください"),
+  first_name_kana: yup.string().nullable().required("セイを入力してください"),
+  last_name_kana: yup.string().nullable().required("メイを入力してください"),
+  post_code: yup.string().nullable().required("郵便番号を入力してください"),
+  address: yup.string().nullable(),
+  phone_number: yup
+    .string()
+    .nullable()
+    .matches(phoneRegExp, "電話番号を入力してください")
+    .min(8, "電話番号を入力してください")
+    .max(12, "電話番号を入力してください")
+    .required("郵便番号を入力してください"),
 });
 
 const PaymentMethodPage: React.FC = () => {
-  const history = useHistory();
+  const [yubinBango, setyubinBango] = useState("");
+  const [spin, setSpin] = useState(false);
 
-  const [value, setValue] = useState("");
-  const [postcode, setPostcode] = useState("");
-  const [address, loading, error] = usePostalJp(value, value.length >= 7);
+  const [address, loading, error] = usePostalJp(
+    yubinBango,
+    yubinBango.length >= 7
+  );
 
-  const handleYubinbangoChange = (e) => {
-    setValue(e.target.value);
-    setPostcode(e.target.value);
+  const [isCloseModal, setIsCloseModal] = useState(false);
+
+  const currentUser = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
+
+  const initialValues = {
+    first_name: currentUser ? currentUser.first_name : "",
+    last_name: currentUser ? currentUser.last_name : "",
+    first_name_kana: currentUser ? currentUser.first_name_kana : "",
+    last_name_kana: currentUser ? currentUser.last_name_kana : "",
+    post_code: currentUser ? currentUser.post_code : "",
+    address: currentUser ? currentUser.address : "",
+    prefecture: currentUser ? currentUser.prefecture : "",
+    phone_number: currentUser ? currentUser.phone_number : "",
   };
 
-  const handleFormSubmit = (e) => {
-    const obj = { ...e, postcode, address };
-    console.log("Values: ", obj);
+  const handlePostCodeChange = (e) => {
+    const { value } = e.target;
+    setyubinBango(value);
+    setFieldValue("post_code", value);
   };
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      onSubmit: handleFormSubmit,
-      initialValues,
-      validationSchema: formSchema,
-    });
+  const handleFormSubmit = async (values) => {
+    let prefecture = address ? address.prefecture : currentUser.prefecture;
+    const addressInfo = { ...values, prefecture };
+    setSpin(true);
+    setIsCloseModal(false);
 
+    try {
+      let userInfo = {
+        ...addressInfo,
+        email: currentUser.email,
+        id: currentUser.id,
+      };
+      const { status, data } = await currentUserApi.address(addressInfo);
+      if (status === 200 && data.status === "success") {
+        setSpin(false);
+        setIsCloseModal(true);
+        dispatch(currentUserActions.setCurrentUser(userInfo));
+      }
+    } catch (error) {
+      console.log(error);
+      setSpin(false);
+    }
+  };
+
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+  } = useFormik({
+    onSubmit: handleFormSubmit,
+    initialValues,
+    validationSchema: formSchema,
+  });
   return (
     <CartLayout>
       <Box
@@ -93,7 +146,9 @@ const PaymentMethodPage: React.FC = () => {
             >
               ご注文者
             </Box>
-            <Box width={{ md: "80%" }}>名前　名前 様</Box>
+            <Box
+              width={{ md: "80%" }}
+            >{`${currentUser.first_name} ${currentUser.last_name}`}</Box>
           </FlexBox>
           <Divider mb="1rem" bg="gray.500"></Divider>
 
@@ -111,8 +166,8 @@ const PaymentMethodPage: React.FC = () => {
               配送先
             </Box>
             <Box width={{ md: "80%" }}>
-              〒661-0953　兵庫県尼崎市東園田町0-0-00 <br />
-              TEL　070-0000-0000
+              <Typography>{`〒${currentUser.post_code} ${currentUser.prefecture}${currentUser.address}`}</Typography>
+              <Typography>{`TEL ${currentUser.phone_number}`}</Typography>
             </Box>
           </FlexBox>
 
@@ -122,6 +177,7 @@ const PaymentMethodPage: React.FC = () => {
             <ModalComponent
               maxWidth="600px"
               minHeight="400px"
+              onClose={isCloseModal}
               buttonElement={
                 <ShippingButton
                   color="gray"
@@ -134,138 +190,302 @@ const PaymentMethodPage: React.FC = () => {
               content={
                 <Box p="2rem" height="370px" overflow="auto">
                   <form onSubmit={handleSubmit}>
-                    <Typography
-                      fontWeight={600}
-                      mb="0.5rem"
-                      fontSize="0.875rem"
-                    >
-                      お名前
-                    </Typography>
+                    <Box mb="2rem">
+                      <FlexBox
+                        alignItems="center"
+                        flexDirection={{ _: "column", md: "row" }}
+                        mb="1rem"
+                      >
+                        <Box
+                          fontWeight={600}
+                          mb={{ _: "1rem", md: "0" }}
+                          width={{ _: "100%", md: "20%" }}
+                        >
+                          お名前
+                        </Box>
 
-                    <TextField
-                      name="name"
-                      placeholder=""
-                      fullwidth
-                      type="text"
-                      mb="1rem"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.name || ""}
-                      errorText={touched.name && errors.name}
-                    />
+                        <FlexBox
+                          flexDirection={{ _: "column", md: "row" }}
+                          mb={{ _: "1rem", md: "0" }}
+                          width={{ _: "100%", md: "80%" }}
+                        >
+                          <FlexBox
+                            mb={{ _: "1rem", md: "0" }}
+                            width={{ _: "100%", md: "50%" }}
+                            alignItems="center"
+                          >
+                            <Box width="30%" textAlign="center" px="1rem">
+                              姓
+                            </Box>
+                            <Box width="70%">
+                              <TextField
+                                name="first_name"
+                                type="text"
+                                fullwidth
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.first_name}
+                                errorText={
+                                  touched.first_name && errors.first_name
+                                }
+                              />
+                            </Box>
+                          </FlexBox>
 
-                    <Typography
-                      fontWeight={600}
-                      mb="0.5rem"
-                      fontSize="0.875rem"
-                    >
-                      電話番号
-                    </Typography>
-                    <TextField
-                      name="phone"
-                      placeholder=""
-                      fullwidth
-                      type="text"
-                      mb="1rem"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.phone || ""}
-                      errorText={touched.phone && errors.phone}
-                    />
+                          <FlexBox
+                            mb={{ _: "1rem", md: "0" }}
+                            width={{ _: "100%", md: "50%" }}
+                            alignItems="center"
+                          >
+                            <Box width="30%" textAlign="center" px="1rem">
+                              名
+                            </Box>
+                            <Box width="70%">
+                              <TextField
+                                name="last_name"
+                                type="text"
+                                fullwidth
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.last_name}
+                                errorText={
+                                  touched.last_name && errors.last_name
+                                }
+                              />
+                            </Box>
+                          </FlexBox>
+                        </FlexBox>
+                      </FlexBox>
 
-                    <Typography
-                      fontWeight={600}
-                      mb="0.5rem"
-                      fontSize="0.875rem"
-                    >
-                      所在
-                    </Typography>
-                    <FlexBox mb="1rem" alignItems="center">
-                      <Box width={{ _: "30%", md: "15%" }} fontSize="0.875rem">
-                        郵便番号
-                      </Box>
-                      <Box width={{ _: "40%", md: "40%" }}>
-                        <TextField
-                          name="yubinbango"
-                          placeholder=""
-                          fullwidth
-                          type="text"
-                          onChange={handleYubinbangoChange}
-                        />
-                      </Box>
-                    </FlexBox>
+                      <Divider
+                        height="1px"
+                        my="2rem"
+                        width="100%"
+                        backgroundColor="gray.500"
+                      ></Divider>
 
-                    {!loading && (
-                      <>
-                        <TextField
-                          name="address"
-                          fullwidth
-                          disabled
-                          mb="1rem"
-                          value={
-                            (address &&
-                              `${address.prefecture}${address.address1}`) ||
-                            ""
-                          }
-                          errorText={touched.address && errors.address}
-                        />
-                        <Typography mb="1rem" color="error">
-                          {error && "郵便番号エラー"}
-                        </Typography>
-                      </>
-                    )}
+                      <FlexBox
+                        alignItems="center"
+                        flexDirection={{ _: "column", md: "row" }}
+                        mb="1rem"
+                      >
+                        <Box
+                          fontWeight={600}
+                          mb={{ _: "1rem", md: "0" }}
+                          width={{ _: "100%", md: "20%" }}
+                        >
+                          フリガナ
+                        </Box>
 
-                    <Typography
-                      fontWeight={600}
-                      mb="0.5rem"
-                      fontSize="0.875rem"
-                    >
-                      町村字番地
-                    </Typography>
+                        <FlexBox
+                          flexDirection={{ _: "column", md: "row" }}
+                          mb={{ _: "1rem", md: "0" }}
+                          width={{ _: "100%", md: "80%" }}
+                        >
+                          <FlexBox
+                            mb={{ _: "1rem", md: "0" }}
+                            width={{ _: "100%", md: "50%" }}
+                            alignItems="center"
+                          >
+                            <Box width="30%" textAlign="center" px="1rem">
+                              セイ
+                            </Box>
+                            <Box width="70%">
+                              <TextField
+                                name="first_name_kana"
+                                type="text"
+                                fullwidth
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.first_name_kana}
+                                errorText={
+                                  touched.first_name_kana &&
+                                  errors.first_name_kana
+                                }
+                              />
+                            </Box>
+                          </FlexBox>
 
-                    <TextField
-                      name="province"
-                      placeholder=""
-                      fullwidth
-                      mb="1rem"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.province || ""}
-                      errorText={touched.province && errors.province}
-                    />
+                          <FlexBox
+                            mb={{ _: "1rem", md: "0" }}
+                            width={{ _: "100%", md: "50%" }}
+                            alignItems="center"
+                          >
+                            <Box width="30%" textAlign="center" px="1rem">
+                              メイ
+                            </Box>
+                            <Box width="70%">
+                              <TextField
+                                name="last_name_kana"
+                                type="text"
+                                fullwidth
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.last_name_kana}
+                                errorText={
+                                  touched.last_name_kana &&
+                                  errors.last_name_kana
+                                }
+                              />
+                            </Box>
+                          </FlexBox>
+                        </FlexBox>
+                      </FlexBox>
 
-                    <Typography
-                      fontWeight={600}
-                      mb="0.5rem"
-                      fontSize="0.875rem"
-                    >
-                      建物名(部屋番号)
-                    </Typography>
-                    <TextField
-                      name="building"
-                      placeholder=""
-                      fullwidth
-                      mb="1rem"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.building || ""}
-                    />
+                      <Divider
+                        height="1px"
+                        my="2rem"
+                        width="100%"
+                        backgroundColor="gray.500"
+                      ></Divider>
+
+                      <FlexBox
+                        alignItems="flex-start"
+                        flexDirection={{ _: "column", md: "row" }}
+                        mb="1rem"
+                      >
+                        <Box
+                          fontWeight={600}
+                          mb={{ _: "1rem", md: "0" }}
+                          width={{ _: "100%", md: "20%" }}
+                        >
+                          住所
+                        </Box>
+                        <Box
+                          mb={{ _: "1rem", md: "0" }}
+                          width={{ _: "100%", md: "60%" }}
+                        >
+                          <FlexBox
+                            maxWidth="220px"
+                            flexDirection="column"
+                            mb="1rem"
+                            alignItems="center"
+                          >
+                            <Box width="100%" mb="0.5rem">
+                              郵便番号
+                            </Box>
+                            <Box width="100%">
+                              <TextField
+                                name="post_code"
+                                placeholder=""
+                                fullwidth
+                                type="text"
+                                onBlur={handleBlur}
+                                value={values.post_code}
+                                onChange={handlePostCodeChange}
+                                errorText={
+                                  touched.post_code && errors.post_code
+                                }
+                              />
+                              {!loading && error && (
+                                <Typography mt="1rem" color="error.main">
+                                  {error && error.message === "Bad request"
+                                    ? "郵便番号が正しくありません"
+                                    : ""}
+                                </Typography>
+                              )}
+                            </Box>
+                          </FlexBox>
+
+                          <Box maxWidth="220px" mb="1rem">
+                            <TextField
+                              name="prefecture"
+                              placeholder=""
+                              fullwidth
+                              type="text"
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              value={
+                                address ? address.prefecture : values.prefecture
+                              }
+                            />
+                          </Box>
+
+                          <TextField
+                            name="address"
+                            fullwidth
+                            type="text"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.address}
+                          />
+                        </Box>
+                      </FlexBox>
+
+                      <Divider
+                        height="1px"
+                        my="2rem"
+                        width="100%"
+                        backgroundColor="gray.500"
+                      ></Divider>
+
+                      <FlexBox
+                        alignItems="center"
+                        flexDirection={{ _: "column", md: "row" }}
+                        mb="1rem"
+                      >
+                        <Box
+                          fontWeight={600}
+                          mb={{ _: "1rem", md: "0" }}
+                          width={{ _: "100%", md: "20%" }}
+                        >
+                          電話番号
+                        </Box>
+                        <Box
+                          mb={{ _: "1rem", md: "0" }}
+                          width={{ _: "100%", md: "60%" }}
+                        >
+                          <TextField
+                            name="phone_number"
+                            fullwidth
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.phone_number}
+                            errorText={
+                              touched.phone_number && errors.phone_number
+                            }
+                          />
+                        </Box>
+                      </FlexBox>
+                    </Box>
+
+                    <Divider
+                      height="1px"
+                      mb="2rem"
+                      width="100%"
+                      backgroundColor="gray.500"
+                    ></Divider>
 
                     <FlexBox
                       justifyContent="center"
-                      flexDirection={{ _: "column-reverse", md: "row" }}
-                      maxWidth="480px"
+                      flexDirection="column"
+                      maxWidth="320px"
                       mx="auto"
+                      alignItems="center"
                     >
                       <Button
-                        width="100%"
+                        mb="1rem"
+                        variant="containedSecond"
                         size="large"
-                        color="primary"
-                        variant="contained"
-                        borderRadius={5}
+                        color="secondary"
                         type="submit"
+                        fullwidth
+                        borderRadius={5}
                       >
-                        <Span fontSize="1rem">確認画面へ</Span>
+                        {spin ? (
+                          <>
+                            <Spinner
+                              size={16}
+                              border="2px solid"
+                              borderColor="secondary.900"
+                              borderTop="2px solid white"
+                            ></Spinner>
+                          </>
+                        ) : (
+                          <Small color="white" fontWeight="600">
+                            情報を変更
+                          </Small>
+                        )}
                       </Button>
                     </FlexBox>
                   </form>
@@ -328,7 +548,7 @@ const PaymentMethodPage: React.FC = () => {
               color="gray"
               variant="outlinedSecond"
               borderRadius={5}
-              onClick={() => history.push("/cart/shopping-cart")}
+              onClick={() => dispatch(push(ROUTES.SHOPPING_CART))}
             >
               <Span fontSize="1rem">戻 る</Span>
             </Button>
@@ -341,7 +561,7 @@ const PaymentMethodPage: React.FC = () => {
               variant="contained"
               borderRadius={5}
               type="submit"
-              onClick={() => history.push("/cart/order-confirmation")}
+              onClick={() => dispatch(push(ROUTES.ORDER_CONFIRMATION))}
             >
               <Span fontSize="1rem">確認画面へ</Span>
             </Button>

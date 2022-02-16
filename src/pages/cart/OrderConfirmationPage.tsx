@@ -13,15 +13,25 @@ import {
 } from "components/atoms";
 import { CartLayout } from "components/templates";
 import { Stepper } from "components/organisms";
-import { monthListArr, stepperList, yearListNextArr } from "utils";
-import { useHistory } from "react-router-dom";
+import {
+  monthListArr,
+  stepperList,
+  yearListNextArr,
+  Route as ROUTES,
+} from "utils";
+
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
 import valid from "card-validator";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
+import { selectCurrentUser } from "redux/features";
+import { push } from "connected-react-router";
 
 const OrderConfirmationPage: React.FC = () => {
-  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const currentUser = useAppSelector(selectCurrentUser);
 
   const [cartCustomerMonth, setCartCustomerMonth] = useState("1");
   const [cartCustomerYear, setCartCustomerYear] = useState("2021");
@@ -64,7 +74,7 @@ const OrderConfirmationPage: React.FC = () => {
 
   const handleFormSubmit = (values) => {
     console.log(values);
-    history.push("/cart/order-complete");
+    dispatch(push(ROUTES.ORDER_COMPLETE));
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -104,7 +114,9 @@ const OrderConfirmationPage: React.FC = () => {
               >
                 ご注文者
               </Box>
-              <Box width={{ md: "80%" }}>名前　名前 様</Box>
+              <Box
+                width={{ md: "80%" }}
+              >{`${currentUser.first_name} ${currentUser.last_name}`}</Box>
             </FlexBox>
             <Divider mb="1rem" bg="gray.500"></Divider>
 
@@ -122,8 +134,8 @@ const OrderConfirmationPage: React.FC = () => {
                 配送先
               </Box>
               <Box width={{ md: "80%" }}>
-                〒661-0953　兵庫県尼崎市東園田町0-0-00 <br />
-                TEL　070-0000-0000
+                <Typography>{`〒${currentUser.post_code} ${currentUser.prefecture}${currentUser.address}`}</Typography>
+                <Typography>{`TEL ${currentUser.phone_number}`}</Typography>
               </Box>
             </FlexBox>
 
@@ -387,7 +399,7 @@ const OrderConfirmationPage: React.FC = () => {
                 color="gray"
                 variant="outlinedSecond"
                 borderRadius={5}
-                onClick={() => history.push("/cart/payment-method")}
+                onClick={() => dispatch(push(ROUTES.PAYMENT_METHOD))}
               >
                 <Span fontSize="1rem">戻 る</Span>
               </Button>

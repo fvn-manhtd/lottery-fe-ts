@@ -39,3 +39,10 @@ export const formatJapanDate = (date) => {
 export const formatNormalDate = (date) => {
   return dayjs(date).format("yyyy/MM/dd");
 }
+
+
+export const addThousandsSeparators = (n) => {
+  return (''+n).split('').reverse().join('')
+      .match(/(\d{1,3})/g).join(',').split('')
+      .reverse().join('');
+}

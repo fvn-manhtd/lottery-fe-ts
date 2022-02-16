@@ -2,14 +2,12 @@ import React from "react";
 import {
   Footer,
   Header,
-  Menu,
   NewsSection,
   RegisterSection,
 } from "components/organisms";
 import styled from "styled-components";
 import { getTheme } from "utils/utils";
 import { ReactNode } from "hoist-non-react-statics/node_modules/@types/react";
-import { fakeNewsList as newsList } from "utils/fakeData";
 import { Box } from "components/atoms";
 
 type BaseLayoutProps = {

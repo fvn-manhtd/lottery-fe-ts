@@ -17,6 +17,7 @@ import { useAppDispatch } from "redux/app/hooks";
 import { authActions } from "redux/features";
 import { Route as ROUTES } from "utils";
 import { push } from "connected-react-router";
+import { useListCartQuery } from "api";
 
 export const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -25,6 +26,12 @@ export const Header: React.FC = () => {
   const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
 
   const dispatch = useAppDispatch();
+
+  const { data: cartData } = useListCartQuery({
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+  });
+
   const handleLogout = async () => {
     await dispatch(authActions.logout());
   };
@@ -88,22 +95,23 @@ export const Header: React.FC = () => {
                         shopping-cart
                       </Icon>
                     </Box>
-
-                    <FlexBox
-                      borderRadius="100%"
-                      bg="error.main"
-                      px="5px"
-                      py="3px"
-                      alignItems="center"
-                      justifyContent="center"
-                      position="absolute"
-                      top="-1.1rem"
-                      left="-1.3rem"
-                    >
-                      <Tiny color="white" fontWeight="600">
-                        99
-                      </Tiny>
-                    </FlexBox>
+                    {cartData && (
+                      <FlexBox
+                        borderRadius="100%"
+                        bg="error.main"
+                        width="20px"
+                        height="20px"
+                        alignItems="center"
+                        justifyContent="center"
+                        position="absolute"
+                        top="-1rem"
+                        left="-1rem"
+                      >
+                        <Tiny color="white" fontWeight="600">
+                          {cartData.total_amount_in_cart}
+                        </Tiny>
+                      </FlexBox>
+                    )}
 
                     <Typography
                       color="gray.700"
@@ -260,21 +268,24 @@ export const Header: React.FC = () => {
                   </Icon>
                 </Box>
 
-                <FlexBox
-                  borderRadius="100%"
-                  bg="error.main"
-                  px="5px"
-                  py="5px"
-                  alignItems="center"
-                  justifyContent="center"
-                  position="absolute"
-                  top="-0.5rem"
-                  right="-8px"
-                >
-                  <Tiny color="white" fontWeight="600">
-                    99
-                  </Tiny>
-                </FlexBox>
+                {cartData && cartData.total_amount_in_cart !== 0 && (
+                  <FlexBox
+                    borderRadius="100%"
+                    bg="error.main"
+                    width="20px"
+                    height="20px"
+                    p="2px"
+                    alignItems="center"
+                    justifyContent="center"
+                    position="absolute"
+                    top="-0.5rem"
+                    right="-8px"
+                  >
+                    <Tiny fontSize="8px" color="white" fontWeight="600">
+                      {cartData.total_amount_in_cart}
+                    </Tiny>
+                  </FlexBox>
+                )}
               </FlexBox>
             </Box>
           </Box>
