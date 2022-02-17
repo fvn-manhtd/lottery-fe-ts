@@ -1,8 +1,8 @@
-import { favoriteApiNew, useListFavoriteLotteryQuery } from "api";
-import { Box, Divider, FlexBox, Spinner, Typography } from "components/atoms";
+import { favoriteApiNew } from "api";
+import { Box, Divider, FlexBox, Typography } from "components/atoms";
 import { Grid, LotteryFavorite, Pagination, Head } from "components/organisms";
 import { DashBoardLayout } from "components/templates";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import UserFavoriteSkeletonPage from "./UserFavoriteSkeletonPage";
 import { getSearchQueryObj, Route as ROUTES } from "utils";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
@@ -13,20 +13,25 @@ import { currentUserActions, selectCurrentUserFav } from "redux/features";
 const UserFavoritePage = () => {
   const dispatch = useAppDispatch();
 
+  const isScreenMounted = useRef(true);
+
   const userFavoriteData = useAppSelector(selectCurrentUserFav);
   let currentPage = getSearchQueryObj("page");
   if (!currentPage) {
     currentPage = 1;
   }
   const [pageCount, setPageCount] = useState(currentPage);
+  const [nextPage, setNextPage] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
 
   const getFavList = async (value) => {
     setIsFetching(true);
     try {
       const { data } = await favoriteApiNew.list(value);
+      if (!isScreenMounted.current) return;
       dispatch(currentUserActions.addUserFav(data.data.data));
       setPageCount(data.data.pagination.total); // total pagination
+      setNextPage(data.data.pagination.next_page_url); // Next page
       setIsFetching(false);
     } catch (error) {
       console.log(error);
@@ -36,7 +41,11 @@ const UserFavoritePage = () => {
 
   useEffect(() => {
     getFavList(currentPage);
-  }, [currentPage]);
+
+    return () => {
+      isScreenMounted.current = false;
+    };
+  }, []);
 
   const handleChangePagination = (value) => {
     dispatch(push(`${ROUTES.USER_FAVORITE}?page=${value}`));
@@ -110,7 +119,7 @@ const UserFavoritePage = () => {
             </Box>
           )}
 
-          {userFavoriteData.length != 0 && (
+          {userFavoriteData.length != 0 && nextPage != null && (
             <>
               <Divider
                 height="1px"
@@ -122,7 +131,7 @@ const UserFavoritePage = () => {
               <FlexBox justifyContent="center">
                 <Pagination
                   onChange={(data) => handleChangePagination(data)}
-                  pageRangeDisplayed={5}
+                  // pageRangeDisplayed={5}
                   pageCount={pageCount}
                 />
               </FlexBox>

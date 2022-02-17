@@ -7,8 +7,7 @@ export const favoriteApiNew = {
         const url = `${ApiRoute.CURRENT_USER.FAVORITE}?page=${page}`;
         return axiosClient.get(url);
     },
-    remove(credentials) {
-        console.log(credentials);
+    remove(credentials) {    
         const url = ApiRoute.CURRENT_USER.FAVORITE;
         return axiosClient.delete(url, { data: credentials });
     },

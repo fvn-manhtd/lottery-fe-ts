@@ -49,8 +49,8 @@ const currentUserSlice = createSlice({
             state.favorite = action.payload            
         },
 
-        removeUserFav(state, action:PayloadAction<number>) {
-            state.favorite = state.favorite.filter((item) => item.lottery_category_id !== action.payload);            
+        removeUserFav(state, action:PayloadAction<UserFavorite[]>) {
+            state.favorite = action.payload 
         },
 
 

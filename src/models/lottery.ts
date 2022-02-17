@@ -1,10 +1,6 @@
 import { PaginationParams } from "./common";
 
-export const LOTTERY_STATUS = [
-    '販売中',
-    '終了間際',
-    '販売予定',
-] as const
+
 export interface LotteryModelDetail {
     id?: number;
     title?: string;
@@ -12,10 +8,11 @@ export interface LotteryModelDetail {
     thumbnailImage?: string;
     startedAt?: string;
     endedAt?: string;
-    status?: typeof LOTTERY_STATUS[number];
+    status?: number;
     url?: string;
     rankedProducts?: [];
 }
+
 
 export interface LotteryModel {
     lottery?: LotteryModelDetail;

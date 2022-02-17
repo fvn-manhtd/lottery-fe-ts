@@ -22,7 +22,6 @@ const TopPage = () => {
     isLoading,
     isFetching,
   } = useGetLotteriesQuery({
-    limitArg: 12,
     pageArg: 1,
   });
 

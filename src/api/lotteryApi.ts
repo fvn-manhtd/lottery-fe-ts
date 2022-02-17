@@ -10,14 +10,14 @@ export const lotteryApi = createApi({
     baseQuery: baseQueryWithRetry,
     keepUnusedDataFor: 60 * 5,
     refetchOnMountOrArgChange: 60 * 30, 
-    refetchOnFocus: false,
+    refetchOnFocus: true,
     refetchOnReconnect: true,
     endpoints: (build) => ({
-        getLotteries: build.query<LotteryListModel, { limitArg: number; pageArg: number}>({
+        getLotteries: build.query<LotteryListModel, { pageArg: number}>({
             query: (arg) => {
-                const { limitArg, pageArg } = arg;
+                const { pageArg } = arg;
                 return {
-                    url: `${ApiRoute.LOTTERY_INDEX}?limit=${limitArg}&page=${pageArg}`,
+                    url: `${ApiRoute.LOTTERY_INDEX}?page=${pageArg}`,
                     validateStatus: (response, result) =>
                         response.status === 200 && !result.isError
                 }                

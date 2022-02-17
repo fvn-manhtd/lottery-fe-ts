@@ -9,7 +9,7 @@ import {
   Typography,
 } from "components/atoms";
 import { push } from "connected-react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "redux/app/hooks";
 import { currentUserActions } from "redux/features";
 import styled from "styled-components";
@@ -22,10 +22,12 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
   title,
   status,
   shop_id,
-  lottery_category_id,
 }) => {
   const dispatch = useAppDispatch();
   const [isRemoving, setIsRemoving] = useState(false);
+
+  const isScreenMounted = useRef(true);
+
   const handleRemoveFavorite = async () => {
     setIsRemoving(true);
     try {
@@ -33,16 +35,24 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
         shop_id: shop_id,
         lottery_id: id,
       });
+      if (!isScreenMounted.current) return;
       dispatch(
         push(`${ROUTES.USER_FAVORITE}?page=${data.data.pagination.last_page}`)
       );
-      dispatch(currentUserActions.removeUserFav(lottery_category_id));
+      dispatch(currentUserActions.removeUserFav(data.data.data));
       setIsRemoving(false);
     } catch (error) {
       console.log("Error remove", error);
       setIsRemoving(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      isScreenMounted.current = false;
+    };
+  }, []);
+
   return (
     <Box bg="white" borderRadius="10px" shadow={4}>
       <Image
