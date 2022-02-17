@@ -3,6 +3,8 @@ import { Box, FlexBox, Icon, Typography } from "components/atoms";
 import { Logo } from "./Logo";
 import { useHistory } from "react-router-dom";
 import { MyPageMenu } from "./MyPageMenu";
+import { useAppSelector } from "redux/app/hooks";
+import { selectCurrentUser } from "redux/features";
 
 export const HeaderDashboard: React.FC = () => {
   let history = useHistory();
@@ -10,6 +12,8 @@ export const HeaderDashboard: React.FC = () => {
   const handleBackClick = async () => {
     history.goBack();
   };
+
+  const currentUser = useAppSelector(selectCurrentUser);
 
   return (
     <header>
@@ -47,7 +51,7 @@ export const HeaderDashboard: React.FC = () => {
             justifyContent="flex-end"
           >
             <Typography display={{ _: "none", md: "block" }}>
-              マン さん
+              こんにちは、{currentUser?.first_name}さん
             </Typography>
           </FlexBox>
         </FlexBox>

@@ -11,6 +11,8 @@ export type LotteryProps = {
   status?: number;
   period?: string;
   url?: string;
+  shop_id?: number;
+  lottery_category_id?: number;
 };
 
 const StyledBox = styled.div`

@@ -1,64 +1,69 @@
+import { favoriteApiNew } from "api";
 import {
   Box,
   Button,
   FlexBox,
   Icon,
   Image,
+  Spinner,
   Typography,
 } from "components/atoms";
+import { push } from "connected-react-router";
+import { useState } from "react";
+import { useAppDispatch } from "redux/app/hooks";
+import { currentUserActions } from "redux/features";
 import styled from "styled-components";
-import { lotteryStatusObj, getTheme } from "utils";
+import { lotteryStatusObj, getTheme, Route as ROUTES } from "utils";
 import { LotteryProps } from "./Lottery";
 
-const StyledButton = styled(Button)`
-  &:hover {
-    color: ${getTheme("colors.gray.white")};
-    background-color: ${getTheme("colors.primary.main")};
-    border-color: ${getTheme("colors.primary.main")};
-  }
-`;
-const StyledText = styled(Box)`
-  display: inline-block;
-  padding: 0.4rem 1rem;
-`;
-
 export const LotteryFavorite: React.FC<LotteryProps> = ({
+  id,
   src,
   title,
   status,
+  shop_id,
+  lottery_category_id,
 }) => {
+  const dispatch = useAppDispatch();
+  const [isRemoving, setIsRemoving] = useState(false);
+  const handleRemoveFavorite = async () => {
+    setIsRemoving(true);
+    try {
+      const { data } = await favoriteApiNew.remove({
+        shop_id: shop_id,
+        lottery_id: id,
+      });
+      dispatch(
+        push(`${ROUTES.USER_FAVORITE}?page=${data.data.pagination.last_page}`)
+      );
+      dispatch(currentUserActions.removeUserFav(lottery_category_id));
+      setIsRemoving(false);
+    } catch (error) {
+      console.log("Error remove", error);
+      setIsRemoving(false);
+    }
+  };
   return (
     <Box bg="white" borderRadius="10px" shadow={4}>
       <Image
         width="100%"
         maxHeight={175}
-        src={src}
-        alt="商品画像"
+        src={process.env.REACT_APP_MALL_IMAGE_PATH + src}
+        alt={title}
         objectFit="cover"
       />
 
       <Box padding={[1, 1, 2, 2]}>
         <Box>
-          {status <= 2 ? (
-            <StyledText
-              width="auto"
-              color="white"
-              fontWeight={600}
-              background={lotteryStatusObj[status - 1].color}
-              fontSize={["0.6rem", "0.8rem", "0.875rem", "0.9375rem"]}
-            >
-              {lotteryStatusObj[status - 1].text}
-            </StyledText>
-          ) : (
-            <StyledText
-              color="white"
-              fontWeight={600}
-              background={lotteryStatusObj[status - 1].color}
-              fontSize={["0.5rem", "0.8rem", "0.8rem", "0.85rem"]}
-            >
-              {lotteryStatusObj[status - 1].text}
-            </StyledText>
-          )}
+          <StyledText
+            width="auto"
+            color="white"
+            fontWeight={600}
+            background={lotteryStatusObj[status - 1].color}
+            fontSize={["0.6rem", "0.8rem", "0.875rem", "0.9375rem"]}
+          >
+            {lotteryStatusObj[status - 1].text}
+          </StyledText>
         </Box>
         <Typography as="h1" fontSize={["0.9375rem", "0.9375rem", "1rem"]}>
           {title}
@@ -71,15 +76,42 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
           borderColor="gray.600"
           variant="outlined"
           type="button"
+          onClick={handleRemoveFavorite}
+          disabled={isRemoving}
         >
-          <FlexBox>
-            <Icon size="1rem" px="0.5rem">
-              close
-            </Icon>
-            <Typography>お気に入りから削除</Typography>
-          </FlexBox>
+          {isRemoving && (
+            <Spinner
+              size={16}
+              border="2px solid"
+              borderColor="primary.light"
+              borderTop="2px solid white"
+            ></Spinner>
+          )}
+          {!isRemoving && (
+            <FlexBox>
+              <Icon size="1rem" px="0.5rem">
+                close
+              </Icon>
+              <Typography>お気に入りから削除</Typography>
+            </FlexBox>
+          )}
         </StyledButton>
       </Box>
     </Box>
   );
 };
+
+const StyledButton = styled(Button)`
+  &:hover {
+    color: ${getTheme("colors.gray.white")};
+    background-color: ${getTheme("colors.primary.main")};
+    border-color: ${getTheme("colors.primary.main")};
+    svg path {
+      fill: ${getTheme("colors.gray.white")}!important;
+    }
+  }
+`;
+const StyledText = styled(Box)`
+  display: inline-block;
+  padding: 0.4rem 1rem;
+`;

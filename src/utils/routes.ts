@@ -92,9 +92,11 @@ export const ApiRoute = {
         'CARD': '/users/self/card',
         'DEFAULT_CARD': '/users/self/default-card',
         'LEAVE': '/users/self/leave',
-        'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id'
+        'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id',
+        'FAVORITE': '/users/self/lottery/bookmark',
     },
 
+    
 
     'STATIC_API': '/pages',
     

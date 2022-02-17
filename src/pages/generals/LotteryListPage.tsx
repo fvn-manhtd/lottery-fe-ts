@@ -76,7 +76,7 @@ const LotteryListPage = () => {
       <Head title="NOW ON SALE＆COMING SOON 販売中/近日発売予定" />
       <BaseLayout>
         <main>
-          <Container>
+          <Container pt="5px">
             <Box p={{ _: 0, md: 40 }}>
               {/*title*/}
               <Box ref={myRef} marginY="2rem">
