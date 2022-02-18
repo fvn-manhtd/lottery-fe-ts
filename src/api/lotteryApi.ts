@@ -3,7 +3,7 @@ import { baseQuery } from 'api';
 import { LotteryListModel, LotteryModel } from 'models';
 import { ApiRoute } from "utils";
 
-const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 0 });
 
 export const lotteryApi = createApi({
     reducerPath: "lotteryApi",

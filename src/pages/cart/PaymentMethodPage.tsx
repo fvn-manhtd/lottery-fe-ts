@@ -20,7 +20,7 @@ import { ModalComponent } from "components/molecules";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { usePostalJp } from "use-postal-jp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { currentUserActions, selectCurrentUser } from "redux/features";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { currentUserApi } from "api";
@@ -58,9 +58,10 @@ const PaymentMethodPage: React.FC = () => {
     yubinBango.length >= 7
   );
 
-  const [isCloseModal, setIsCloseModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const currentUser = useAppSelector(selectCurrentUser);
+
   const dispatch = useAppDispatch();
 
   const initialValues = {
@@ -80,11 +81,15 @@ const PaymentMethodPage: React.FC = () => {
     setFieldValue("post_code", value);
   };
 
+  useEffect(() => {
+    if (Object.keys(currentUser).length === 0) setIsOpenModal(true);
+  }, [currentUser]);
+
   const handleFormSubmit = async (values) => {
     let prefecture = address ? address.prefecture : currentUser.prefecture;
     const addressInfo = { ...values, prefecture };
     setSpin(true);
-    setIsCloseModal(false);
+    setIsOpenModal(true);
 
     try {
       let userInfo = {
@@ -95,12 +100,13 @@ const PaymentMethodPage: React.FC = () => {
       const { status, data } = await currentUserApi.address(addressInfo);
       if (status === 200 && data.status === "success") {
         setSpin(false);
-        setIsCloseModal(true);
+        setIsOpenModal(false);
         dispatch(currentUserActions.setCurrentUser(userInfo));
       }
     } catch (error) {
       console.log(error);
       setSpin(false);
+      setIsOpenModal(false);
     }
   };
 
@@ -133,6 +139,8 @@ const PaymentMethodPage: React.FC = () => {
             <Stepper stepperList={stepperList} selectedStep={2} />
           </Box>
           <Divider mb="1rem" bg="gray.500"></Divider>
+
+          {/*Order Info User */}
           <FlexBox
             mb="1rem"
             flexDirection={{ _: "column", md: "row" }}
@@ -177,7 +185,9 @@ const PaymentMethodPage: React.FC = () => {
             <ModalComponent
               maxWidth="600px"
               minHeight="400px"
-              onClose={isCloseModal}
+              onOpen={isOpenModal}
+              hasCloseButton={false}
+              shouldCloseOnOverlayClick={false}
               buttonElement={
                 <ShippingButton
                   color="gray"
@@ -191,6 +201,15 @@ const PaymentMethodPage: React.FC = () => {
                 <Box p="2rem" height="370px" overflow="auto">
                   <form onSubmit={handleSubmit}>
                     <Box mb="2rem">
+                      <Typography as="h2" mb="1rem" fontWeight={700}>
+                        お届け先
+                      </Typography>
+                      <Divider
+                        height="1px"
+                        my="2rem"
+                        width="100%"
+                        backgroundColor="gray.500"
+                      ></Divider>
                       <FlexBox
                         alignItems="center"
                         flexDirection={{ _: "column", md: "row" }}
@@ -222,6 +241,7 @@ const PaymentMethodPage: React.FC = () => {
                                 name="first_name"
                                 type="text"
                                 fullwidth
+                                placeholder="姓を入力してください"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 value={values.first_name}
@@ -246,6 +266,7 @@ const PaymentMethodPage: React.FC = () => {
                                 type="text"
                                 fullwidth
                                 onBlur={handleBlur}
+                                placeholder="名を入力してください"
                                 onChange={handleChange}
                                 value={values.last_name}
                                 errorText={
@@ -294,6 +315,7 @@ const PaymentMethodPage: React.FC = () => {
                               <TextField
                                 name="first_name_kana"
                                 type="text"
+                                placeholder="セイを入力してください"
                                 fullwidth
                                 onBlur={handleBlur}
                                 onChange={handleChange}
@@ -317,6 +339,7 @@ const PaymentMethodPage: React.FC = () => {
                             <Box width="70%">
                               <TextField
                                 name="last_name_kana"
+                                placeholder="メイを入力してください"
                                 type="text"
                                 fullwidth
                                 onBlur={handleBlur}
@@ -367,7 +390,7 @@ const PaymentMethodPage: React.FC = () => {
                             <Box width="100%">
                               <TextField
                                 name="post_code"
-                                placeholder=""
+                                placeholder="郵便番号"
                                 fullwidth
                                 type="text"
                                 onBlur={handleBlur}
@@ -390,7 +413,7 @@ const PaymentMethodPage: React.FC = () => {
                           <Box maxWidth="220px" mb="1rem">
                             <TextField
                               name="prefecture"
-                              placeholder=""
+                              placeholder="都道府県"
                               fullwidth
                               type="text"
                               onBlur={handleBlur}
@@ -404,11 +427,15 @@ const PaymentMethodPage: React.FC = () => {
                           <TextField
                             name="address"
                             fullwidth
+                            placeholder="市区郡町村・パート・マンション・部屋番号を入力してください"
                             type="text"
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.address}
                           />
+                          <Typography as="span" fontSize="10px">
+                            市区群町村入力可能な文字数の上限を超える際は[番地]に続けて入力してください。
+                          </Typography>
                         </Box>
                       </FlexBox>
 
@@ -438,6 +465,7 @@ const PaymentMethodPage: React.FC = () => {
                           <TextField
                             name="phone_number"
                             fullwidth
+                            placeholder="電話番号を入力してください。"
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.phone_number}
@@ -445,6 +473,9 @@ const PaymentMethodPage: React.FC = () => {
                               touched.phone_number && errors.phone_number
                             }
                           />
+                          <Typography as="span" fontSize="10px">
+                            ご注文内容や配送について、電話またはメールにてご連絡させていただく事があります
+                          </Typography>
                         </Box>
                       </FlexBox>
                     </Box>
@@ -496,6 +527,7 @@ const PaymentMethodPage: React.FC = () => {
 
           <Divider mb="1rem" bg="gray.500"></Divider>
 
+          {/*Payment Method */}
           <FlexBox
             mb="1rem"
             flexDirection={{ _: "column", md: "row" }}
@@ -534,7 +566,7 @@ const PaymentMethodPage: React.FC = () => {
           </FlexBox>
 
           <Divider bg="gray.500" mb="2rem"></Divider>
-
+          {/*Button Control */}
           <FlexBox
             justifyContent="center"
             flexDirection={{ _: "column-reverse", md: "row" }}

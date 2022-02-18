@@ -20,11 +20,16 @@ import { useState, useEffect } from "react";
 import { StyledModal } from "components/molecules";
 import Modal from "react-modal";
 import { Route as ROUTES } from "utils";
-import { useDeleteCartMutation, useListCartQuery } from "api";
+import {
+  useAddCouponMutation,
+  useDeleteCartMutation,
+  useListCartQuery,
+} from "api";
 import ShoppingCartSkeletonPage from "./ShoppingCartSkeletonPage";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "redux/app/hooks";
 import { push } from "connected-react-router";
+import * as yup from "yup";
 
 const StyledButton = styled(Button)`
   background-color: #000;
@@ -62,19 +67,37 @@ const ShoppingCartPage: React.FC = () => {
     }
   };
 
+  //Delete Cart
+  const [addCoupon, { isLoading: isAddCoupon }] = useAddCouponMutation();
+
   //Submit form protion code
-  const handleFormSubmit = (values) => {
-    console.log(values);
-  };
-
-  const initialValues = {
-    promotionCode: "",
-  };
-
-  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues,
-    onSubmit: handleFormSubmit,
+  const formSchema = yup.object().shape({
+    coupon_code: yup.string().required("クーポンを入力してください"),
   });
+  const initialValues = {
+    coupon_code: "",
+  };
+  const handleFormSubmit = async (values) => {
+    try {
+      const { data, status } = await addCoupon(values).unwrap();
+      if (data.status == "success" && status == 200) {
+        toast.success("クーポンを追加できました", {
+          autoClose: 7000,
+        });
+      }
+    } catch (error) {
+      console.log("Error coupon", error);
+      toast.error("クーポンを追加できませんでした", {
+        autoClose: 7000,
+      });
+    }
+  };
+  const { values, touched, errors, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      onSubmit: handleFormSubmit,
+      validationSchema: formSchema,
+    });
 
   const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
 
@@ -94,6 +117,7 @@ const ShoppingCartPage: React.FC = () => {
       <Head title="カート" />
       <CartLayout pageTitle="カート">
         <main>
+          {/*Cart Item info */}
           <Box
             bg="body.paper"
             borderRadius="5px"
@@ -174,7 +198,10 @@ const ShoppingCartPage: React.FC = () => {
                           <FlexBox fontSize="0.8rem" display={{ md: "none" }}>
                             <Box width="50%">数量: {cartItem.amount}</Box>
                             <Box width="50%">
-                              ¥ {cartItem.price_at_the_time}
+                              ¥
+                              {addThousandsSeparators(
+                                cartItem.price_at_the_time
+                              )}
                             </Box>
                           </FlexBox>
                         </Box>
@@ -228,13 +255,16 @@ const ShoppingCartPage: React.FC = () => {
                         <FlexBox fontSize="0.8rem">
                           <Box width="70%">
                             <TextField
-                              name="promotionCode"
+                              name="coupon_code"
                               borderRadius="0"
                               type="text"
                               fullwidth
                               onBlur={handleBlur}
                               onChange={handleChange}
-                              value={values.promotionCode || ""}
+                              value={values.coupon_code || ""}
+                              errorText={
+                                touched.coupon_code && errors.coupon_code
+                              }
                             />
                           </Box>
                           <Box width="30%">
@@ -244,8 +274,17 @@ const ShoppingCartPage: React.FC = () => {
                               size="small"
                               variant="containedSecond"
                               color="secondary"
+                              disabled={isAddCoupon}
                             >
-                              適用
+                              {isAddCoupon && (
+                                <Spinner
+                                  size={16}
+                                  border="2px solid"
+                                  borderColor="primary.light"
+                                  borderTop="2px solid white"
+                                ></Spinner>
+                              )}
+                              {!isAddCoupon && "適用"}
                             </StyledButton>
                           </Box>
                         </FlexBox>
@@ -289,6 +328,8 @@ const ShoppingCartPage: React.FC = () => {
               )}
             </Box>
           </Box>
+
+          {/*If not login show popup */}
           {!isLoggedIn && (
             <>
               <Modal

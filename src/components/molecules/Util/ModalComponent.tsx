@@ -7,7 +7,9 @@ export type ModalProps = {
   content: JSX.Element;
   minHeight?: string;
   maxWidth?: string;
-  onClose?: boolean;
+  onOpen?: boolean;
+  hasCloseButton?: boolean;
+  shouldCloseOnOverlayClick?: boolean;
 };
 
 export const StyledModal = (minHeight, maxWidth) => {
@@ -39,13 +41,16 @@ export const ModalComponent: React.FC<ModalProps> = ({
   content,
   minHeight,
   maxWidth,
-  onClose,
+  onOpen,
+  hasCloseButton,
+  shouldCloseOnOverlayClick,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (onClose) setIsModalOpen(false);
-  }, [onClose]);
+    if (onOpen) setIsModalOpen(true);
+    else setIsModalOpen(false);
+  }, [onOpen]);
 
   return (
     <div>
@@ -57,50 +62,37 @@ export const ModalComponent: React.FC<ModalProps> = ({
         onRequestClose={() => {
           setIsModalOpen(false);
         }}
+        shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       >
-        <FlexBox
-          borderRadius="50%"
-          bg="gray.350"
-          width={35}
-          height={35}
-          color="white"
-          border="2px solid white"
-          alignItems="center"
-          justifyContent="center"
-          position="absolute"
-          top={-15}
-          right={-15}
-          cursor="pointer"
-          onClick={() => {
-            setIsModalOpen(false);
-          }}
-        >
-          <Icon variant="medium">close</Icon>
-        </FlexBox>
-        {content}
+        {hasCloseButton && (
+          <FlexBox
+            borderRadius="50%"
+            bg="gray.350"
+            width={35}
+            height={35}
+            color="white"
+            border="2px solid white"
+            alignItems="center"
+            justifyContent="center"
+            position="absolute"
+            top={-15}
+            right={-15}
+            cursor="pointer"
+            onClick={() => {
+              setIsModalOpen(false);
+            }}
+          >
+            <Icon variant="medium">close</Icon>
+          </FlexBox>
+        )}
 
-        <Box
-          cursor="pointer"
-          color="primary.text"
-          border="1px solid"
-          borderColor="gray.white"
-          bg="gray.600"
-          width="40px"
-          height="40px"
-          borderRadius="50%"
-          justifyContent="center"
-          alignItems="center"
-          display="flex"
-          position="absolute"
-          top="-20px"
-          right="-20px"
-          onClick={() => {
-            setIsModalOpen(false);
-          }}
-        >
-          <Icon>close</Icon>
-        </Box>
+        {content}
       </Modal>
     </div>
   );
+};
+
+ModalComponent.defaultProps = {
+  hasCloseButton: true,
+  shouldCloseOnOverlayClick: true,
 };

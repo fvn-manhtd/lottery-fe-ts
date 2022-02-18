@@ -28,8 +28,8 @@ export const Header: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { data: cartData } = useListCartQuery({
-    refetchOnMountOrArgChange: true,
-    refetchOnFocus: true,
+    refetchOnMountOrArgChange: false,
+    refetchOnFocus: false,
   });
 
   const handleLogout = async () => {

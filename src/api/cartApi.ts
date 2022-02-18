@@ -9,7 +9,7 @@ export const cartApi = createApi({
     reducerPath: "cartApi",
     tagTypes: ['Cart'],
     baseQuery: baseQueryWithRetry,
-    keepUnusedDataFor: 60 * 5,
+    keepUnusedDataFor: 2 * 60,
     endpoints: (build) => ({
 
         listCart: build.query<Cart,any>({
@@ -34,6 +34,18 @@ export const cartApi = createApi({
             },
             invalidatesTags: (result) => [{ type: 'Cart', result }],
         }),
+        addCoupon: build.mutation<any, {coupon_code: string}>({
+            query: args => {
+                return {
+                    url: `${ApiRoute.CART.COUPON}`,
+                    method: 'POST',
+                    body: { "coupon_code": args.coupon_code }
+                }
+            },
+            transformResponse: (response : any) => {
+                return response;
+            }
+        }),
         shopConfig: build.query<any, any>({
             query: () => {
                 return {
@@ -49,5 +61,5 @@ export const cartApi = createApi({
     }),
 })
 
-export const { useDeleteCartMutation,  useListCartQuery, useShopConfigQuery } = cartApi;
+export const { useDeleteCartMutation,  useListCartQuery, useShopConfigQuery, useAddCouponMutation } = cartApi;
 

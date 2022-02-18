@@ -6,83 +6,39 @@ import {
   Span,
   Image,
   Typography,
-  TextField,
-  SelectBox,
-  CheckBox,
-  SemiSpan,
 } from "components/atoms";
 import { CartLayout } from "components/templates";
 import { Stepper } from "components/organisms";
-import {
-  monthListArr,
-  stepperList,
-  yearListNextArr,
-  Route as ROUTES,
-} from "utils";
+import { stepperList, Route as ROUTES, addThousandsSeparators } from "utils";
 
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useState } from "react";
-import valid from "card-validator";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { selectCurrentUser } from "redux/features";
 import { push } from "connected-react-router";
+import { useFormik } from "formik";
+import { useListCartQuery } from "api";
+import Skeleton from "react-loading-skeleton";
 
 const OrderConfirmationPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const currentUser = useAppSelector(selectCurrentUser);
 
-  const [cartCustomerMonth, setCartCustomerMonth] = useState("1");
-  const [cartCustomerYear, setCartCustomerYear] = useState("2021");
-
-  const initialValues = {
-    cartCustomerName: "",
-    cartCustomerNumber: "",
-    cartCustomerYear: cartCustomerYear,
-    cartCustomerMonth: cartCustomerMonth,
-    cartCustomerCVC: "",
-    saveCardCheck: true,
-  };
-
-  const formSchema = yup.object().shape({
-    cartCustomerName: yup.string().required("カード名義を入力してください"),
-    cartCustomerNumber: yup
-      .string()
-      .test(
-        "test-number",
-        "カード番号を入力してください",
-        (value) => valid.number(value).isValid
-      ),
-    cartCustomerYear: yup.string().required("有効期限を入力してください"),
-    cartCustomerMonth: yup.string().required("有効期限を入力してください"),
-    cartCustomerCVC: yup
-      .number()
-      .typeError("セキュリティコードを入力してください")
-      .required("セキュリティコードを入力してください")
-      .min(0, "セキュリティコードを入力してください")
-      .max(1000, "セキュリティコードを入力してください"),
+  //Get Cart
+  const { data: cartData, isLoading } = useListCartQuery({
+    refetchOnMountOrArgChange: false,
+    refetchOnFocus: false,
   });
 
-  const handleYearChange = (e) => {
-    console.log(e);
-    setCartCustomerYear(e.value);
-  };
-  const handleMonthChange = (e) => {
-    setCartCustomerMonth(e.value);
+  const handleFormSubmit = () => {
+    console.log("aaa");
   };
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
-    dispatch(push(ROUTES.ORDER_COMPLETE));
-  };
+  const initialValues = null;
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      onSubmit: handleFormSubmit,
-      initialValues,
-      validationSchema: formSchema,
-    });
+  const { handleSubmit } = useFormik({
+    onSubmit: handleFormSubmit,
+    initialValues,
+  });
 
   return (
     <CartLayout>
@@ -101,6 +57,7 @@ const OrderConfirmationPage: React.FC = () => {
               <Stepper stepperList={stepperList} selectedStep={3} />
             </Box>
             <Divider mb="1rem" bg="gray.500"></Divider>
+            {/*Order Info User */}
             <FlexBox
               mb="1rem"
               flexDirection={{ _: "column", md: "row" }}
@@ -141,43 +98,90 @@ const OrderConfirmationPage: React.FC = () => {
 
             <Divider mb="1rem" bg="gray.500"></Divider>
 
-            <FlexBox mb="1rem" alignItems={{ _: "flex-start", md: "center" }}>
-              <Box width={{ _: "50%", md: "20%" }} px="1rem">
-                <Image
-                  mb="1rem"
-                  width="100%"
-                  src="https://www.bs11.jp/anime/img/selection_project_main.jpg"
-                  alt="商品"
-                  objectFit="cover"
-                />
-              </Box>
-              <Box
-                width={{ _: "50%", md: "50%" }}
-                fontSize={{ _: "0.8rem", md: "1rem" }}
-              >
-                <Typography mb="5px" fontWeight={600}>
-                  商品名が入ります商品名が入ります商品名が入ります
-                </Typography>
-                <Typography mb="5px">10回くじ</Typography>
-                <Typography mb="5px" color="gray.500">
-                  商品番号：LS010217
-                </Typography>
+            {/*Cart Item Info */}
+            {isLoading && cartData === undefined && (
+              <FlexBox mb="1rem" alignItems={{ _: "flex-start", md: "center" }}>
+                <Box width={{ _: "50%", md: "20%" }} px="1rem">
+                  <Skeleton height="120px" />
+                </Box>
+                <Box
+                  width={{ _: "50%", md: "50%" }}
+                  fontSize={{ _: "0.8rem", md: "1rem" }}
+                >
+                  <Box mb="5px">
+                    <Skeleton width="90%" height="25px" />
+                  </Box>
+                  <Box mb="5px" display="inline-block">
+                    <Skeleton width="120px" height="15px" />
+                  </Box>
+                  <Box>
+                    <Skeleton width="80%" height="60px" />
+                  </Box>
+                </Box>
+                <Box width="10%" display={{ _: "none", md: "block" }} mx="auto">
+                  <Skeleton height="30px" width="90%" />
+                </Box>
+                <Box width="15%" display={{ _: "none", md: "block" }} mx="auto">
+                  <Skeleton height="30px" width="90%" />
+                </Box>
+                <Box mx="auto" width="5%" display={{ _: "none", md: "block" }}>
+                  <Skeleton height="30px" width="90%" />
+                </Box>
+              </FlexBox>
+            )}
 
-                <FlexBox fontSize="0.8rem" display={{ md: "none" }}>
-                  <Box width="50%">数量：1</Box>
-                  <Box width="50%">¥ 12,000</Box>
-                </FlexBox>
-              </Box>
-              <Box width="10%" display={{ _: "none", md: "block" }}>
-                1
-              </Box>
-              <Box width="15%" display={{ _: "none", md: "block" }}>
-                ¥ 12,000
-              </Box>
-            </FlexBox>
+            {cartData &&
+              cartData.carts?.map((cartItem) => {
+                return (
+                  <FlexBox
+                    mb="1rem"
+                    alignItems={{ _: "flex-start", md: "center" }}
+                    key={cartItem.lottery_ticket_catalog_id}
+                  >
+                    <Box width={{ _: "50%", md: "20%" }} px="1rem">
+                      <Image
+                        mb="1rem"
+                        width="100%"
+                        src={
+                          process.env.REACT_APP_MALL_IMAGE_PATH +
+                          cartItem.lottery_image
+                        }
+                        alt={cartItem.lottery_title}
+                        objectFit="cover"
+                      />
+                    </Box>
+                    <Box
+                      width={{ _: "50%", md: "50%" }}
+                      fontSize={{ _: "0.8rem", md: "1rem" }}
+                    >
+                      <Typography mb="5px" fontWeight={600}>
+                        {cartItem.lottery_title}
+                      </Typography>
+                      <Typography mb="5px">10回くじ</Typography>
+                      <Typography mb="5px" color="gray.500">
+                        商品番号: {cartItem.lottery_ticket_catalog_id}
+                      </Typography>
+
+                      <FlexBox fontSize="0.8rem" display={{ md: "none" }}>
+                        <Box width="50%">数量: {cartItem.amount}</Box>
+                        <Box width="50%">
+                          ¥ {addThousandsSeparators(cartItem.price_at_the_time)}
+                        </Box>
+                      </FlexBox>
+                    </Box>
+                    <Box width="10%" display={{ _: "none", md: "block" }}>
+                      {cartItem.amount}
+                    </Box>
+                    <Box width="15%" display={{ _: "none", md: "block" }}>
+                      ¥ {addThousandsSeparators(cartItem.price_at_the_time)}
+                    </Box>
+                  </FlexBox>
+                );
+              })}
 
             <Divider mb="1rem" bg="gray.500"></Divider>
 
+            {/*Order Calc */}
             <FlexBox justifyContent="flex-end" mb="1rem">
               <Box width="100%" maxWidth="380px">
                 <FlexBox alignItems="center" mb="10px">
@@ -239,6 +243,7 @@ const OrderConfirmationPage: React.FC = () => {
 
             <Divider mb="1rem" bg="gray.500"></Divider>
 
+            {/*Payment Select */}
             <FlexBox
               mb="1rem"
               flexDirection={{ _: "column", md: "row" }}
@@ -264,128 +269,12 @@ const OrderConfirmationPage: React.FC = () => {
                     alt="cards"
                   />
                 </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}>カード名義</Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <TextField
-                      name="cartCustomerName"
-                      fullwidth
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.cartCustomerName || ""}
-                      errorText={
-                        touched.cartCustomerName && errors.cartCustomerName
-                      }
-                    />
-                  </Box>
-                </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}>カード番号</Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <TextField
-                      name="cartCustomerNumber"
-                      fullwidth
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.cartCustomerNumber || ""}
-                      errorText={
-                        touched.cartCustomerNumber && errors.cartCustomerNumber
-                      }
-                    />
-                  </Box>
-                </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}>有効期限</Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <FlexBox justifyContent="flex-start" alignItems="center">
-                      <Box width="20%">
-                        <SelectBox
-                          placeholder="選択"
-                          defaultValue={monthListArr().reverse()[0]}
-                          options={monthListArr().reverse()}
-                          onChange={handleMonthChange}
-                        />
-                      </Box>
-                      <Box textAlign="center" width="8%">
-                        月
-                      </Box>
-
-                      <Box width="25%">
-                        <SelectBox
-                          placeholder="選択"
-                          defaultValue={yearListNextArr(10)[0]}
-                          options={yearListNextArr(10)}
-                          onChange={handleYearChange}
-                        />
-                      </Box>
-                      <Box textAlign="center" width="8%">
-                        年
-                      </Box>
-                    </FlexBox>
-                  </Box>
-                </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}>セキュリティコード</Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <TextField
-                      name="cartCustomerCVC"
-                      fullwidth
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.cartCustomerCVC || ""}
-                      errorText={
-                        touched.cartCustomerCVC && errors.cartCustomerCVC
-                      }
-                    />
-                  </Box>
-                </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}></Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <CheckBox
-                      mb="1rem"
-                      name="saveCardCheck"
-                      color="secondary"
-                      checked={values.saveCardCheck}
-                      onChange={handleChange}
-                      label={
-                        <FlexBox>
-                          <SemiSpan>今後もこのカードを使う</SemiSpan>
-                        </FlexBox>
-                      }
-                    />
-                  </Box>
-                </FlexBox>
               </Box>
             </FlexBox>
 
             <Divider bg="gray.500" mb="2rem"></Divider>
 
+            {/*Button Control */}
             <FlexBox
               justifyContent="center"
               flexDirection={{ _: "column-reverse", md: "row" }}
