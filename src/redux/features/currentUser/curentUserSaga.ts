@@ -1,4 +1,5 @@
 import { currentUserApi } from "api";
+import { UserCard1 } from "models";
 import { toast } from "react-toastify";
 import { call, fork, put } from "redux-saga/effects";
 import { currentUserActions } from "./curentUserSlice";
@@ -22,6 +23,20 @@ export function* registerCustomerToPayjp() {
         yield call(currentUserApi.registerPayCustomerID);        
     } catch (error) {        
         toast.error("カードは登録できませんでした。", { autoClose: 7000 });
+    }
+}
+
+
+export function* getUserCards() {
+    console.log("Get Current Card of User");
+    try {
+        const res = yield call(currentUserApi.getCard);
+        const data: UserCard1 = res.data.data;
+        yield put(currentUserActions.setDefaultCard(data.default_card));
+        yield put(currentUserActions.setCurrentUserCard(data.cards));
+        console.log("Add Card to State");
+    } catch (error) {        
+        console.log(error);
     }
 }
 

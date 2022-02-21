@@ -1,23 +1,24 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { authApi } from 'api';
 import { push } from "connected-react-router";
+import { User } from "models";
 import { call, fork, put, take } from "redux-saga/effects";
 import { Route as ROUTES } from "utils";
 import { currentUserActions } from "..";
+import { getUserCards } from "../currentUser";
 import { authActions, LoginPayLoad } from "./authSlice";
 
 function* handleLogin(payload: LoginPayLoad) {
     console.log("Handle Login");
 
     try {                    
-        const {status, data} = yield call(authApi.login, payload);        
-        if (status === 200 && data.status === 'success') {
-            yield put(authActions.loginSucess());
-            localStorage.setItem("isLoggedIn", "yes");
-            yield put(push(ROUTES.HOME));
-            yield put(currentUserActions.setCurrentUser(data.data.user));
-            // yield call(registerCustomerToPayjp);
-        }        
+        const res = yield call(authApi.login, payload);        
+        const data: User = res.data.user;        
+        yield put(authActions.loginSucess());
+        localStorage.setItem("isLoggedIn", "yes");
+        yield put(push(ROUTES.HOME));
+        yield put(currentUserActions.setCurrentUser(data));        
+        yield call(getUserCards);       
         
     } catch (error) {
         

@@ -19,6 +19,7 @@ import { useVerifyCartMutation } from "api";
 import Skeleton from "react-loading-skeleton";
 import { useEffect, useState } from "react";
 import { Cart } from "models";
+import PayjpCheckout from "hooks/PayjpCheckout";
 
 const OrderConfirmationPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -51,6 +52,7 @@ const OrderConfirmationPage: React.FC = () => {
     recipient_phone_number: currentUser.phone_number,
   };
 
+  //Handle Verfiy Cart
   const [cartVerifyData, { isLoading: isVerifyCartLoading }] =
     useVerifyCartMutation();
 
@@ -76,6 +78,20 @@ const OrderConfirmationPage: React.FC = () => {
     onSubmit: handleFormSubmit,
     initialValues,
   });
+
+  // Payjp checkout
+  const payjpCheckoutProps = {
+    dataKey: process.env.REACT_APP_PAPJP_PUBLIC_KEY,
+    dataText: "新しクレジットカード追加",
+    dataPartial: "true",
+    dataNamePlaceholder: "名前を入力してください",
+    onCreatedHandler: (payload) => {
+      console.log(payload);
+    },
+    onFailedHandler: (payload) => {
+      console.log("onFailedHandler", payload && payload.message);
+    },
+  };
 
   return (
     <CartLayout>
@@ -379,7 +395,7 @@ const OrderConfirmationPage: React.FC = () => {
 
             <Divider mb="1rem" bg="gray.500"></Divider>
 
-            {/*Payment Select */}
+            {/*Credit Card Select */}
             <FlexBox
               mb="1rem"
               flexDirection={{ _: "column", md: "row" }}
@@ -397,6 +413,10 @@ const OrderConfirmationPage: React.FC = () => {
                 <Typography mb="10px" fontSize="1rem">
                   クレジットカード
                 </Typography>
+
+                <Box mb="1rem">
+                  <PayjpCheckout {...payjpCheckoutProps} />
+                </Box>
 
                 <FlexBox maxWidth="360px" mb="2rem">
                   <Image

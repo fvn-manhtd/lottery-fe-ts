@@ -15,7 +15,7 @@ export interface User {
 }
 
 export interface UserCard {
-    id?: number;
+    id?: string;
     brand?: string;
     exp_month?: number;
     exp_year?: number;
@@ -39,4 +39,30 @@ export interface UserFavorite {
     endedAt: string;
     status: number;
     shop_domain: string;
+}
+
+
+export interface UserCardItem {
+    id: string;
+    address_city: string;
+    address_line1: string;
+    address_line2: string;
+    address_state: string;
+    address_zip: string;
+    address_zip_check: string;
+    brand: string;
+    country: string;
+    created: number;
+    customer: string;
+    cvc_check: string;
+    exp_month: number;
+    exp_year: number;
+    fingerprint: string;
+    last4: string;
+    livemode: boolean;
+    name: string;
+}
+export interface UserCard1 {
+    default_card: string;
+    cards: UserCardItem[];
 }

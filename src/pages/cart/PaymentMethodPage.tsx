@@ -53,6 +53,8 @@ const PaymentMethodPage: React.FC = () => {
   const [yubinBango, setyubinBango] = useState("");
   const [spin, setSpin] = useState(false);
 
+  const [paymethod, setPaymethod] = useState("credit-card");
+
   const [address, loading, error] = usePostalJp(
     yubinBango,
     yubinBango.length >= 7
@@ -109,6 +111,11 @@ const PaymentMethodPage: React.FC = () => {
       setSpin(false);
       setIsOpenModal(false);
     }
+  };
+
+  const handlePaymentMethod = (e) => {
+    setPaymethod(e.target.value);
+    dispatch(currentUserActions.setPaymentMethod(e.target.value));
   };
 
   const {
@@ -552,8 +559,8 @@ const PaymentMethodPage: React.FC = () => {
                     クレジットカード
                   </Typography>
                 }
-                checked
-                onChange={(e) => console.log(e)}
+                checked={paymethod === "credit-card"}
+                onChange={(e) => handlePaymentMethod(e)}
               />
 
               <FlexBox maxWidth="360px">

@@ -27,7 +27,7 @@ export const cartApi = createApi({
         }),
         verifyCart: build.mutation<Cart,any>({
             query: args => {                
-                console.log(args);
+                // console.log(args);
                 return {                    
                     url: `${ApiRoute.CART.VERIFY}`,
                     method: 'POST',
