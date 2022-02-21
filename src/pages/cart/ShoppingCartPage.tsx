@@ -79,8 +79,9 @@ const ShoppingCartPage: React.FC = () => {
   };
   const handleFormSubmit = async (values) => {
     try {
-      const { data, status } = await addCoupon(values).unwrap();
-      if (data.status == "success" && status == 200) {
+      const { status } = await addCoupon(values).unwrap();
+      console.log(status);
+      if (status == "success") {
         toast.success("クーポンを追加できました", {
           autoClose: 7000,
         });

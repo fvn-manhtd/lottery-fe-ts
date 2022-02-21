@@ -15,19 +15,56 @@ import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { selectCurrentUser } from "redux/features";
 import { push } from "connected-react-router";
 import { useFormik } from "formik";
-import { useListCartQuery } from "api";
+import { useVerifyCartMutation } from "api";
 import Skeleton from "react-loading-skeleton";
+import { useEffect, useState } from "react";
+import { Cart } from "models";
 
 const OrderConfirmationPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const currentUser = useAppSelector(selectCurrentUser);
 
-  //Get Cart
-  const { data: cartData, isLoading } = useListCartQuery({
-    refetchOnMountOrArgChange: false,
-    refetchOnFocus: false,
-  });
+  const [cartData, setCartData] = useState<Cart>(null);
+
+  //Get Verify Cart
+  const args = {
+    payment_method: "Visa",
+    //Order
+    order_last_name: currentUser.last_name,
+    order_first_name: currentUser.first_name,
+    order_last_name_kana: currentUser.last_name_kana,
+    order_first_name_kana: currentUser.first_name_kana,
+    order_post_code: currentUser.post_code,
+    order_prefecture: currentUser.prefecture,
+    order_address: currentUser.address,
+    order_phone_number: currentUser.phone_number,
+    //Recipient
+    recipient_input: true,
+    recipient_last_name: currentUser.last_name,
+    recipient_first_name: currentUser.first_name,
+    recipient_last_name_kana: currentUser.last_name_kana,
+    recipient_first_name_kana: currentUser.first_name_kana,
+    recipient_post_code: currentUser.post_code,
+    recipient_prefecture: currentUser.prefecture,
+    recipient_address: currentUser.address,
+    recipient_phone_number: currentUser.phone_number,
+  };
+
+  const [cartVerifyData, { isLoading: isVerifyCartLoading }] =
+    useVerifyCartMutation();
+
+  const handleVerifyCart = async () => {
+    try {
+      const data = await cartVerifyData(JSON.stringify(args)).unwrap();
+      setCartData(data);
+    } catch (error) {
+      console.log("Error verify cart", error);
+    }
+  };
+  useEffect(() => {
+    handleVerifyCart();
+  }, []);
 
   const handleFormSubmit = () => {
     console.log("aaa");
@@ -97,40 +134,130 @@ const OrderConfirmationPage: React.FC = () => {
             </FlexBox>
 
             <Divider mb="1rem" bg="gray.500"></Divider>
-
-            {/*Cart Item Info */}
-            {isLoading && cartData === undefined && (
-              <FlexBox mb="1rem" alignItems={{ _: "flex-start", md: "center" }}>
-                <Box width={{ _: "50%", md: "20%" }} px="1rem">
-                  <Skeleton height="120px" />
-                </Box>
-                <Box
-                  width={{ _: "50%", md: "50%" }}
-                  fontSize={{ _: "0.8rem", md: "1rem" }}
+            {/*Cart Item Skeleton */}
+            {isVerifyCartLoading && (
+              <>
+                <FlexBox
+                  mb="1rem"
+                  alignItems={{ _: "flex-start", md: "center" }}
                 >
-                  <Box mb="5px">
-                    <Skeleton width="90%" height="25px" />
+                  <Box width={{ _: "50%", md: "20%" }} px="1rem">
+                    <Skeleton height="120px" />
                   </Box>
-                  <Box mb="5px" display="inline-block">
-                    <Skeleton width="120px" height="15px" />
+                  <Box
+                    width={{ _: "50%", md: "50%" }}
+                    fontSize={{ _: "0.8rem", md: "1rem" }}
+                  >
+                    <Box mb="5px">
+                      <Skeleton width="90%" height="25px" />
+                    </Box>
+                    <Box mb="5px" display="inline-block">
+                      <Skeleton width="120px" height="15px" />
+                    </Box>
+                    <Box>
+                      <Skeleton width="80%" height="60px" />
+                    </Box>
                   </Box>
-                  <Box>
-                    <Skeleton width="80%" height="60px" />
+                  <Box
+                    width="10%"
+                    display={{ _: "none", md: "block" }}
+                    mx="auto"
+                  >
+                    <Skeleton height="30px" width="90%" />
                   </Box>
-                </Box>
-                <Box width="10%" display={{ _: "none", md: "block" }} mx="auto">
-                  <Skeleton height="30px" width="90%" />
-                </Box>
-                <Box width="15%" display={{ _: "none", md: "block" }} mx="auto">
-                  <Skeleton height="30px" width="90%" />
-                </Box>
-                <Box mx="auto" width="5%" display={{ _: "none", md: "block" }}>
-                  <Skeleton height="30px" width="90%" />
-                </Box>
-              </FlexBox>
-            )}
+                  <Box
+                    width="15%"
+                    display={{ _: "none", md: "block" }}
+                    mx="auto"
+                  >
+                    <Skeleton height="30px" width="90%" />
+                  </Box>
+                  <Box
+                    mx="auto"
+                    width="5%"
+                    display={{ _: "none", md: "block" }}
+                  >
+                    <Skeleton height="30px" width="90%" />
+                  </Box>
+                </FlexBox>
 
-            {cartData &&
+                <Divider mb="1rem" bg="gray.500"></Divider>
+
+                <FlexBox justifyContent="flex-end" mb="1rem">
+                  <Box width="100%" maxWidth="380px">
+                    <FlexBox alignItems="center" mb="10px">
+                      <Typography fontSize="1rem" width="50%" fontWeight={600}>
+                        商品税込計<Span fontSize="0.8rem">（税込）</Span>
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                        fontSize="1.4rem"
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+
+                    <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                      <Typography width="50%" fontWeight={600}>
+                        送料
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+
+                    <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                      <Typography width="50%" fontWeight={600}>
+                        手数料
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+
+                    <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                      <Typography width="50%" fontWeight={600}>
+                        クーポン
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+
+                    <FlexBox alignItems="center" mb="10px" color="primary.main">
+                      <Typography fontSize="1rem" width="50%" fontWeight={600}>
+                        お支払い総計<Span fontSize="0.8rem">（税込）</Span>
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                        fontSize="1.4rem"
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+                  </Box>
+                </FlexBox>
+              </>
+            )}
+            {/*Cart Item Info */}
+            {!isVerifyCartLoading &&
+              cartData &&
               cartData.carts?.map((cartItem) => {
                 return (
                   <FlexBox
@@ -157,7 +284,9 @@ const OrderConfirmationPage: React.FC = () => {
                       <Typography mb="5px" fontWeight={600}>
                         {cartItem.lottery_title}
                       </Typography>
-                      <Typography mb="5px">10回くじ</Typography>
+                      <Typography mb="5px">
+                        {cartItem.number_of_times}回くじ
+                      </Typography>
                       <Typography mb="5px" color="gray.500">
                         商品番号: {cartItem.lottery_ticket_catalog_id}
                       </Typography>
@@ -178,68 +307,75 @@ const OrderConfirmationPage: React.FC = () => {
                   </FlexBox>
                 );
               })}
-
             <Divider mb="1rem" bg="gray.500"></Divider>
-
             {/*Order Calc */}
-            <FlexBox justifyContent="flex-end" mb="1rem">
-              <Box width="100%" maxWidth="380px">
-                <FlexBox alignItems="center" mb="10px">
-                  <Typography fontSize="1rem" width="50%" fontWeight={600}>
-                    商品税込計<Span fontSize="0.8rem">（税込）</Span>
-                  </Typography>
-                  <Typography
-                    textAlign="right"
-                    width="50%"
-                    fontWeight={600}
-                    fontSize="1.4rem"
-                  >
-                    ￥12,000
-                  </Typography>
-                </FlexBox>
+            {!isVerifyCartLoading && cartData && (
+              <FlexBox justifyContent="flex-end" mb="1rem">
+                <Box width="100%" maxWidth="380px">
+                  <FlexBox alignItems="center" mb="10px">
+                    <Typography fontSize="1rem" width="50%" fontWeight={600}>
+                      商品税込計<Span fontSize="0.8rem">（税込）</Span>
+                    </Typography>
+                    <Typography
+                      textAlign="right"
+                      width="50%"
+                      fontWeight={600}
+                      fontSize="1.4rem"
+                    >
+                      ￥
+                      {addThousandsSeparators(cartData.total_price_at_the_time)}
+                    </Typography>
+                  </FlexBox>
 
-                <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
-                  <Typography width="50%" fontWeight={600}>
-                    送料
-                  </Typography>
-                  <Typography textAlign="right" width="50%" fontWeight={600}>
-                    ￥700
-                  </Typography>
-                </FlexBox>
+                  <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                    <Typography width="50%" fontWeight={600}>
+                      送料
+                    </Typography>
+                    <Typography textAlign="right" width="50%" fontWeight={600}>
+                      ￥{addThousandsSeparators(cartData.shipping_fee)}
+                    </Typography>
+                  </FlexBox>
 
-                <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
-                  <Typography width="50%" fontWeight={600}>
-                    手数料
-                  </Typography>
-                  <Typography textAlign="right" width="50%" fontWeight={600}>
-                    ￥700
-                  </Typography>
-                </FlexBox>
+                  <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                    <Typography width="50%" fontWeight={600}>
+                      手数料
+                    </Typography>
+                    <Typography textAlign="right" width="50%" fontWeight={600}>
+                      ￥
+                      {addThousandsSeparators(cartData.total_sales_fee_in_cart)}
+                    </Typography>
+                  </FlexBox>
 
-                <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
-                  <Typography width="50%" fontWeight={600}>
-                    クーポン
-                  </Typography>
-                  <Typography textAlign="right" width="50%" fontWeight={600}>
-                    -￥700
-                  </Typography>
-                </FlexBox>
+                  <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                    <Typography width="50%" fontWeight={600}>
+                      クーポン
+                    </Typography>
+                    <Typography textAlign="right" width="50%" fontWeight={600}>
+                      {cartData.total_discount_in_cart === 0
+                        ? "￥ 0"
+                        : "-￥" +
+                          addThousandsSeparators(
+                            cartData.total_discount_in_cart
+                          )}
+                    </Typography>
+                  </FlexBox>
 
-                <FlexBox alignItems="center" mb="10px" color="primary.main">
-                  <Typography fontSize="1rem" width="50%" fontWeight={600}>
-                    お支払い総計<Span fontSize="0.8rem">（税込）</Span>
-                  </Typography>
-                  <Typography
-                    textAlign="right"
-                    width="50%"
-                    fontWeight={600}
-                    fontSize="1.4rem"
-                  >
-                    ￥12,700
-                  </Typography>
-                </FlexBox>
-              </Box>
-            </FlexBox>
+                  <FlexBox alignItems="center" mb="10px" color="primary.main">
+                    <Typography fontSize="1rem" width="50%" fontWeight={600}>
+                      お支払い総計<Span fontSize="0.8rem">（税込）</Span>
+                    </Typography>
+                    <Typography
+                      textAlign="right"
+                      width="50%"
+                      fontWeight={600}
+                      fontSize="1.4rem"
+                    >
+                      ￥{addThousandsSeparators(cartData.result_price_in_cart)}
+                    </Typography>
+                  </FlexBox>
+                </Box>
+              </FlexBox>
+            )}
 
             <Divider mb="1rem" bg="gray.500"></Divider>
 

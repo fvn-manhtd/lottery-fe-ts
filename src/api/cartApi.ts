@@ -25,6 +25,21 @@ export const cartApi = createApi({
                 return response.data;
             }
         }),
+        verifyCart: build.mutation<Cart,any>({
+            query: args => {                
+                console.log(args);
+                return {                    
+                    url: `${ApiRoute.CART.VERIFY}`,
+                    method: 'POST',
+                    body: JSON.parse(args),
+                    validateStatus: (response, result) =>
+                        response.status === 200 && !result.isError
+                }    
+            },            
+            transformResponse: (response : {data : Cart}) => {
+                return response.data;
+            }
+        }),
         deleteCart: build.mutation({
             query: () => {
                 return {
@@ -61,5 +76,5 @@ export const cartApi = createApi({
     }),
 })
 
-export const { useDeleteCartMutation,  useListCartQuery, useShopConfigQuery, useAddCouponMutation } = cartApi;
+export const { useDeleteCartMutation,  useListCartQuery, useShopConfigQuery, useAddCouponMutation, useVerifyCartMutation } = cartApi;
 

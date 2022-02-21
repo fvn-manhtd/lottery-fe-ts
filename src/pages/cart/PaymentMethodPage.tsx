@@ -85,6 +85,7 @@ const PaymentMethodPage: React.FC = () => {
     if (Object.keys(currentUser).length === 0) setIsOpenModal(true);
   }, [currentUser]);
 
+  //Handle Submit Form Add Shipping Address
   const handleFormSubmit = async (values) => {
     let prefecture = address ? address.prefecture : currentUser.prefecture;
     const addressInfo = { ...values, prefecture };
@@ -180,7 +181,7 @@ const PaymentMethodPage: React.FC = () => {
           </FlexBox>
 
           <Divider mb="1rem" bg="gray.500"></Divider>
-
+          {/*Modal Shipping Address */}
           <FlexBox justifyContent="center" mb="1rem">
             <ModalComponent
               maxWidth="600px"
