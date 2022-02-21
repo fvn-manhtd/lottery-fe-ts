@@ -6,13 +6,16 @@ import {
   Span,
   Image,
   Typography,
+  TableRow,
+  H5,
+  RadioButton,
 } from "components/atoms";
 import { CartLayout } from "components/templates";
-import { Stepper } from "components/organisms";
+import { Card, Stepper } from "components/organisms";
 import { stepperList, Route as ROUTES, addThousandsSeparators } from "utils";
 
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
-import { selectCurrentUser } from "redux/features";
+import { selectCurrentUser, selectCurrentUserCard } from "redux/features";
 import { push } from "connected-react-router";
 import { useFormik } from "formik";
 import { useVerifyCartMutation } from "api";
@@ -25,8 +28,8 @@ const OrderConfirmationPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const currentUser = useAppSelector(selectCurrentUser);
-
   const [cartData, setCartData] = useState<Cart>(null);
+  const [cardToken, setCardToken] = useState(null);
 
   //Get Verify Cart
   const args = {
@@ -68,12 +71,11 @@ const OrderConfirmationPage: React.FC = () => {
     handleVerifyCart();
   }, []);
 
-  const handleFormSubmit = () => {
-    console.log("aaa");
+  const handleFormSubmit = () => {};
+
+  const initialValues = {
+    card_token: "",
   };
-
-  const initialValues = null;
-
   const { handleSubmit } = useFormik({
     onSubmit: handleFormSubmit,
     initialValues,
@@ -87,6 +89,7 @@ const OrderConfirmationPage: React.FC = () => {
     dataNamePlaceholder: "名前を入力してください",
     onCreatedHandler: (payload) => {
       console.log(payload);
+      setCardToken(payload);
     },
     onFailedHandler: (payload) => {
       console.log("onFailedHandler", payload && payload.message);
@@ -414,10 +417,6 @@ const OrderConfirmationPage: React.FC = () => {
                   クレジットカード
                 </Typography>
 
-                <Box mb="1rem">
-                  <PayjpCheckout {...payjpCheckoutProps} />
-                </Box>
-
                 <FlexBox maxWidth="360px" mb="2rem">
                   <Image
                     src="/assets/images/illustrator/card-list.png"
@@ -425,42 +424,64 @@ const OrderConfirmationPage: React.FC = () => {
                     alt="cards"
                   />
                 </FlexBox>
+
+                <Box mb="1rem">
+                  <PayjpCheckout {...payjpCheckoutProps} />
+                </Box>
               </Box>
             </FlexBox>
 
             <Divider bg="gray.500" mb="2rem"></Divider>
 
             {/*Button Control */}
-            <FlexBox
-              justifyContent="center"
-              flexDirection={{ _: "column-reverse", md: "row" }}
-              maxWidth="480px"
-              mx="auto"
-            >
-              <Button
-                width={{ _: "100%", md: "50%" }}
-                mx={{ _: "0", md: "1rem" }}
-                size="large"
-                color="gray"
-                variant="outlinedSecond"
-                borderRadius={5}
-                onClick={() => dispatch(push(ROUTES.PAYMENT_METHOD))}
+            {isVerifyCartLoading && (
+              <FlexBox
+                justifyContent="center"
+                flexDirection={{ _: "column-reverse", md: "row" }}
+                maxWidth="480px"
+                mx="auto"
               >
-                <Span fontSize="1rem">戻 る</Span>
-              </Button>
-              <Button
-                width={{ _: "100%", md: "50%" }}
-                mx={{ _: "0", md: "1rem" }}
-                mb={{ _: "1rem", md: "0" }}
-                size="large"
-                color="primary"
-                variant="contained"
-                borderRadius={5}
-                type="submit"
+                <Box mb="10px" width="100%" mx="auto">
+                  <Skeleton width="90%" height="50px" />
+                </Box>
+                <Box mb="10px" width="100%" mx="auto">
+                  <Skeleton width="90%" height="50px" />
+                </Box>
+              </FlexBox>
+            )}
+
+            {!isVerifyCartLoading && (
+              <FlexBox
+                justifyContent="center"
+                flexDirection={{ _: "column-reverse", md: "row" }}
+                maxWidth="480px"
+                mx="auto"
               >
-                <Span fontSize="1rem">ご注文を確定</Span>
-              </Button>
-            </FlexBox>
+                <Button
+                  width={{ _: "100%", md: "50%" }}
+                  mx={{ _: "0", md: "1rem" }}
+                  size="large"
+                  color="gray"
+                  variant="outlinedSecond"
+                  borderRadius={5}
+                  onClick={() => dispatch(push(ROUTES.PAYMENT_METHOD))}
+                >
+                  <Span fontSize="1rem">戻 る</Span>
+                </Button>
+                <Button
+                  width={{ _: "100%", md: "50%" }}
+                  mx={{ _: "0", md: "1rem" }}
+                  mb={{ _: "1rem", md: "0" }}
+                  size="large"
+                  color="primary"
+                  variant="contained"
+                  borderRadius={5}
+                  type="submit"
+                >
+                  <Span fontSize="1rem">ご注文を確定</Span>
+                </Button>
+              </FlexBox>
+            )}
           </Box>
         </Box>
       </form>

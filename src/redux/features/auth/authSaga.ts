@@ -12,8 +12,8 @@ function* handleLogin(payload: LoginPayLoad) {
     console.log("Handle Login");
 
     try {                    
-        const res = yield call(authApi.login, payload);        
-        const data: User = res.data.user;        
+        const res = yield call(authApi.login, payload);                
+        const data: User = res.data.data.user;
         yield put(authActions.loginSucess());
         localStorage.setItem("isLoggedIn", "yes");
         yield put(push(ROUTES.HOME));
