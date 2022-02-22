@@ -94,6 +94,10 @@ export const ApiRoute = {
         'LEAVE': '/users/self/leave',
         'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id',
         'FAVORITE': '/users/self/lottery/bookmark',
+
+        'PURCHASE_HISTORY': {
+            'LIST': '/users/self/order',            
+        }
     },
 
     

@@ -7,5 +7,6 @@ export * from './favoriteApi';
 export * from './favoriteApiNew';
 export * from './lotteryApi';
 export * from './newsApi';
+export * from './purchaseHistoryApi';
 export * from './staticPageApi';
 

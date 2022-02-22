@@ -37,7 +37,7 @@ export const formatJapanDate = (date) => {
   return dayjs(date).format("YYYY年MM月DD日 (dd)");
 }
 export const formatNormalDate = (date) => {
-  return dayjs(date).format("yyyy/MM/dd");
+  return dayjs(date).format("YYYY/MM/DD");
 }
 
 

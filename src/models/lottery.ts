@@ -5,7 +5,7 @@ export interface LotteryModelDetail {
     id?: number;
     title?: string;
     image?: string;
-    thumbnailImage?: string;
+    thumbnail_image?: string;
     startedAt?: string;
     endedAt?: string;
     status?: number;
@@ -32,3 +32,4 @@ export interface Rank{
     probability?: string;
     lotteryProducts?: []
 }
+
