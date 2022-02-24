@@ -18,7 +18,7 @@ function* handleLogin(payload: LoginPayLoad) {
         localStorage.setItem("isLoggedIn", "yes");
         yield put(push(ROUTES.HOME));
         yield put(currentUserActions.setCurrentUser(data));        
-        yield call(getUserCards);       
+        yield call(getUserCards);
         
     } catch (error) {
         
