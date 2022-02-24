@@ -45,7 +45,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "cross-env PORT=3002 react-scripts start",
+    "start": "cross-env PORT=3002 PUBLIC_URL=./ react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -65,5 +65,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
-  }
+  },
+  "homepage": "/mall_theme_basic/"
 }
