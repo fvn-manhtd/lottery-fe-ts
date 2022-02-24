@@ -65,6 +65,5 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
-  },
-  "homepage": "/mall_theme_basic/"
+  }
 }
