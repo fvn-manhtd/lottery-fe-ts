@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User, UserCardItem, UserFavorite } from "models";
+import { UserCardItem, UserFavorite } from "models";
 
-export interface CurrentUserSlice {
-    self: User,
+export interface CurrentUserDataSlice {    
     card: UserCardItem[],
     favorite: UserFavorite[],
     default_card: string,
     payment_method: string,
 }
-const initialState: CurrentUserSlice = {
-    self: {},
+const initialState: CurrentUserDataSlice = {    
     card: [],
     favorite: [],
     default_card: '',
@@ -17,17 +15,10 @@ const initialState: CurrentUserSlice = {
 }
 
 
-const currentUserSlice = createSlice({
-    name: 'currentUser',
+const currentUserDataSlice = createSlice({
+    name: 'currentUserData',
     initialState,
     reducers: {
-        unSetCurrentUser(state) {
-            state.self = {};
-        },
-        setCurrentUser(state, action:PayloadAction<User>) {
-            state.self = action.payload;
-        },
-
         unSetCurrentUserCard(state) {
             state.card = [];
         },
@@ -66,10 +57,9 @@ const currentUserSlice = createSlice({
 })
 
 //Actions
-export const currentUserActions = currentUserSlice.actions
+export const currentUserDataActions = currentUserDataSlice.actions
 
 //Selector
-export const selectCurrentUser = (state: { currentUser: { self: User } }) => state.currentUser.self
 export const selectCurrentUserCard = (state: { currentUser: { card: UserCardItem[] } }) => state.currentUser.card
 export const selectDefaultCardID = (state: { currentUser: { default_card: string } }) => state.currentUser.default_card
 
@@ -79,4 +69,4 @@ export const selectPaymethod = (state: { currentUser: { paymethod: string } }) =
 
 
 //Reducer
-export const currentUserReducer = currentUserSlice.reducer
+export const currentUserDataReducer = currentUserDataSlice.reducer

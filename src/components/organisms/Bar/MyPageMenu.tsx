@@ -34,8 +34,8 @@ export const MyPageMenu: React.FC = () => {
   const location = useLocation();
 
   const dispatch = useAppDispatch();
-  const handleLogout = async () => {
-    await dispatch(authActions.logout());
+  const handleLogout = () => {
+    dispatch(authActions.logout());
   };
 
   return (

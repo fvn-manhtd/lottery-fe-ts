@@ -14,7 +14,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PayjpCheckout from "hooks/PayjpCheckout";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import {
-  currentUserActions,
+  currentUserDataActions,
   selectCurrentUserCard,
   selectDefaultCardID,
 } from "redux/features";
@@ -50,8 +50,8 @@ const UserCardPage: React.FC = () => {
       const res = await currentUserApi.getCard();
       const data: UserCard1 = res.data.data;
       if (!isScreenMounted.current) return;
-      dispatch(currentUserActions.setCurrentUserCard(data.cards));
-      dispatch(currentUserActions.setDefaultCard(data.default_card));
+      dispatch(currentUserDataActions.setCurrentUserCard(data.cards));
+      dispatch(currentUserDataActions.setDefaultCard(data.default_card));
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -65,8 +65,8 @@ const UserCardPage: React.FC = () => {
       const { data } = await currentUserApi.saveCard({
         token: cardToken,
       });
-      dispatch(currentUserActions.setCurrentUserCard(data.data.cards));
-      dispatch(currentUserActions.setDefaultCard(data.data.default_card));
+      dispatch(currentUserDataActions.setCurrentUserCard(data.data.cards));
+      dispatch(currentUserDataActions.setDefaultCard(data.data.default_card));
       toast.success("カードは登録できました。", {
         autoClose: 7000,
       });
@@ -83,8 +83,8 @@ const UserCardPage: React.FC = () => {
       const { data } = await currentUserApi.deleteCard({
         card_id: cardID,
       });
-      dispatch(currentUserActions.removeOneCard(cardID));
-      dispatch(currentUserActions.setDefaultCard(data.data.default_card));
+      dispatch(currentUserDataActions.removeOneCard(cardID));
+      dispatch(currentUserDataActions.setDefaultCard(data.data.default_card));
       toast.success("カードは削除できました。", {
         autoClose: 7000,
       });
@@ -101,7 +101,9 @@ const UserCardPage: React.FC = () => {
       const { data } = await currentUserApi.setDefaultCard({
         card_id: cardID,
       });
-      dispatch(currentUserActions.setDefaultCard(data.data.card_default_id));
+      dispatch(
+        currentUserDataActions.setDefaultCard(data.data.card_default_id)
+      );
       toast.success("カードは追加できました。", {
         autoClose: 7000,
       });

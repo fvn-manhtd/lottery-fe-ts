@@ -15,8 +15,8 @@ import { useAppDispatch } from "redux/app/hooks";
 export const MobileMenuContent: React.FC = () => {
   const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
   const dispatch = useAppDispatch();
-  const handleLogout = async () => {
-    await dispatch(authActions.logout());
+  const handleLogout = () => {
+    dispatch(authActions.logout());
   };
 
   return (

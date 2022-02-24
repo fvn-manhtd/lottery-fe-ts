@@ -21,7 +21,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { usePostalJp } from "use-postal-jp";
 import { useEffect, useState } from "react";
-import { currentUserActions, selectCurrentUser } from "redux/features";
+import {
+  currentUserActions,
+  currentUserDataActions,
+  selectCurrentUser,
+} from "redux/features";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { currentUserApi } from "api";
 import { push } from "connected-react-router";
@@ -115,7 +119,7 @@ const PaymentMethodPage: React.FC = () => {
 
   const handlePaymentMethod = (e) => {
     setPaymethod(e.target.value);
-    dispatch(currentUserActions.setPaymentMethod(e.target.value));
+    dispatch(currentUserDataActions.setPaymentMethod(e.target.value));
   };
 
   const {

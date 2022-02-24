@@ -9,7 +9,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
-import { authReducer, currentUserReducer, storeObjectReducer } from 'redux/features';
+import { authReducer, currentUserDataReducer, currentUserReducer, storeObjectReducer } from 'redux/features';
 import { history } from 'utils';
 import rootSaga from './rootSaga';
 
@@ -17,13 +17,14 @@ import rootSaga from './rootSaga';
 
 const persistConfig = {
   key: 'gacha',
-  blacklist: ['purchaseHistoryApi', 'newsApi', 'lotteryApi', 'staticPageApi', 'cartApi'],
+  blacklist: ['currentUserData', 'purchaseHistoryApi', 'newsApi', 'lotteryApi', 'staticPageApi', 'cartApi'],
   storage,
 }
 
 const combinedReducer = combineReducers({
   auth: authReducer,
   currentUser: currentUserReducer,
+  currentUserData: currentUserDataReducer,
   [newsApi.reducerPath]: newsApi.reducer,
   [lotteryApi.reducerPath]: lotteryApi.reducer,
   [staticPageApi.reducerPath]: staticPageApi.reducer,

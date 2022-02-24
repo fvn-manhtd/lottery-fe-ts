@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   FlexBox,
@@ -27,13 +27,13 @@ export const Header: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { data: cartData } = useListCartQuery({
+  let { data: cartData } = useListCartQuery({
     refetchOnMountOrArgChange: false,
     refetchOnFocus: false,
   });
 
-  const handleLogout = async () => {
-    await dispatch(authActions.logout());
+  const handleLogout = () => {
+    dispatch(authActions.logout());
   };
 
   const menuHandle = (
@@ -95,7 +95,7 @@ export const Header: React.FC = () => {
                         shopping-cart
                       </Icon>
                     </Box>
-                    {cartData && (
+                    {cartData && cartData.total_amount_in_cart != 0 && (
                       <FlexBox
                         borderRadius="100%"
                         bg="error.main"

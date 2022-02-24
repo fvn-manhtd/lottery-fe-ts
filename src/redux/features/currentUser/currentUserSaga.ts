@@ -2,7 +2,8 @@ import { currentUserApi } from "api";
 import { UserCard1 } from "models";
 import { toast } from "react-toastify";
 import { call, fork, put } from "redux-saga/effects";
-import { currentUserActions } from "./curentUserSlice";
+import { currentUserDataActions } from "./currentUserDataSlice";
+import { currentUserActions } from "./currentUserSlice";
 
 
 function* getCurrentUser() {
@@ -32,8 +33,8 @@ export function* getUserCards() {
     try {
         const res = yield call(currentUserApi.getCard);
         const data: UserCard1 = res.data.data;
-        yield put(currentUserActions.setDefaultCard(data.default_card));
-        yield put(currentUserActions.setCurrentUserCard(data.cards));        
+        yield put(currentUserDataActions.setDefaultCard(data.default_card));
+        yield put(currentUserDataActions.setCurrentUserCard(data.cards));        
     } catch (error) {        
         console.log(error);
     }

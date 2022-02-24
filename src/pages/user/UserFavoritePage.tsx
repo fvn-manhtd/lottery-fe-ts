@@ -8,7 +8,7 @@ import { getSearchQueryObj, Route as ROUTES } from "utils";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { push } from "connected-react-router";
 import Skeleton from "react-loading-skeleton";
-import { currentUserActions, selectCurrentUserFav } from "redux/features";
+import { currentUserDataActions, selectCurrentUserFav } from "redux/features";
 
 const UserFavoritePage = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const UserFavoritePage = () => {
     try {
       const { data } = await favoriteApiNew.list(value);
       if (!isScreenMounted.current) return;
-      dispatch(currentUserActions.addUserFav(data.data.data));
+      dispatch(currentUserDataActions.addUserFav(data.data.data));
       setPageCount(data.data.pagination.total); // total pagination
       setNextPage(data.data.pagination.next_page_url); // Next page
       setIsFetching(false);
