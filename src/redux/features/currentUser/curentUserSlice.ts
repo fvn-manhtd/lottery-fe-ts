@@ -43,8 +43,7 @@ const currentUserSlice = createSlice({
         unSetDefaultCard(state) {
             state.default_card = '';
         },
-        setDefaultCard(state, action: PayloadAction<string>) {
-            console.log(action.payload);
+        setDefaultCard(state, action: PayloadAction<string>) {            
             state.default_card = action.payload;
         },
 

@@ -60,14 +60,10 @@ axiosClient.interceptors.response.use(
     const { status, data } = error.response;
     switch (status) {
       case 401: // HTTP_UNAUTHORIZED
-        dispatch(push(ROUTES.USER_LOGIN));
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("persist:gacha");
         dispatch(authActions.reset());
         dispatch(authActions.loginFailed());
-        window.location.href = ROUTES.USER_LOGIN;
-        toast.error(data.message, { autoClose: 7000 });
-
         break;
 
       case 404: // HTTP_NOT_FOUND

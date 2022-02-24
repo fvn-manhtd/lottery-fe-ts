@@ -10,8 +10,8 @@ export const lotteryApi = createApi({
     baseQuery: baseQueryWithRetry,
     keepUnusedDataFor: 60 * 5,
     refetchOnMountOrArgChange: 60 * 30, 
-    refetchOnFocus: true,
-    refetchOnReconnect: true,
+    refetchOnFocus: false,
+    refetchOnReconnect: false,
     endpoints: (build) => ({
         getLotteries: build.query<LotteryListModel, { pageArg: number}>({
             query: (arg) => {

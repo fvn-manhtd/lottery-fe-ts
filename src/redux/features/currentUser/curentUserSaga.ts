@@ -33,8 +33,7 @@ export function* getUserCards() {
         const res = yield call(currentUserApi.getCard);
         const data: UserCard1 = res.data.data;
         yield put(currentUserActions.setDefaultCard(data.default_card));
-        yield put(currentUserActions.setCurrentUserCard(data.cards));
-        console.log("Add Card to State");
+        yield put(currentUserActions.setCurrentUserCard(data.cards));        
     } catch (error) {        
         console.log(error);
     }
