@@ -100,7 +100,12 @@ export const LotteryPurchasedHistory: React.FC<
               <Grid container spacing={6}>
                 {order_prize.map((item) => (
                   <Grid item lg={3} sm={6} xs={12} key={item.id}>
-                    <Product src={""} title={""} prize={""} quanity={""} />
+                    <Product
+                      src={item.lottery_product?.image}
+                      title={item.lottery_product?.name}
+                      prize={item.selected_rank}
+                      quanity={"1"}
+                    />
                   </Grid>
                 ))}
               </Grid>
