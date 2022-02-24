@@ -94,6 +94,7 @@ function* handleLogout() {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("persist:gacha");
         yield put(authActions.reset());
+        yield put(push(ROUTES.HOME));
                 
     } catch (error) {
         console.log(error);
