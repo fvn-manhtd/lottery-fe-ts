@@ -419,7 +419,7 @@ const OrderConfirmationPage: React.FC = () => {
 
                 <FlexBox maxWidth="360px" mb="2rem">
                   <Image
-                    src="/assets/images/illustrator/card-list.png"
+                    src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/illustrator/card-list.png`}
                     width="100%"
                     alt="cards"
                   />

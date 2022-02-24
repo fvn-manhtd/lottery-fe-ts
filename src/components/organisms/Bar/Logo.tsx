@@ -5,7 +5,11 @@ import { Route as ROUTES } from "utils";
 export const Logo: React.FC = () => {
   return (
     <NavLink href={ROUTES.HOME}>
-      <Image width="100%" src="/assets/images/logo.png" alt="Online Gacha" />
+      <Image
+        width="100%"
+        src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/logo.png`}
+        alt="Online Gacha"
+      />
     </NavLink>
   );
 };

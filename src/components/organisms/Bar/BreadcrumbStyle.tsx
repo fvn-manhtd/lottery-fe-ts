@@ -20,8 +20,8 @@ export const BreadcrumbStyle = styled.ol`
           content: "";
           width: 18px;
           height: 18px;
-          background: url("../assets/images/icons/home1.svg") center center
-            no-repeat;
+          background: url("mall_theme_basic/assets/images/icons/home1.svg")
+            center center no-repeat;
           background-size: cover;
 
           display: inline-block;
@@ -45,8 +45,8 @@ export const BreadcrumbStyle = styled.ol`
         content: "";
         width: 12px;
         height: 12px;
-        background: url("../assets/images/icons/chevron-right.svg") center
-          center no-repeat;
+        background: url("mall_theme_basic/assets/images/icons/chevron-right.svg")
+          center center no-repeat;
         background-size: cover;
 
         display: inline-block;

@@ -48,7 +48,8 @@
     "start": "cross-env PORT=3002 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "newbuild": "BUILD_PATH='../../../public/mall_theme_basic' react-scripts build"
   },
   "browserslist": {
     "production": [
@@ -64,5 +65,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
-  }
+  },
+  "homepage": "/mall_theme_basic/"
 }

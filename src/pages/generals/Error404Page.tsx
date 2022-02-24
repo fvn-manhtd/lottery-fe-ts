@@ -27,7 +27,7 @@ const Error404Page = () => {
           </Typography>
           <Box maxWidth="500px" mx="auto">
             <Image
-              src="/assets/images/illustrator/404.png"
+              src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/illustrator/404.png`}
               width="100%"
               alt="404"
             />
