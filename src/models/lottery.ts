@@ -1,15 +1,19 @@
 import { PaginationParams } from "./common";
 
+
 export interface LotteryModelDetail {
     id?: number;
     title?: string;
     image?: string;
-    thumbnailImage?: string;
+    thumbnail_image?: string;
     startedAt?: string;
     endedAt?: string;
     status?: number;
+    url?: string;
     rankedProducts?: [];
 }
+
+
 export interface LotteryModel {
     lottery?: LotteryModelDetail;
     ranks?: Rank[];
@@ -28,3 +32,4 @@ export interface Rank{
     probability?: string;
     lotteryProducts?: []
 }
+

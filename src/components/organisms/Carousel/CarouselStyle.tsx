@@ -35,17 +35,18 @@ export const CarouselStyle = styled.div`
     &::before {
       content: "";
       position: absolute;
-      width: 25%;
-      padding-top: 25%;
-      transform: rotate(45deg);
-      top: -24%;
-      left: -13%;
-      z-index: 900;
+      width: 100px;
+      height: 100px;
+      top: 0%;
+      left: 0%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      z-index: 2;
     }
-    @media (max-width: 768px) {
-      width: unset;
-      height: unset;
-      left: unset;
+    @media screen and (min-width: 768px) {
+      &::before {
+        width: 150px;
+        height: 150px;
+      }
     }
   }
 
@@ -84,6 +85,9 @@ export const CarouselStyle = styled.div`
     width: 3.3rem;
     height: 3.3rem;
     font-size: 1.2rem;
+    &:hover {
+      opacity: 0.7;
+    }
     @media (max-width: 425px) {
       width: 2.2rem;
       height: 2.2rem;

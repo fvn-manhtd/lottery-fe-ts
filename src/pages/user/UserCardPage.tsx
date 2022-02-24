@@ -21,6 +21,7 @@ import {
 import { currentUserApi } from "api";
 import { Card, Head } from "components/organisms";
 import { toast } from "react-toastify";
+import { UserCard1 } from "models";
 
 const UserCardPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -46,10 +47,11 @@ const UserCardPage: React.FC = () => {
   const getCustomerCard = async () => {
     setLoading(true);
     try {
-      const { data } = await currentUserApi.getCard();
+      const res = await currentUserApi.getCard();
+      const data: UserCard1 = res.data.data;
       if (!isScreenMounted.current) return;
-      dispatch(currentUserActions.setCurrentUserCard(data.data.cards));
-      dispatch(currentUserActions.setDefaultCard(data.data.default_card));
+      dispatch(currentUserActions.setCurrentUserCard(data.cards));
+      dispatch(currentUserActions.setDefaultCard(data.default_card));
       setLoading(false);
     } catch (error) {
       console.log(error);

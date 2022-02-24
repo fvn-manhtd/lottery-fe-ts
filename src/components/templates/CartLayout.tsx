@@ -2,6 +2,7 @@ import React from "react";
 import { Box, FlexBox, NavLink, Paragraph, Typography } from "components/atoms";
 import { HeaderCart } from "components/organisms";
 import { Route as ROUTES } from "utils";
+import { ReactNode } from "hoist-non-react-statics/node_modules/@types/react";
 
 const listStaticPage = [
   { id: 1, title: "ご利用規約", href: ROUTES.STATIC_USAGE_POLICY },
@@ -19,16 +20,19 @@ const listStaticPage = [
 ];
 
 type CartLayoutProps = {
-  children:JSX.Element,
-  pageTitle?:string,
-}
+  children: ReactNode;
+  pageTitle?: string;
+};
 
-export const CartLayout: React.FC<CartLayoutProps> = ({ children, pageTitle }) => (
+export const CartLayout: React.FC<CartLayoutProps> = ({
+  children,
+  pageTitle,
+}) => (
   <>
     <HeaderCart />
 
     <Typography as="h2" textAlign="center" my="3rem">
-      {pageTitle?pageTitle:"カート"}
+      {pageTitle ? pageTitle : "カート"}
     </Typography>
     <Box bg="gray.400" my="3rem">
       {children}

@@ -87,6 +87,9 @@ export const Button = styled.button<
         text: {
           border: "none",
           color: `${color}.second`,
+          "&:focus": {
+            boxShadow: 0, //shadows[0]
+          },
           "&:hover": {
             bg: color ? `${color}.light` : "gray.100",
             color: `${color}.text`,

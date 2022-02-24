@@ -17,6 +17,7 @@ import { useAppDispatch } from "redux/app/hooks";
 import { authActions } from "redux/features";
 import { Route as ROUTES } from "utils";
 import { push } from "connected-react-router";
+import { useListCartQuery } from "api";
 
 export const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -25,6 +26,12 @@ export const Header: React.FC = () => {
   const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
 
   const dispatch = useAppDispatch();
+
+  const { data: cartData } = useListCartQuery({
+    refetchOnMountOrArgChange: false,
+    refetchOnFocus: false,
+  });
+
   const handleLogout = async () => {
     await dispatch(authActions.logout());
   };
@@ -46,7 +53,10 @@ export const Header: React.FC = () => {
         justifyContent="space-between"
         height={{ _: "60px", md: "80px" }}
         px={10}
-        position="relative"
+        position="fixed"
+        top="0"
+        left="0"
+        width="100%"
         zIndex={991}
       >
         <Box width={{ _: "20%", lg: "30%" }}>
@@ -75,10 +85,8 @@ export const Header: React.FC = () => {
           >
             {isLoggedIn && (
               <>
-                <Box
-                  ml={40}
-                  color="gray.700"
-                  cursor="pointer"
+                <Button
+                  variant="text"
                   onClick={() => dispatch(push(ROUTES.SHOPPING_CART))}
                 >
                   <FlexBox position="relative" alignItems="center">
@@ -87,22 +95,23 @@ export const Header: React.FC = () => {
                         shopping-cart
                       </Icon>
                     </Box>
-
-                    <FlexBox
-                      borderRadius="100%"
-                      bg="error.main"
-                      px="5px"
-                      py="3px"
-                      alignItems="center"
-                      justifyContent="center"
-                      position="absolute"
-                      top="-1.1rem"
-                      left="-1.3rem"
-                    >
-                      <Tiny color="white" fontWeight="600">
-                        99
-                      </Tiny>
-                    </FlexBox>
+                    {cartData && (
+                      <FlexBox
+                        borderRadius="100%"
+                        bg="error.main"
+                        width="20px"
+                        height="20px"
+                        alignItems="center"
+                        justifyContent="center"
+                        position="absolute"
+                        top="-1rem"
+                        left="-1rem"
+                      >
+                        <Tiny color="white" fontWeight="600">
+                          {cartData.total_amount_in_cart}
+                        </Tiny>
+                      </FlexBox>
+                    )}
 
                     <Typography
                       color="gray.700"
@@ -113,13 +122,16 @@ export const Header: React.FC = () => {
                       カート
                     </Typography>
                   </FlexBox>
-                </Box>
+                </Button>
               </>
             )}
 
             {!isLoggedIn && (
               <>
-                <NavLink href={ROUTES.USER_LOGIN}>
+                <Button
+                  variant="text"
+                  onClick={() => dispatch(push(ROUTES.USER_LOGIN))}
+                >
                   <FlexBox alignItems="center">
                     <Box width="16px">
                       <IconPng>login</IconPng>
@@ -133,7 +145,7 @@ export const Header: React.FC = () => {
                       ログイン
                     </Typography>
                   </FlexBox>
-                </NavLink>
+                </Button>
               </>
             )}
 
@@ -141,7 +153,7 @@ export const Header: React.FC = () => {
               ml={20}
               direction="right"
               handler={
-                <Button variant="none" className="dropdown-handler">
+                <Button variant="text" className="dropdown-handler">
                   <Box width="16px">
                     <IconPng>user</IconPng>
                   </Box>
@@ -256,21 +268,24 @@ export const Header: React.FC = () => {
                   </Icon>
                 </Box>
 
-                <FlexBox
-                  borderRadius="100%"
-                  bg="error.main"
-                  px="5px"
-                  py="5px"
-                  alignItems="center"
-                  justifyContent="center"
-                  position="absolute"
-                  top="-0.5rem"
-                  right="-8px"
-                >
-                  <Tiny color="white" fontWeight="600">
-                    99
-                  </Tiny>
-                </FlexBox>
+                {cartData && cartData.total_amount_in_cart !== 0 && (
+                  <FlexBox
+                    borderRadius="100%"
+                    bg="error.main"
+                    width="20px"
+                    height="20px"
+                    p="2px"
+                    alignItems="center"
+                    justifyContent="center"
+                    position="absolute"
+                    top="-0.5rem"
+                    right="-8px"
+                  >
+                    <Tiny fontSize="8px" color="white" fontWeight="600">
+                      {cartData.total_amount_in_cart}
+                    </Tiny>
+                  </FlexBox>
+                )}
               </FlexBox>
             </Box>
           </Box>

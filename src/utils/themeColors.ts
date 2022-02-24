@@ -42,6 +42,7 @@ const primaryColor = {
   middle: "#F4C521",  
   dark: "#E70012",
   light: "#FF6C00",
+  moreLight: "rgba(233,81,6,.7)",
 
   text: "#ffffff",  
 

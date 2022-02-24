@@ -1,10 +1,18 @@
+import { useListPurchaseHistoryQuery } from "api";
 import { Box, Divider, FlexBox, Typography } from "components/atoms";
-import { LotteryPurchasedHistory, Grid, Head } from "components/organisms";
+import {
+  Grid,
+  Head,
+  LotteryPurchasedHistory,
+  LotteryPurchasedHistorySkeleton,
+} from "components/organisms";
 import { DashBoardLayout } from "components/templates";
 import React from "react";
-import { fakeLotteryPurchasedHistoryList } from "utils/fakeData";
 
 const UserPurchaseHistoryPage: React.FC = () => {
+  const { data: purchaseHistoryData, isLoading } =
+    useListPurchaseHistoryQuery();
+
   return (
     <>
       <Head title="購入履歴" />
@@ -27,21 +35,35 @@ const UserPurchaseHistoryPage: React.FC = () => {
             backgroundColor="gray.500"
           ></Divider>
 
-          <Box mb="2rem">
-            <Grid container spacing={6}>
-              {fakeLotteryPurchasedHistoryList.map((item) => (
-                <Grid item xs={12} key={item.id}>
-                  <LotteryPurchasedHistory
-                    title={item.title}
-                    image={item.image}
-                    date={item.date}
-                    total={12000}
-                    paymethod={item.paymethod}
-                  />
+          {(isLoading || purchaseHistoryData == undefined) && (
+            <Box mb="2rem">
+              <Grid container spacing={6}>
+                <Grid item xs={12}>
+                  <LotteryPurchasedHistorySkeleton />
                 </Grid>
-              ))}
-            </Grid>
-          </Box>
+              </Grid>
+            </Box>
+          )}
+
+          {(!isLoading || purchaseHistoryData !== undefined) && (
+            <Box mb="2rem">
+              <Grid container spacing={6}>
+                {purchaseHistoryData.orders?.map((item) => (
+                  <Grid item xs={12} key={item.id}>
+                    <LotteryPurchasedHistory
+                      id={item.id}
+                      title={item.order_ticket[0]?.lottery_title}
+                      image={item.order_ticket[0]?.lottery?.thumbnail_image}
+                      date={item.order.created_at}
+                      total={item.order_ticket[0]?.total_price}
+                      paymethod={item.order?.payment_method}
+                      order_prize={item.order_ticket[0]?.order_prize}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          )}
         </Box>
       </DashBoardLayout>
     </>

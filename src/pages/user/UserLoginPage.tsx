@@ -125,9 +125,6 @@ const UserLoginPage = () => {
                     borderColor="#3b5a9a"
                     borderTop="2px solid white"
                   ></Spinner>
-                  <Small ml="0.5rem" color="white" fontWeight="600">
-                    ログイン中です
-                  </Small>
                 </>
               ) : (
                 <>
@@ -159,9 +156,6 @@ const UserLoginPage = () => {
                     borderColor="#55acee"
                     borderTop="2px solid white"
                   ></Spinner>
-                  <Small ml="0.5rem" color="white" fontWeight="600">
-                    ログイン中です
-                  </Small>
                 </>
               ) : (
                 <>
@@ -232,9 +226,6 @@ const UserLoginPage = () => {
                       borderColor="primary.light"
                       borderTop="2px solid white"
                     ></Spinner>
-                    <Small ml="0.5rem" color="white" fontWeight="600">
-                      ログイン中です
-                    </Small>
                   </>
                 ) : (
                   <Small color="white" fontWeight="600">
@@ -256,7 +247,7 @@ const UserLoginPage = () => {
               <NavLink
                 bg="gray.500"
                 py="1.4rem"
-                variant="button"
+                variant="register_button"
                 href={ROUTES.USER_REGISTER}
               >
                 <H6 fontWeight={400}>新規登録</H6>

@@ -16,6 +16,7 @@ export const axiosClient = axios.create({
 //Call API using fetchBaseQuery from RTK Query
 export const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_PUBLIC_API_URL,
+  credentials: 'include',
   prepareHeaders: (headers) => {
       headers.set("Context-Type", "application/json");
       headers.set("X-Requested-With", "XMLHttpRequest");      

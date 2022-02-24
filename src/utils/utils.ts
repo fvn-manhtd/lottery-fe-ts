@@ -37,5 +37,12 @@ export const formatJapanDate = (date) => {
   return dayjs(date).format("YYYY年MM月DD日 (dd)");
 }
 export const formatNormalDate = (date) => {
-  return dayjs(date).format("yyyy/MM/dd");
+  return dayjs(date).format("YYYY/MM/DD");
+}
+
+
+export const addThousandsSeparators = (n) => {
+  return (''+n).split('').reverse().join('')
+      .match(/(\d{1,3})/g).join(',').split('')
+      .reverse().join('');
 }

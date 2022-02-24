@@ -92,11 +92,26 @@ export const ApiRoute = {
         'CARD': '/users/self/card',
         'DEFAULT_CARD': '/users/self/default-card',
         'LEAVE': '/users/self/leave',
-        'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id'
+        'REGISTER_PAY_CUSTOMER_ID': '/users/self/regiser-pay-customer-id',
+        'FAVORITE': '/users/self/lottery/bookmark',
+
+        'PURCHASE_HISTORY': {
+            'LIST': '/users/self/order',            
+        }
     },
 
+    
 
-    'STATIC_API' : '/pages'    
+    'STATIC_API': '/pages',
+    
+    'CART': {
+        'LIST': '/cart',
+        'VERIFY': '/cart/verify',
+        'SHOP_CONFIG': '/cart/shop_config',
+        'DELETE': '/cart/ticket',
+        'ORDER': '/cart/order',
+        'COUPON': '/cart/coupon'
+    }
 
 
 }

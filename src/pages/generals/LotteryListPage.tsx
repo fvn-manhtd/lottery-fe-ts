@@ -21,10 +21,14 @@ import { useState, useEffect, useRef } from "react";
 
 const LotteryListPage = () => {
   const [pagination, setPagination] = useState(1);
-  const [limit, setLimit] = useState(12);
+
   const dispatch = useAppDispatch();
 
   let currentStatus = getSearchQueryObj("status");
+
+  if (!currentStatus) {
+    currentStatus = 0;
+  }
 
   let myRef = useRef(null);
 
@@ -32,7 +36,7 @@ const LotteryListPage = () => {
     data: lotteriesData,
     isLoading,
     isFetching,
-  } = useGetLotteriesQuery({ limitArg: limit, pageArg: pagination });
+  } = useGetLotteriesQuery({ pageArg: pagination });
 
   const handleChangePagination = (value) => {
     dispatch(push(`${ROUTES.LOTTERIES}?page=${value}`));
@@ -42,15 +46,6 @@ const LotteryListPage = () => {
   const handleStatusChange = (value) => {
     dispatch(push(`${ROUTES.LOTTERIES}?status=${value}`));
   };
-
-  useEffect(() => {
-    if (currentStatus && currentStatus != undefined) {
-      setLimit(100);
-      setPagination(1);
-    } else {
-      setLimit(12);
-    }
-  }, [currentStatus]);
 
   useEffect(() => {
     window.scrollTo({ behavior: "smooth", top: myRef.current.offsetTop });
@@ -76,7 +71,7 @@ const LotteryListPage = () => {
       <Head title="NOW ON SALE＆COMING SOON 販売中/近日発売予定" />
       <BaseLayout>
         <main>
-          <Container>
+          <Container pt="5px">
             <Box p={{ _: 0, md: 40 }}>
               {/*title*/}
               <Box ref={myRef} marginY="2rem">
@@ -189,7 +184,8 @@ const LotteryListPage = () => {
                   >
                     <Pagination
                       onChange={(data) => handleChangePagination(data)}
-                      pageCount={lotteriesData.pagination.last_page}
+                      pageRangeDisplayed={5}
+                      pageCount={lotteriesData.pagination.total}
                     />
                   </Box>
                 )}

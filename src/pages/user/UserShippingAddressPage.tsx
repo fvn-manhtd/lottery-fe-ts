@@ -143,21 +143,22 @@ const UserShippingAddressPage: React.FC = () => {
                 <FlexBox
                   flexDirection={{ _: "column", md: "row" }}
                   mb={{ _: "1rem", md: "0" }}
-                  width={{ _: "100%", md: "60%" }}
+                  width={{ _: "100%", md: "80%" }}
                 >
                   <FlexBox
                     mb={{ _: "1rem", md: "0" }}
                     width={{ _: "100%", md: "50%" }}
                     alignItems="center"
                   >
-                    <Box width="20%" textAlign="center" px="1rem">
+                    <Box width="30%" textAlign="center" px="1rem">
                       姓
                     </Box>
-                    <Box width="80%">
+                    <Box width="70%">
                       <TextField
                         name="first_name"
                         type="text"
                         fullwidth
+                        placeholder="姓を入力してください"
                         onBlur={handleBlur}
                         onChange={handleChange}
                         value={values.first_name}
@@ -171,15 +172,16 @@ const UserShippingAddressPage: React.FC = () => {
                     width={{ _: "100%", md: "50%" }}
                     alignItems="center"
                   >
-                    <Box width="20%" textAlign="center" px="1rem">
+                    <Box width="30%" textAlign="center" px="1rem">
                       名
                     </Box>
-                    <Box width="80%">
+                    <Box width="70%">
                       <TextField
                         name="last_name"
                         type="text"
                         fullwidth
                         onBlur={handleBlur}
+                        placeholder="名を入力してください"
                         onChange={handleChange}
                         value={values.last_name}
                         errorText={touched.last_name && errors.last_name}
@@ -212,20 +214,21 @@ const UserShippingAddressPage: React.FC = () => {
                 <FlexBox
                   flexDirection={{ _: "column", md: "row" }}
                   mb={{ _: "1rem", md: "0" }}
-                  width={{ _: "100%", md: "60%" }}
+                  width={{ _: "100%", md: "80%" }}
                 >
                   <FlexBox
                     mb={{ _: "1rem", md: "0" }}
                     width={{ _: "100%", md: "50%" }}
                     alignItems="center"
                   >
-                    <Box width="20%" textAlign="center" px="1rem">
+                    <Box width="30%" textAlign="center" px="1rem">
                       セイ
                     </Box>
-                    <Box width="80%">
+                    <Box width="70%">
                       <TextField
                         name="first_name_kana"
                         type="text"
+                        placeholder="セイを入力してください"
                         fullwidth
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -242,12 +245,13 @@ const UserShippingAddressPage: React.FC = () => {
                     width={{ _: "100%", md: "50%" }}
                     alignItems="center"
                   >
-                    <Box width="20%" textAlign="center" px="1rem">
+                    <Box width="30%" textAlign="center" px="1rem">
                       メイ
                     </Box>
-                    <Box width="80%">
+                    <Box width="70%">
                       <TextField
                         name="last_name_kana"
+                        placeholder="メイを入力してください"
                         type="text"
                         fullwidth
                         onBlur={handleBlur}
@@ -297,7 +301,7 @@ const UserShippingAddressPage: React.FC = () => {
                     <Box width="100%">
                       <TextField
                         name="post_code"
-                        placeholder=""
+                        placeholder="郵便番号"
                         fullwidth
                         type="text"
                         onBlur={handleBlur}
@@ -318,7 +322,7 @@ const UserShippingAddressPage: React.FC = () => {
                   <Box maxWidth="220px" mb="1rem">
                     <TextField
                       name="prefecture"
-                      placeholder=""
+                      placeholder="都道府県"
                       fullwidth
                       type="text"
                       onBlur={handleBlur}
@@ -330,11 +334,15 @@ const UserShippingAddressPage: React.FC = () => {
                   <TextField
                     name="address"
                     fullwidth
+                    placeholder="市区郡町村・パート・マンション・部屋番号を入力してください"
                     type="text"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.address}
                   />
+                  <Typography as="span" fontSize="10px">
+                    市区群町村入力可能な文字数の上限を超える際は[番地]に続けて入力してください。
+                  </Typography>
                 </Box>
               </FlexBox>
 
@@ -364,11 +372,15 @@ const UserShippingAddressPage: React.FC = () => {
                   <TextField
                     name="phone_number"
                     fullwidth
+                    placeholder="電話番号を入力してください。"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.phone_number}
                     errorText={touched.phone_number && errors.phone_number}
                   />
+                  <Typography as="span" fontSize="10px">
+                    ご注文内容や配送について、電話またはメールにてご連絡させていただく事があります
+                  </Typography>
                 </Box>
               </FlexBox>
             </Box>
@@ -404,9 +416,6 @@ const UserShippingAddressPage: React.FC = () => {
                       borderColor="secondary.900"
                       borderTop="2px solid white"
                     ></Spinner>
-                    <Small ml="0.5rem" color="white" fontWeight="600">
-                      情報を変更中です
-                    </Small>
                   </>
                 ) : (
                   <Small color="white" fontWeight="600">

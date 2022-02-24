@@ -83,27 +83,16 @@ export const Carousel: React.FC<CarouselProps> = ({
                     className={"carousel__slide-" + value.status}
                     key={value.id}
                   >
-                    {value.status <= 2 ? (
-                      <StyledLabelText
-                        color="white"
-                        fontWeight={600}
-                        pt={["4%", "4%", "4%", "4%"]}
-                        ml={["-1%", "-1%", "unset", "unset"]}
-                        fontSize={["0.8rem", "1.4rem", "1rem", "1.4rem"]}
-                      >
-                        {lotteryStatusObj[value.status - 1].text}
-                      </StyledLabelText>
-                    ) : (
-                      <StyledLabelText
-                        color="white"
-                        fontWeight={600}
-                        pt={["4%", "4%", "4%", "4%"]}
-                        ml={["-1%", "-2%", "-1%", "-1%"]}
-                        fontSize={["0.6rem", "1.1rem", "0.8rem", "1.2rem"]}
-                      >
-                        {lotteryStatusObj[value.status - 1].text}
-                      </StyledLabelText>
-                    )}
+                    <StyledLabelText
+                      color="white"
+                      fontWeight={600}
+                      textAlign="center"
+                      pt={["20px", "30px"]}
+                      ml={["-1%", "-1%", "unset", "unset"]}
+                      fontSize={["0.6rem", "0.8rem", "0.875rem", "0.9375rem"]}
+                    >
+                      {lotteryStatusObj[value.status - 1].text}
+                    </StyledLabelText>
                     <Box
                       position="absolute"
                       bottom={0}
@@ -133,9 +122,14 @@ export const Carousel: React.FC<CarouselProps> = ({
                         {value.title}
                       </Typography>
                     </Box>
-                    <NavLink href={"/lottery/" + value.id}>
-                      <Image src={value.image} hasMasterSpinner={true} />
-                    </NavLink>
+                    <a href={"http://" + value.url} target="_blank">
+                      <Image
+                        src={
+                          process.env.REACT_APP_MALL_IMAGE_PATH + value.image
+                        }
+                        hasMasterSpinner={true}
+                      />
+                    </a>
                   </Slide>
                 );
               })}

@@ -40,7 +40,7 @@ const NewsDetailPage = () => {
 
       <BaseLayout>
         <main>
-          <Container>
+          <Container pt="5px">
             <Breadcrumb my={20} breadcrumbList={breadcrumbList} />
 
             {newsItem === undefined && (isLoading || isFetching) && (

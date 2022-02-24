@@ -6,73 +6,95 @@ import {
   Span,
   Image,
   Typography,
-  TextField,
-  SelectBox,
-  CheckBox,
-  SemiSpan,
+  TableRow,
+  H5,
+  RadioButton,
 } from "components/atoms";
 import { CartLayout } from "components/templates";
-import { Stepper } from "components/organisms";
-import { monthListArr, stepperList, yearListNextArr } from "utils";
-import { useHistory } from "react-router-dom";
+import { Card, Stepper } from "components/organisms";
+import { stepperList, Route as ROUTES, addThousandsSeparators } from "utils";
+
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
+import { selectCurrentUser, selectCurrentUserCard } from "redux/features";
+import { push } from "connected-react-router";
 import { useFormik } from "formik";
-import * as yup from "yup";
-import { useState } from "react";
-import valid from "card-validator";
+import { useVerifyCartMutation } from "api";
+import Skeleton from "react-loading-skeleton";
+import { useEffect, useState } from "react";
+import { Cart } from "models";
+import PayjpCheckout from "hooks/PayjpCheckout";
 
 const OrderConfirmationPage: React.FC = () => {
-  const history = useHistory();
+  const dispatch = useAppDispatch();
 
-  const [cartCustomerMonth, setCartCustomerMonth] = useState("1");
-  const [cartCustomerYear, setCartCustomerYear] = useState("2021");
+  const currentUser = useAppSelector(selectCurrentUser);
+  const [cartData, setCartData] = useState<Cart>(null);
+  const [cardToken, setCardToken] = useState(null);
+
+  //Get Verify Cart
+  const args = {
+    payment_method: "Visa",
+    //Order
+    order_last_name: currentUser.last_name,
+    order_first_name: currentUser.first_name,
+    order_last_name_kana: currentUser.last_name_kana,
+    order_first_name_kana: currentUser.first_name_kana,
+    order_post_code: currentUser.post_code,
+    order_prefecture: currentUser.prefecture,
+    order_address: currentUser.address,
+    order_phone_number: currentUser.phone_number,
+    //Recipient
+    recipient_input: true,
+    recipient_last_name: currentUser.last_name,
+    recipient_first_name: currentUser.first_name,
+    recipient_last_name_kana: currentUser.last_name_kana,
+    recipient_first_name_kana: currentUser.first_name_kana,
+    recipient_post_code: currentUser.post_code,
+    recipient_prefecture: currentUser.prefecture,
+    recipient_address: currentUser.address,
+    recipient_phone_number: currentUser.phone_number,
+  };
+
+  //Handle Verfiy Cart
+  const [cartVerifyData, { isLoading: isVerifyCartLoading }] =
+    useVerifyCartMutation();
+
+  const handleVerifyCart = async () => {
+    try {
+      const data = await cartVerifyData(JSON.stringify(args)).unwrap();
+      setCartData(data);
+    } catch (error) {
+      console.log("Error verify cart", error);
+    }
+  };
+  useEffect(() => {
+    handleVerifyCart();
+  }, []);
+
+  const handleFormSubmit = () => {};
 
   const initialValues = {
-    cartCustomerName: "",
-    cartCustomerNumber: "",
-    cartCustomerYear: cartCustomerYear,
-    cartCustomerMonth: cartCustomerMonth,
-    cartCustomerCVC: "",
-    saveCardCheck: true,
+    card_token: "",
   };
-
-  const formSchema = yup.object().shape({
-    cartCustomerName: yup.string().required("カード名義を入力してください"),
-    cartCustomerNumber: yup
-      .string()
-      .test(
-        "test-number",
-        "カード番号を入力してください",
-        (value) => valid.number(value).isValid
-      ),
-    cartCustomerYear: yup.string().required("有効期限を入力してください"),
-    cartCustomerMonth: yup.string().required("有効期限を入力してください"),
-    cartCustomerCVC: yup
-      .number()
-      .typeError("セキュリティコードを入力してください")
-      .required("セキュリティコードを入力してください")
-      .min(0, "セキュリティコードを入力してください")
-      .max(1000, "セキュリティコードを入力してください"),
+  const { handleSubmit } = useFormik({
+    onSubmit: handleFormSubmit,
+    initialValues,
   });
 
-  const handleYearChange = (e) => {
-    console.log(e);
-    setCartCustomerYear(e.value);
+  // Payjp checkout
+  const payjpCheckoutProps = {
+    dataKey: process.env.REACT_APP_PAPJP_PUBLIC_KEY,
+    dataText: "新しクレジットカード追加",
+    dataPartial: "true",
+    dataNamePlaceholder: "名前を入力してください",
+    onCreatedHandler: (payload) => {
+      console.log(payload);
+      setCardToken(payload);
+    },
+    onFailedHandler: (payload) => {
+      console.log("onFailedHandler", payload && payload.message);
+    },
   };
-  const handleMonthChange = (e) => {
-    setCartCustomerMonth(e.value);
-  };
-
-  const handleFormSubmit = (values) => {
-    console.log(values);
-    history.push("/cart/order-complete");
-  };
-
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      onSubmit: handleFormSubmit,
-      initialValues,
-      validationSchema: formSchema,
-    });
 
   return (
     <CartLayout>
@@ -91,6 +113,7 @@ const OrderConfirmationPage: React.FC = () => {
               <Stepper stepperList={stepperList} selectedStep={3} />
             </Box>
             <Divider mb="1rem" bg="gray.500"></Divider>
+            {/*Order Info User */}
             <FlexBox
               mb="1rem"
               flexDirection={{ _: "column", md: "row" }}
@@ -104,7 +127,9 @@ const OrderConfirmationPage: React.FC = () => {
               >
                 ご注文者
               </Box>
-              <Box width={{ md: "80%" }}>名前　名前 様</Box>
+              <Box
+                width={{ md: "80%" }}
+              >{`${currentUser.first_name} ${currentUser.last_name}`}</Box>
             </FlexBox>
             <Divider mb="1rem" bg="gray.500"></Divider>
 
@@ -122,111 +147,258 @@ const OrderConfirmationPage: React.FC = () => {
                 配送先
               </Box>
               <Box width={{ md: "80%" }}>
-                〒661-0953　兵庫県尼崎市東園田町0-0-00 <br />
-                TEL　070-0000-0000
+                <Typography>{`〒${currentUser.post_code} ${currentUser.prefecture}${currentUser.address}`}</Typography>
+                <Typography>{`TEL ${currentUser.phone_number}`}</Typography>
               </Box>
             </FlexBox>
 
             <Divider mb="1rem" bg="gray.500"></Divider>
-
-            <FlexBox mb="1rem" alignItems={{ _: "flex-start", md: "center" }}>
-              <Box width={{ _: "50%", md: "20%" }} px="1rem">
-                <Image
+            {/*Cart Item Skeleton */}
+            {isVerifyCartLoading && (
+              <>
+                <FlexBox
                   mb="1rem"
-                  width="100%"
-                  src="https://www.bs11.jp/anime/img/selection_project_main.jpg"
-                  alt="商品"
-                  objectFit="cover"
-                />
-              </Box>
-              <Box
-                width={{ _: "50%", md: "50%" }}
-                fontSize={{ _: "0.8rem", md: "1rem" }}
-              >
-                <Typography mb="5px" fontWeight={600}>
-                  商品名が入ります商品名が入ります商品名が入ります
-                </Typography>
-                <Typography mb="5px">10回くじ</Typography>
-                <Typography mb="5px" color="gray.500">
-                  商品番号：LS010217
-                </Typography>
-
-                <FlexBox fontSize="0.8rem" display={{ md: "none" }}>
-                  <Box width="50%">数量：1</Box>
-                  <Box width="50%">¥ 12,000</Box>
+                  alignItems={{ _: "flex-start", md: "center" }}
+                >
+                  <Box width={{ _: "50%", md: "20%" }} px="1rem">
+                    <Skeleton height="120px" />
+                  </Box>
+                  <Box
+                    width={{ _: "50%", md: "50%" }}
+                    fontSize={{ _: "0.8rem", md: "1rem" }}
+                  >
+                    <Box mb="5px">
+                      <Skeleton width="90%" height="25px" />
+                    </Box>
+                    <Box mb="5px" display="inline-block">
+                      <Skeleton width="120px" height="15px" />
+                    </Box>
+                    <Box>
+                      <Skeleton width="80%" height="60px" />
+                    </Box>
+                  </Box>
+                  <Box
+                    width="10%"
+                    display={{ _: "none", md: "block" }}
+                    mx="auto"
+                  >
+                    <Skeleton height="30px" width="90%" />
+                  </Box>
+                  <Box
+                    width="15%"
+                    display={{ _: "none", md: "block" }}
+                    mx="auto"
+                  >
+                    <Skeleton height="30px" width="90%" />
+                  </Box>
+                  <Box
+                    mx="auto"
+                    width="5%"
+                    display={{ _: "none", md: "block" }}
+                  >
+                    <Skeleton height="30px" width="90%" />
+                  </Box>
                 </FlexBox>
-              </Box>
-              <Box width="10%" display={{ _: "none", md: "block" }}>
-                1
-              </Box>
-              <Box width="15%" display={{ _: "none", md: "block" }}>
-                ¥ 12,000
-              </Box>
-            </FlexBox>
+
+                <Divider mb="1rem" bg="gray.500"></Divider>
+
+                <FlexBox justifyContent="flex-end" mb="1rem">
+                  <Box width="100%" maxWidth="380px">
+                    <FlexBox alignItems="center" mb="10px">
+                      <Typography fontSize="1rem" width="50%" fontWeight={600}>
+                        商品税込計<Span fontSize="0.8rem">（税込）</Span>
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                        fontSize="1.4rem"
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+
+                    <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                      <Typography width="50%" fontWeight={600}>
+                        送料
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+
+                    <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                      <Typography width="50%" fontWeight={600}>
+                        手数料
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+
+                    <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                      <Typography width="50%" fontWeight={600}>
+                        クーポン
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+
+                    <FlexBox alignItems="center" mb="10px" color="primary.main">
+                      <Typography fontSize="1rem" width="50%" fontWeight={600}>
+                        お支払い総計<Span fontSize="0.8rem">（税込）</Span>
+                      </Typography>
+                      <Typography
+                        textAlign="right"
+                        width="50%"
+                        fontWeight={600}
+                        fontSize="1.4rem"
+                      >
+                        <Skeleton height="30px" width="90%" />
+                      </Typography>
+                    </FlexBox>
+                  </Box>
+                </FlexBox>
+              </>
+            )}
+            {/*Cart Item Info */}
+            {!isVerifyCartLoading &&
+              cartData &&
+              cartData.carts?.map((cartItem) => {
+                return (
+                  <FlexBox
+                    mb="1rem"
+                    alignItems={{ _: "flex-start", md: "center" }}
+                    key={cartItem.lottery_ticket_catalog_id}
+                  >
+                    <Box width={{ _: "50%", md: "20%" }} px="1rem">
+                      <Image
+                        mb="1rem"
+                        width="100%"
+                        src={
+                          process.env.REACT_APP_MALL_IMAGE_PATH +
+                          cartItem.lottery_image
+                        }
+                        alt={cartItem.lottery_title}
+                        objectFit="cover"
+                      />
+                    </Box>
+                    <Box
+                      width={{ _: "50%", md: "50%" }}
+                      fontSize={{ _: "0.8rem", md: "1rem" }}
+                    >
+                      <Typography mb="5px" fontWeight={600}>
+                        {cartItem.lottery_title}
+                      </Typography>
+                      <Typography mb="5px">
+                        {cartItem.number_of_times}回くじ
+                      </Typography>
+                      <Typography mb="5px" color="gray.500">
+                        商品番号: {cartItem.lottery_ticket_catalog_id}
+                      </Typography>
+
+                      <FlexBox fontSize="0.8rem" display={{ md: "none" }}>
+                        <Box width="50%">数量: {cartItem.amount}</Box>
+                        <Box width="50%">
+                          ¥ {addThousandsSeparators(cartItem.price_at_the_time)}
+                        </Box>
+                      </FlexBox>
+                    </Box>
+                    <Box width="10%" display={{ _: "none", md: "block" }}>
+                      {cartItem.amount}
+                    </Box>
+                    <Box width="15%" display={{ _: "none", md: "block" }}>
+                      ¥ {addThousandsSeparators(cartItem.price_at_the_time)}
+                    </Box>
+                  </FlexBox>
+                );
+              })}
+            <Divider mb="1rem" bg="gray.500"></Divider>
+            {/*Order Calc */}
+            {!isVerifyCartLoading && cartData && (
+              <FlexBox justifyContent="flex-end" mb="1rem">
+                <Box width="100%" maxWidth="380px">
+                  <FlexBox alignItems="center" mb="10px">
+                    <Typography fontSize="1rem" width="50%" fontWeight={600}>
+                      商品税込計<Span fontSize="0.8rem">（税込）</Span>
+                    </Typography>
+                    <Typography
+                      textAlign="right"
+                      width="50%"
+                      fontWeight={600}
+                      fontSize="1.4rem"
+                    >
+                      ￥
+                      {addThousandsSeparators(cartData.total_price_at_the_time)}
+                    </Typography>
+                  </FlexBox>
+
+                  <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                    <Typography width="50%" fontWeight={600}>
+                      送料
+                    </Typography>
+                    <Typography textAlign="right" width="50%" fontWeight={600}>
+                      ￥{addThousandsSeparators(cartData.shipping_fee)}
+                    </Typography>
+                  </FlexBox>
+
+                  <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                    <Typography width="50%" fontWeight={600}>
+                      手数料
+                    </Typography>
+                    <Typography textAlign="right" width="50%" fontWeight={600}>
+                      ￥
+                      {addThousandsSeparators(cartData.total_sales_fee_in_cart)}
+                    </Typography>
+                  </FlexBox>
+
+                  <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
+                    <Typography width="50%" fontWeight={600}>
+                      クーポン
+                    </Typography>
+                    <Typography textAlign="right" width="50%" fontWeight={600}>
+                      {cartData.total_discount_in_cart === 0
+                        ? "￥ 0"
+                        : "-￥" +
+                          addThousandsSeparators(
+                            cartData.total_discount_in_cart
+                          )}
+                    </Typography>
+                  </FlexBox>
+
+                  <FlexBox alignItems="center" mb="10px" color="primary.main">
+                    <Typography fontSize="1rem" width="50%" fontWeight={600}>
+                      お支払い総計<Span fontSize="0.8rem">（税込）</Span>
+                    </Typography>
+                    <Typography
+                      textAlign="right"
+                      width="50%"
+                      fontWeight={600}
+                      fontSize="1.4rem"
+                    >
+                      ￥{addThousandsSeparators(cartData.result_price_in_cart)}
+                    </Typography>
+                  </FlexBox>
+                </Box>
+              </FlexBox>
+            )}
 
             <Divider mb="1rem" bg="gray.500"></Divider>
 
-            <FlexBox justifyContent="flex-end" mb="1rem">
-              <Box width="100%" maxWidth="380px">
-                <FlexBox alignItems="center" mb="10px">
-                  <Typography fontSize="1rem" width="50%" fontWeight={600}>
-                    商品税込計<Span fontSize="0.8rem">（税込）</Span>
-                  </Typography>
-                  <Typography
-                    textAlign="right"
-                    width="50%"
-                    fontWeight={600}
-                    fontSize="1.4rem"
-                  >
-                    ￥12,000
-                  </Typography>
-                </FlexBox>
-
-                <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
-                  <Typography width="50%" fontWeight={600}>
-                    送料
-                  </Typography>
-                  <Typography textAlign="right" width="50%" fontWeight={600}>
-                    ￥700
-                  </Typography>
-                </FlexBox>
-
-                <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
-                  <Typography width="50%" fontWeight={600}>
-                    手数料
-                  </Typography>
-                  <Typography textAlign="right" width="50%" fontWeight={600}>
-                    ￥700
-                  </Typography>
-                </FlexBox>
-
-                <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
-                  <Typography width="50%" fontWeight={600}>
-                    クーポン
-                  </Typography>
-                  <Typography textAlign="right" width="50%" fontWeight={600}>
-                    -￥700
-                  </Typography>
-                </FlexBox>
-
-                <FlexBox alignItems="center" mb="10px" color="primary.main">
-                  <Typography fontSize="1rem" width="50%" fontWeight={600}>
-                    お支払い総計<Span fontSize="0.8rem">（税込）</Span>
-                  </Typography>
-                  <Typography
-                    textAlign="right"
-                    width="50%"
-                    fontWeight={600}
-                    fontSize="1.4rem"
-                  >
-                    ￥12,700
-                  </Typography>
-                </FlexBox>
-              </Box>
-            </FlexBox>
-
-            <Divider mb="1rem" bg="gray.500"></Divider>
-
+            {/*Credit Card Select */}
             <FlexBox
               mb="1rem"
               flexDirection={{ _: "column", md: "row" }}
@@ -253,157 +425,63 @@ const OrderConfirmationPage: React.FC = () => {
                   />
                 </FlexBox>
 
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}>カード名義</Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <TextField
-                      name="cartCustomerName"
-                      fullwidth
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.cartCustomerName || ""}
-                      errorText={
-                        touched.cartCustomerName && errors.cartCustomerName
-                      }
-                    />
-                  </Box>
-                </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}>カード番号</Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <TextField
-                      name="cartCustomerNumber"
-                      fullwidth
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.cartCustomerNumber || ""}
-                      errorText={
-                        touched.cartCustomerNumber && errors.cartCustomerNumber
-                      }
-                    />
-                  </Box>
-                </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}>有効期限</Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <FlexBox justifyContent="flex-start" alignItems="center">
-                      <Box width="20%">
-                        <SelectBox
-                          placeholder="選択"
-                          defaultValue={monthListArr().reverse()[0]}
-                          options={monthListArr().reverse()}
-                          onChange={handleMonthChange}
-                        />
-                      </Box>
-                      <Box textAlign="center" width="8%">
-                        月
-                      </Box>
-
-                      <Box width="25%">
-                        <SelectBox
-                          placeholder="選択"
-                          defaultValue={yearListNextArr(10)[0]}
-                          options={yearListNextArr(10)}
-                          onChange={handleYearChange}
-                        />
-                      </Box>
-                      <Box textAlign="center" width="8%">
-                        年
-                      </Box>
-                    </FlexBox>
-                  </Box>
-                </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}>セキュリティコード</Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <TextField
-                      name="cartCustomerCVC"
-                      fullwidth
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.cartCustomerCVC || ""}
-                      errorText={
-                        touched.cartCustomerCVC && errors.cartCustomerCVC
-                      }
-                    />
-                  </Box>
-                </FlexBox>
-
-                <FlexBox
-                  alignItems="center"
-                  flexDirection={{ _: "column", md: "row" }}
-                  mb="1rem"
-                >
-                  <Box width={{ _: "100%", md: "20%" }}></Box>
-                  <Box width={{ _: "100%", md: "60%" }}>
-                    <CheckBox
-                      mb="1rem"
-                      name="saveCardCheck"
-                      color="secondary"
-                      checked={values.saveCardCheck}
-                      onChange={handleChange}
-                      label={
-                        <FlexBox>
-                          <SemiSpan>今後もこのカードを使う</SemiSpan>
-                        </FlexBox>
-                      }
-                    />
-                  </Box>
-                </FlexBox>
+                <Box mb="1rem">
+                  <PayjpCheckout {...payjpCheckoutProps} />
+                </Box>
               </Box>
             </FlexBox>
 
             <Divider bg="gray.500" mb="2rem"></Divider>
 
-            <FlexBox
-              justifyContent="center"
-              flexDirection={{ _: "column-reverse", md: "row" }}
-              maxWidth="480px"
-              mx="auto"
-            >
-              <Button
-                width={{ _: "100%", md: "50%" }}
-                mx={{ _: "0", md: "1rem" }}
-                size="large"
-                color="gray"
-                variant="outlinedSecond"
-                borderRadius={5}
-                onClick={() => history.push("/cart/payment-method")}
+            {/*Button Control */}
+            {isVerifyCartLoading && (
+              <FlexBox
+                justifyContent="center"
+                flexDirection={{ _: "column-reverse", md: "row" }}
+                maxWidth="480px"
+                mx="auto"
               >
-                <Span fontSize="1rem">戻 る</Span>
-              </Button>
-              <Button
-                width={{ _: "100%", md: "50%" }}
-                mx={{ _: "0", md: "1rem" }}
-                mb={{ _: "1rem", md: "0" }}
-                size="large"
-                color="primary"
-                variant="contained"
-                borderRadius={5}
-                type="submit"
+                <Box mb="10px" width="100%" mx="auto">
+                  <Skeleton width="90%" height="50px" />
+                </Box>
+                <Box mb="10px" width="100%" mx="auto">
+                  <Skeleton width="90%" height="50px" />
+                </Box>
+              </FlexBox>
+            )}
+
+            {!isVerifyCartLoading && (
+              <FlexBox
+                justifyContent="center"
+                flexDirection={{ _: "column-reverse", md: "row" }}
+                maxWidth="480px"
+                mx="auto"
               >
-                <Span fontSize="1rem">ご注文を確定</Span>
-              </Button>
-            </FlexBox>
+                <Button
+                  width={{ _: "100%", md: "50%" }}
+                  mx={{ _: "0", md: "1rem" }}
+                  size="large"
+                  color="gray"
+                  variant="outlinedSecond"
+                  borderRadius={5}
+                  onClick={() => dispatch(push(ROUTES.PAYMENT_METHOD))}
+                >
+                  <Span fontSize="1rem">戻 る</Span>
+                </Button>
+                <Button
+                  width={{ _: "100%", md: "50%" }}
+                  mx={{ _: "0", md: "1rem" }}
+                  mb={{ _: "1rem", md: "0" }}
+                  size="large"
+                  color="primary"
+                  variant="contained"
+                  borderRadius={5}
+                  type="submit"
+                >
+                  <Span fontSize="1rem">ご注文を確定</Span>
+                </Button>
+              </FlexBox>
+            )}
           </Box>
         </Box>
       </form>

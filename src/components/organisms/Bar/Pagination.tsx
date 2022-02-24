@@ -60,9 +60,10 @@ export const Pagination: React.FC<PaginationProps> = ({
         pageRangeDisplayed={pageRangeDisplayed}
         onPageChange={handlePageChange}
         containerClassName="pagination"
-        subContainerClassName="pages pagination"
+        // subContainerClassName="pages pagination"
         activeClassName="active"
         disabledClassName="disabled"
+        disableInitialCallback={false}
       />
     </StyledPagination>
   );
