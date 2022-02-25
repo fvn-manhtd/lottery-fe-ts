@@ -173,7 +173,7 @@ export default function App() {
           <FancyRoute
             path={ROUTES.SHOPPING_CART}
             exact
-            component={ShoppingCartPage}
+            component={ProtectedRoute(ShoppingCartPage)}
           />
           <FancyRoute
             path={ROUTES.PAYMENT_METHOD}
