@@ -12,7 +12,7 @@ import {
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { CarouselStyle, StyledLabelText } from "./CarouselStyle";
-import { Box, NavLink, Typography } from "components/atoms";
+import { Box, Typography } from "components/atoms";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 

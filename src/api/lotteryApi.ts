@@ -9,7 +9,7 @@ export const lotteryApi = createApi({
     reducerPath: "lotteryApi",
     baseQuery: baseQueryWithRetry,
     keepUnusedDataFor: 60 * 5,
-    refetchOnMountOrArgChange: 60 * 30, 
+    refetchOnMountOrArgChange: false, 
     refetchOnFocus: false,
     refetchOnReconnect: false,
     endpoints: (build) => ({
