@@ -3,7 +3,6 @@ import { Box, Divider, FlexBox, Typography } from "components/atoms";
 import { Grid, LotteryFavorite, Pagination, Head } from "components/organisms";
 import { DashBoardLayout } from "components/templates";
 import { useEffect, useRef, useState } from "react";
-// import UserFavoriteSkeletonPage from "./UserFavoriteSkeletonPage";
 import { getSearchQueryObj, Route as ROUTES } from "utils";
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { push } from "connected-react-router";
@@ -64,15 +63,7 @@ const UserFavoritePage = () => {
             <Typography fontWeight={600} fontSize="1.2rem">
               お気に入り一覧
             </Typography>
-            <Box>
-              <Box minWidth="150px">
-                {/* <SelectBox
-                  placeholder="Short by"
-                  defaultValue={sortOptions[0]}
-                  options={sortOptions}
-                /> */}
-              </Box>
-            </Box>
+            <Box></Box>
           </FlexBox>
           <Divider
             height="2px"
@@ -81,7 +72,7 @@ const UserFavoritePage = () => {
             backgroundColor="gray.500"
           ></Divider>
 
-          {isFetching && (
+          {(isFetching || userFavoriteData === undefined) && (
             <Box mb="2rem">
               <Grid container spacing={6}>
                 {(() => {
@@ -101,10 +92,10 @@ const UserFavoritePage = () => {
             </Box>
           )}
 
-          {!isFetching && (
+          {!isFetching && userFavoriteData !== undefined && (
             <Box mb="2rem">
               <Grid container spacing={6}>
-                {userFavoriteData?.map((item) => (
+                {userFavoriteData.map((item) => (
                   <Grid item lg={3} sm={6} xs={12} key={item.lottery_id}>
                     <LotteryFavorite
                       id={item.lottery_id}

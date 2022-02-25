@@ -19,7 +19,7 @@ export const LotteryPurchasedHistorySkeleton: React.FC = () => {
         </Box>
         <FlexBox maxWidth="600px">
           <FlexBox width="30%">
-            <Skeleton width="120px" height="120px" />
+            <Skeleton width="90px" height="90px" />
           </FlexBox>
           <FlexBox
             fontSize="0.8rem"

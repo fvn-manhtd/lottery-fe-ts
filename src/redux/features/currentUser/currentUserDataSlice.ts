@@ -60,12 +60,12 @@ const currentUserDataSlice = createSlice({
 export const currentUserDataActions = currentUserDataSlice.actions
 
 //Selector
-export const selectCurrentUserCard = (state: { currentUser: { card: UserCardItem[] } }) => state.currentUser.card
-export const selectDefaultCardID = (state: { currentUser: { default_card: string } }) => state.currentUser.default_card
+export const selectCurrentUserCard = (state: { currentUserData: { card: UserCardItem[] } }) => state.currentUserData.card
+export const selectDefaultCardID = (state: { currentUserData: { default_card: string } }) => state.currentUserData.default_card
 
-export const selectCurrentUserFav = (state: { currentUser: { favorite: UserFavorite[] } }) => state.currentUser.favorite
+export const selectCurrentUserFav = (state: { currentUserData: { favorite: UserFavorite[] } }) => state.currentUserData.favorite
 
-export const selectPaymethod = (state: { currentUser: { paymethod: string } }) => state.currentUser.paymethod;
+export const selectPaymethod = (state: { currentUserData: { paymethod: string } }) => state.currentUserData.paymethod;
 
 
 //Reducer

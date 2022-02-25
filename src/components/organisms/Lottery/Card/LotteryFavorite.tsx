@@ -11,7 +11,7 @@ import {
 import { push } from "connected-react-router";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "redux/app/hooks";
-import { currentUserActions } from "redux/features";
+import { currentUserDataActions } from "redux/features";
 import styled from "styled-components";
 import { lotteryStatusObj, getTheme, Route as ROUTES } from "utils";
 import { LotteryProps } from "./Lottery";
@@ -39,7 +39,7 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
       dispatch(
         push(`${ROUTES.USER_FAVORITE}?page=${data.data.pagination.last_page}`)
       );
-      dispatch(currentUserActions.removeUserFav(data.data.data));
+      dispatch(currentUserDataActions.removeUserFav(data.data.data));
       setIsRemoving(false);
     } catch (error) {
       console.log("Error remove", error);
