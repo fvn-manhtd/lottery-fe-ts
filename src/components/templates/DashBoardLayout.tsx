@@ -2,11 +2,11 @@ import React from "react";
 import { Sticky, Box } from "components/atoms";
 import { HeaderDashboard } from "components/organisms";
 import { useAppSelector } from "redux/app/hooks";
-import { selectIsLogging } from "redux/features";
+import { selectIsLogouting } from "redux/features";
 import { LoadingBox } from "components/molecules";
 
 export const DashBoardLayout: React.FC = ({ children }) => {
-  const isLogging = useAppSelector(selectIsLogging);
+  const isLogouting = useAppSelector(selectIsLogouting);
 
   return (
     <>
@@ -20,7 +20,7 @@ export const DashBoardLayout: React.FC = ({ children }) => {
         </Box>
       </Box>
 
-      {isLogging && <LoadingBox />}
+      {isLogouting && <LoadingBox />}
     </>
   );
 };

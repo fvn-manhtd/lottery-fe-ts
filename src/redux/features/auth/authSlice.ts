@@ -6,11 +6,13 @@ export interface LoginPayLoad {
 }
 export interface AuthSlice {
     isLoggedIn: Boolean,
-    logging: Boolean,    
+    logging: Boolean,
+    logouting: Boolean,
 }
 const initialState: AuthSlice = {
     isLoggedIn: false,
-    logging: false,    
+    logging: false,
+    logouting: false
 }
 
 
@@ -33,14 +35,14 @@ const authSlice = createSlice({
             state.logging = false
         },
         logout(state) {            
-            state.logging = true
+            state.logouting = true
         },
         logoutSucess(state) {
             state.isLoggedIn = false
-            state.logging = false
+            state.logouting = false
         },
         reset(state) {
-
+            state = undefined;
         }
     }
 })
@@ -51,6 +53,7 @@ export const authActions = authSlice.actions
 //Selector
 export const selectIsLoggedIn = (state: { auth: { isLoggedIn: Boolean; }; }) => state.auth.isLoggedIn
 export const selectIsLogging = (state: { auth: { logging: Boolean; }; }) => state.auth.logging
+export const selectIsLogouting = (state: { auth: { logouting: Boolean; }; }) => state.auth.logouting
 
 
 //Reducer

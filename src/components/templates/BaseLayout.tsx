@@ -10,7 +10,7 @@ import { getTheme } from "utils/utils";
 import { ReactNode } from "hoist-non-react-statics/node_modules/@types/react";
 import { Box } from "components/atoms";
 import { useAppSelector } from "redux/app/hooks";
-import { selectIsLogging } from "redux/features";
+import { selectIsLogouting } from "redux/features";
 import { LoadingBox } from "components/molecules";
 
 type BaseLayoutProps = {
@@ -25,7 +25,7 @@ const BaseLayoutStyle = styled.div`
 
 export const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
   const isLoggedIn = Boolean(localStorage.getItem("isLoggedIn"));
-  const isLogging = useAppSelector(selectIsLogging);
+  const isLogouting = useAppSelector(selectIsLogouting);
   return (
     <BaseLayoutStyle>
       <Header />
@@ -39,7 +39,7 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
 
       <Footer />
 
-      {isLogging && <LoadingBox />}
+      {isLogouting && <LoadingBox />}
     </BaseLayoutStyle>
   );
 };
