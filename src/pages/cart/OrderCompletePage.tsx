@@ -14,20 +14,20 @@ import { useHistory } from "react-router-dom";
 import { theme } from "utils";
 
 const StyledFinishButton = styled(Button)`
-  background-color: ${theme.colors.primary.navy};
+  background-color: ${theme.colors.primary.light};
   padding: 1.5rem 8rem 1.5rem 8rem;
   border: none;
-  box-shadow: 0 4px 0 #004980;
+  box-shadow: 0 4px 0 ${theme.colors.primary.main};
   align-items: flex-end;
   &:hover {
     opacity: 0.7;
   }
 `;
 
-const StyledNewButton = styled(Button)`
-  background-color: ${theme.colors.gray[500]};
-  border: none;
-`;
+// const StyledNewButton = styled(Button)`
+//   background-color: ${theme.colors.gray[500]};
+//   border: none;
+// `;
 
 const OrderCompletePage: React.FC = () => {
   const history = useHistory();
@@ -76,11 +76,11 @@ const OrderCompletePage: React.FC = () => {
               <Span color="primary.yellow" fontSize="1.5rem">
                 1回くじ
               </Span>
-              <Span color="primary.text" fontSize="0.8rem">
+              <Span color="primary.text" fontSize="1rem">
                 をひく
               </Span>
             </StyledFinishButton>
-            <StyledNewButton
+            {/* <StyledNewButton
               width="100%"
               size="medium"
               color="secondary"
@@ -89,7 +89,7 @@ const OrderCompletePage: React.FC = () => {
               onClick={() => history.push("/")}
             >
               <Span fontSize="1rem">もう一度購入する</Span>
-            </StyledNewButton>
+            </StyledNewButton> */}
           </FlexBox>
         </Box>
       </Box>

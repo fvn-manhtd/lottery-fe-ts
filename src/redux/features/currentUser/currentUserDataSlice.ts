@@ -65,7 +65,11 @@ export const selectDefaultCardID = (state: { currentUserData: { default_card: st
 
 export const selectCurrentUserFav = (state: { currentUserData: { favorite: UserFavorite[] } }) => state.currentUserData.favorite
 
-export const selectPaymethod = (state: { currentUserData: { paymethod: string } }) => state.currentUserData.paymethod;
+export const selectPaymethod = (state: { currentUserData: { payment_method: string } }) => state.currentUserData.payment_method;
+
+export const selectDefaultCardItem = (state: { currentUserData: { card: UserCardItem[], default_card: string } }) => {
+    state.currentUserData.card.filter((item) => item.id === "car_0d6f78cd84b70d9ba066643b1bc8");
+}
 
 
 //Reducer
