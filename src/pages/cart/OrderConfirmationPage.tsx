@@ -8,6 +8,7 @@ import {
   Typography,
   TableRow,
   H5,
+  CheckBox,
 } from "components/atoms";
 import { CartLayout } from "components/templates";
 import { Card, Stepper } from "components/organisms";
@@ -37,6 +38,8 @@ const OrderConfirmationPage: React.FC = () => {
   const selectedPaymethod = useAppSelector(selectPaymethod);
   const [cartData, setCartData] = useState<Cart>(null);
   const [cardToken, setCardToken] = useState(null);
+
+  const [savedCard, setSavedCard] = useState(false);
 
   const currentUserCards = useAppSelector(selectCurrentUserCard);
   const defaultCardID = useAppSelector(selectDefaultCardID);
@@ -135,7 +138,7 @@ const OrderConfirmationPage: React.FC = () => {
           ...values,
           charge_once: true,
           card_token: cardToken,
-          register_this_card: true, // Register Card to Customer
+          register_this_card: savedCard, // Register Card to Customer
         };
       } else {
         args = values;
@@ -544,6 +547,20 @@ const OrderConfirmationPage: React.FC = () => {
                     />
                   </FlexBox>
                   <PayjpCheckout {...payjpCheckoutProps} />
+
+                  <CheckBox
+                    name="save_card"
+                    mt="1rem"
+                    color="secondary"
+                    label={
+                      <Typography ml="2px" fontSize="0.8rem">
+                        このカード情報を保存／更新
+                      </Typography>
+                    }
+                    value="save_card"
+                    checked={savedCard}
+                    onChange={() => setSavedCard(!savedCard)}
+                  />
                 </Box>
               </Box>
             </FlexBox>
