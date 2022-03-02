@@ -2,7 +2,7 @@ import { Box, Image, Typography } from "components/atoms";
 
 export type ProductProps = {
   src: string;
-  prize: number;
+  prize: string;
   title: string;
   quanity?: number;
 };
@@ -26,7 +26,10 @@ export const Product: React.FC<ProductProps> = ({
           borderRadius="5px"
           width="100%"
           maxHeight={175}
-          src={process.env.REACT_APP_MALL_IMAGE_PATH + src}
+          // src={process.env.REACT_APP_MALL_IMAGE_PATH + src}
+          src={
+            "https://scratch.dmm.com/s3/kuji/7hk5xBCfickcBMEVdp5NhCGygeawe28iSBO8k8AA.jpeg?w=860"
+          }
           alt={title}
           objectFit="cover"
         />

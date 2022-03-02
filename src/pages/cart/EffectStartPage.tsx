@@ -1,45 +1,39 @@
 import { Box, Span, Button, FlexBox } from "components/atoms";
-import { Logo } from "components/organisms";
+import { useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { Route as ROUTES } from "utils";
 
 const EffectStartPage: React.FC = () => {
   const history = useHistory();
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    videoRef.current?.play();
+  }, []);
+
   return (
-    <Box py="1rem">
-      <Box maxWidth="320px" mx="auto" my="2rem">
-        <Logo />
-      </Box>
+    <Box>
+      <FlexBox justifyContent="center" flexDirection="column" mx="auto">
+        <video height="100%" ref={videoRef}>
+          <source
+            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support HTML video.
+        </video>
 
-      <FlexBox justifyContent="center" mx="auto"></FlexBox>
-
-      <FlexBox
-        justifyContent="center"
-        flexDirection="column"
-        maxWidth="480px"
-        mx="auto"
-      >
-        <Button
-          width="100%"
-          size="large"
-          color="primary"
-          variant="contained"
-          borderRadius={5}
-        >
-          <Span fontSize="1rem">スタート</Span>
-        </Button>
-
-        <Button
-          width="100%"
-          size="large"
-          color="gray"
-          variant="outlinedSecond"
-          borderRadius={5}
-          onClick={() => history.push(ROUTES.EFFECT_FINISH)}
-        >
-          <Span fontSize="1rem">スキップ</Span>
-        </Button>
+        <Box position={"fixed"} bottom="20px" left="calc(50% - 100px)">
+          <Button
+            width="200px"
+            size="medium"
+            color="primary"
+            variant="contained"
+            borderRadius={5}
+            onClick={() => history.push(ROUTES.EFFECT_FINISH)}
+          >
+            <Span fontSize="1rem">スキップ</Span>
+          </Button>
+        </Box>
       </FlexBox>
     </Box>
   );

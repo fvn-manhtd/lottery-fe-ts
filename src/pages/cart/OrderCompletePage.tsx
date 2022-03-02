@@ -10,8 +10,9 @@ import { CartLayout } from "components/templates";
 import { Stepper } from "components/organisms";
 import styled from "styled-components";
 import { stepperList } from "utils";
-import { useHistory } from "react-router-dom";
-import { theme } from "utils";
+import { theme, Route as ROUTES } from "utils";
+import { useAppDispatch } from "redux/app/hooks";
+import { push } from "connected-react-router";
 
 const StyledFinishButton = styled(Button)`
   background-color: ${theme.colors.primary.light};
@@ -24,13 +25,8 @@ const StyledFinishButton = styled(Button)`
   }
 `;
 
-// const StyledNewButton = styled(Button)`
-//   background-color: ${theme.colors.gray[500]};
-//   border: none;
-// `;
-
 const OrderCompletePage: React.FC = () => {
-  const history = useHistory();
+  const dispatch = useAppDispatch();
 
   return (
     <CartLayout>
@@ -71,7 +67,7 @@ const OrderCompletePage: React.FC = () => {
               color="gray"
               variant="outlinedSecond"
               borderRadius={5}
-              onClick={() => history.push("/cart/effect-finish")}
+              onClick={() => dispatch(push(ROUTES.EFFECT_START))}
             >
               <Span color="primary.yellow" fontSize="1.5rem">
                 1回くじ

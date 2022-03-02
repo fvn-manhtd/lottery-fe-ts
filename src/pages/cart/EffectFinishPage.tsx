@@ -15,30 +15,30 @@ const EffectFinishPage: React.FC = () => {
         textAlign="center"
         color="primary.light"
         as="h1"
-        fontSize="2rem"
-        my="2rem"
+        fontSize="2.5rem"
+        mt="3rem"
       >
         当たり
       </Typography>
       <Box
-        bg="body.paper"
+        bg="transparent"
         borderRadius="5px"
         maxWidth={1200}
-        shadow={5}
         mx={{ _: "15px", md: "auto" }}
-        mb="2rem"
-        p="2rem"
+        mb="3rem"
       >
         <Box>
           <Grid container spacing={6}>
             {fakeProductList.map((item) => (
               <Grid item lg={3} sm={6} xs={12} key={item.id}>
-                <Product
-                  src={item.image}
-                  title={item.title}
-                  prize={item.prize}
-                  quanity={item.quanity}
-                />
+                <Box p="1rem" bg="white" shadow={5} borderRadius="10px">
+                  <Product
+                    src={item.image}
+                    title={item.title}
+                    prize={item.prize}
+                    quanity={item.quanity}
+                  />
+                </Box>
               </Grid>
             ))}
           </Grid>
@@ -47,8 +47,9 @@ const EffectFinishPage: React.FC = () => {
       <FlexBox
         justifyContent="center"
         flexDirection={{ _: "column-reverse", md: "row" }}
-        maxWidth="480px"
         mx="auto"
+        px="1rem"
+        maxWidth="600px"
       >
         <Button
           width={{ _: "100%", md: "50%" }}
