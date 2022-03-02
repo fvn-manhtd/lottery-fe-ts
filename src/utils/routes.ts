@@ -109,7 +109,7 @@ export const ApiRoute = {
         'VERIFY': '/cart/verify',
         'SHOP_CONFIG': '/cart/shop_config',
         'DELETE': '/cart/ticket',
-        'ORDER': '/cart/order',
+        'ORDER': '/cart/order',        
         'COUPON': '/cart/coupon'
     }
 

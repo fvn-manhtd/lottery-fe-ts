@@ -257,19 +257,19 @@ const UserLoginPage = () => {
             <Divider height="1px" width="100%" mx="auto" mb="1.25rem" />
 
             <FlexBox justifyContent="center" py="1rem">
-              <NavLink href={ROUTES.SHOP_LOGIN}>
+              <a href={ROUTES.SHOP_LOGIN} target="_blank">
                 <H6 color="primary.blue" fontWeight={400}>
                   ショップログイン
                 </H6>
-              </NavLink>
+              </a>
             </FlexBox>
 
             <FlexBox justifyContent="center" py="1rem">
-              <NavLink href={ROUTES.SHOP_REGISTER}>
+              <a href={ROUTES.SHOP_REGISTER} target="_blank">
                 <H6 color="primary.blue" fontWeight={400}>
                   ショップを作成
                 </H6>
-              </NavLink>
+              </a>
             </FlexBox>
           </Card>
           <Paragraph py="1rem" textAlign="center" fontSize="0.8rem">

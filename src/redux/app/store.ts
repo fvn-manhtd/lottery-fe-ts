@@ -17,7 +17,7 @@ import rootSaga from './rootSaga';
 
 const persistConfig = {
   key: 'gacha',
-  blacklist: ['currentUserData', 'purchaseHistoryApi', 'newsApi', 'lotteryApi', 'staticPageApi', 'cartApi'],
+  blacklist: ['purchaseHistoryApi', 'newsApi', 'lotteryApi', 'staticPageApi', 'cartApi'],
   storage,
 }
 

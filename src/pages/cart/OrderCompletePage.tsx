@@ -10,27 +10,23 @@ import { CartLayout } from "components/templates";
 import { Stepper } from "components/organisms";
 import styled from "styled-components";
 import { stepperList } from "utils";
-import { useHistory } from "react-router-dom";
-import { theme } from "utils";
+import { theme, Route as ROUTES } from "utils";
+import { useAppDispatch } from "redux/app/hooks";
+import { push } from "connected-react-router";
 
 const StyledFinishButton = styled(Button)`
-  background-color: ${theme.colors.primary.navy};
+  background-color: ${theme.colors.primary.light};
   padding: 1.5rem 8rem 1.5rem 8rem;
   border: none;
-  box-shadow: 0 4px 0 #004980;
+  box-shadow: 0 4px 0 ${theme.colors.primary.main};
   align-items: flex-end;
   &:hover {
     opacity: 0.7;
   }
 `;
 
-const StyledNewButton = styled(Button)`
-  background-color: ${theme.colors.gray[500]};
-  border: none;
-`;
-
 const OrderCompletePage: React.FC = () => {
-  const history = useHistory();
+  const dispatch = useAppDispatch();
 
   return (
     <CartLayout>
@@ -71,16 +67,16 @@ const OrderCompletePage: React.FC = () => {
               color="gray"
               variant="outlinedSecond"
               borderRadius={5}
-              onClick={() => history.push("/cart/effect-finish")}
+              onClick={() => dispatch(push(ROUTES.EFFECT_START))}
             >
               <Span color="primary.yellow" fontSize="1.5rem">
                 1回くじ
               </Span>
-              <Span color="primary.text" fontSize="0.8rem">
+              <Span color="primary.text" fontSize="1rem">
                 をひく
               </Span>
             </StyledFinishButton>
-            <StyledNewButton
+            {/* <StyledNewButton
               width="100%"
               size="medium"
               color="secondary"
@@ -89,7 +85,7 @@ const OrderCompletePage: React.FC = () => {
               onClick={() => history.push("/")}
             >
               <Span fontSize="1rem">もう一度購入する</Span>
-            </StyledNewButton>
+            </StyledNewButton> */}
           </FlexBox>
         </Box>
       </Box>

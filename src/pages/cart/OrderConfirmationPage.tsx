@@ -8,32 +8,60 @@ import {
   Typography,
   TableRow,
   H5,
-  RadioButton,
+  CheckBox,
 } from "components/atoms";
 import { CartLayout } from "components/templates";
 import { Card, Stepper } from "components/organisms";
 import { stepperList, Route as ROUTES, addThousandsSeparators } from "utils";
 
 import { useAppDispatch, useAppSelector } from "redux/app/hooks";
-import { selectCurrentUser, selectCurrentUserCard } from "redux/features";
+import {
+  selectCurrentUser,
+  selectCurrentUserCard,
+  selectDefaultCardID,
+  selectPaymethod,
+} from "redux/features";
 import { push } from "connected-react-router";
 import { useFormik } from "formik";
-import { useVerifyCartMutation } from "api";
+import { usePurchaseCartMutation, useVerifyCartMutation } from "api";
 import Skeleton from "react-loading-skeleton";
 import { useEffect, useState } from "react";
 import { Cart } from "models";
 import PayjpCheckout from "hooks/PayjpCheckout";
+import { LoadingBox } from "components/molecules";
+import { toast } from "react-toastify";
 
 const OrderConfirmationPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const currentUser = useAppSelector(selectCurrentUser);
+  const selectedPaymethod = useAppSelector(selectPaymethod);
   const [cartData, setCartData] = useState<Cart>(null);
   const [cardToken, setCardToken] = useState(null);
 
+  const [savedCard, setSavedCard] = useState(false);
+
+  const currentUserCards = useAppSelector(selectCurrentUserCard);
+  const defaultCardID = useAppSelector(selectDefaultCardID);
+
+  // Payjp checkout
+  const payjpCheckoutProps = {
+    dataKey: process.env.REACT_APP_PAPJP_PUBLIC_KEY,
+    dataText: "新しクレジットカード追加",
+    dataPartial: "true",
+    dataNamePlaceholder: "名前を入力してください",
+    onCreatedHandler: (payload) => {
+      console.log(payload.token);
+      setCardToken(payload.token);
+    },
+    onFailedHandler: (payload) => {
+      console.log("onFailedHandler", payload && payload.message);
+    },
+  };
+
   //Get Verify Cart
   const args = {
-    payment_method: "Visa",
+    payment_method: selectedPaymethod,
     //Order
     order_last_name: currentUser.last_name,
     order_first_name: currentUser.first_name,
@@ -71,30 +99,62 @@ const OrderConfirmationPage: React.FC = () => {
     handleVerifyCart();
   }, []);
 
-  const handleFormSubmit = () => {};
-
   const initialValues = {
-    card_token: "",
+    payment_method: selectedPaymethod,
+    //Order
+    order_last_name: currentUser.last_name,
+    order_first_name: currentUser.first_name,
+    order_last_name_kana: currentUser.last_name_kana,
+    order_first_name_kana: currentUser.first_name_kana,
+    order_post_code: currentUser.post_code,
+    order_prefecture: currentUser.prefecture,
+    order_address: currentUser.address,
+    order_phone_number: currentUser.phone_number,
+    //Recipient
+    recipient_input: true,
+    recipient_last_name: currentUser.last_name,
+    recipient_first_name: currentUser.first_name,
+    recipient_last_name_kana: currentUser.last_name_kana,
+    recipient_first_name_kana: currentUser.first_name_kana,
+    recipient_post_code: currentUser.post_code,
+    recipient_prefecture: currentUser.prefecture,
+    recipient_address: currentUser.address,
+    recipient_phone_number: currentUser.phone_number,
+    charge_once: false,
   };
+
+  // Do Order
+
+  //Handle Purchase Cart
+  const [purchaseCart, { isLoading: isPurchaseCartLoading }] =
+    usePurchaseCartMutation();
+
+  const handleFormPurchaseSubmit = async (values) => {
+    try {
+      // Set New card
+      let args = null;
+      if (cardToken) {
+        args = {
+          ...values,
+          charge_once: true,
+          card_token: cardToken,
+          register_this_card: savedCard, // Register Card to Customer
+        };
+      } else {
+        args = values;
+      }
+      await purchaseCart(JSON.stringify(args)).unwrap();
+      dispatch(push(ROUTES.ORDER_COMPLETE));
+    } catch (error) {
+      console.log("Error purchase cart", error);
+      toast.error("クレジットカードが必要です", { autoClose: 7000 });
+    }
+  };
+
   const { handleSubmit } = useFormik({
-    onSubmit: handleFormSubmit,
+    onSubmit: handleFormPurchaseSubmit,
     initialValues,
   });
-
-  // Payjp checkout
-  const payjpCheckoutProps = {
-    dataKey: process.env.REACT_APP_PAPJP_PUBLIC_KEY,
-    dataText: "新しクレジットカード追加",
-    dataPartial: "true",
-    dataNamePlaceholder: "名前を入力してください",
-    onCreatedHandler: (payload) => {
-      console.log(payload);
-      setCardToken(payload);
-    },
-    onFailedHandler: (payload) => {
-      console.log("onFailedHandler", payload && payload.message);
-    },
-  };
 
   return (
     <CartLayout>
@@ -413,20 +473,94 @@ const OrderConfirmationPage: React.FC = () => {
                 お支払い方法
               </Box>
               <Box width={{ md: "80%" }}>
-                <Typography mb="10px" fontSize="1rem">
-                  クレジットカード
-                </Typography>
+                {/**Check if has cards */}
+                {currentUserCards && (
+                  <>
+                    <Typography mb="10px" fontSize="1rem">
+                      保存したクレジットカード
+                    </Typography>
+                    <Box mb="2rem">
+                      {currentUserCards
+                        .filter((a) => a.id === defaultCardID)
+                        .map((item) => (
+                          <TableRow my="1rem" padding="6px 18px" key={item.id}>
+                            <FlexBox alignItems="center" m="6px">
+                              <Card
+                                width="42px"
+                                height="28px"
+                                mr="10px"
+                                elevation={4}
+                              >
+                                <img
+                                  width="100%"
+                                  src={`${
+                                    process.env.REACT_APP_MALL_IMAGE_ASSET_PATH
+                                  }/assets/images/payment-methods/${item.brand.toLowerCase()}.svg`}
+                                  alt={item.brand}
+                                />
+                              </Card>
+                              <H5 className="pre" m="6px">
+                                {item.name}
+                              </H5>
+                            </FlexBox>
+                            <Typography className="pre" m="6px">
+                              **** **** **** {item.last4}
+                            </Typography>
+                            <Typography className="pre" m="6px">
+                              {item.exp_month}/{item.exp_year}
+                            </Typography>
+                          </TableRow>
+                        ))}
+                    </Box>
 
-                <FlexBox maxWidth="360px" mb="2rem">
-                  <Image
-                    src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/illustrator/card-list.png`}
-                    width="100%"
-                    alt="cards"
-                  />
-                </FlexBox>
+                    <Box mb="2rem">
+                      <Divider
+                        height="1px"
+                        color="gray.500"
+                        width="100%"
+                        mx="auto"
+                      />
+                      <FlexBox justifyContent="center" mt="-10px">
+                        <Span
+                          fontSize="0.8rem"
+                          color="text.muted"
+                          bg="body.paper"
+                          px="1rem"
+                        >
+                          または
+                        </Span>
+                      </FlexBox>
+                    </Box>
+                  </>
+                )}
 
                 <Box mb="1rem">
+                  <Typography mb="10px" fontSize="1rem">
+                    クレジットカード
+                  </Typography>
+
+                  <FlexBox maxWidth="360px" mb="2rem">
+                    <Image
+                      src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/illustrator/card-list.png`}
+                      width="100%"
+                      alt="cards"
+                    />
+                  </FlexBox>
                   <PayjpCheckout {...payjpCheckoutProps} />
+
+                  <CheckBox
+                    name="save_card"
+                    mt="1rem"
+                    color="secondary"
+                    label={
+                      <Typography ml="2px" fontSize="0.8rem">
+                        このカード情報を保存／更新
+                      </Typography>
+                    }
+                    value="save_card"
+                    checked={savedCard}
+                    onChange={() => setSavedCard(!savedCard)}
+                  />
                 </Box>
               </Box>
             </FlexBox>
@@ -485,6 +619,7 @@ const OrderConfirmationPage: React.FC = () => {
           </Box>
         </Box>
       </form>
+      {isPurchaseCartLoading && <LoadingBox />}
     </CartLayout>
   );
 };

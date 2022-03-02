@@ -193,7 +193,7 @@ export default function App() {
           <FancyRoute
             path={ROUTES.EFFECT_START}
             exact
-            component={ProtectedRoute(EffectStartPage)}
+            component={EffectStartPage}
           />
           <FancyRoute
             path={ROUTES.EFFECT_FINISH}

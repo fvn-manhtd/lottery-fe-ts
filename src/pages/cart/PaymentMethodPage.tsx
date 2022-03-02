@@ -57,7 +57,7 @@ const PaymentMethodPage: React.FC = () => {
   const [yubinBango, setyubinBango] = useState("");
   const [spin, setSpin] = useState(false);
 
-  const [paymethod, setPaymethod] = useState("credit-card");
+  const [paymethod, setPaymethod] = useState("credit");
 
   const [address, loading, error] = usePostalJp(
     yubinBango,
@@ -117,7 +117,12 @@ const PaymentMethodPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(currentUserDataActions.setPaymentMethod("credit"));
+  }, []);
+
   const handlePaymentMethod = (e) => {
+    console.log(e.target.value);
     setPaymethod(e.target.value);
     dispatch(currentUserDataActions.setPaymentMethod(e.target.value));
   };
@@ -555,7 +560,7 @@ const PaymentMethodPage: React.FC = () => {
             </Box>
             <Box width={{ md: "80%" }}>
               <RadioButton
-                name="credit-card"
+                name="paymethod"
                 mb="1rem"
                 color="secondary"
                 label={
@@ -563,9 +568,24 @@ const PaymentMethodPage: React.FC = () => {
                     クレジットカード
                   </Typography>
                 }
-                checked={paymethod === "credit-card"}
+                value="credit"
+                checked={paymethod === "credit" ? true : false}
                 onChange={(e) => handlePaymentMethod(e)}
               />
+
+              {/* <RadioButton
+                name="paymethod"
+                mb="1rem"
+                color="secondary"
+                value="cash"
+                label={
+                  <Typography ml="6px" fontWeight="600" fontSize="1rem">
+                    Cash
+                  </Typography>
+                }
+                checked={paymethod === "cash" ? true : false}
+                onChange={(e) => handlePaymentMethod(e)}
+              /> */}
 
               <FlexBox maxWidth="360px">
                 <Image

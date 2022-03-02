@@ -1,4 +1,4 @@
 export const siteMetaSetting = {
-    title: 'オンラインガチャ',
-    description: 'オンラインガチャDescription',    
+    title: 'Online Gacha',
+    description: 'Online Gacha',    
 };
