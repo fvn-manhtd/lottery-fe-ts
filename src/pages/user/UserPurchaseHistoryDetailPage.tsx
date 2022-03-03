@@ -201,7 +201,9 @@ const UserPurchaseHistoryDetailPage: React.FC = () => {
                   </H6>
                 </FlexBox>
                 <Typography fontSize="14px">
-                  {purchaseHistoryData?.order.payment_method}
+                  {purchaseHistoryData?.order.payment_method == "credit"
+                    ? "クレジットカード"
+                    : purchaseHistoryData?.order.payment_method}
                 </Typography>
               </Card>
             </Grid>

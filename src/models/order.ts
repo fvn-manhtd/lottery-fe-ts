@@ -1,6 +1,23 @@
 import { LotteryModelDetail } from "./lottery";
 import { ProductModel } from "./product";
 
+export interface LotteryAggregate {
+    count: [
+        {
+            count: number;
+            lottery_product_id: number;
+            id: number;
+            order_ticket_id: number;
+            lottery_product_name: string;
+            order_status: number;
+            selected_rank: number;
+            lottery_product_selection_period: string;
+            created_at: string;
+            updated_at: string;
+            lottery_product: ProductModel
+        }
+    ]
+}
 export interface OrderPrize {
     id: number;
     order_ticket_id: number;
@@ -34,8 +51,10 @@ export interface OrderTicket {
     order_status: number;
     created_at: string;
     updated_at: string;
+    lottery_aggregate: LotteryAggregate;
     order_prize: OrderPrize[];
-    lottery: LotteryModelDetail
+    lottery: LotteryModelDetail;
+
 }
 
 export interface Order {

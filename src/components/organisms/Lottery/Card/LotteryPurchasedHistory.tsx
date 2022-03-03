@@ -2,7 +2,7 @@ import { FlexBox, Image, Typography, Button, Box } from "components/atoms";
 import { ModalComponent } from "components/molecules";
 import { Grid, Product } from "components/organisms";
 import { push } from "connected-react-router";
-import { OrderPrize } from "models";
+import { LotteryAggregate } from "models";
 import { useAppDispatch } from "redux/app/hooks";
 import { addThousandsSeparators, formatNormalDate } from "utils";
 
@@ -13,12 +13,12 @@ type LotteryPurchasedHistoryProps = {
   date: string;
   total: number;
   paymethod: string;
-  order_prize: OrderPrize[];
+  lottery_aggregate: LotteryAggregate;
 };
 
 export const LotteryPurchasedHistory: React.FC<
   LotteryPurchasedHistoryProps
-> = ({ id, title, image, date, total, paymethod, order_prize }) => {
+> = ({ id, title, image, date, total, paymethod, lottery_aggregate }) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -98,13 +98,13 @@ export const LotteryPurchasedHistory: React.FC<
           content={
             <Box p="2rem" height="370px" overflow="auto">
               <Grid container spacing={6}>
-                {order_prize.map((item) => (
+                {lottery_aggregate?.count.map((item) => (
                   <Grid item lg={3} sm={6} xs={12} key={item.id}>
                     <Product
                       src={item.lottery_product?.image}
                       title={item.lottery_product?.name}
                       prize={item.selected_rank}
-                      quanity={1}
+                      quanity={item.count}
                     />
                   </Grid>
                 ))}
