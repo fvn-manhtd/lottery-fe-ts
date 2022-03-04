@@ -2,7 +2,7 @@ import { Box, Image, Typography } from "components/atoms";
 
 export type ProductProps = {
   src: string;
-  prize: number;
+  prize: string;
   title: string;
   quanity?: number;
 };
@@ -15,13 +15,7 @@ export const Product: React.FC<ProductProps> = ({
 }) => {
   return (
     <Box bg="white" fontSize="0.8rem">
-      <Box
-        borderRadius="5px"
-        mb="0.5rem"
-        border="1px solid"
-        borderColor="gray.500"
-        bg="gray.500"
-      >
+      <Box borderRadius="5px" mb="0.8rem" bg="gray.500">
         <Image
           borderRadius="5px"
           width="100%"

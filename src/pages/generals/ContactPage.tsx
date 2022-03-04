@@ -61,6 +61,7 @@ const ContactPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    dispatch(storeObjectActions.unSetObject());
   }, []);
 
   return (

@@ -20,6 +20,7 @@ import {
   selectCurrentUserCard,
   selectDefaultCardID,
   selectPaymethod,
+  storeObjectActions,
 } from "redux/features";
 import { push } from "connected-react-router";
 import { useFormik } from "formik";
@@ -143,7 +144,8 @@ const OrderConfirmationPage: React.FC = () => {
       } else {
         args = values;
       }
-      await purchaseCart(JSON.stringify(args)).unwrap();
+      const res = await purchaseCart(JSON.stringify(args)).unwrap();
+      dispatch(storeObjectActions.setObject(res));
       dispatch(push(ROUTES.ORDER_COMPLETE));
     } catch (error) {
       console.log("Error purchase cart", error);

@@ -1,6 +1,6 @@
 import { createApi, retry } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from 'api';
-import { Cart } from 'models';
+import { Cart, OrderComplete } from 'models';
 import { ApiRoute } from 'utils';
 
 
@@ -74,7 +74,7 @@ export const cartApi = createApi({
             }
         }),
 
-        purchaseCart: build.mutation<any,any>({
+        purchaseCart: build.mutation<OrderComplete,any>({
             query: args => {                                
                 return {                    
                     url: `${ApiRoute.CART.ORDER}`,
@@ -84,7 +84,7 @@ export const cartApi = createApi({
                         response.status === 200 && !result.isError
                 }    
             },            
-            transformResponse: (response : {data : any}) => {
+            transformResponse: (response : {data : OrderComplete}) => {
                 return response.data;
             }
         }),

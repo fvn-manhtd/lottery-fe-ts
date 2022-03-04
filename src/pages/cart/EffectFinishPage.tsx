@@ -1,11 +1,20 @@
 import { Box, Span, Button, FlexBox, Typography } from "components/atoms";
 import { Grid, Logo, Product } from "components/organisms";
-import { useHistory } from "react-router-dom";
+import { OrderComplete } from "models";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { Route as ROUTES } from "utils";
-import { fakeProductList } from "utils/fakeData";
+import { selectStoreObject, storeObjectActions } from "redux/features";
+import { push } from "connected-react-router";
 
 const EffectFinishPage: React.FC = () => {
-  const history = useHistory();
+  const orderCompleteData: OrderComplete = useAppSelector(selectStoreObject);
+  const dispatch = useAppDispatch();
+
+  const goToPage = (value) => {
+    dispatch(storeObjectActions.unSetObject());
+    dispatch(push(value));
+  };
+
   return (
     <Box py="1rem">
       <Box maxWidth="300px" mx="auto" my="2rem">
@@ -27,22 +36,25 @@ const EffectFinishPage: React.FC = () => {
         mx={{ _: "15px", md: "auto" }}
         mb="3rem"
       >
-        <Box>
-          <Grid container spacing={6}>
-            {fakeProductList.map((item) => (
-              <Grid item lg={3} sm={6} xs={12} key={item.id}>
-                <Box p="1rem" bg="white" shadow={5} borderRadius="10px">
-                  <Product
-                    src={item.image}
-                    title={item.title}
-                    prize={item.prize}
-                    quanity={item.quanity}
-                  />
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+        {Object.keys(orderCompleteData).length < 0 && <Box>No Data</Box>}
+        {Object.keys(orderCompleteData).length > 0 && (
+          <Box>
+            <Grid container spacing={6} justifyContent={"center"}>
+              {orderCompleteData?.order_prize.map((item, index) => (
+                <Grid item lg={3} sm={6} xs={12} key={index}>
+                  <Box p="1rem" bg="white" shadow={5} borderRadius="10px">
+                    <Product
+                      src={item.image}
+                      title={item.name}
+                      prize={item.rank_label}
+                      quanity={item.count}
+                    />
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        )}
       </Box>
       <FlexBox
         justifyContent="center"
@@ -58,7 +70,7 @@ const EffectFinishPage: React.FC = () => {
           color="gray"
           variant="outlinedSecond"
           borderRadius={5}
-          onClick={() => history.push(ROUTES.HOME)}
+          onClick={() => goToPage(ROUTES.HOME)}
         >
           <Span fontSize="1rem">トップページへ戻る</Span>
         </Button>
@@ -71,7 +83,7 @@ const EffectFinishPage: React.FC = () => {
           variant="contained"
           borderRadius={5}
           type="submit"
-          onClick={() => history.push(ROUTES.LOTTERIES)}
+          onClick={() => goToPage(ROUTES.LOTTERIES)}
         >
           <Span fontSize="1rem">商品ページへ戻る</Span>
         </Button>
