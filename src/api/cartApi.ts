@@ -9,7 +9,7 @@ export const cartApi = createApi({
     reducerPath: "cartApi",
     tagTypes: ['Cart'],
     baseQuery: baseQueryWithRetry,
-    keepUnusedDataFor: 2 * 60,
+    keepUnusedDataFor: 0,
     endpoints: (build) => ({
 
         listCart: build.query<Cart,any>({

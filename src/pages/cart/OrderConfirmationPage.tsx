@@ -429,7 +429,7 @@ const OrderConfirmationPage: React.FC = () => {
 
                   <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
                     <Typography width="50%" fontWeight={600}>
-                      クーポン
+                      割引金額
                     </Typography>
                     <Typography textAlign="right" width="50%" fontWeight={600}>
                       {cartData.total_discount_in_cart === 0
