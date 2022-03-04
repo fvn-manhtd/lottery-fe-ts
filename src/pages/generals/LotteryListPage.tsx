@@ -20,12 +20,10 @@ import { push } from "connected-react-router";
 import { useEffect, useRef } from "react";
 
 const LotteryListPage = () => {
-  // const [pagination, setPagination] = useState(1);
-
   const dispatch = useAppDispatch();
 
-  let currentStatus = getSearchQueryObj("status");
-  let currentPage = getSearchQueryObj("page");
+  let currentStatus = Number(getSearchQueryObj("status"));
+  let currentPage = Number(getSearchQueryObj("page"));
 
   if (!currentStatus) {
     currentStatus = 1;
@@ -44,11 +42,9 @@ const LotteryListPage = () => {
 
   const handleChangePagination = (value) => {
     dispatch(push(`${ROUTES.LOTTERIES}?status=${currentStatus}&page=${value}`));
-    // setPagination(value);
   };
 
   const handleStatusChange = (value) => {
-    // setPagination(1);
     dispatch(push(`${ROUTES.LOTTERIES}?status=${value}&page=1`));
   };
 

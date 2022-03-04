@@ -13,7 +13,7 @@ export const lotteryApi = createApi({
     refetchOnFocus: false,
     refetchOnReconnect: false,
     endpoints: (build) => ({
-        getLotteries: build.query<LotteryListModel, { pageArg: number, statusArg: number}>({
+        getLotteries: build.query<LotteryListModel, { pageArg: number, statusArg?: number}>({
             query: (arg) => {
                 const { pageArg, statusArg } = arg;
                 return {
