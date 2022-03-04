@@ -88,6 +88,7 @@ export interface Order {
     recipient_phone_number: string;
     created_at: string;
     updated_at: string;
+    order_ticket?: OrderTicket[]
    
 }
 
@@ -97,7 +98,7 @@ export interface OrderItem {
     user_id: number;
     order_id: number;
     order: Order
-    order_ticket: OrderTicket[]
+    order_ticket?: OrderTicket[]
 }
 
 export interface OrderList {

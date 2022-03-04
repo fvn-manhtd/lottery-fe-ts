@@ -35,8 +35,8 @@ export const purchaseHistoryApi = createApi({
                 }    
             },
             providesTags: ['PurchaseHistory'],
-            transformResponse: (response: { data: OrderItem }) => {
-                return response.data;
+            transformResponse: (response: { data: { order: OrderItem } }) => {
+                return response.data.order;
             },
         }),
     }),

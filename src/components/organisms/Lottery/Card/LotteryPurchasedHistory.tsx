@@ -66,7 +66,9 @@ export const LotteryPurchasedHistory: React.FC<
             </FlexBox>
             <FlexBox>
               <FlexBox width="40%">お支払い方法</FlexBox>
-              <FlexBox width="60%">{paymethod}</FlexBox>
+              <FlexBox width="60%">
+                {paymethod === "credit" ? "クレジットカード" : paymethod}
+              </FlexBox>
             </FlexBox>
           </FlexBox>
         </FlexBox>
