@@ -175,13 +175,13 @@ const UserPurchaseHistoryDetailPage: React.FC = () => {
                     割引金額:
                   </Typography>
                   <H6 my="0px">
-                    {purchaseHistoryData?.order.total_discount_price === 0
+                    {purchaseHistoryData?.order.total_discount_amount === 0
                       ? addThousandsSeparators(
-                          purchaseHistoryData?.order.total_discount_price
+                          purchaseHistoryData?.order.total_discount_amount
                         )
                       : "-" +
                         addThousandsSeparators(
-                          purchaseHistoryData?.order.total_discount_price
+                          purchaseHistoryData?.order.total_discount_amount
                         )}
                     円
                   </H6>

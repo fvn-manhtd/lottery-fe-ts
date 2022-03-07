@@ -14,6 +14,7 @@ export interface LotteryAggregate {
             lottery_product_selection_period: string;
             created_at: string;
             updated_at: string;
+            selected_rank_label: string;
             lottery_product: ProductModel
         }
     ]

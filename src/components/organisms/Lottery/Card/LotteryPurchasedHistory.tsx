@@ -105,7 +105,7 @@ export const LotteryPurchasedHistory: React.FC<
                     <Product
                       src={item.lottery_product?.image}
                       title={item.lottery_product?.name}
-                      prize={item.selected_rank}
+                      prize={item.selected_rank_label}
                       quanity={item.count}
                     />
                   </Grid>
