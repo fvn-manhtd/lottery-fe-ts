@@ -142,9 +142,6 @@ const UserRegisterPage = () => {
                     borderColor="#3b5a9a"
                     borderTop="2px solid white"
                   ></Spinner>
-                  <Small ml="0.5rem" color="white" fontWeight="600">
-                    ログイン中です
-                  </Small>
                 </>
               ) : (
                 <>
@@ -176,9 +173,6 @@ const UserRegisterPage = () => {
                     borderColor="#55acee"
                     borderTop="2px solid white"
                   ></Spinner>
-                  <Small ml="0.5rem" color="white" fontWeight="600">
-                    ログイン中です
-                  </Small>
                 </>
               ) : (
                 <>

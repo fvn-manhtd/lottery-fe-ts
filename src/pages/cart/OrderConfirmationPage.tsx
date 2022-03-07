@@ -477,7 +477,7 @@ const OrderConfirmationPage: React.FC = () => {
               </Box>
               <Box width={{ md: "80%" }}>
                 {/**Check if has cards */}
-                {currentUserCards && (
+                {currentUserCards && currentUserCards.length > 0 && (
                   <>
                     <Typography mb="10px" fontSize="1rem">
                       保存したクレジットカード
