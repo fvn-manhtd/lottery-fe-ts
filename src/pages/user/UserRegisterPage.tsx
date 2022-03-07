@@ -248,7 +248,7 @@ const UserRegisterPage = () => {
                 errorText={touched.agreement && errors.agreement}
                 label={
                   <FlexBox>
-                    <NavLink href="/static-pages/usage-policy">
+                    <NavLink href="/static-pages/terms-service">
                       <H6 ml="0.5rem" color="primary.blue" fontWeight={400}>
                         利用規約
                       </H6>
