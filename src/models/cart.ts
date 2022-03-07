@@ -13,7 +13,7 @@ export interface CartItem {
 
 export interface Cart {
     total_price_in_cart     : number;  //カート内商品の合計金額。
-	total_sales_fee_in_cart : number;  //カート内商品への販売手数料合計。
+	total_tax_in_cart       : number;  //カート内商品への内消費税
 	total_discount_in_cart  : number;  //カート内商品への適用割引金額合計。
 	total_amount_in_cart    : number;  //カート内商品の購入総量。
 	shipping_fee            : number;  //選択中のエリアの送料。

@@ -88,7 +88,8 @@ const PaymentMethodPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(currentUser).length === 0) setIsOpenModal(true);
+    if (Object.keys(currentUser).length === 0 || currentUser?.address === null)
+      setIsOpenModal(true);
   }, [currentUser]);
 
   //Handle Submit Form Add Shipping Address

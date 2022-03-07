@@ -94,6 +94,8 @@ const OrderConfirmationPage: React.FC = () => {
       setCartData(data);
     } catch (error) {
       console.log("Error verify cart", error);
+      setCartData(null);
+      dispatch(push(ROUTES.ERROR));
     }
   };
   useEffect(() => {
@@ -339,7 +341,7 @@ const OrderConfirmationPage: React.FC = () => {
             {/*Cart Item Info */}
             {!isVerifyCartLoading &&
               cartData &&
-              cartData.carts?.map((cartItem) => {
+              cartData?.carts?.map((cartItem) => {
                 return (
                   <FlexBox
                     mb="1rem"
@@ -390,7 +392,7 @@ const OrderConfirmationPage: React.FC = () => {
               })}
             <Divider mb="1rem" bg="gray.500"></Divider>
             {/*Order Calc */}
-            {!isVerifyCartLoading && cartData && (
+            {!isVerifyCartLoading && cartData && cartData !== null && (
               <FlexBox justifyContent="flex-end" mb="1rem">
                 <Box width="100%" maxWidth="380px">
                   <FlexBox alignItems="center" mb="10px">
@@ -422,8 +424,7 @@ const OrderConfirmationPage: React.FC = () => {
                       内消費税
                     </Typography>
                     <Typography textAlign="right" width="50%" fontWeight={600}>
-                      ￥
-                      {addThousandsSeparators(cartData.total_sales_fee_in_cart)}
+                      ￥{addThousandsSeparators(cartData.total_tax_in_cart)}
                     </Typography>
                   </FlexBox>
 
