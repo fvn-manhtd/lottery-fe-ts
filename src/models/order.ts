@@ -1,17 +1,35 @@
 import { LotteryModelDetail } from "./lottery";
 import { ProductModel } from "./product";
 
+export interface LotteryAggregate {
+    count: [
+        {
+            count: number;
+            lottery_product_id: number;
+            id: number;
+            order_ticket_id: number;
+            lottery_product_name: string;
+            order_status: number;
+            selected_rank: number;
+            lottery_product_selection_period: string;
+            created_at: string;
+            updated_at: string;
+            selected_rank_label: string;
+            lottery_product: ProductModel
+        }
+    ]
+}
 export interface OrderPrize {
-    id: number;
-    order_ticket_id: number;
-    lottery_product_id: number;
-    lottery_product_name: string;
-    order_status: number;
-    selected_rank: number;
-    lottery_product_selection_period: string;
-    created_at: string;
-    updated_at: string;
-    lottery_product: ProductModel
+    id?: number;
+    order_ticket_id?: number;
+    lottery_product_id?: number;
+    lottery_product_name?: string;
+    order_status?: number;
+    selected_rank?: number;
+    lottery_product_selection_period?: string;
+    created_at?: string;
+    updated_at?: string;
+    lottery_product?: ProductModel
 }
 
 export interface OrderTicket {
@@ -34,8 +52,10 @@ export interface OrderTicket {
     order_status: number;
     created_at: string;
     updated_at: string;
+    lottery_aggregate: LotteryAggregate;
     order_prize: OrderPrize[];
-    lottery: LotteryModelDetail
+    lottery: LotteryModelDetail;
+
 }
 
 export interface Order {
@@ -69,6 +89,7 @@ export interface Order {
     recipient_phone_number: string;
     created_at: string;
     updated_at: string;
+    order_ticket?: OrderTicket[]
    
 }
 
@@ -78,9 +99,24 @@ export interface OrderItem {
     user_id: number;
     order_id: number;
     order: Order
-    order_ticket: OrderTicket[]
+    order_ticket?: OrderTicket[]
 }
 
 export interface OrderList {
     orders: OrderItem[]
+}
+
+export interface OrderPrizeComplete {
+    rank_label: string;
+    rank: number;
+    name: string;
+    image: string;
+    count: number;
+}
+export interface OrderComplete {
+    length: number;
+    is_paid: boolean;
+    order_prize: OrderPrizeComplete[],
+    number_of_times : number;
+    ticket_order_amount: number;
 }

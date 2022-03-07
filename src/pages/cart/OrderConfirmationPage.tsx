@@ -20,6 +20,7 @@ import {
   selectCurrentUserCard,
   selectDefaultCardID,
   selectPaymethod,
+  storeObjectActions,
 } from "redux/features";
 import { push } from "connected-react-router";
 import { useFormik } from "formik";
@@ -93,6 +94,8 @@ const OrderConfirmationPage: React.FC = () => {
       setCartData(data);
     } catch (error) {
       console.log("Error verify cart", error);
+      setCartData(null);
+      dispatch(push(ROUTES.ERROR));
     }
   };
   useEffect(() => {
@@ -143,7 +146,8 @@ const OrderConfirmationPage: React.FC = () => {
       } else {
         args = values;
       }
-      await purchaseCart(JSON.stringify(args)).unwrap();
+      const res = await purchaseCart(JSON.stringify(args)).unwrap();
+      dispatch(storeObjectActions.setObject(res));
       dispatch(push(ROUTES.ORDER_COMPLETE));
     } catch (error) {
       console.log("Error purchase cart", error);
@@ -293,7 +297,7 @@ const OrderConfirmationPage: React.FC = () => {
 
                     <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
                       <Typography width="50%" fontWeight={600}>
-                        手数料
+                        内消費税
                       </Typography>
                       <Typography
                         textAlign="right"
@@ -337,7 +341,7 @@ const OrderConfirmationPage: React.FC = () => {
             {/*Cart Item Info */}
             {!isVerifyCartLoading &&
               cartData &&
-              cartData.carts?.map((cartItem) => {
+              cartData?.carts?.map((cartItem) => {
                 return (
                   <FlexBox
                     mb="1rem"
@@ -388,7 +392,7 @@ const OrderConfirmationPage: React.FC = () => {
               })}
             <Divider mb="1rem" bg="gray.500"></Divider>
             {/*Order Calc */}
-            {!isVerifyCartLoading && cartData && (
+            {!isVerifyCartLoading && cartData && cartData !== null && (
               <FlexBox justifyContent="flex-end" mb="1rem">
                 <Box width="100%" maxWidth="380px">
                   <FlexBox alignItems="center" mb="10px">
@@ -417,17 +421,16 @@ const OrderConfirmationPage: React.FC = () => {
 
                   <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
                     <Typography width="50%" fontWeight={600}>
-                      手数料
+                      内消費税
                     </Typography>
                     <Typography textAlign="right" width="50%" fontWeight={600}>
-                      ￥
-                      {addThousandsSeparators(cartData.total_sales_fee_in_cart)}
+                      ￥{addThousandsSeparators(cartData.total_tax_in_cart)}
                     </Typography>
                   </FlexBox>
 
                   <FlexBox fontSize="0.9rem" alignItems="center" mb="10px">
                     <Typography width="50%" fontWeight={600}>
-                      クーポン
+                      割引金額
                     </Typography>
                     <Typography textAlign="right" width="50%" fontWeight={600}>
                       {cartData.total_discount_in_cart === 0
@@ -585,36 +588,43 @@ const OrderConfirmationPage: React.FC = () => {
             )}
 
             {!isVerifyCartLoading && (
-              <FlexBox
-                justifyContent="center"
-                flexDirection={{ _: "column-reverse", md: "row" }}
-                maxWidth="480px"
-                mx="auto"
-              >
-                <Button
-                  width={{ _: "100%", md: "50%" }}
-                  mx={{ _: "0", md: "1rem" }}
-                  size="large"
-                  color="gray"
-                  variant="outlinedSecond"
-                  borderRadius={5}
-                  onClick={() => dispatch(push(ROUTES.PAYMENT_METHOD))}
+              <>
+                <FlexBox
+                  justifyContent="center"
+                  flexDirection={{ _: "column-reverse", md: "row" }}
+                  maxWidth="480px"
+                  mx="auto"
                 >
-                  <Span fontSize="1rem">戻 る</Span>
-                </Button>
-                <Button
-                  width={{ _: "100%", md: "50%" }}
-                  mx={{ _: "0", md: "1rem" }}
-                  mb={{ _: "1rem", md: "0" }}
-                  size="large"
-                  color="primary"
-                  variant="contained"
-                  borderRadius={5}
-                  type="submit"
-                >
-                  <Span fontSize="1rem">ご注文を確定</Span>
-                </Button>
-              </FlexBox>
+                  <Button
+                    width={{ _: "100%", md: "50%" }}
+                    mx={{ _: "0", md: "1rem" }}
+                    size="large"
+                    color="gray"
+                    variant="outlinedSecond"
+                    borderRadius={5}
+                    onClick={() => dispatch(push(ROUTES.PAYMENT_METHOD))}
+                  >
+                    <Span fontSize="1rem">戻 る</Span>
+                  </Button>
+                  <Button
+                    width={{ _: "100%", md: "50%" }}
+                    mx={{ _: "0", md: "1rem" }}
+                    mb={{ _: "1rem", md: "0" }}
+                    size="large"
+                    color="primary"
+                    variant="contained"
+                    borderRadius={5}
+                    type="submit"
+                  >
+                    <Span fontSize="1rem">ご注文を確定</Span>
+                  </Button>
+                </FlexBox>
+                <Typography mt="1rem" textAlign="center" fontSize="0.8rem">
+                  注文が完了すると抽選も完了します。
+                  <br />
+                  注文完了後の返品・キャンセルはできませんのでご注意ください。
+                </Typography>
+              </>
             )}
           </Box>
         </Box>

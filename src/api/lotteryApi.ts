@@ -13,14 +13,15 @@ export const lotteryApi = createApi({
     refetchOnFocus: false,
     refetchOnReconnect: false,
     endpoints: (build) => ({
-        getLotteries: build.query<LotteryListModel, { pageArg: number}>({
+        getLotteries: build.query<LotteryListModel, { pageArg: number, statusArg?: number}>({
             query: (arg) => {
-                const { pageArg } = arg;
+                const { pageArg, statusArg } = arg;
                 return {
-                    url: `${ApiRoute.LOTTERY_INDEX}?page=${pageArg}`,
-                    validateStatus: (response, result) =>
-                        response.status === 200 && !result.isError
-                }                
+                        url: `${ApiRoute.LOTTERY_INDEX}?status=${statusArg}&page=${pageArg}`,
+                        validateStatus: (response, result) =>
+                            response.status === 200 && !result.isError
+                    }
+                             
             },
             transformResponse: (response: { data: LotteryListModel }) => {
                 return response.data;

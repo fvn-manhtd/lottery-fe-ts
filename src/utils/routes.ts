@@ -67,7 +67,7 @@ export const ApiRoute = {
 
     'LOTTERY_DETAIL': '/lottery',
 
-    'CONTACT': '/shop/contact',
+    'CONTACT': '/mall/contact',
     
     'NEWS_LIST': '/mall/news',
     'NEWS_DETAIL' : '/mall/news',

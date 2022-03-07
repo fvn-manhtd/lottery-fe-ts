@@ -15,21 +15,12 @@ export const Product: React.FC<ProductProps> = ({
 }) => {
   return (
     <Box bg="white" fontSize="0.8rem">
-      <Box
-        borderRadius="5px"
-        mb="0.5rem"
-        border="1px solid"
-        borderColor="gray.500"
-        bg="gray.500"
-      >
+      <Box borderRadius="5px" mb="0.8rem" bg="gray.500">
         <Image
           borderRadius="5px"
           width="100%"
           maxHeight={175}
-          // src={process.env.REACT_APP_MALL_IMAGE_PATH + src}
-          src={
-            "https://scratch.dmm.com/s3/kuji/7hk5xBCfickcBMEVdp5NhCGygeawe28iSBO8k8AA.jpeg?w=860"
-          }
+          src={process.env.REACT_APP_MALL_IMAGE_PATH + src}
           alt={title}
           objectFit="cover"
         />

@@ -24,9 +24,16 @@ const StyledBox = styled.div`
     background: ${(props) => props.color};
     width: 100px;
     height: 100px;
-    top: 0%;
-    left: 0%;
+    top: 0;
+    left: 0;
     transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  @media screen and (min-width: 425px) {
+    &::before {
+      width: 140px;
+      height: 140px;
+    }
   }
   @media screen and (min-width: 768px) {
     &::before {

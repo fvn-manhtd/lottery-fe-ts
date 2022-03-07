@@ -11,8 +11,10 @@ import { Stepper } from "components/organisms";
 import styled from "styled-components";
 import { stepperList } from "utils";
 import { theme, Route as ROUTES } from "utils";
-import { useAppDispatch } from "redux/app/hooks";
+import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { push } from "connected-react-router";
+import { selectStoreObject } from "redux/features";
+import { OrderComplete } from "models";
 
 const StyledFinishButton = styled(Button)`
   background-color: ${theme.colors.primary.light};
@@ -27,6 +29,8 @@ const StyledFinishButton = styled(Button)`
 
 const OrderCompletePage: React.FC = () => {
   const dispatch = useAppDispatch();
+
+  const orderCompleteData: OrderComplete = useAppSelector(selectStoreObject);
 
   return (
     <CartLayout>
@@ -48,10 +52,10 @@ const OrderCompletePage: React.FC = () => {
             <IconPng>complete-color</IconPng>
           </Box>
           <Typography textAlign="center" as="h1">
-            ご注文ありがとうございます！
+            ご注文ありがとうございます!
           </Typography>
           <Typography textAlign="center" as="p" mb="2rem">
-            テキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入ります
+            下のボタンを押して抽選結果を確認しましょう!
           </Typography>
           <FlexBox
             justifyContent="center"
@@ -70,7 +74,7 @@ const OrderCompletePage: React.FC = () => {
               onClick={() => dispatch(push(ROUTES.EFFECT_START))}
             >
               <Span color="primary.yellow" fontSize="1.5rem">
-                1回くじ
+                {orderCompleteData?.number_of_times} 回くじ
               </Span>
               <Span color="primary.text" fontSize="1rem">
                 をひく

@@ -1,4 +1,4 @@
-import { useListPurchaseHistoryQuery } from "api";
+import { useDetailPurchaseHistoryQuery } from "api";
 import {
   Box,
   Divider,
@@ -20,15 +20,14 @@ import UserPurchaseHistoryDetailSkeletonPage from "./UserPurchaseHistoryDetailSk
 const UserPurchaseHistoryDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { purchaseHistoryData } = useListPurchaseHistoryQuery(undefined, {
-    selectFromResult: ({ data }) => ({
-      purchaseHistoryData: data?.orders?.find((item) => item.id === Number(id)),
-    }),
-  });
+  const { data: purchaseHistoryData, isLoading } =
+    useDetailPurchaseHistoryQuery({ id: Number(id) });
 
-  if (purchaseHistoryData === undefined) {
+  if (purchaseHistoryData === undefined || isLoading) {
     return <UserPurchaseHistoryDetailSkeletonPage />;
   }
+
+  console.log(purchaseHistoryData);
 
   return (
     <>
@@ -75,7 +74,7 @@ const UserPurchaseHistoryDetailPage: React.FC = () => {
                     width="240px"
                     src={
                       process.env.REACT_APP_MALL_IMAGE_PATH +
-                      purchaseHistoryData?.order_ticket[0]?.lottery
+                      purchaseHistoryData?.order?.order_ticket[0]?.lottery
                         ?.thumbnail_image
                     }
                     alt="商品"
@@ -83,7 +82,10 @@ const UserPurchaseHistoryDetailPage: React.FC = () => {
                   />
                   <Box ml="20px">
                     <H6 my="0px">
-                      {purchaseHistoryData?.order_ticket[0]?.lottery_title}
+                      {
+                        purchaseHistoryData?.order?.order_ticket[0]
+                          ?.lottery_title
+                      }
                     </H6>
                   </Box>
                 </FlexBox>
@@ -154,16 +156,32 @@ const UserPurchaseHistoryDetailPage: React.FC = () => {
                   mb="0.5rem"
                 >
                   <Typography fontSize="14px" color="text.hint">
+                    内消費税:
+                  </Typography>
+                  <H6 my="0px">
+                    {addThousandsSeparators(
+                      purchaseHistoryData?.order.total_tax
+                    )}
+                    円
+                  </H6>
+                </FlexBox>
+
+                <FlexBox
+                  justifyContent="space-between"
+                  alignItems="center"
+                  mb="0.5rem"
+                >
+                  <Typography fontSize="14px" color="text.hint">
                     割引金額:
                   </Typography>
                   <H6 my="0px">
-                    {purchaseHistoryData?.order.total_discount_price === 0
+                    {purchaseHistoryData?.order.total_discount_amount === 0
                       ? addThousandsSeparators(
-                          purchaseHistoryData?.order.total_discount_price
+                          purchaseHistoryData?.order.total_discount_amount
                         )
                       : "-" +
                         addThousandsSeparators(
-                          purchaseHistoryData?.order.total_discount_price
+                          purchaseHistoryData?.order.total_discount_amount
                         )}
                     円
                   </H6>
@@ -201,7 +219,9 @@ const UserPurchaseHistoryDetailPage: React.FC = () => {
                   </H6>
                 </FlexBox>
                 <Typography fontSize="14px">
-                  {purchaseHistoryData?.order.payment_method}
+                  {purchaseHistoryData?.order.payment_method == "credit"
+                    ? "クレジットカード"
+                    : purchaseHistoryData?.order.payment_method}
                 </Typography>
               </Card>
             </Grid>

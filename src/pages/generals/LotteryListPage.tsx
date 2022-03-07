@@ -17,17 +17,19 @@ import { getSearchQueryObj, Route as ROUTES, statusButton } from "utils";
 import { useGetLotteriesQuery } from "api";
 import { useAppDispatch } from "redux/app/hooks";
 import { push } from "connected-react-router";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const LotteryListPage = () => {
-  const [pagination, setPagination] = useState(1);
-
   const dispatch = useAppDispatch();
 
-  let currentStatus = getSearchQueryObj("status");
+  let currentStatus = Number(getSearchQueryObj("status"));
+  let currentPage = Number(getSearchQueryObj("page"));
 
   if (!currentStatus) {
-    currentStatus = 0;
+    currentStatus = 1;
+  }
+  if (!currentPage) {
+    currentPage = 1;
   }
 
   let myRef = useRef(null);
@@ -36,35 +38,19 @@ const LotteryListPage = () => {
     data: lotteriesData,
     isLoading,
     isFetching,
-  } = useGetLotteriesQuery({ pageArg: pagination });
+  } = useGetLotteriesQuery({ pageArg: currentPage, statusArg: currentStatus });
 
   const handleChangePagination = (value) => {
-    dispatch(push(`${ROUTES.LOTTERIES}?page=${value}`));
-    setPagination(value);
+    dispatch(push(`${ROUTES.LOTTERIES}?status=${currentStatus}&page=${value}`));
   };
 
   const handleStatusChange = (value) => {
-    dispatch(push(`${ROUTES.LOTTERIES}?status=${value}`));
+    dispatch(push(`${ROUTES.LOTTERIES}?status=${value}&page=1`));
   };
 
   useEffect(() => {
     window.scrollTo({ behavior: "smooth", top: myRef.current.offsetTop });
-  }, [currentStatus, pagination]);
-
-  const filterStatusData = (data, value) => {
-    if (value == 1) {
-      //[未調整]新着(開始1週間以内):1 販売中:2
-      return data.filter((item) => item.status == 1 || item.status == 2);
-    } else if (value == 2) {
-      // 終了間際(期限1週間以内):3
-      return data.filter((item) => item.status == 3);
-    } else if (value == 3) {
-      // 販売予定:4
-      return data.filter((item) => item.status == 4);
-    } else {
-      return data;
-    }
-  };
+  }, [currentStatus, currentPage]);
 
   return (
     <>
@@ -163,32 +149,25 @@ const LotteryListPage = () => {
 
               {lotteriesData && (
                 <Box mb="3rem">
-                  <LotteryList
-                    lotteries={filterStatusData(
-                      lotteriesData.lotteries,
-                      currentStatus
-                    )}
-                  />
+                  <LotteryList lotteries={lotteriesData.lotteries} />
                 </Box>
               )}
 
               {/* pagination */}
-              {!isLoading &&
-                lotteriesData &&
-                lotteriesData.pagination.per_page != 100 && (
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    width="90%"
-                    margin="1rem auto 3rem auto"
-                  >
-                    <Pagination
-                      onChange={(data) => handleChangePagination(data)}
-                      pageRangeDisplayed={5}
-                      pageCount={lotteriesData.pagination.total}
-                    />
-                  </Box>
-                )}
+              {!isLoading && lotteriesData && (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  width="90%"
+                  margin="1rem auto 3rem auto"
+                >
+                  <Pagination
+                    onChange={(data) => handleChangePagination(data)}
+                    pageRangeDisplayed={5}
+                    pageCount={lotteriesData.pagination.last_page}
+                  />
+                </Box>
+              )}
             </Box>
           </Container>
         </main>

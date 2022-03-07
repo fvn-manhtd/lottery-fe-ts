@@ -55,9 +55,11 @@ const UserPurchaseHistoryPage: React.FC = () => {
                       title={item.order_ticket[0]?.lottery_title}
                       image={item.order_ticket[0]?.lottery?.thumbnail_image}
                       date={item.order.created_at}
-                      total={item.order_ticket[0]?.total_price}
+                      total={item.order.total_price}
                       paymethod={item.order?.payment_method}
-                      order_prize={item.order_ticket[0]?.order_prize}
+                      lottery_aggregate={
+                        item.order_ticket[0]?.lottery_aggregate
+                      }
                     />
                   </Grid>
                 ))}
