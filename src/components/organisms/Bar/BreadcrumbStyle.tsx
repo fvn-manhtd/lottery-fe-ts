@@ -20,7 +20,7 @@ export const BreadcrumbStyle = styled.ol`
           content: "";
           width: 18px;
           height: 18px;
-          background: url("mall_theme_basic/assets/images/icons/home1.svg")
+          background: url("./mall_theme_basic/assets/images/icons/home1.svg")
             center center no-repeat;
           background-size: cover;
 
@@ -45,7 +45,7 @@ export const BreadcrumbStyle = styled.ol`
         content: "";
         width: 12px;
         height: 12px;
-        background: url("mall_theme_basic/assets/images/icons/chevron-right.svg")
+        background: url("./mall_theme_basic/assets/images/icons/chevron-right.svg")
           center center no-repeat;
         background-size: cover;
 
