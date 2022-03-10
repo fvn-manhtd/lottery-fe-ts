@@ -54,13 +54,21 @@ const StaticPage = () => {
 
             {(isLoading || isFetching || staticData == undefined) && (
               <>
-                <Box mb="3rem">
+                <Box
+                  pt={{ _: 3, md: 40 }}
+                  pb={{ _: 3, md: 80 }}
+                  paddingX={{ _: 2, md: 6 }}
+                >
                   <Skeleton height="200px"></Skeleton>
                 </Box>
               </>
             )}
             {(!isLoading || !isFetching) && staticData?.label == name && (
-              <Box paddingY={{ _: 3, md: 40 }} paddingX={{ _: 2, md: 6 }}>
+              <Box
+                pt={{ _: 3, md: 40 }}
+                pb={{ _: 3, md: 80 }}
+                paddingX={{ _: 2, md: 6 }}
+              >
                 <Box bg="white" shadow={4} p={{ _: "2rem", md: "3rem" }}>
                   <H3 mb={2} textAlign="center">
                     {staticData?.title}
