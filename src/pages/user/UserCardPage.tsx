@@ -199,7 +199,7 @@ const UserCardPage: React.FC = () => {
                       width="100%"
                       src={`${
                         process.env.REACT_APP_MALL_IMAGE_ASSET_PATH
-                      }/assets/images/payment-methods/${item.brand.toLowerCase()}.svg`}
+                      }assets/images/payment-methods/${item.brand.toLowerCase()}.svg`}
                       alt={item.brand}
                     />
                   </Card>

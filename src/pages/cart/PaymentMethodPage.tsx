@@ -574,23 +574,9 @@ const PaymentMethodPage: React.FC = () => {
                 onChange={(e) => handlePaymentMethod(e)}
               />
 
-              {/* <RadioButton
-                name="paymethod"
-                mb="1rem"
-                color="secondary"
-                value="cash"
-                label={
-                  <Typography ml="6px" fontWeight="600" fontSize="1rem">
-                    Cash
-                  </Typography>
-                }
-                checked={paymethod === "cash" ? true : false}
-                onChange={(e) => handlePaymentMethod(e)}
-              /> */}
-
               <FlexBox maxWidth="360px">
                 <Image
-                  src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/illustrator/card-list.png`}
+                  src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}assets/images/illustrator/card-list.png`}
                   width="100%"
                   alt="cards"
                 />

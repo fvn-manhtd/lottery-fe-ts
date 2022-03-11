@@ -7,7 +7,7 @@ export const Logo: React.FC = () => {
     <NavLink href={ROUTES.HOME}>
       <Image
         width="100%"
-        src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/logo.png`}
+        src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}assets/images/logo.png`}
         alt="Online Gacha"
       />
     </NavLink>

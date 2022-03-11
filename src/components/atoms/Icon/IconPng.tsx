@@ -15,7 +15,7 @@ export const IconPng: React.FC<
     <>
       <Image
         width="100%"
-        src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/icons/${children}.png`}
+        src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}assets/images/icons/${children}.png`}
         alt="Icon"
       />
     </>

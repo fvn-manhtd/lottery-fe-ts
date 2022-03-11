@@ -203,7 +203,7 @@ const UserRegisterPage = () => {
 
             <Image
               mb="1rem"
-              src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/illustrator/login_step.png`}
+              src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}assets/images/illustrator/login_step.png`}
               width="100%"
               alt="Login"
             />

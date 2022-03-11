@@ -17,7 +17,7 @@ export const Icon: React.FC<
 > = ({ children, ...props }: IconProps) => {
   return (
     <StyledIcon
-      src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}/assets/images/icons/${children}.svg`}
+      src={`${process.env.REACT_APP_MALL_IMAGE_ASSET_PATH}assets/images/icons/${children}.svg`}
       fallback={() => <span>{children?.trim()}</span>}
       {...props}
     />
