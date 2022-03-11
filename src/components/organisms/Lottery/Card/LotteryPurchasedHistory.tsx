@@ -94,7 +94,7 @@ export const LotteryPurchasedHistory: React.FC<
               width="100%"
               variant="outlined"
             >
-              朝鮮結果
+              抽選結果
             </Button>
           }
           content={
