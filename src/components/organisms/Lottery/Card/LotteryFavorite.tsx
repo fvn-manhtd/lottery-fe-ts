@@ -5,6 +5,7 @@ import {
   FlexBox,
   Icon,
   Image,
+  NavLink,
   Spinner,
   Typography,
 } from "components/atoms";
@@ -22,6 +23,7 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
   title,
   status,
   shop_id,
+  url,
 }) => {
   const dispatch = useAppDispatch();
   const [isRemoving, setIsRemoving] = useState(false);
@@ -55,13 +57,15 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
 
   return (
     <Box bg="white" borderRadius="10px" shadow={4}>
-      <Image
-        width="100%"
-        maxHeight={175}
-        src={process.env.REACT_APP_MALL_IMAGE_PATH + src}
-        alt={title}
-        objectFit="cover"
-      />
+      <NavLink href={url}>
+        <Image
+          width="100%"
+          maxHeight={175}
+          src={process.env.REACT_APP_MALL_IMAGE_PATH + src}
+          alt={title}
+          objectFit="cover"
+        />
+      </NavLink>
 
       <Box padding={[1, 1, 2, 2]}>
         <Box>

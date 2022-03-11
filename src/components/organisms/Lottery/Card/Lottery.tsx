@@ -58,7 +58,7 @@ export const Lottery: React.FC<LotteryProps> = ({
 }) => {
   return (
     <Card bg="white" shadow={9} hoverEffect={true}>
-      <a href={"http://" + url} target="_blank">
+      <a href={`https://${url}`} target="_blank">
         <StyledBox color={lotteryStatusObj[status - 1].color}>
           <StyledText
             color="white"

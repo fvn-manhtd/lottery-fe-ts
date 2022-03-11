@@ -8,13 +8,14 @@ import { useAppDispatch, useAppSelector } from "redux/app/hooks";
 import { push } from "connected-react-router";
 import Skeleton from "react-loading-skeleton";
 import { currentUserDataActions, selectCurrentUserFav } from "redux/features";
+import { UserFavorite } from "models";
 
 const UserFavoritePage = () => {
   const dispatch = useAppDispatch();
 
   const isScreenMounted = useRef(true);
 
-  const userFavoriteData = useAppSelector(selectCurrentUserFav);
+  const userFavoriteData: UserFavorite[] = useAppSelector(selectCurrentUserFav);
   let currentPage = getSearchQueryObj("page");
   if (!currentPage) {
     currentPage = 1;
@@ -103,6 +104,7 @@ const UserFavoritePage = () => {
                       src={item.image}
                       title={item.title}
                       status={item.status}
+                      url={`https://${item.shop_domain}/lottery/${item.lottery_id}`}
                     />
                   </Grid>
                 ))}
