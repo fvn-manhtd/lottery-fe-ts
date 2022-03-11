@@ -57,7 +57,7 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
 
   return (
     <Box bg="white" borderRadius="10px" shadow={4}>
-      <NavLink href={url}>
+      <a href={url} target="_blank">
         <Image
           width="100%"
           maxHeight={175}
@@ -65,7 +65,7 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
           alt={title}
           objectFit="cover"
         />
-      </NavLink>
+      </a>
 
       <Box padding={[1, 1, 2, 2]}>
         <Box>
