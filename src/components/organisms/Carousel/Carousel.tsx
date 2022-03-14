@@ -1,5 +1,5 @@
 import React from "react";
-import { formatJapanDate, lotteryStatusObj } from "utils";
+import { formatJapanDate, formatTitle, lotteryStatusObj } from "utils";
 import { LotteryModelDetail } from "models";
 import {
   CarouselProvider,
@@ -118,11 +118,17 @@ export const Carousel: React.FC<CarouselProps> = ({
                         color="white"
                         fontSize={["0.8rem", "1rem", "1.2rem", "1.45rem"]}
                         margin={0}
+                        wrap={true}
                       >
                         {value.title}
                       </Typography>
                     </Box>
-                    <a href={"http://" + value.url} target="_blank">
+                    <a
+                      href={`https://${value.shop_domain}/lottery/${formatTitle(
+                        value.title
+                      )}/${value.id}`}
+                      target="_blank"
+                    >
                       <Image
                         src={
                           process.env.REACT_APP_MALL_IMAGE_PATH + value.image

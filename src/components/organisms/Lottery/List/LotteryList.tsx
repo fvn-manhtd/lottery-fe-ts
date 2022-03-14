@@ -28,7 +28,7 @@ export const LotteryList: React.FC<LotteryListModel> = ({ lotteries }) => {
               title={value.title}
               status={value.status}
               period={value.startedAt}
-              url={value.url}
+              shop_domain={value.shop_domain}
             />
           </Box>
         );

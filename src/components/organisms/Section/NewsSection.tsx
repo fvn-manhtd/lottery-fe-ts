@@ -10,7 +10,7 @@ import {
 } from "components/atoms";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { formatJapanDate } from "utils";
+import { formatJapanDate, formatTitle } from "utils";
 
 export const NewsSection = () => {
   const { data: listNews, isLoading, isFetching } = useGetNewsListQuery(1);
@@ -59,13 +59,20 @@ export const NewsSection = () => {
                       href={value.external}
                       target="_blank"
                     >
-                      {value.title}
+                      <Typography as="span" wrap={true}>
+                        {value.title}
+                      </Typography>
                     </a>
                   </Box>
                 )}
                 {value.external == null && (
-                  <NavLink color="white" href={"/news/" + value.id}>
-                    {value.title}
+                  <NavLink
+                    color="white"
+                    href={`/news/${formatTitle(value.title)}/${value.id}`}
+                  >
+                    <Typography as="span" wrap={true}>
+                      {value.title}
+                    </Typography>
                   </NavLink>
                 )}
               </FlexBox>

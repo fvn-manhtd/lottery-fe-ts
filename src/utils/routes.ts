@@ -2,7 +2,7 @@ export enum Route {
     //General Pages
     HOME = '/',
     NEWS_LIST="/news-list",
-    NEWS_DETAIL="/news/:id",
+    NEWS_DETAIL="/news/:title/:id",
     CONTACT = "/contact",
     CONTACT_CONFIRM = "/contact/confirm",
     CONTACT_COMPLETE = "/contact/complete",
@@ -10,7 +10,7 @@ export enum Route {
 
     //Lottery
     LOTTERIES = '/lotteries',
-    LOTTERY_DETAIL = '/lottery/:id',
+    LOTTERY_DETAIL = '/lottery/:title/:id',
     
     //User
     USER_LOGIN = '/user/login',

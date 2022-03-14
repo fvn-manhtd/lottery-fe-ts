@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer>
-      <Box pt={115} pb={60}>
+      <Box pt={115} pb={60} borderTop="1px solid" borderColor="gray.400">
         <Container>
           <FlexBox
             mx="auto"

@@ -10,6 +10,7 @@ export interface LotteryModelDetail {
     endedAt?: string;
     status?: number;
     url?: string;
+    shop_domain?: string;
     rankedProducts?: [];
 }
 

@@ -46,3 +46,7 @@ export const addThousandsSeparators = (n) => {
       .match(/(\d{1,3})/g).join(',').split('')
       .reverse().join('');
 }
+
+export const formatTitle = (v) => {
+  return v.split(' ').join('+');
+} 

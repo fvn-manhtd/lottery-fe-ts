@@ -104,7 +104,7 @@ const UserFavoritePage = () => {
                       src={item.image}
                       title={item.title}
                       status={item.status}
-                      url={`https://${item.shop_domain}/lottery/${item.lottery_id}`}
+                      shop_domain={item.shop_domain}
                     />
                   </Grid>
                 ))}

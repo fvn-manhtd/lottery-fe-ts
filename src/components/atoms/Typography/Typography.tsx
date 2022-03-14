@@ -27,6 +27,7 @@ interface CustomProps
   title?: string;
   className?: string;
   ellipsis?: boolean;
+  wrap?: boolean;
   style?: CSSProperties;
   onClick?: (e) => void;
   [key: string]: any;
@@ -42,6 +43,13 @@ export const Typography: React.FC<CustomProps> = styled.div<CustomProps>`
   `
       : ""}
 
+  ${(props) =>
+    props.wrap
+      ? `
+  white-space: pre-wrap;
+  `
+      : ""}
+      
   ${border}
   ${typography}
   ${space}

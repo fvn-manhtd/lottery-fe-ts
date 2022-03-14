@@ -38,6 +38,7 @@ export const LotteryPurchasedHistory: React.FC<
           color="primary.blue"
           fontWeight={600}
           mb="1rem"
+          wrap={true}
         >
           {title}
         </Typography>

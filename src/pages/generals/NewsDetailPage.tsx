@@ -9,12 +9,13 @@ import { useAppDispatch } from "redux/app/hooks";
 import { push } from "connected-react-router";
 import { useGetNewsByIdQuery } from "api";
 
-type NewsParams = {
+export type NewsParams = {
   id: string;
+  title: string;
 };
 
 const NewsDetailPage = () => {
-  const { id } = useParams<NewsParams>();
+  const { id, title } = useParams<NewsParams>();
   const dispatch = useAppDispatch();
 
   const {
@@ -31,12 +32,12 @@ const NewsDetailPage = () => {
   const breadcrumbList = [
     { url: ROUTES.HOME, description: "ホーム" },
     { url: ROUTES.NEWS_LIST, description: "ニュース" },
-    { url: "", description: newsItem ? newsItem?.title : "" },
+    { url: "", description: title },
   ];
 
   return (
     <>
-      <Head title={newsItem?.title} />
+      <Head title={title} />
 
       <BaseLayout>
         <main>

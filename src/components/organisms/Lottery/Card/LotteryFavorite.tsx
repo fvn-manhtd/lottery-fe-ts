@@ -5,7 +5,6 @@ import {
   FlexBox,
   Icon,
   Image,
-  NavLink,
   Spinner,
   Typography,
 } from "components/atoms";
@@ -14,7 +13,12 @@ import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "redux/app/hooks";
 import { currentUserDataActions } from "redux/features";
 import styled from "styled-components";
-import { lotteryStatusObj, getTheme, Route as ROUTES } from "utils";
+import {
+  lotteryStatusObj,
+  getTheme,
+  Route as ROUTES,
+  formatTitle,
+} from "utils";
 import { LotteryProps } from "./Lottery";
 
 export const LotteryFavorite: React.FC<LotteryProps> = ({
@@ -23,7 +27,7 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
   title,
   status,
   shop_id,
-  url,
+  shop_domain,
 }) => {
   const dispatch = useAppDispatch();
   const [isRemoving, setIsRemoving] = useState(false);
@@ -57,7 +61,10 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
 
   return (
     <Box bg="white" borderRadius="10px" shadow={4}>
-      <a href={url} target="_blank">
+      <a
+        href={`https://${shop_domain}/lottery/${formatTitle(title)}/${id}`}
+        target="_blank"
+      >
         <Image
           width="100%"
           maxHeight={175}
@@ -79,7 +86,11 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
             {lotteryStatusObj[status - 1].text}
           </StyledText>
         </Box>
-        <Typography as="h1" fontSize={["0.9375rem", "0.9375rem", "1rem"]}>
+        <Typography
+          as="h1"
+          fontSize={["0.9375rem", "0.9375rem", "1rem"]}
+          wrap={true}
+        >
           {title}
         </Typography>
         <StyledButton

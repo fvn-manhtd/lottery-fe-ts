@@ -5,11 +5,12 @@ import {
   Paragraph,
   NavLink,
   Spinner,
+  Typography,
 } from "components/atoms";
 import { Breadcrumb, Head, Pagination } from "components/organisms";
 import { BaseLayout } from "components/templates";
 import { useAppDispatch } from "redux/app/hooks";
-import { formatJapanDate, Route as ROUTES } from "utils";
+import { formatJapanDate, Route as ROUTES, formatTitle } from "utils";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { push } from "connected-react-router";
@@ -59,12 +60,18 @@ const NewsListPage = () => {
                     </Paragraph>
                     {value.external != null && (
                       <a href={value.external} target="_blank">
-                        {value.title}
+                        <Typography as="span" wrap={true}>
+                          {value.title}
+                        </Typography>
                       </a>
                     )}
                     {value.external == null && (
-                      <NavLink href={"/news/" + value.id}>
-                        {value.title}
+                      <NavLink
+                        href={`/news/${formatTitle(value.title)}/${value.id}`}
+                      >
+                        <Typography as="span" wrap={true}>
+                          {value.title}
+                        </Typography>
                       </NavLink>
                     )}
                   </FlexBox>
