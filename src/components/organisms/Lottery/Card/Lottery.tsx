@@ -26,7 +26,9 @@ export const Lottery: React.FC<LotteryProps> = ({
   return (
     <Card bg="white" shadow={9} hoverEffect={true}>
       <a
-        href={`https://${shop_domain}/lottery/${formatTitle(title)}/${id}`}
+        href={`${
+          process.env.REACT_APP_MALL_SSL
+        }${shop_domain}/lottery/${formatTitle(title)}/${id}`}
         target="_blank"
       >
         <StyledBox color={lotteryStatusObj[status - 1].color}>

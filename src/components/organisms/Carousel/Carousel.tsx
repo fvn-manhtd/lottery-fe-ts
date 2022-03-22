@@ -124,9 +124,9 @@ export const Carousel: React.FC<CarouselProps> = ({
                       </Typography>
                     </Box>
                     <a
-                      href={`https://${value.shop_domain}/lottery/${formatTitle(
-                        value.title
-                      )}/${value.id}`}
+                      href={`${process.env.REACT_APP_MALL_SSL}${
+                        value.shop_domain
+                      }/lottery/${formatTitle(value.title)}/${value.id}`}
                       target="_blank"
                     >
                       <Image

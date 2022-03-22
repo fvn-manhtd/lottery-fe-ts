@@ -62,7 +62,9 @@ export const LotteryFavorite: React.FC<LotteryProps> = ({
   return (
     <Box bg="white" borderRadius="10px" shadow={4}>
       <a
-        href={`https://${shop_domain}/lottery/${formatTitle(title)}/${id}`}
+        href={`${
+          process.env.REACT_APP_MALL_SSL
+        }${shop_domain}/lottery/${formatTitle(title)}/${id}`}
         target="_blank"
       >
         <Image
